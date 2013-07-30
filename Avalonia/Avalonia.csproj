@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{46EA210F-DFF1-4AC0-B7BF-6362141DC61A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Avalonia</RootNamespace>
+    <AssemblyName>Avalonia</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Animation\Animatable.cs" />
+    <Compile Include="Application.cs" />
+    <Compile Include="AvaloniaPresentationSource.cs" />
+    <Compile Include="AvaloniaSpecificAttribute.cs" />
+    <Compile Include="Controls\Border.cs" />
+    <Compile Include="Controls\ContentControl.cs" />
+    <Compile Include="Controls\ContentPresenter.cs" />
+    <Compile Include="Controls\Control.cs" />
+    <Compile Include="Controls\ControlTemplate.cs" />
+    <Compile Include="Controls\Decorator.cs" />
+    <Compile Include="Controls\TextBlock.cs" />
+    <Compile Include="CornerRadius.cs" />
+    <Compile Include="Data\Binding.cs" />
+    <Compile Include="Data\BindingBase.cs" />
+    <Compile Include="Data\BindingExpression.cs" />
+    <Compile Include="Data\BindingExpressionBase.cs" />
+    <Compile Include="Data\BindingOperations.cs" />
+    <Compile Include="Data\IPropertyPathParser.cs" />
+    <Compile Include="Data\PropertyPathParser.cs" />
+    <Compile Include="Data\PropertyPathToken.cs" />
+    <Compile Include="Input\MouseButtonEventArgs.cs" />
+    <Compile Include="Input\MouseEventArgs.cs" />
+    <Compile Include="IObservableDependencyObject.cs" />
+    <Compile Include="PropertyPath.cs" />
+    <Compile Include="Expression.cs" />
+    <Compile Include="Delegates.cs" />
+    <Compile Include="DependencyObject.cs" />
+    <Compile Include="DependencyObjectType.cs" />
+    <Compile Include="DependencyProperty.cs" />
+    <Compile Include="DependencyPropertyChangedEventArgs.cs" />
+    <Compile Include="DependencyPropertyKey.cs" />
+    <Compile Include="FrameworkElement.cs" />
+    <Compile Include="FrameworkTemplate.cs" />
+    <Compile Include="Freezable.cs" />
+    <Compile Include="IWeakEventListener.cs" />
+    <Compile Include="LocalValueEntry.cs" />
+    <Compile Include="LocalValueEnumerator.cs" />
+    <Compile Include="Media\Brush.cs" />
+    <Compile Include="Media\Color.cs" />
+    <Compile Include="Media\Colors.cs" />
+    <Compile Include="Media\DrawingContext.cs" />
+    <Compile Include="Media\FormattedText.cs" />
+    <Compile Include="Media\Matrix.cs" />
+    <Compile Include="Media\Pen.cs" />
+    <Compile Include="Media\SolidColorBrush.cs" />
+    <Compile Include="Media\Transform.cs" />
+    <Compile Include="Media\TranslateTransform.cs" />
+    <Compile Include="Media\Visual.cs" />
+    <Compile Include="Point.cs" />
+    <Compile Include="PresentationSource.cs" />
+    <Compile Include="PropertyChangedCallback.cs" />
+    <Compile Include="PropertyMetadata.cs" />
+    <Compile Include="Rect.cs" />
+    <Compile Include="RoutedEventArgs.cs" />
+    <Compile Include="Size.cs" />
+    <Compile Include="Threading\Dispatcher.cs" />
+    <Compile Include="Threading\DispatcherFrame.cs" />
+    <Compile Include="Threading\DispatcherObject.cs" />
+    <Compile Include="Thickness.cs" />
+    <Compile Include="Threading\IPlatformDispatcherImpl.cs" />
+    <Compile Include="UIElement.cs" />
+    <Compile Include="Vector.cs" />
+    <Compile Include="Window.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

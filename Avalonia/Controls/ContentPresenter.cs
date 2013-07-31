@@ -42,7 +42,13 @@ namespace Avalonia.Controls
 
         public override bool ApplyTemplate()
         {
+            if (this.visualChild != null)
+            {
+                this.RemoveVisualChild(this.visualChild);
+            }
+
             this.visualChild = this.Content as Visual;
+            this.AddVisualChild(this.visualChild);
             return true;
         }
 

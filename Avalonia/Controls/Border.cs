@@ -17,7 +17,13 @@ namespace Avalonia.Controls
     public class Border : Decorator
     {
         public static readonly DependencyProperty BackgroundProperty =
-            DependencyProperty.Register("Background", typeof(Brush), typeof(Border));
+            DependencyProperty.Register(
+                "Background", 
+                typeof(Brush), 
+                typeof(Border),
+                new FrameworkPropertyMetadata(
+                    new SolidColorBrush(Colors.White),
+                    FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush Background
         {

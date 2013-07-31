@@ -43,7 +43,9 @@ namespace Avalonia.Controls
         {
             if (this.visualChildren.Count == 0)
             {
-                this.visualChildren.Add(this.Template.CreateVisualTree(this));
+                Visual child = this.Template.CreateVisualTree(this);
+                this.visualChildren.Add(child);
+                this.AddVisualChild(child);
                 return true;
             }
             else

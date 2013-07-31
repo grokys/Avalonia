@@ -126,6 +126,7 @@ namespace Avalonia
 
                 value = binding.GetCurrentValue();
 
+                // TODO: Check old and new value equality.
                 this.properties[dp] = value;
                 this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(
                     dp,
@@ -223,6 +224,17 @@ namespace Avalonia
                 foreach (var handler in handlers.ToArray())
                 {
                     handler(this, e);
+                }
+            }
+
+            FrameworkPropertyMetadata metadata = e.Property.GetMetadata(this) as FrameworkPropertyMetadata;
+            UIElement uiElement = this as UIElement;
+
+            if (metadata != null && uiElement != null)
+            {
+                if (metadata.AffectsRender)
+                {
+                    uiElement.InvalidateVisual();
                 }
             }
         }

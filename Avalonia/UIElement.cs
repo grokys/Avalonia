@@ -41,6 +41,12 @@ namespace Avalonia
         public void InvalidateArrange()
         {
             this.IsArrangeValid = false;
+            this.HackDoingARedraw();
+        }
+
+        public void InvalidateVisual()
+        {
+            this.InvalidateArrange();
         }
 
         public void UpdateLayout()
@@ -78,6 +84,23 @@ namespace Avalonia
             if (this.MouseLeftButtonDown != null)
             {
                 this.MouseLeftButtonDown(this, e);
+            }
+        }
+
+        private void HackDoingARedraw()
+        {
+            Visual visual = this.VisualParent as Visual;
+            Window window = visual as Window;
+
+            while (visual != null && window == null)
+            {
+                visual = visual.VisualParent as Visual;
+                window = visual as Window;
+            }
+
+            if (window != null)
+            {
+                window.DoMeasureArrange();
             }
         }
     }

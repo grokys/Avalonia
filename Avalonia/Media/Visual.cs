@@ -20,7 +20,27 @@ namespace Avalonia.Media
             get { return 0; }
         }
 
-        protected internal Transform VisualTransform { get; protected set; }
+        protected internal DependencyObject VisualParent
+        {
+            get;
+            private set;
+        }
+
+        protected internal Transform VisualTransform 
+        { 
+            get; 
+            protected set; 
+        }
+
+        protected void AddVisualChild(Visual child)
+        {
+            child.VisualParent = this;
+        }
+
+        protected void RemoveVisualChild(Visual child)
+        {
+            child.VisualParent = this;
+        }
 
         protected internal virtual Visual GetVisualChild(int index)
         {

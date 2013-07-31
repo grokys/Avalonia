@@ -151,7 +151,7 @@ namespace Avalonia
                 };
 
                 Binding binding = new Binding("Background");
-                binding.Source = parent;
+                binding.RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent);
                 BindingOperations.SetBinding(border, Border.BackgroundProperty, binding);
 
                 return border;

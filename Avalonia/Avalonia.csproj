@@ -61,6 +61,7 @@
     <Compile Include="Data\IPropertyPathParser.cs" />
     <Compile Include="Data\PropertyPathParser.cs" />
     <Compile Include="Data\PropertyPathToken.cs" />
+    <Compile Include="Data\RelativeSource.cs" />
     <Compile Include="Data\UpdateSourceTrigger.cs" />
     <Compile Include="FrameworkPropertyMetadata.cs" />
     <Compile Include="Input\MouseButtonEventArgs.cs" />

@@ -32,6 +32,11 @@ namespace Avalonia.Media
             protected set; 
         }
 
+        protected internal virtual Visual GetVisualChild(int index)
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+
         protected void AddVisualChild(Visual child)
         {
             child.VisualParent = this;
@@ -40,11 +45,6 @@ namespace Avalonia.Media
         protected void RemoveVisualChild(Visual child)
         {
             child.VisualParent = this;
-        }
-
-        protected internal virtual Visual GetVisualChild(int index)
-        {
-            throw new ArgumentOutOfRangeException();
         }
     }
 }

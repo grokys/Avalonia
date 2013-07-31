@@ -19,6 +19,11 @@ namespace Avalonia.Data
     {
         public PropertyPathToken[] Parse(object source, string path)
         {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+
             List<PropertyPathToken> result = new List<PropertyPathToken>();
             string[] tokens = path.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
 

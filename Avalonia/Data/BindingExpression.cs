@@ -59,9 +59,36 @@ namespace Avalonia.Data
 
         protected override object Evaluate()
         {
-            this.chain = this.pathParser.Parse(this.DataItem, this.ParentBinding.Path.Path);
+            this.chain = this.pathParser.Parse(this.GetSource(), this.ParentBinding.Path.Path);
             this.AttachListeners();
             return this.chain.Last().Object;
+        }
+
+        private object GetSource()
+        {
+            if (this.DataItem != null)
+            {
+                return this.DataItem;
+            }
+            else if (this.ParentBinding.RelativeSource != null)
+            {
+                switch (this.ParentBinding.RelativeSource.Mode)
+                {
+                    case RelativeSourceMode.TemplatedParent:
+                        FrameworkElement fe = this.Target as FrameworkElement;
+
+                        if (fe != null)
+                        {
+                            return fe.TemplatedParent;
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("Cannot get TemplatedParent outside a Template.");
+                        }
+                }               
+            }
+
+            throw new NotSupportedException("Don't know how to get binding source!");
         }
 
         private void AttachListeners()

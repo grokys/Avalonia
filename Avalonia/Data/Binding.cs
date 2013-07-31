@@ -32,6 +32,8 @@ namespace Avalonia.Data
 
         public PropertyPath Path { get; set; }
 
+        public RelativeSource RelativeSource { get; set; }
+
         public object Source { get; set; }
     }
 }

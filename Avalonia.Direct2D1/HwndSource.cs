@@ -150,6 +150,7 @@
                 style = parameters.WindowClassStyle,
                 lpfnWndProc = this.WndProc,
                 hInstance = Marshal.GetHINSTANCE(this.GetType().Module),
+                hCursor = UnmanagedMethods.LoadCursor(IntPtr.Zero, (int)UnmanagedMethods.Cursor.IDC_ARROW),
                 lpszClassName = className,
             };
 

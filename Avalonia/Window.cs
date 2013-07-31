@@ -1,4 +1,11 @@
-﻿namespace Avalonia
+// -----------------------------------------------------------------------
+// <copyright file="Window.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia
 {
     using System;
     using System.Collections.Generic;
@@ -13,11 +20,14 @@
         private AvaloniaPresentationSource presentationSource;
         private bool isShown;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Window"/> class.
+        /// </summary>
         public Window()
         {
             this.presentationSource = (AvaloniaPresentationSource)
                 Activator.CreateInstance(Application.Current.PresentationSourceType);
-            
+
             this.presentationSource.Closed += (s, e) => this.OnClosed(EventArgs.Empty);
             this.presentationSource.MouseLeftButtonDown += (s, e) => this.OnMouseLeftButtonDown(e);
             this.presentationSource.Resized += (s, e) => this.DoMeasureArrange();
@@ -26,14 +36,16 @@
             this.Template = new WindowTemplate();
         }
 
+        public event EventHandler Closed;
+
         public double Width
         {
-            get 
-            { 
-                return this.presentationSource.BoundingRect.Width; 
+            get
+            {
+                return this.presentationSource.BoundingRect.Width;
             }
 
-            set 
+            set
             {
                 Rect rect = this.presentationSource.BoundingRect;
                 rect.Width = value;
@@ -43,12 +55,12 @@
 
         public double Height
         {
-            get 
-            { 
-                return this.presentationSource.BoundingRect.Height; 
+            get
+            {
+                return this.presentationSource.BoundingRect.Height;
             }
 
-            set 
+            set
             {
                 Rect rect = this.presentationSource.BoundingRect;
                 rect.Height = value;
@@ -56,46 +68,11 @@
             }
         }
 
-        public event EventHandler Closed;
-
         public void Show()
         {
             this.presentationSource.Show();
             this.isShown = true;
             this.DoMeasureArrange();
-        }
-
-        protected virtual void OnClosed(EventArgs e)
-        {
-            if (this.Closed != null)
-            {
-                this.Closed(this, e);
-            }
-        }
-
-        protected internal override void OnRender(DrawingContext drawingContext)
-        {
-        }
-
-        // HACK to work around the fact we don't have xaml support.
-        private class WindowTemplate : ControlTemplate
-        {
-            public override Visual CreateVisualTree(DependencyObject parent)
-            {
-                Window window = parent as Window;
-
-                Border border = new Border
-                {
-                    TemplatedParent = parent,
-                    Child = new ContentPresenter(window)
-                };
-
-                Binding binding = new Binding("Background");
-                binding.Source = parent;
-                BindingOperations.SetBinding(border, Border.BackgroundProperty, binding);
-
-                return border;
-            }
         }
 
         public void DoMeasureArrange()
@@ -106,6 +83,18 @@
                 this.Measure(clientSize);
                 this.Arrange(new Rect(new Point(), clientSize));
                 this.DoRender();
+            }
+        }
+
+        protected internal override void OnRender(DrawingContext drawingContext)
+        {
+        }
+
+        protected virtual void OnClosed(EventArgs e)
+        {
+            if (this.Closed != null)
+            {
+                this.Closed(this, e);
             }
         }
 
@@ -145,6 +134,27 @@
             if (performPop)
             {
                 drawingContext.Pop();
+            }
+        }
+
+        // HACK to work around the fact we don't have xaml support.
+        private class WindowTemplate : ControlTemplate
+        {
+            public override Visual CreateVisualTree(DependencyObject parent)
+            {
+                Window window = parent as Window;
+
+                Border border = new Border
+                {
+                    TemplatedParent = parent,
+                    Child = new ContentPresenter(window)
+                };
+
+                Binding binding = new Binding("Background");
+                binding.Source = parent;
+                BindingOperations.SetBinding(border, Border.BackgroundProperty, binding);
+
+                return border;
             }
         }
     }

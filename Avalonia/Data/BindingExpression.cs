@@ -1,24 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+// -----------------------------------------------------------------------
+// <copyright file="BindingExpression.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Avalonia.Data
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public class BindingExpression : BindingExpressionBase
     {
         private IPropertyPathParser pathParser;
         private PropertyPathToken[] chain;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BindingExpression"/> class.
+        /// </summary>
         public BindingExpression(
-            IPropertyPathParser pathParser,
-            DependencyObject target, 
-            DependencyProperty dp, 
-            Binding binding)
-            : base(target, dp)
+                    IPropertyPathParser pathParser,
+                    DependencyObject target,
+                    DependencyProperty dp,
+                    Binding binding)
+                    : base(target, dp)
         {
             this.pathParser = pathParser;
             this.ParentBinding = binding;
@@ -29,10 +39,10 @@ namespace Avalonia.Data
             get { return this.ParentBinding.Source; }
         }
 
-        public Binding ParentBinding 
-        { 
-            get; 
-            private set; 
+        public Binding ParentBinding
+        {
+            get;
+            private set;
         }
 
         public object ResolvedSource

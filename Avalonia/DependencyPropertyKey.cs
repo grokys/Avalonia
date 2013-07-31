@@ -1,30 +1,9 @@
-﻿//
-// DependencyPropertyKey.cs
-//
-// Author:
-//   Iain McCoy (iain@mccoy.id.au)
-//
-// (C) 2005 Iain McCoy
-//
-// Permission is hereby granted, free of charge, to any person obtaining
-// a copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to
-// permit persons to whom the Software is furnished to do so, subject to
-// the following conditions:
-// 
-// The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
+// -----------------------------------------------------------------------
+// <copyright file="DependencyPropertyKey.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Avalonia
 {
@@ -32,20 +11,24 @@ namespace Avalonia
 
     public sealed class DependencyPropertyKey
     {
+        private DependencyProperty dependencyProperty;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DependencyPropertyKey"/> class.
+        /// </summary>
         internal DependencyPropertyKey(DependencyProperty dependencyProperty)
         {
             this.dependencyProperty = dependencyProperty;
         }
 
-        private DependencyProperty dependencyProperty;
         public DependencyProperty DependencyProperty
         {
-            get { return dependencyProperty; }
+            get { return this.dependencyProperty; }
         }
 
         public void OverrideMetadata(Type forType, PropertyMetadata typeMetadata)
         {
-            dependencyProperty.OverrideMetadata(forType, typeMetadata, this);
+            this.dependencyProperty.OverrideMetadata(forType, typeMetadata, this);
         }
     }
 }

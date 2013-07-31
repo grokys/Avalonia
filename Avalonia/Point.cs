@@ -1,4 +1,11 @@
-﻿namespace Avalonia
+// -----------------------------------------------------------------------
+// <copyright file="Point.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia
 {
     using System;
     using System.Globalization;
@@ -6,6 +13,12 @@
 
     public struct Point : IFormattable
     {
+        private double x;
+        private double y;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Point"/> struct.
+        /// </summary>
         public Point(double x, double y)
         {
             this.x = x;
@@ -14,38 +27,14 @@
 
         public double X
         {
-            get { return x; }
-            set { x = value; }
+            get { return this.x; }
+            set { this.x = value; }
         }
 
         public double Y
         {
-            get { return y; }
-            set { y = value; }
-        }
-
-        public override bool Equals(object o)
-        {
-            if (!(o is Point))
-                return false;
-            return Equals((Point)o);
-        }
-
-        public bool Equals(Point value)
-        {
-            return x == value.X && y == value.Y;
-        }
-
-        public override int GetHashCode()
-        {
-            return (x.GetHashCode() ^ y.GetHashCode());
-        }
-
-
-        public void Offset(double offsetX, double offsetY)
-        {
-            x += offsetX;
-            y += offsetY;
+            get { return this.y; }
+            set { this.y = value; }
         }
 
         public static Point Add(Point point, Vector vector)
@@ -60,8 +49,9 @@
 
         public static Point Multiply(Point point, Matrix matrix)
         {
-            return new Point(point.X * matrix.M11 + point.Y * matrix.M21 + matrix.OffsetX,
-                      point.X * matrix.M12 + point.Y * matrix.M22 + matrix.OffsetY);
+            return new Point(
+                (point.X * matrix.M11) + ((point.Y * matrix.M21) + matrix.OffsetX),
+                (point.X * matrix.M12) + ((point.Y * matrix.M22) + matrix.OffsetY));
         }
 
         public static Vector Subtract(Point point1, Point point2)
@@ -74,7 +64,23 @@
             return new Point(point.X - vector.X, point.Y - vector.Y);
         }
 
-        /* operators */
+        public static Point Parse(string source)
+        {
+            string[] points = source.Split(',');
+
+            if (points.Length < 2)
+            {
+                throw new InvalidOperationException("source does not contain two numbers");
+            }
+
+            if (points.Length > 2)
+            {
+                throw new InvalidOperationException("source contains too many delimiters");
+            }
+
+            CultureInfo ci = CultureInfo.InvariantCulture;
+            return new Point(Convert.ToDouble(points[0], ci), Convert.ToDouble(points[1], ci));
+        }
 
         public static Vector operator -(Point point1, Point point2)
         {
@@ -116,17 +122,35 @@
             return new Vector(point.X, point.Y);
         }
 
-        public static Point Parse(string source)
+        string IFormattable.ToString(string format, IFormatProvider formatProvider)
         {
-            string[] points = source.Split(',');
+            return this.ToString(format, formatProvider);
+        }
 
-            if (points.Length < 2)
-                throw new InvalidOperationException("source does not contain two numbers");
-            if (points.Length > 2)
-                throw new InvalidOperationException("source contains too many delimiters");
+        public override bool Equals(object o)
+        {
+            if (!(o is Point))
+            {
+                return false;
+            }
 
-            CultureInfo ci = CultureInfo.InvariantCulture;
-            return new Point(Convert.ToDouble(points[0], ci), Convert.ToDouble(points[1], ci));
+            return this.Equals((Point)o);
+        }
+
+        public bool Equals(Point value)
+        {
+            return this.x == value.X && this.y == value.Y;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.x.GetHashCode() ^ this.y.GetHashCode();
+        }
+
+        public void Offset(double offsetX, double offsetY)
+        {
+            this.x += offsetX;
+            this.y += offsetY;
         }
 
         public override string ToString()
@@ -144,23 +168,23 @@
             CultureInfo ci = (CultureInfo)formatProvider;
 
             if (ci == null)
+            {
                 ci = CultureInfo.CurrentCulture;
+            }
+
             string seperator = ci.NumberFormat.NumberDecimalSeparator;
             if (seperator.Equals(","))
+            {
                 seperator = ";";
+            }
             else
+            {
                 seperator = ",";
+            }
+
             object[] ob = { this.x, seperator, this.y };
 
             return string.Format(formatProvider, "{0:" + format + "}{1}{2:" + format + "}", ob);
         }
-
-        string IFormattable.ToString(string format, IFormatProvider formatProvider)
-        {
-            return this.ToString(format, formatProvider);
-        }
-
-        double x;
-        double y;
     }
 }

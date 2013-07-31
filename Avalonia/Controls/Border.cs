@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Media;
+// -----------------------------------------------------------------------
+// <copyright file="Border.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Avalonia.Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Avalonia.Media;
+
     public class Border : Decorator
     {
         public static readonly DependencyProperty BackgroundProperty =
@@ -30,8 +37,8 @@ namespace Avalonia.Controls
                     this.Background,
                     null,
                     rect,
-                    CornerRadius.TopLeft,
-                    CornerRadius.BottomLeft);
+                    this.CornerRadius.TopLeft,
+                    this.CornerRadius.BottomLeft);
             }
             else
             {

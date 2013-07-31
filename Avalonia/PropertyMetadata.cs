@@ -1,4 +1,11 @@
-﻿namespace Avalonia
+// -----------------------------------------------------------------------
+// <copyright file="PropertyMetadata.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia
 {
     using System;
 
@@ -9,32 +16,47 @@
         private PropertyChangedCallback propertyChangedCallback;
         private CoerceValueCallback coerceValueCallback;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PropertyMetadata"/> class.
+        /// </summary>
         public PropertyMetadata()
-            : this(null, null, null)
+                    : this(null, null, null)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PropertyMetadata"/> class.
+        /// </summary>
         public PropertyMetadata(object defaultValue)
-            : this(defaultValue, null, null)
+                    : this(defaultValue, null, null)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PropertyMetadata"/> class.
+        /// </summary>
         public PropertyMetadata(PropertyChangedCallback propertyChangedCallback)
-            : this(null, propertyChangedCallback, null)
+                    : this(null, propertyChangedCallback, null)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PropertyMetadata"/> class.
+        /// </summary>
         public PropertyMetadata(
-            object defaultValue, 
-            PropertyChangedCallback propertyChangedCallback)
-            : this(defaultValue, propertyChangedCallback, null)
+                    object defaultValue,
+                    PropertyChangedCallback propertyChangedCallback)
+                    : this(defaultValue, propertyChangedCallback, null)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PropertyMetadata"/> class.
+        /// </summary>
         public PropertyMetadata(
-            object defaultValue, 
-            PropertyChangedCallback propertyChangedCallback, 
-            CoerceValueCallback coerceValueCallback)
+                    object defaultValue,
+                    PropertyChangedCallback propertyChangedCallback,
+                    CoerceValueCallback coerceValueCallback)
         {
             this.CheckNotUnset(defaultValue);
             this.defaultValue = defaultValue;
@@ -44,9 +66,9 @@
 
         public object DefaultValue
         {
-            get 
+            get
             {
-                return this.defaultValue; 
+                return this.defaultValue;
             }
 
             set
@@ -59,9 +81,9 @@
 
         public PropertyChangedCallback PropertyChangedCallback
         {
-            get 
+            get
             {
-                return this.propertyChangedCallback; 
+                return this.propertyChangedCallback;
             }
 
             set
@@ -73,21 +95,28 @@
 
         public CoerceValueCallback CoerceValueCallback
         {
-            get 
-            { 
-                return coerceValueCallback; 
+            get
+            {
+                return this.coerceValueCallback;
             }
 
             set
             {
-                CheckNotSealed();
-                coerceValueCallback = value;
+                this.CheckNotSealed();
+                this.coerceValueCallback = value;
             }
         }
 
         protected bool IsSealed
         {
             get { return this.isSealed; }
+        }
+
+        internal void Merge(PropertyMetadata baseMetadata, DependencyProperty dp, Type targetType)
+        {
+            this.Merge(baseMetadata, dp);
+            this.OnApply(dp, targetType);
+            this.isSealed = true;
         }
 
         protected void CheckNotSealed()
@@ -100,31 +129,24 @@
 
         protected virtual void Merge(PropertyMetadata baseMetadata, DependencyProperty dp)
         {
-            if (defaultValue == null)
+            if (this.defaultValue == null)
             {
-                defaultValue = baseMetadata.defaultValue;
+                this.defaultValue = baseMetadata.defaultValue;
             }
 
-            if (propertyChangedCallback == null)
+            if (this.propertyChangedCallback == null)
             {
-                propertyChangedCallback = baseMetadata.propertyChangedCallback;
+                this.propertyChangedCallback = baseMetadata.propertyChangedCallback;
             }
 
-            if (coerceValueCallback == null)
+            if (this.coerceValueCallback == null)
             {
-                coerceValueCallback = baseMetadata.coerceValueCallback;
+                this.coerceValueCallback = baseMetadata.coerceValueCallback;
             }
         }
 
         protected virtual void OnApply(DependencyProperty dp, Type targetType)
         {
-        }
-
-        internal void Merge(PropertyMetadata baseMetadata, DependencyProperty dp, Type targetType)
-        {
-            Merge(baseMetadata, dp);
-            OnApply(dp, targetType);
-            isSealed = true;
         }
 
         private void CheckNotUnset(object value)

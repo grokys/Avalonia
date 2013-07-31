@@ -1,36 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Media;
+// -----------------------------------------------------------------------
+// <copyright file="ContentPresenter.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Avalonia.Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Avalonia.Media;
+
     public class ContentPresenter : FrameworkElement
     {
-        Visual visualChild;
+        private Visual visualChild;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContentPresenter"/> class.
+        /// </summary>
         public ContentPresenter()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContentPresenter"/> class.
+        /// </summary>
         internal ContentPresenter(ContentControl templatedParent)
         {
             this.Content = templatedParent.Content;
         }
 
-        public Object Content { get; set; }
-
-        public override bool ApplyTemplate()
-        {
-            this.visualChild = Content as Visual;
-            return true;
-        }
+        public object Content { get; set; }
 
         protected internal override int VisualChildrenCount
         {
             get { return (this.visualChild != null) ? 1 : 0; }
+        }
+
+        public override bool ApplyTemplate()
+        {
+            this.visualChild = this.Content as Visual;
+            return true;
         }
 
         protected internal override Visual GetVisualChild(int index)

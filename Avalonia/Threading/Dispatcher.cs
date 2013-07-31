@@ -1,15 +1,29 @@
-﻿namespace Avalonia.Threading
+// -----------------------------------------------------------------------
+// <copyright file="Dispatcher.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia.Threading
 {
     using System.Threading;
 
     public sealed class Dispatcher
     {
-        private static ThreadLocal<Dispatcher> dispatcher = 
+        private static ThreadLocal<Dispatcher> dispatcher =
             new ThreadLocal<Dispatcher>(() => new Dispatcher());
 
         private bool shutdown;
 
-        public static Dispatcher CurrentDispatcher 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="Dispatcher"/> class from being created.
+        /// </summary>
+        private Dispatcher()
+        {
+        }
+
+        public static Dispatcher CurrentDispatcher
         {
             get { return dispatcher.Value; }
         }
@@ -35,11 +49,7 @@
 
         public void Run()
         {
-            PushFrame(new DispatcherFrame());
-        }
-
-        private Dispatcher()
-        {
+            this.PushFrame(new DispatcherFrame());
         }
     }
 }

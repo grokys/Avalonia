@@ -1,4 +1,11 @@
-﻿namespace Avalonia
+// -----------------------------------------------------------------------
+// <copyright file="Vector.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia
 {
     using System;
     using System.ComponentModel;
@@ -7,33 +14,38 @@
 
     public struct Vector : IFormattable
     {
+        private double x;
+        private double y;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector"/> struct.
+        /// </summary>
         public Vector(double x, double y)
         {
             this.x = x;
             this.y = y;
         }
 
-        public bool Equals(Vector value)
+        public double Length
         {
-            return x == value.X && y == value.Y;
+            get { return Math.Sqrt(this.LengthSquared); }
         }
 
-        public override bool Equals(object o)
+        public double LengthSquared
         {
-            if (!(o is Vector))
-                return false;
-
-            return Equals((Vector)o);
+            get { return (this.x * this.x) + (this.y * this.y); }
         }
 
-        public override int GetHashCode()
+        public double X
         {
-            throw new NotImplementedException();
+            get { return this.x; }
+            set { this.x = value; }
         }
 
-        string IFormattable.ToString(string format, IFormatProvider formatProvider)
+        public double Y
         {
-            throw new NotImplementedException();
+            get { return this.y; }
+            set { this.y = value; }
         }
 
         public static bool Equals(Vector vector1, Vector vector2)
@@ -48,27 +60,24 @@
 
         public static Vector Add(Vector vector1, Vector vector2)
         {
-            return new Vector(vector1.X + vector2.X,
-                       vector1.Y + vector2.Y);
+            return new Vector(vector1.X + vector2.X, vector1.Y + vector2.Y);
         }
 
         public static double AngleBetween(Vector vector1, Vector vector2)
         {
-            double cos_theta = (vector1.X * vector2.X + vector1.Y * vector2.Y) / (vector1.Length * vector2.Length);
+            double cos_theta = ((vector1.X * vector2.X) + (vector1.Y * vector2.Y)) / (vector1.Length * vector2.Length);
 
             return Math.Acos(cos_theta) / Math.PI * 180;
         }
 
         public static double CrossProduct(Vector vector1, Vector vector2)
         {
-            // ... what operation is this exactly?
-            return vector1.X * vector2.Y - vector1.Y * vector2.X;
+            return (vector1.X * vector2.Y) - (vector1.Y * vector2.X);
         }
 
         public static double Determinant(Vector vector1, Vector vector2)
         {
-            // same as CrossProduct, it appears.
-            return vector1.X * vector2.Y - vector1.Y * vector2.X;
+            return (vector1.X * vector2.Y) - (vector1.Y * vector2.X);
         }
 
         public static Vector Divide(Vector vector, double scalar)
@@ -78,13 +87,14 @@
 
         public static double Multiply(Vector vector1, Vector vector2)
         {
-            return vector1.X * vector2.X + vector1.Y * vector2.Y;
+            return (vector1.X * vector2.X) + (vector1.Y * vector2.Y);
         }
 
         public static Vector Multiply(Vector vector, Matrix matrix)
         {
-            return new Vector(vector.X * matrix.M11 + vector.Y * matrix.M21,
-                       vector.X * matrix.M12 + vector.Y * matrix.M22);
+            return new Vector(
+                (vector.X * matrix.M11) + (vector.Y * matrix.M21),
+                (vector.X * matrix.M12) + (vector.Y * matrix.M22));
         }
 
         public static Vector Multiply(double scalar, Vector vector)
@@ -97,23 +107,6 @@
             return new Vector(scalar * vector.X, scalar * vector.Y);
         }
 
-        public void Negate()
-        {
-            x = -x;
-            y = -y;
-        }
-
-        public void Normalize()
-        {
-            double ls = LengthSquared;
-            if (ls == 1)
-                return;
-
-            double l = Math.Sqrt(ls);
-            x /= l;
-            y /= l;
-        }
-
         public static Vector Subtract(Vector vector1, Vector vector2)
         {
             return new Vector(vector1.X - vector2.X, vector1.Y - vector2.Y);
@@ -122,49 +115,6 @@
         public static Vector Parse(string source)
         {
             throw new NotImplementedException();
-        }
-
-        public override string ToString()
-        {
-            return String.Format("{0},{1}", x, y);
-        }
-
-        public string ToString(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public double Length
-        {
-            get { return Math.Sqrt(LengthSquared); }
-        }
-
-        public double LengthSquared
-        {
-            get { return x * x + y * y; }
-        }
-
-        public double X
-        {
-            get { return x; }
-            set { x = value; }
-        }
-
-        public double Y
-        {
-            get { return y; }
-            set { y = value; }
-        }
-
-        /* operators */
-        public static explicit operator Point(Vector vector)
-        {
-            return new Point(vector.X, vector.Y);
-        }
-
-        public static explicit operator Size(Vector vector)
-        {
-            return new Size(vector.X, vector.Y);
         }
 
         public static Vector operator -(Vector vector1, Vector vector2)
@@ -224,8 +174,68 @@
             return Add(vector1, vector2);
         }
 
-        double x;
-        double y;
-    }
+        public static explicit operator Point(Vector vector)
+        {
+            return new Point(vector.X, vector.Y);
+        }
 
+        public static explicit operator Size(Vector vector)
+        {
+            return new Size(vector.X, vector.Y);
+        }
+
+        string IFormattable.ToString(string format, IFormatProvider formatProvider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Equals(Vector value)
+        {
+            return this.x == value.X && this.y == value.Y;
+        }
+
+        public override bool Equals(object o)
+        {
+            if (!(o is Vector))
+            {
+                return false;
+            }
+
+            return this.Equals((Vector)o);
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Negate()
+        {
+            this.x = -this.x;
+            this.y = -this.y;
+        }
+
+        public void Normalize()
+        {
+            double ls = this.LengthSquared;
+            if (ls == 1)
+            {
+                return;
+            }
+
+            double l = Math.Sqrt(ls);
+            this.x /= l;
+            this.y /= l;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0},{1}", this.x, this.y);
+        }
+
+        public string ToString(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

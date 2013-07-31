@@ -1,20 +1,31 @@
-﻿namespace Avalonia
+// -----------------------------------------------------------------------
+// <copyright file="AvaloniaPresentationSource.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia
 {
     using System;
-using Avalonia.Input;
-using Avalonia.Media;
+    using Avalonia.Input;
+    using Avalonia.Media;
 
     [AvaloniaSpecific]
     public abstract class AvaloniaPresentationSource : PresentationSource
     {
+        public event EventHandler Closed;
+
+        public event MouseButtonEventHandler MouseLeftButtonDown;
+        
+        public event EventHandler Resized;
+        
         public abstract Size ClientSize { get; }
+        
         public abstract Rect BoundingRect { get; set; }
 
-        public event EventHandler Closed;
-        public event MouseButtonEventHandler MouseLeftButtonDown;
-        public event EventHandler Resized;
-
         public abstract DrawingContext CreateDrawingContext();
+        
         public abstract void Show();
 
         protected void OnClosed()

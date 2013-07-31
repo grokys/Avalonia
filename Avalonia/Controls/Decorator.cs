@@ -1,4 +1,11 @@
-﻿namespace Avalonia.Controls
+// -----------------------------------------------------------------------
+// <copyright file="Decorator.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia.Controls
 {
     using System;
     using Avalonia.Media;
@@ -9,7 +16,7 @@
 
         protected internal override int VisualChildrenCount
         {
-            get { return (Child != null) ? 1 : 0; }
+            get { return (this.Child != null) ? 1 : 0; }
         }
 
         protected internal override Visual GetVisualChild(int index)

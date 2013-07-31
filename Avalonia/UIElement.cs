@@ -1,4 +1,11 @@
-﻿namespace Avalonia
+// -----------------------------------------------------------------------
+// <copyright file="UIElement.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia
 {
     using System;
     using Avalonia.Input;
@@ -6,12 +13,15 @@
 
     public class UIElement : Visual
     {
-        public Size DesiredSize { get; set; }
-        public bool IsMeasureValid { get; private set; }
-        public bool IsArrangeValid { get; private set; }
-        public Size RenderSize { get; private set; }
-
         public event MouseButtonEventHandler MouseLeftButtonDown;
+
+        public Size DesiredSize { get; set; }
+        
+        public bool IsMeasureValid { get; private set; }
+        
+        public bool IsArrangeValid { get; private set; }
+        
+        public Size RenderSize { get; private set; }
 
         public void Measure(Size availableSize)
         {
@@ -40,6 +50,10 @@
             this.Arrange(new Rect(new Point(), size));
         }
 
+        protected internal virtual void OnRender(DrawingContext drawingContext)
+        {
+        }
+
         protected virtual Size MeasureCore(Size availableSize)
         {
             return new Size();
@@ -65,10 +79,6 @@
             {
                 this.MouseLeftButtonDown(this, e);
             }
-        }
-
-        protected internal virtual void OnRender(DrawingContext drawingContext)
-        {
         }
     }
 }

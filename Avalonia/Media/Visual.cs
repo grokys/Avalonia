@@ -1,14 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+// -----------------------------------------------------------------------
+// <copyright file="Visual.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence
+// See licence.md for more information
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Avalonia.Media
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public class Visual : DependencyObject
     {
-        protected internal virtual int VisualChildrenCount 
+        protected internal virtual int VisualChildrenCount
         {
             get { return 0; }
         }

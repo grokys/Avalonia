@@ -118,20 +118,22 @@ namespace Avalonia
         public void InvalidateProperty(DependencyProperty dp)
         {
             BindingExpressionBase binding;
-            object value = this.GetValue(dp);
 
             if (this.propertyExpressions.TryGetValue(dp, out binding))
             {
+                object value = this.GetValue(dp);
                 object oldValue = value;
 
                 value = binding.GetCurrentValue();
 
-                // TODO: Check old and new value equality.
-                this.properties[dp] = value;
-                this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(
-                    dp,
-                    oldValue,
-                    value));
+                if (!object.Equals(oldValue, value))
+                {
+                    this.properties[dp] = value;
+                    this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(
+                        dp,
+                        oldValue,
+                        value));
+                }
             }
         }
 
@@ -161,10 +163,8 @@ namespace Avalonia
             }
             else
             {
-                object oldValue;
+                object oldValue = GetValue(dp);
                 BindingExpressionBase binding = value as BindingExpressionBase;
-
-                this.properties.TryGetValue(dp, out oldValue);
 
                 if (binding != null)
                 {
@@ -176,9 +176,11 @@ namespace Avalonia
                     this.propertyExpressions.Remove(dp);
                 }
 
-                this.properties[dp] = value;
-
-                this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(dp, oldValue, value));
+                if (!object.Equals(oldValue, value))
+                {
+                    this.properties[dp] = value;
+                    this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(dp, oldValue, value));
+                }
             }
         }
 

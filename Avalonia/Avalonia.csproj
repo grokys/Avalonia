@@ -61,6 +61,8 @@
     <Compile Include="Data\IPropertyPathParser.cs" />
     <Compile Include="Data\PropertyPathParser.cs" />
     <Compile Include="Data\PropertyPathToken.cs" />
+    <Compile Include="Data\UpdateSourceTrigger.cs" />
+    <Compile Include="FrameworkPropertyMetadata.cs" />
     <Compile Include="Input\MouseButtonEventArgs.cs" />
     <Compile Include="Input\MouseEventArgs.cs" />
     <Compile Include="IObservableDependencyObject.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Thickness.cs" />
     <Compile Include="Threading\IPlatformDispatcherImpl.cs" />
     <Compile Include="UIElement.cs" />
+    <Compile Include="UIPropertyMetadata.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

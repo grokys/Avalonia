@@ -127,7 +127,7 @@ namespace Avalonia
             if (ReadOnly)
                 throw new InvalidOperationException(String.Format("Cannot override metadata on readonly property '{0}' without using a DependencyPropertyKey", Name));
 
-            typeMetadata.DoMerge(DefaultMetadata, this, forType);
+            typeMetadata.Merge(DefaultMetadata, this, forType);
             metadataByType.Add(forType, typeMetadata);
         }
 
@@ -142,7 +142,7 @@ namespace Avalonia
             // further checking?  should we check
             // key.DependencyProperty == this?
 
-            typeMetadata.DoMerge(DefaultMetadata, this, forType);
+            typeMetadata.Merge(DefaultMetadata, this, forType);
             metadataByType.Add(forType, typeMetadata);
         }
 

@@ -184,11 +184,6 @@ namespace Avalonia
             return new Size(vector.X, vector.Y);
         }
 
-        string IFormattable.ToString(string format, IFormatProvider formatProvider)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Equals(Vector value)
         {
             return this.x == value.X && this.y == value.Y;
@@ -234,6 +229,11 @@ namespace Avalonia
         }
 
         public string ToString(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IFormattable.ToString(string format, IFormatProvider formatProvider)
         {
             throw new NotImplementedException();
         }

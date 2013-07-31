@@ -49,9 +49,9 @@ namespace Avalonia
 
         public double Height
         {
-            get 
-            { 
-                return this.height; 
+            get
+            {
+                return this.height;
             }
 
             set
@@ -72,9 +72,9 @@ namespace Avalonia
 
         public double Width
         {
-            get 
-            { 
-                return this.width; 
+            get
+            {
+                return this.width;
             }
 
             set
@@ -128,11 +128,6 @@ namespace Avalonia
             throw new NotImplementedException();
         }
 
-        string IFormattable.ToString(string format, IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Equals(Size value)
         {
             return this.width == value.Width && this.height == value.Height;
@@ -147,7 +142,7 @@ namespace Avalonia
 
             return this.Equals((Size)o);
         }
-        
+
         public override string ToString()
         {
             if (this.IsEmpty)
@@ -159,6 +154,11 @@ namespace Avalonia
         }
 
         public string ToString(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IFormattable.ToString(string format, IFormatProvider provider)
         {
             throw new NotImplementedException();
         }

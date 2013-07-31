@@ -18,8 +18,8 @@ namespace Avalonia.Controls
     {
         public static readonly DependencyProperty BackgroundProperty =
             DependencyProperty.Register(
-                "Background", 
-                typeof(Brush), 
+                "Background",
+                typeof(Brush),
                 typeof(Border),
                 new FrameworkPropertyMetadata(
                     new SolidColorBrush(Colors.White),
@@ -49,7 +49,7 @@ namespace Avalonia.Controls
             set { this.SetValue(BackgroundProperty, value); }
         }
 
-        public CornerRadius CornerRadius 
+        public CornerRadius CornerRadius
         {
             get { return (CornerRadius)this.GetValue(CornerRadiusProperty); }
             set { this.SetValue(CornerRadiusProperty, value); }
@@ -59,6 +59,28 @@ namespace Avalonia.Controls
         {
             get { return (Thickness)this.GetValue(PaddingProperty); }
             set { this.SetValue(PaddingProperty, value); }
+        }
+
+        protected internal override void OnRender(DrawingContext drawingContext)
+        {
+            Rect rect = new Rect(new Point(), new Size(this.ActualWidth, this.ActualHeight));
+
+            if (this.CornerRadius.TopLeft > 0 || this.CornerRadius.BottomLeft > 0)
+            {
+                drawingContext.DrawRoundedRectangle(
+                    this.Background,
+                    null,
+                    rect,
+                    this.CornerRadius.TopLeft,
+                    this.CornerRadius.BottomLeft);
+            }
+            else
+            {
+                drawingContext.DrawRectangle(
+                    this.Background,
+                    null,
+                    rect);
+            }
         }
 
         protected override Size MeasureOverride(Size constraint)
@@ -84,28 +106,6 @@ namespace Avalonia.Controls
             }
 
             return finalSize;
-        }
-
-        protected internal override void OnRender(DrawingContext drawingContext)
-        {
-            Rect rect = new Rect(new Point(), new Size(this.ActualWidth, this.ActualHeight));
-
-            if (this.CornerRadius.TopLeft > 0 || this.CornerRadius.BottomLeft > 0)
-            {
-                drawingContext.DrawRoundedRectangle(
-                    this.Background,
-                    null,
-                    rect,
-                    this.CornerRadius.TopLeft,
-                    this.CornerRadius.BottomLeft);
-            }
-            else
-            {
-                drawingContext.DrawRectangle(
-                    this.Background,
-                    null,
-                    rect);
-            }
         }
 
         private static Rect Deflate(Rect rect, Thickness thickness)

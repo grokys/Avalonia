@@ -70,22 +70,25 @@ namespace Avalonia.Data
             {
                 return this.DataItem;
             }
-            else if (this.ParentBinding.RelativeSource != null)
+            else
             {
-                switch (this.ParentBinding.RelativeSource.Mode)
+                if (this.ParentBinding.RelativeSource != null)
                 {
-                    case RelativeSourceMode.TemplatedParent:
-                        FrameworkElement fe = this.Target as FrameworkElement;
+                    switch (this.ParentBinding.RelativeSource.Mode)
+                    {
+                        case RelativeSourceMode.TemplatedParent:
+                            FrameworkElement fe = this.Target as FrameworkElement;
 
-                        if (fe != null)
-                        {
-                            return fe.TemplatedParent;
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("Cannot get TemplatedParent outside a Template.");
-                        }
-                }               
+                            if (fe != null)
+                            {
+                                return fe.TemplatedParent;
+                            }
+                            else
+                            {
+                                throw new InvalidOperationException("Cannot get TemplatedParent outside a Template.");
+                            }
+                    }
+                }
             }
 
             throw new NotSupportedException("Don't know how to get binding source!");

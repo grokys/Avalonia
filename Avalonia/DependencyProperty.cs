@@ -37,13 +37,13 @@ namespace Avalonia
         public bool ReadOnly { get; private set; }
 
         public PropertyMetadata DefaultMetadata { get; private set; }
-        
+
         public string Name { get; private set; }
-        
+
         public Type OwnerType { get; private set; }
-        
+
         public Type PropertyType { get; private set; }
-        
+
         public ValidateValueCallback ValidateValueCallback { get; private set; }
 
         public int GlobalIndex
@@ -59,8 +59,8 @@ namespace Avalonia
         }
 
         public static DependencyProperty Register(
-            string name, 
-            Type propertyType, 
+            string name,
+            Type propertyType,
             Type ownerType,
             PropertyMetadata typeMetadata)
         {
@@ -68,8 +68,8 @@ namespace Avalonia
         }
 
         public static DependencyProperty Register(
-            string name, 
-            Type propertyType, 
+            string name,
+            Type propertyType,
             Type ownerType,
             PropertyMetadata typeMetadata,
             ValidateValueCallback validateValueCallback)
@@ -85,11 +85,11 @@ namespace Avalonia
             }
 
             DependencyProperty dp = new DependencyProperty(
-                false, 
-                name, 
-                propertyType, 
+                false,
+                name,
+                propertyType,
                 ownerType,
-                typeMetadata, 
+                typeMetadata,
                 validateValueCallback);
 
             DependencyObject.Register(ownerType, dp);
@@ -105,8 +105,8 @@ namespace Avalonia
         }
 
         public static DependencyProperty RegisterAttached(
-            string name, 
-            Type propertyType, 
+            string name,
+            Type propertyType,
             Type ownerType,
             PropertyMetadata defaultMetadata)
         {
@@ -114,26 +114,26 @@ namespace Avalonia
         }
 
         public static DependencyProperty RegisterAttached(
-            string name, 
-            Type propertyType, 
+            string name,
+            Type propertyType,
             Type ownerType,
             PropertyMetadata defaultMetadata,
             ValidateValueCallback validateValueCallback)
         {
             DependencyProperty dp = new DependencyProperty(
-                true, 
-                name, 
-                propertyType, 
+                true,
+                name,
+                propertyType,
                 ownerType,
-                defaultMetadata, 
+                defaultMetadata,
                 validateValueCallback);
             DependencyObject.Register(ownerType, dp);
             return dp;
         }
 
         public static DependencyPropertyKey RegisterAttachedReadOnly(
-            string name, 
-            Type propertyType, 
+            string name,
+            Type propertyType,
             Type ownerType,
             PropertyMetadata defaultMetadata)
         {
@@ -141,8 +141,8 @@ namespace Avalonia
         }
 
         public static DependencyPropertyKey RegisterAttachedReadOnly(
-            string name, 
-            Type propertyType, 
+            string name,
+            Type propertyType,
             Type ownerType,
             PropertyMetadata defaultMetadata,
             ValidateValueCallback validateValueCallback)
@@ -151,8 +151,8 @@ namespace Avalonia
         }
 
         public static DependencyPropertyKey RegisterReadOnly(
-            string name, 
-            Type propertyType, 
+            string name,
+            Type propertyType,
             Type ownerType,
             PropertyMetadata typeMetadata)
         {
@@ -160,8 +160,8 @@ namespace Avalonia
         }
 
         public static DependencyPropertyKey RegisterReadOnly(
-            string name, 
-            Type propertyType, 
+            string name,
+            Type propertyType,
             Type ownerType,
             PropertyMetadata typeMetadata,
             ValidateValueCallback validateValueCallback)

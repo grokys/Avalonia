@@ -16,11 +16,11 @@ namespace Avalonia
         public event MouseButtonEventHandler MouseLeftButtonDown;
 
         public Size DesiredSize { get; set; }
-        
+
         public bool IsMeasureValid { get; private set; }
-        
+
         public bool IsArrangeValid { get; private set; }
-        
+
         public Size RenderSize { get; private set; }
 
         public void Measure(Size availableSize)
@@ -56,6 +56,11 @@ namespace Avalonia
             this.Arrange(new Rect(new Point(), size));
         }
 
+        internal override Rect GetHitTestBounds()
+        {
+            return new Rect((Point)this.VisualOffset, this.RenderSize);
+        }
+
         protected internal virtual void OnRender(DrawingContext drawingContext)
         {
         }
@@ -77,11 +82,6 @@ namespace Avalonia
             {
                 this.MouseLeftButtonDown(this, e);
             }
-        }
-
-        internal override Rect GetHitTestBounds()
-        {
-            return new Rect((Point)this.VisualOffset, this.RenderSize);
         }
 
         private void HackDoingARedraw()

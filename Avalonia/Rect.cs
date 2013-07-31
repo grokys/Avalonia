@@ -33,7 +33,7 @@ namespace Avalonia
         /// </summary>
         public Rect(Point point, Vector vector)
                     : this(point, Point.Add(point, vector))
-        { 
+        {
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace Avalonia
 
         public double X
         {
-            get 
-            { 
-                return this.x; 
+            get
+            {
+                return this.x;
             }
 
             set
@@ -176,9 +176,9 @@ namespace Avalonia
 
         public double Y
         {
-            get 
-            { 
-                return this.y; 
+            get
+            {
+                return this.y;
             }
 
             set
@@ -194,9 +194,9 @@ namespace Avalonia
 
         public double Width
         {
-            get 
-            { 
-                return this.width; 
+            get
+            {
+                return this.width;
             }
 
             set
@@ -217,9 +217,9 @@ namespace Avalonia
 
         public double Height
         {
-            get 
-            { 
-                return this.height; 
+            get
+            {
+                return this.height;
             }
 
             set
@@ -361,15 +361,10 @@ namespace Avalonia
         {
             return rect1.Location == rect2.Location && rect1.Size == rect2.Size;
         }
-        
+
         public void Union(Point point)
         {
             this.Union(new Rect(point, point));
-        }
-
-        string IFormattable.ToString(string format, IFormatProvider provider)
-        {
-            return this.ToString(format, provider);
         }
 
         public bool Equals(Rect value)
@@ -431,7 +426,7 @@ namespace Avalonia
         {
             return this.Contains(point.X, point.Y);
         }
-        
+
         public void Intersect(Rect rect)
         {
             double x = Math.Max(this.x, rect.x);
@@ -473,7 +468,7 @@ namespace Avalonia
             return !((this.Left >= rect.Right) || (this.Right <= rect.Left) ||
                 (this.Top >= rect.Bottom) || (this.Bottom <= rect.Top));
         }
-        
+
         public void Offset(double offsetX, double offsetY)
         {
             this.x += offsetX;
@@ -520,6 +515,11 @@ namespace Avalonia
         public string ToString(IFormatProvider provider)
         {
             return this.ToString(null, provider);
+        }
+
+        string IFormattable.ToString(string format, IFormatProvider provider)
+        {
+            return this.ToString(format, provider);
         }
 
         private string ToString(string format, IFormatProvider provider)

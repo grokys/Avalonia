@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="DependencyObject.cs" company="Steven Kirk">
 // Copyright 2013 MIT Licence
 // See licence.md for more information
@@ -89,7 +89,8 @@ namespace Avalonia
 
         public sealed override bool Equals(object obj)
         {
-            throw new NotImplementedException("Equals");
+            // TODO: Implement
+            return false;
         }
 
         public sealed override int GetHashCode()
@@ -163,7 +164,7 @@ namespace Avalonia
             }
             else
             {
-                object oldValue = GetValue(dp);
+                object oldValue = this.GetValue(dp);
                 BindingExpressionBase binding = value as BindingExpressionBase;
 
                 if (binding != null)
@@ -234,7 +235,17 @@ namespace Avalonia
 
             if (metadata != null && uiElement != null)
             {
-                if (metadata.AffectsArrange || metadata.AffectsMeasure || metadata.AffectsRender)
+                if (metadata.AffectsArrange)
+                {
+                    uiElement.InvalidateArrange();
+                }
+
+                if (metadata.AffectsMeasure)
+                {
+                    uiElement.InvalidateMeasure();
+                }
+
+                if (metadata.AffectsRender)
                 {
                     uiElement.InvalidateVisual();
                 }

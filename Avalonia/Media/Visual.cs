@@ -29,10 +29,10 @@ namespace Avalonia.Media
         /// <summary>
         /// Gets the position of the visual within it's parent visual.
         /// </summary>
-        protected internal Vector VisualOffset 
-        { 
-            get; 
-            protected set; 
+        protected internal Vector VisualOffset
+        {
+            get;
+            protected set;
         }
 
         /// <summary>
@@ -47,24 +47,10 @@ namespace Avalonia.Media
         /// <summary>
         /// Gets or sets a transform that can be applied to the visual.
         /// </summary>
-        protected internal Transform VisualTransform 
-        { 
-            get; 
-            protected set; 
-        }
-
-        /// <summary>
-        /// Adds a child <see cref="Visual"/> to the visual tree.
-        /// </summary>
-        /// <param name="child">The child visual.</param>
-        protected void AddVisualChild(Visual child)
+        protected internal Transform VisualTransform
         {
-            if (child.VisualParent != null)
-            {
-                throw new InvalidOperationException("Child already has a visual parent.");
-            }
-
-            child.VisualParent = this;
+            get;
+            protected set;
         }
 
         /// <summary>
@@ -84,6 +70,20 @@ namespace Avalonia.Media
         protected internal virtual Visual GetVisualChild(int index)
         {
             throw new ArgumentOutOfRangeException();
+        }
+
+        /// <summary>
+        /// Adds a child <see cref="Visual"/> to the visual tree.
+        /// </summary>
+        /// <param name="child">The child visual.</param>
+        protected void AddVisualChild(Visual child)
+        {
+            if (child.VisualParent != null)
+            {
+                throw new InvalidOperationException("Child already has a visual parent.");
+            }
+
+            child.VisualParent = this;
         }
 
         /// <summary>

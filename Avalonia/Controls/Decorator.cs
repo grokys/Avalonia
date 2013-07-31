@@ -12,13 +12,13 @@ namespace Avalonia.Controls
 
     public class Decorator : FrameworkElement
     {
-        UIElement child;
+        private UIElement child;
 
-        public virtual UIElement Child 
+        public virtual UIElement Child
         {
-            get 
-            { 
-                return this.child; 
+            get
+            {
+                return this.child;
             }
 
             set

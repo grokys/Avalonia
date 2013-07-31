@@ -103,9 +103,16 @@
     <Compile Include="RoutedEventArgs.cs" />
     <Compile Include="Size.cs" />
     <Compile Include="Threading\Dispatcher.cs" />
+    <Compile Include="Threading\DispatcherEventArgs.cs" />
     <Compile Include="Threading\DispatcherFrame.cs" />
+    <Compile Include="Threading\DispatcherHookEventArgs.cs" />
+    <Compile Include="Threading\DispatcherHooks.cs" />
     <Compile Include="Threading\DispatcherObject.cs" />
     <Compile Include="Thickness.cs" />
+    <Compile Include="Threading\DispatcherOperation.cs" />
+    <Compile Include="Threading\DispatcherProcessingDisabled.cs" />
+    <Compile Include="Threading\DispatcherUnhandledExceptionEventArgs.cs" />
+    <Compile Include="Threading\DispatcherUnhandledExceptionFilterEventArgs.cs" />
     <Compile Include="Threading\IPlatformDispatcherImpl.cs" />
     <Compile Include="UIElement.cs" />
     <Compile Include="UIPropertyMetadata.cs" />

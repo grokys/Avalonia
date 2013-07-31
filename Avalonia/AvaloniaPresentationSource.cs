@@ -17,15 +17,15 @@ namespace Avalonia
         public event EventHandler Closed;
 
         public event MouseButtonEventHandler MouseLeftButtonDown;
-        
+
         public event EventHandler Resized;
-        
+
         public abstract Size ClientSize { get; }
-        
+
         public abstract Rect BoundingRect { get; set; }
 
         public abstract DrawingContext CreateDrawingContext();
-        
+
         public abstract void Show();
 
         protected void OnClosed()

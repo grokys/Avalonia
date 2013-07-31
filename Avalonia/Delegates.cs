@@ -18,6 +18,6 @@ namespace Avalonia
     public delegate void DependencyPropertyChangedEventHandler(object sender, DependencyPropertyChangedEventArgs e);
 
     public delegate void PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e);
-    
+
     public delegate bool ValidateValueCallback(object value);
 }

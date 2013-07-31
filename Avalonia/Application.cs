@@ -44,7 +44,7 @@ namespace Avalonia
                 this.MainWindow = window;
             }
 
-            this.Dispatcher.Run();
+            Dispatcher.Run();
         }
     }
 }

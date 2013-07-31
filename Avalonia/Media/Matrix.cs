@@ -236,11 +236,11 @@ namespace Avalonia.Media
             double theta = angle * Math.PI / 180;
 
             Matrix r_theta = new Matrix(
-                Math.Cos(theta), 
-                Math.Sin(theta),
-                -Math.Sin(theta), 
                 Math.Cos(theta),
-                0, 
+                Math.Sin(theta),
+                -Math.Sin(theta),
+                Math.Cos(theta),
+                0,
                 0);
 
             this.Append(r_theta);
@@ -304,11 +304,11 @@ namespace Avalonia.Media
         public void Skew(double skewX, double skewY)
         {
             Matrix skew_m = new Matrix(
-                1, 
-                Math.Tan(skewY * Math.PI / 180),
-                Math.Tan(skewX * Math.PI / 180), 
                 1,
-                0, 
+                Math.Tan(skewY * Math.PI / 180),
+                Math.Tan(skewX * Math.PI / 180),
+                1,
+                0,
                 0);
             this.Append(skew_m);
         }
@@ -330,11 +330,11 @@ namespace Avalonia.Media
             {
                 return string.Format(
                     "{0},{1},{2},{3},{4},{5}",
-                    this.m11, 
-                    this.m12, 
-                    this.m21, 
-                    this.m22, 
-                    this.offsetX, 
+                    this.m11,
+                    this.m12,
+                    this.m21,
+                    this.m22,
+                    this.offsetX,
                     this.offsetY);
             }
         }

@@ -68,6 +68,7 @@
     <Compile Include="Input\MouseEventArgs.cs" />
     <Compile Include="Interop\WindowInteropHelper.cs" />
     <Compile Include="IObservableDependencyObject.cs" />
+    <Compile Include="LayoutManager.cs" />
     <Compile Include="Media\HitTestParameters.cs" />
     <Compile Include="Media\HitTestResult.cs" />
     <Compile Include="Media\PointHitTestParameters.cs" />

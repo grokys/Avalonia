@@ -24,6 +24,8 @@ namespace Avalonia
 
         public abstract Rect BoundingRect { get; set; }
 
+        public IntPtr Handle { get; protected set; }
+
         public abstract DrawingContext CreateDrawingContext();
 
         public abstract void Show();

@@ -56,8 +56,6 @@ namespace Avalonia.Threading
         
         private int queueBits;
         
-        private EventWaitHandle wait;
-        
         private DispatcherHooks hooks;
         
         private DispatcherFrame currentFrame;
@@ -73,7 +71,6 @@ namespace Avalonia.Threading
                 this.priorityQueues[i] = new PokableQueue();
             }
 
-            this.wait = new EventWaitHandle(false, EventResetMode.AutoReset);
             this.hooks = new DispatcherHooks(this);
         }
 
@@ -142,20 +139,19 @@ namespace Avalonia.Threading
         [SecurityCritical]
         public static void ExitAllFrames()
         {
-            ////Dispatcher dis = CurrentDispatcher;
+            Dispatcher dis = CurrentDispatcher;
 
-            ////for (DispatcherFrame frame = dis.current_frame; frame != null; frame = frame.ParentFrame)
-            ////{
-            ////    if (frame.exit_on_request)
-            ////        frame.Continue = false;
-            ////    else
-            ////    {
-            ////        //
-            ////        // Stop unwinding the frames at the first frame that is
-            ////        // long running
-            ////        break;
-            ////    }
-            ////}
+            for (DispatcherFrame frame = dis.currentFrame; frame != null; frame = frame.ParentFrame)
+            {
+                if (frame.ExitOnRequest)
+                {
+                    frame.Continue = false;
+                }
+                else
+                {
+                    break;
+                }
+            }
         }
 
         public static Dispatcher FromThread(Thread thread)
@@ -195,7 +191,7 @@ namespace Avalonia.Threading
                 throw new InvalidOperationException("Dispatcher processing has been disabled");
             }
 
-            ////frame.ParentFrame = dis.current_frame;
+            frame.ParentFrame = dis.currentFrame;
             dis.currentFrame = frame;
 
             frame.Running = dis;
@@ -436,7 +432,7 @@ namespace Avalonia.Threading
         public void InvokeShutdown()
         {
             this.flags |= Flags.ShutdownStarted;
-            this.Queue(DispatcherPriority.Normal, new DispatcherOperation(this, DispatcherPriority.Normal));
+            PlatformDispatcher.SendMessage();
         }
 
         [SecurityCritical]
@@ -480,7 +476,7 @@ namespace Avalonia.Threading
 
             if (Thread.CurrentThread != this.baseThread)
             {
-                this.wait.Set();
+                PlatformDispatcher.SendMessage();
             }
         }
 
@@ -503,7 +499,6 @@ namespace Avalonia.Threading
             }
 
             this.priorityQueues = null;
-            this.wait = null;
         }
 
         private void RunFrame(DispatcherFrame frame)
@@ -571,6 +566,12 @@ namespace Avalonia.Threading
 
                 this.hooks.EmitInactive();
                 PlatformDispatcher.ProcessMessage();
+
+                if (this.HasShutdownStarted)
+                {
+                    this.PerformShutdown();
+                    return;
+                }
             } 
             while (frame.Continue);
         }

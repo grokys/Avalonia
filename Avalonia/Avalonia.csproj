@@ -66,6 +66,7 @@
     <Compile Include="FrameworkPropertyMetadata.cs" />
     <Compile Include="Input\MouseButtonEventArgs.cs" />
     <Compile Include="Input\MouseEventArgs.cs" />
+    <Compile Include="Interop\WindowInteropHelper.cs" />
     <Compile Include="IObservableDependencyObject.cs" />
     <Compile Include="Media\HitTestParameters.cs" />
     <Compile Include="Media\HitTestResult.cs" />

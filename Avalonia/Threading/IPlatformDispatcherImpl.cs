@@ -17,5 +17,6 @@ namespace Avalonia.Threading
     public interface IPlatformDispatcherImpl
     {
         void ProcessMessage();
+        void SendMessage();
     }
 }

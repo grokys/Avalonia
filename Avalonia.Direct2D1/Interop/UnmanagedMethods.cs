@@ -28,6 +28,9 @@
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
 
+        [DllImport("user32.dll")]
+        public static extern IntPtr PostMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern ushort RegisterClassEx(ref WNDCLASSEX lpwcx);
 
@@ -379,6 +382,8 @@
             WM_PENWINLAST = 0x038F,
             WM_APP = 0x8000,
             WM_USER = 0x0400,
+
+            WM_DISPATCH_WORK_ITEM = WM_USER,
         }
     }
 }

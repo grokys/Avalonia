@@ -17,7 +17,6 @@ namespace Avalonia
 
     public class Window : ContentControl
     {
-        private AvaloniaPresentationSource presentationSource;
         private bool isShown;
 
         /// <summary>
@@ -25,12 +24,12 @@ namespace Avalonia
         /// </summary>
         public Window()
         {
-            this.presentationSource = (AvaloniaPresentationSource)
+            this.PresentationSource = (AvaloniaPresentationSource)
                 Activator.CreateInstance(Application.Current.PresentationSourceType);
 
-            this.presentationSource.Closed += (s, e) => this.OnClosed(EventArgs.Empty);
-            this.presentationSource.MouseLeftButtonDown += (s, e) => this.OnMouseLeftButtonDown(e);
-            this.presentationSource.Resized += (s, e) => this.DoMeasureArrange();
+            this.PresentationSource.Closed += (s, e) => this.OnClosed(EventArgs.Empty);
+            this.PresentationSource.MouseLeftButtonDown += (s, e) => this.OnMouseLeftButtonDown(e);
+            this.PresentationSource.Resized += (s, e) => this.DoMeasureArrange();
 
             this.Background = new SolidColorBrush(Colors.White);
             this.Template = new WindowTemplate();
@@ -42,14 +41,14 @@ namespace Avalonia
         {
             get
             {
-                return this.presentationSource.BoundingRect.Width;
+                return this.PresentationSource.BoundingRect.Width;
             }
 
             set
             {
-                Rect rect = this.presentationSource.BoundingRect;
+                Rect rect = this.PresentationSource.BoundingRect;
                 rect.Width = value;
-                this.presentationSource.BoundingRect = rect;
+                this.PresentationSource.BoundingRect = rect;
             }
         }
 
@@ -57,20 +56,20 @@ namespace Avalonia
         {
             get
             {
-                return this.presentationSource.BoundingRect.Height;
+                return this.PresentationSource.BoundingRect.Height;
             }
 
             set
             {
-                Rect rect = this.presentationSource.BoundingRect;
+                Rect rect = this.PresentationSource.BoundingRect;
                 rect.Height = value;
-                this.presentationSource.BoundingRect = rect;
+                this.PresentationSource.BoundingRect = rect;
             }
         }
 
         public void Show()
         {
-            this.presentationSource.Show();
+            this.PresentationSource.Show();
             this.isShown = true;
             this.DoMeasureArrange();
         }
@@ -79,11 +78,17 @@ namespace Avalonia
         {
             if (this.isShown)
             {
-                Size clientSize = this.presentationSource.ClientSize;
+                Size clientSize = this.PresentationSource.ClientSize;
                 this.Measure(clientSize);
                 this.Arrange(new Rect(new Point(), clientSize));
                 this.DoRender();
             }
+        }
+
+        internal AvaloniaPresentationSource PresentationSource 
+        { 
+            get; 
+            private set; 
         }
 
         protected internal override void OnRender(DrawingContext drawingContext)
@@ -100,7 +105,7 @@ namespace Avalonia
 
         private void DoRender()
         {
-            using (DrawingContext drawingContext = this.presentationSource.CreateDrawingContext())
+            using (DrawingContext drawingContext = this.PresentationSource.CreateDrawingContext())
             {
                 this.DoRender(drawingContext, this);
             }

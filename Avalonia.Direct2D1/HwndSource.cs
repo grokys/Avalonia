@@ -81,7 +81,6 @@
         {
         }
 
-        public IntPtr Handle { get; private set; }
         public override Visual RootVisual { get; set; }
 
         [AvaloniaSpecific]

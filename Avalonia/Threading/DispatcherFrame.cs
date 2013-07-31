@@ -21,10 +21,12 @@ namespace Avalonia.Threading
         /// Initializes a new instance of the <see cref="DispatcherFrame"/> class.
         /// </summary>
         public DispatcherFrame(bool exitWhenRequested)
-                    : this()
+            : this()
         {
         }
 
         public bool Continue { get; set; }
+
+        public Dispatcher Running { get; internal set; }
     }
 }

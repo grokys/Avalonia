@@ -17,6 +17,6 @@ namespace Avalonia.Threading
             this.Dispatcher = Dispatcher.CurrentDispatcher;
         }
 
-        public Dispatcher Dispatcher { get; set; }
+        public Dispatcher Dispatcher { get; private set; }
     }
 }

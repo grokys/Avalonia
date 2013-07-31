@@ -16,6 +16,11 @@ namespace Avalonia
 
     public class FrameworkElement : UIElement
     {
+        public FrameworkElement()
+        {
+            this.Resources = new ResourceDictionary();
+        }
+
         public static readonly DependencyProperty MarginProperty =
             DependencyProperty.Register(
                 "Margin",
@@ -39,6 +44,12 @@ namespace Avalonia
         {
             get { return (Thickness)this.GetValue(MarginProperty); }
             set { this.SetValue(MarginProperty, value); }
+        }
+
+        public ResourceDictionary Resources
+        {
+            get;
+            set;
         }
 
         public DependencyObject TemplatedParent

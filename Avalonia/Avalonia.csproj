@@ -53,6 +53,7 @@
     <Compile Include="Controls\ControlTemplate.cs" />
     <Compile Include="Controls\Decorator.cs" />
     <Compile Include="Controls\TextBlock.cs" />
+    <Compile Include="ResourceDictionary.cs" />
     <Compile Include="ThicknessConverter.cs" />
     <Compile Include="CornerRadius.cs" />
     <Compile Include="CornerRadiusConverter.cs" />
@@ -128,6 +129,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,11 @@
+<StyleCopSettings Version="105">
+  <Analyzers>
+    <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
+      <AnalyzerSettings>
+        <StringProperty Name="CompanyName">Steven Kirk</StringProperty>
+        <StringProperty Name="Copyright">Copyright 2013 MIT Licence
+See licence.md for more information</StringProperty>
+      </AnalyzerSettings>
+    </Analyzer>
+  </Analyzers>
+</StyleCopSettings>

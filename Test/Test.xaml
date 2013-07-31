@@ -1,0 +1,8 @@
+﻿<Border xmlns='clr-namespace:Avalonia.Controls;assembly=Avalonia'
+        Background="Red" 
+        CornerRadius="8" 
+        Margin="8" 
+        Padding="8">
+  <TextBlock Text="Goodbye Cruel World!"/>
+</Border>
+

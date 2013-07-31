@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,7 +53,9 @@
     <Compile Include="Controls\ControlTemplate.cs" />
     <Compile Include="Controls\Decorator.cs" />
     <Compile Include="Controls\TextBlock.cs" />
+    <Compile Include="ThicknessConverter.cs" />
     <Compile Include="CornerRadius.cs" />
+    <Compile Include="CornerRadiusConverter.cs" />
     <Compile Include="Data\Binding.cs" />
     <Compile Include="Data\BindingBase.cs" />
     <Compile Include="Data\BindingExpression.cs" />
@@ -69,6 +72,7 @@
     <Compile Include="Interop\WindowInteropHelper.cs" />
     <Compile Include="IObservableDependencyObject.cs" />
     <Compile Include="LayoutManager.cs" />
+    <Compile Include="Media\BrushConverter.cs" />
     <Compile Include="Media\HitTestParameters.cs" />
     <Compile Include="Media\HitTestResult.cs" />
     <Compile Include="Media\PointHitTestParameters.cs" />

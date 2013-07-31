@@ -45,7 +45,12 @@ namespace Avalonia.Controls
             if (this.visualChild == null)
             {
                 this.visualChild = this.Content as Visual;
-                this.AddVisualChild(this.visualChild);
+
+                if (this.visualChild != null)
+                {
+                    this.AddVisualChild(this.visualChild);
+                }
+
                 return true;
             }
 

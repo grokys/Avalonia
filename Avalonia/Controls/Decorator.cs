@@ -8,8 +8,10 @@
 namespace Avalonia.Controls
 {
     using System;
+    using System.Windows.Markup;
     using Avalonia.Media;
 
+    [ContentProperty("Child")]
     public class Decorator : FrameworkElement
     {
         private UIElement child;

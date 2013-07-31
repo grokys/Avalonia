@@ -9,19 +9,30 @@ namespace Avalonia
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
+    [TypeConverter(typeof(CornerRadiusConverter))]
     public struct CornerRadius
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CornerRadius"/> struct.
         /// </summary>
         public CornerRadius(double uniformRadius)
-                    : this()
+            : this()
         {
             this.BottomLeft = this.BottomRight = this.TopLeft = this.TopRight = uniformRadius;
+        }
+
+        public CornerRadius(double topLeft, double topRight, double bottomRight, double bottomLeft)
+            : this()
+        {
+            this.TopLeft = topLeft;
+            this.TopRight = topRight;
+            this.BottomLeft = bottomLeft;
+            this.BottomRight = bottomRight;
         }
 
         public double BottomLeft { get; set; }

@@ -16,6 +16,15 @@ namespace Avalonia
 
     public class FrameworkElement : UIElement
     {
+        public static readonly DependencyProperty MarginProperty =
+            DependencyProperty.Register(
+                "Margin",
+                typeof(Thickness),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    new Thickness(),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         public double ActualWidth
         {
             get { return this.RenderSize.Width; }
@@ -28,8 +37,8 @@ namespace Avalonia
 
         public Thickness Margin
         {
-            get;
-            set;
+            get { return (Thickness)this.GetValue(MarginProperty); }
+            set { this.SetValue(MarginProperty, value); }
         }
 
         public DependencyObject TemplatedParent

@@ -13,7 +13,13 @@ namespace Avalonia.Controls
     public class Control : FrameworkElement
     {
         public static readonly DependencyProperty BackgroundProperty =
-            DependencyProperty.Register("Background", typeof(Brush), typeof(Control));
+            DependencyProperty.Register(
+                "Background",
+                typeof(Brush),
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                    new SolidColorBrush(Colors.White),
+                    FrameworkPropertyMetadataOptions.AffectsRender));
 
         private List<Visual> visualChildren;
 

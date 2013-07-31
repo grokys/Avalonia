@@ -24,6 +24,15 @@ namespace Avalonia.Media
             this.Y = y;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TranslateTransform"/> class.
+        /// </summary>
+        public TranslateTransform(Vector offset)
+        {
+            this.X = offset.X;
+            this.Y = offset.Y;
+        }
+
         public double X { get; set; }
 
         public double Y { get; set; }

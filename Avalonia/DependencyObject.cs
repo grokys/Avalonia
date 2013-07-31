@@ -232,7 +232,7 @@ namespace Avalonia
 
             if (metadata != null && uiElement != null)
             {
-                if (metadata.AffectsRender)
+                if (metadata.AffectsArrange || metadata.AffectsMeasure || metadata.AffectsRender)
                 {
                     uiElement.InvalidateVisual();
                 }

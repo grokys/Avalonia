@@ -114,12 +114,9 @@ namespace Avalonia
 
             if (uiElement != null)
             {
-                if (uiElement.VisualTransform != null)
-                {
-                    drawingContext.PushTransform(uiElement.VisualTransform);
-                    performPop = true;
-                }
-
+                TranslateTransform translate = new TranslateTransform(uiElement.VisualOffset);
+                drawingContext.PushTransform(translate);
+                performPop = true;
                 uiElement.OnRender(drawingContext);
             }
 
@@ -147,7 +144,7 @@ namespace Avalonia
                 Border border = new Border
                 {
                     TemplatedParent = parent,
-                    Child = new ContentPresenter(window)
+                    Child = new ContentPresenter(window),
                 };
 
                 Binding binding = new Binding("Background");

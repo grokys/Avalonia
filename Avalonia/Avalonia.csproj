@@ -67,6 +67,10 @@
     <Compile Include="Input\MouseButtonEventArgs.cs" />
     <Compile Include="Input\MouseEventArgs.cs" />
     <Compile Include="IObservableDependencyObject.cs" />
+    <Compile Include="Media\HitTestParameters.cs" />
+    <Compile Include="Media\HitTestResult.cs" />
+    <Compile Include="Media\PointHitTestParameters.cs" />
+    <Compile Include="Media\PointHitTestResult.cs" />
     <Compile Include="PropertyPath.cs" />
     <Compile Include="Expression.cs" />
     <Compile Include="Delegates.cs" />

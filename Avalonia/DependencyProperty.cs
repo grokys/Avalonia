@@ -195,8 +195,10 @@ namespace Avalonia
             {
                 return this.metadataByType[forType];
             }
-
-            return null;
+            else
+            {
+                return this.DefaultMetadata;
+            }
         }
 
         public PropertyMetadata GetMetadata(DependencyObject dependencyObject)
@@ -205,8 +207,10 @@ namespace Avalonia
             {
                 return this.metadataByType[dependencyObject.GetType()];
             }
-
-            return null;
+            else
+            {
+                return this.DefaultMetadata;
+            }
         }
 
         public PropertyMetadata GetMetadata(DependencyObjectType dependencyObjectType)
@@ -215,8 +219,10 @@ namespace Avalonia
             {
                 return this.metadataByType[dependencyObjectType.SystemType];
             }
-
-            return null;
+            else
+            {
+                return this.DefaultMetadata;
+            }
         }
 
         public bool IsValidType(object value)

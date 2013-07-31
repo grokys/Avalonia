@@ -12,7 +12,30 @@ namespace Avalonia.Controls
 
     public class Decorator : FrameworkElement
     {
-        public virtual UIElement Child { get; set; }
+        UIElement child;
+
+        public virtual UIElement Child 
+        {
+            get 
+            { 
+                return this.child; 
+            }
+
+            set
+            {
+                if (this.child != null)
+                {
+                    this.RemoveVisualChild(this.child);
+                }
+
+                this.child = value;
+
+                if (this.child != null)
+                {
+                    this.AddVisualChild(this.child);
+                }
+            }
+        }
 
         protected internal override int VisualChildrenCount
         {

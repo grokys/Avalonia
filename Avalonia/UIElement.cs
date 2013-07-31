@@ -67,15 +67,7 @@ namespace Avalonia
 
         protected virtual void ArrangeCore(Rect finalRect)
         {
-            if (finalRect.Left != 0 || finalRect.Top != 0)
-            {
-                this.VisualTransform = new TranslateTransform(finalRect.Top, finalRect.Left);
-            }
-            else
-            {
-                this.VisualTransform = null;
-            }
-
+            this.VisualOffset = (Vector)finalRect.TopLeft;
             this.RenderSize = finalRect.Size;
         }
 
@@ -85,6 +77,11 @@ namespace Avalonia
             {
                 this.MouseLeftButtonDown(this, e);
             }
+        }
+
+        internal override Rect GetHitTestBounds()
+        {
+            return new Rect((Point)this.VisualOffset, this.RenderSize);
         }
 
         private void HackDoingARedraw()

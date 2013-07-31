@@ -17,6 +17,7 @@ namespace Test
             border.Background = new SolidColorBrush(Colors.Red);
             border.CornerRadius = new CornerRadius(8);
             border.Margin = new Thickness(8);
+            border.Padding = new Thickness(8);
 
             TextBlock textBlock = new TextBlock();
             textBlock.Text = "Hello World!";
@@ -29,6 +30,7 @@ namespace Test
             this.MouseLeftButtonDown += (s, e) =>
             {
                 this.Background = new SolidColorBrush(Colors.Green);
+                border.Margin = new Thickness(16);
             };
         }
     }

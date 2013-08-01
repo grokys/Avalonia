@@ -27,6 +27,16 @@ namespace Avalonia
                     new Thickness(),
                     FrameworkPropertyMetadataOptions.AffectsMeasure));
 
+        public static readonly DependencyProperty StyleProperty =
+            DependencyProperty.Register(
+                "Style",
+                typeof(Style),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    null, 
+                    FrameworkPropertyMetadataOptions.AffectsMeasure,
+                    StyleChanged));
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FrameworkElement"/> class.
         /// </summary>
@@ -68,6 +78,12 @@ namespace Avalonia
         {
             get;
             set;
+        }
+
+        public Style Style 
+        {
+            get { return (Style)this.GetValue(StyleProperty); }
+            set { this.SetValue(StyleProperty, value); }
         }
 
         public DependencyObject TemplatedParent
@@ -154,6 +170,24 @@ namespace Avalonia
         protected virtual Size ArrangeOverride(Size finalSize)
         {
             return finalSize;
+        }
+
+        protected internal virtual void OnStyleChanged(Style oldStyle, Style newStyle)
+        {
+            if (oldStyle != null)
+            {
+                oldStyle.Detach(this);
+            }
+
+            if (newStyle != null)
+            {
+                newStyle.Attach(this);
+            }
+        }
+
+        private static void StyleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ((FrameworkElement)sender).OnStyleChanged((Style)e.OldValue, (Style)e.NewValue);
         }
 
         private INameScope FindNameScope(FrameworkElement e)

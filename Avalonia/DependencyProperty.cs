@@ -230,7 +230,7 @@ namespace Avalonia
 
         public bool IsValidType(object value)
         {
-            return this.PropertyType.IsInstanceOfType(value);
+            return value == null || this.PropertyType.IsInstanceOfType(value);
         }
 
         public bool IsValidValue(object value)

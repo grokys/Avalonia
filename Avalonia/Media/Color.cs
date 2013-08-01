@@ -22,6 +22,17 @@ namespace Avalonia.Media
 
         public byte B { get; set; }
 
+        public static Color FromArgb(byte a, byte r, byte g, byte b)
+        {
+            return new Color
+            {
+                A = a,
+                R = r,
+                G = g,
+                B = b,
+            };
+        }
+
         public static Color FromRgb(byte r, byte g, byte b)
         {
             return new Color

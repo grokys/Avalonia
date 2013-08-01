@@ -34,9 +34,19 @@ namespace Avalonia.Media
             get { return Color.FromRgb(0xff, 0, 0); }
         }
 
+        public static Color Transparent
+        {
+            get { return Color.FromArgb(0, 0, 0, 0); }
+        }
+
         public static Color White
         {
             get { return Color.FromRgb(0xff, 0xff, 0xff); }
+        }
+
+        public static Color Yellow
+        {
+            get { return Color.FromRgb(0xff, 0xff, 0); }
         }
     }
 }

@@ -13,14 +13,17 @@ namespace Test
     public class MainWindow : Window
     {
         Border border;
+        TextBlock textBlock;
 
         public MainWindow()
         {
             InitializeComponent();
 
+            this.textBlock.Style = (Style)this.Resources["Yellow"];
+
             this.MouseLeftButtonDown += (s, e) =>
             {
-                this.Background = new SolidColorBrush(Colors.Green);
+                this.textBlock.Style = null;
             };
         }
 
@@ -28,6 +31,7 @@ namespace Test
         {
             Application.LoadComponent(this, new Uri("MainWindow.xaml", UriKind.Relative));
             this.border = (Border)this.FindName("border");
+            this.textBlock = (TextBlock)this.FindName("textBlock");
         }
     }
 }

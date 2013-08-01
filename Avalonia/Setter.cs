@@ -8,12 +8,16 @@ namespace Avalonia
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using System.Threading.Tasks;
 
     public class Setter : SetterBase
     {
+        Dictionary<FrameworkElement, object> oldValues = new Dictionary<FrameworkElement, object>();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Setter"/> class.
         /// </summary>
@@ -56,6 +60,56 @@ namespace Avalonia
         {
             get;
             set;
+        }
+
+        internal void Attach(FrameworkElement frameworkElement)
+        {
+            object oldValue = DependencyProperty.UnsetValue;
+
+            if (!frameworkElement.IsUnset(this.Property))
+            {
+                oldValue = frameworkElement.GetValue(this.Property);
+            }
+
+            this.oldValues.Add(frameworkElement, oldValue);
+
+            frameworkElement.SetValue(this.Property, this.ConvertValue(this.Value));
+        }
+
+        internal void Detach(FrameworkElement frameworkElement)
+        {
+            frameworkElement.SetValue(this.Property, oldValues[frameworkElement]);
+        }
+
+        private object ConvertValue(object value)
+        {
+            if (value.GetType() == this.Property.PropertyType)
+            {
+                return value;
+            }
+            else
+            {
+                TypeConverterAttribute attribute =
+                    this.Property.PropertyType.GetCustomAttributes(typeof(TypeConverterAttribute), true)
+                        .Cast<TypeConverterAttribute>()
+                        .FirstOrDefault();
+
+                if (attribute != null)
+                {
+                    Type converterType = Type.GetType(attribute.ConverterTypeName);
+                    TypeConverter converter = (TypeConverter)Activator.CreateInstance(converterType);
+
+                    if (converter.CanConvertFrom(value.GetType()))
+                    {
+                        return converter.ConvertFrom(value);
+                    }
+                }
+
+                throw new NotSupportedException(string.Format(
+                    "Could not convert the value '{0}' to '{1}",
+                    value,
+                    this.Property.PropertyType.Name));
+            }
         }
     }
 }

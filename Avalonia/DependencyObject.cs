@@ -86,17 +86,6 @@ namespace Avalonia
             }
         }
 
-        public sealed override bool Equals(object obj)
-        {
-            // TODO: Implement
-            return false;
-        }
-
-        public sealed override int GetHashCode()
-        {
-            throw new NotImplementedException("GetHashCode");
-        }
-
         public LocalValueEnumerator GetLocalValueEnumerator()
         {
             return new LocalValueEnumerator(this.properties);
@@ -150,7 +139,7 @@ namespace Avalonia
                 throw new InvalidOperationException("Cannot manipulate property values on a sealed DependencyObject");
             }
 
-            if (!(value is Expression) && !dp.IsValidType(value))
+            if (!(value == DependencyProperty.UnsetValue || value is BindingExpressionBase || dp.IsValidType(value)))
             {
                 throw new ArgumentException("value not of the correct type for this DependencyProperty");
             }
@@ -166,19 +155,29 @@ namespace Avalonia
                 object oldValue = this.GetValue(dp);
                 BindingExpressionBase binding = value as BindingExpressionBase;
 
-                if (binding != null)
+                if (value == DependencyProperty.UnsetValue)
                 {
-                    this.propertyExpressions.Add(dp, binding);
-                    value = binding.GetCurrentValue();
+                    this.properties.Remove(dp);
+                    this.propertyExpressions.Remove(dp);
+                    value = this.GetValue(dp);
                 }
                 else
                 {
-                    this.propertyExpressions.Remove(dp);
+                    if (binding != null)
+                    {
+                        this.propertyExpressions.Add(dp, binding);
+                        value = binding.GetCurrentValue();
+                    }
+                    else
+                    {
+                        this.propertyExpressions.Remove(dp);
+                    }
+
+                    this.properties[dp] = value;
                 }
 
                 if (!object.Equals(oldValue, value))
                 {
-                    this.properties[dp] = value;
                     this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(dp, oldValue, value));
                 }
             }
@@ -203,6 +202,11 @@ namespace Avalonia
             }
 
             throw new KeyNotFoundException("Dependency property not found.");
+        }
+
+        internal bool IsUnset(DependencyProperty dependencyProperty)
+        {
+            return !this.properties.ContainsKey(dependencyProperty);
         }
 
         internal static void Register(Type t, DependencyProperty dp)

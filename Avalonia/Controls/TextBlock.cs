@@ -10,6 +10,15 @@ namespace Avalonia.Controls
 
     public class TextBlock : FrameworkElement
     {
+        public static readonly DependencyProperty BackgroundProperty =
+            DependencyProperty.Register(
+                "Background",
+                typeof(Brush),
+                typeof(TextBlock),
+                new FrameworkPropertyMetadata(
+                    new SolidColorBrush(Colors.Transparent),
+                    FrameworkPropertyMetadataOptions.AffectsRender));
+
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(
                 "Text",
@@ -24,15 +33,25 @@ namespace Avalonia.Controls
         /// </summary>
         public TextBlock()
         {
-            this.FontSize = 12;
         }
 
-        public double FontSize { get; set; }
+        public Brush Background
+        {
+            get { return (Brush)this.GetValue(BackgroundProperty); }
+            set { this.SetValue(BackgroundProperty, value); }
+        }
 
         public string Text { get; set; }
 
         protected internal override void OnRender(DrawingContext drawingContext)
         {
+            Rect rect = new Rect(new Point(), new Size(this.ActualWidth, this.ActualHeight));
+
+            drawingContext.DrawRectangle(
+                this.Background,
+                null,
+                rect);
+
             drawingContext.DrawText(
                 new FormattedText { Text = this.Text },
                 new Point());

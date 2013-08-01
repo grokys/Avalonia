@@ -88,5 +88,21 @@ namespace Avalonia
         {
             this.nameScope.UnregisterName(name);
         }
+
+        internal void Attach(FrameworkElement frameworkElement)
+        {
+            foreach (Setter setter in this.Setters)
+            {
+                setter.Attach(frameworkElement);
+            }
+        }
+
+        internal void Detach(FrameworkElement frameworkElement)
+        {
+            foreach (Setter setter in this.Setters)
+            {
+                setter.Detach(frameworkElement);
+            }
+        }
     }
 }

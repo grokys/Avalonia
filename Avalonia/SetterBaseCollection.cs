@@ -21,21 +21,5 @@ namespace Avalonia
         public SetterBaseCollection()
         {
         }
-
-        protected override void ClearItems()
-        {
-        }
-
-        protected override void InsertItem(int index, SetterBase item)
-        {
-        }
-
-        protected override void RemoveItem(int index)
-        {
-        }
-
-        protected override void SetItem(int index, SetterBase item)
-        {
-        }
     }
 }

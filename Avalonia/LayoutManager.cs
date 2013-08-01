@@ -56,16 +56,24 @@ namespace Avalonia
 
         private void DoLayout()
         {
+            List<Window> windows = new List<Window>();
+
             foreach (UIElement entry in this.entries)
             {
                 Window window = this.FindWindow(entry);
 
                 if (window != null)
                 {
-                    window.DoMeasureArrange();
+                    windows.Add(window);
                 }
             }
 
+            foreach (Window window in windows)
+            {
+                window.DoMeasureArrange();
+            }
+
+            this.entries.Clear();
             this.layoutPassQueued = false;
         }
 

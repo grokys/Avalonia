@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="Point.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -122,11 +121,6 @@ namespace Avalonia
             return new Vector(point.X, point.Y);
         }
 
-        string IFormattable.ToString(string format, IFormatProvider formatProvider)
-        {
-            return this.ToString(format, formatProvider);
-        }
-
         public override bool Equals(object o)
         {
             if (!(o is Point))
@@ -161,6 +155,11 @@ namespace Avalonia
         public string ToString(IFormatProvider provider)
         {
             return this.ToString(null, provider);
+        }
+
+        string IFormattable.ToString(string format, IFormatProvider formatProvider)
+        {
+            return this.ToString(format, formatProvider);
         }
 
         private string ToString(string format, IFormatProvider formatProvider)

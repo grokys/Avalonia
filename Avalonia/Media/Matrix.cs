@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="Matrix.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -125,11 +124,6 @@ namespace Avalonia.Media
             Matrix result = trans1;
             result.Append(trans2);
             return result;
-        }
-
-        string IFormattable.ToString(string format, IFormatProvider provider)
-        {
-            throw new NotImplementedException();
         }
 
         public void Append(Matrix matrix)
@@ -381,6 +375,11 @@ namespace Avalonia.Media
             Matrix m = Matrix.Identity;
             m.Translate(offsetX, offsetY);
             this.Prepend(m);
+        }
+
+        string IFormattable.ToString(string format, IFormatProvider provider)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="FrameworkElement.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -18,11 +17,6 @@ namespace Avalonia
 
     public class FrameworkElement : UIElement
     {
-        public FrameworkElement()
-        {
-            this.Resources = new ResourceDictionary();
-        }
-
         public static readonly DependencyProperty MarginProperty =
             DependencyProperty.Register(
                 "Margin",
@@ -32,6 +26,14 @@ namespace Avalonia
                     new Thickness(),
                     FrameworkPropertyMetadataOptions.AffectsMeasure));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FrameworkElement"/> class.
+        /// </summary>
+        public FrameworkElement()
+        {
+            this.Resources = new ResourceDictionary();
+        }
+
         public double ActualWidth
         {
             get { return this.RenderSize.Width; }
@@ -40,11 +42,6 @@ namespace Avalonia
         public double ActualHeight
         {
             get { return this.RenderSize.Height; }
-        }
-
-        protected internal virtual IEnumerator LogicalChildren
-        {
-            get { return new object[0].GetEnumerator(); }
         }
 
         public Thickness Margin
@@ -78,18 +75,23 @@ namespace Avalonia
             internal set;
         }
 
+        protected internal virtual IEnumerator LogicalChildren
+        {
+            get { return new object[0].GetEnumerator(); }
+        }
+
         public virtual bool ApplyTemplate()
         {
             return false;
         }
 
-        public Object FindName(string name)
+        public object FindName(string name)
         {
             throw new NotImplementedException();
-            //INameScope nameScope = this.FindNameScope(this);
-            //return (nameScope != null) ? nameScope.FindName(name) : null;
+            //// INameScope nameScope = this.FindNameScope(this);
+            //// return (nameScope != null) ? nameScope.FindName(name) : null;
         }
- 
+
         protected internal void AddLogicalChild(object child)
         {
             FrameworkElement fe = child as FrameworkElement;

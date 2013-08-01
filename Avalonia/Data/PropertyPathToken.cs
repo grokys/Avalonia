@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="PropertyPathToken.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 

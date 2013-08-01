@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="TextBlock.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -18,8 +17,7 @@ namespace Avalonia.Controls
                 typeof(TextBlock),
                 new FrameworkPropertyMetadata(
                     string.Empty,
-                    FrameworkPropertyMetadataOptions.AffectsMeasure |
-                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBlock"/> class.

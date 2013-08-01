@@ -1,4 +1,10 @@
-﻿namespace Avalonia
+// -----------------------------------------------------------------------
+// <copyright file="LayoutManager.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia
 {
     using System;
     using System.Collections.Generic;
@@ -10,22 +16,25 @@
         private List<UIElement> entries = new List<UIElement>();
         private bool layoutPassQueued = false;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LayoutManager"/> class.
+        /// </summary>
         static LayoutManager()
         {
-            Instance = new LayoutManager(); 
+            Instance = new LayoutManager();
         }
 
-        public static LayoutManager Instance 
-        { 
-            get; 
-            private set; 
+        public static LayoutManager Instance
+        {
+            get;
+            private set;
         }
 
         public void QueueMeasure(UIElement e)
         {
-            if (!entries.Contains(e))
+            if (!this.entries.Contains(e))
             {
-                entries.Add(e);
+                this.entries.Add(e);
             }
 
             this.QueueLayoutPass();
@@ -40,7 +49,7 @@
         {
             if (!this.layoutPassQueued)
             {
-                this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)DoLayout);
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)this.DoLayout);
                 this.layoutPassQueued = true;
             }
         }

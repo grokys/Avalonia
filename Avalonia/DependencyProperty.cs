@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="DependencyProperty.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -10,6 +9,8 @@ namespace Avalonia
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+
+    public delegate bool ValidateValueCallback(object value);
 
     [TypeConverter(typeof(DependencyPropertyConverter))]
     public sealed class DependencyProperty

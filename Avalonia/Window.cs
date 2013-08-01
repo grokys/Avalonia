@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="Window.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -67,6 +66,12 @@ namespace Avalonia
             }
         }
 
+        internal AvaloniaPresentationSource PresentationSource
+        {
+            get;
+            private set;
+        }
+
         public void Show()
         {
             this.PresentationSource.Show();
@@ -83,12 +88,6 @@ namespace Avalonia
                 this.Arrange(new Rect(new Point(), clientSize));
                 this.DoRender();
             }
-        }
-
-        internal AvaloniaPresentationSource PresentationSource 
-        { 
-            get; 
-            private set; 
         }
 
         protected internal override void OnRender(DrawingContext drawingContext)

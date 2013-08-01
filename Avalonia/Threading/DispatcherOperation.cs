@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="DispatcherOperation.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -79,8 +78,6 @@ namespace Avalonia.Threading
             this.delegateArgs[0] = arg;
             Array.Copy(args, 1, this.delegateArgs, 0, args.Length);
         }
-
-        public event EventHandler Aborted;
 
         public event EventHandler Completed;
 

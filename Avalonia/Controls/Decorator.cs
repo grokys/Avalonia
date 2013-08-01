@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="Decorator.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -58,12 +57,12 @@ namespace Avalonia.Controls
         {
             if (this.VisualChildrenCount > 0)
             {
-                UIElement uiElement = this.GetVisualChild(0) as UIElement;
+                UIElement ui = this.GetVisualChild(0) as UIElement;
 
-                if (uiElement != null)
+                if (ui != null)
                 {
-                    uiElement.Measure(constraint);
-                    return uiElement.DesiredSize;
+                    ui.Measure(constraint);
+                    return ui.DesiredSize;
                 }
             }
 
@@ -74,11 +73,11 @@ namespace Avalonia.Controls
         {
             if (this.VisualChildrenCount > 0)
             {
-                UIElement uiElement = this.GetVisualChild(0) as UIElement;
+                UIElement ui = this.GetVisualChild(0) as UIElement;
 
-                if (uiElement != null)
+                if (ui != null)
                 {
-                    uiElement.Arrange(new Rect(finalSize));
+                    ui.Arrange(new Rect(finalSize));
                     return finalSize;
                 }
             }

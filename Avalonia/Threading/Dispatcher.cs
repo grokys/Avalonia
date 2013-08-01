@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="Dispatcher.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -43,21 +42,21 @@ namespace Avalonia.Threading
         private const int TopPriority = (int)DispatcherPriority.Send;
 
         private static Dictionary<Thread, Dispatcher> dispatchers = new Dictionary<Thread, Dispatcher>();
-        
+
         private static object olock = new object();
-        
+
         private static DispatcherFrame mainExecutionFrame = new DispatcherFrame();
 
         private Thread baseThread;
-        
+
         private PokableQueue[] priorityQueues = new PokableQueue[TopPriority + 1];
-        
+
         private Flags flags;
-        
+
         private int queueBits;
-        
+
         private DispatcherHooks hooks;
-        
+
         private DispatcherFrame currentFrame;
 
         /// <summary>
@@ -77,10 +76,6 @@ namespace Avalonia.Threading
         public event EventHandler ShutdownStarted;
 
         public event EventHandler ShutdownFinished;
-        
-        public event DispatcherUnhandledExceptionEventHandler UnhandledException;
-        
-        public event DispatcherUnhandledExceptionFilterEventHandler UnhandledExceptionFilter;
 
         public static IPlatformDispatcherImpl PlatformDispatcher { get; set; }
 
@@ -117,7 +112,10 @@ namespace Avalonia.Threading
         public DispatcherHooks Hooks
         {
             [SecurityCritical]
-            get { throw new NotImplementedException(); }
+            get
+            { 
+                throw new NotImplementedException(); 
+            }
         }
 
         public bool HasShutdownStarted
@@ -459,7 +457,7 @@ namespace Avalonia.Threading
             this.Queue(op.Priority, op);
             this.hooks.EmitOperationPriorityChanged(op);
         }
-    
+
         private void Queue(DispatcherPriority priority, DispatcherOperation x)
         {
             int p = (int)priority;
@@ -558,7 +556,7 @@ namespace Avalonia.Threading
                                 {
                                     break;
                                 }
-                            } 
+                            }
                             while (true);
                         }
                     }
@@ -572,7 +570,7 @@ namespace Avalonia.Threading
                     this.PerformShutdown();
                     return;
                 }
-            } 
+            }
             while (frame.Continue);
         }
 

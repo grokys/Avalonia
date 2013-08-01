@@ -1,4 +1,10 @@
-﻿namespace Avalonia
+// -----------------------------------------------------------------------
+// <copyright file="LogicalTreeHelper.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia
 {
     using System;
     using System.Collections;
@@ -14,7 +20,7 @@
         public static IEnumerable GetChildren(DependencyObject current)
         {
             FrameworkElement fe = current as FrameworkElement;
-            
+
             if (fe == null)
             {
                 throw new InvalidOperationException("Object is not a FrameworkElement.");

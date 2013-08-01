@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="Thickness.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -26,8 +25,11 @@ namespace Avalonia
             this.Left = this.Top = this.Right = this.Bottom = uniformLength;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Thickness"/> struct.
+        /// </summary>
         public Thickness(double left, double top, double right, double bottom)
-            : this()
+                    : this()
         {
             this.Left = left;
             this.Top = top;

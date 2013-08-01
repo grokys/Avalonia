@@ -87,7 +87,6 @@
     <Compile Include="Media\PointHitTestResult.cs" />
     <Compile Include="PropertyPath.cs" />
     <Compile Include="Expression.cs" />
-    <Compile Include="Delegates.cs" />
     <Compile Include="DependencyObject.cs" />
     <Compile Include="DependencyObjectType.cs" />
     <Compile Include="DependencyProperty.cs" />

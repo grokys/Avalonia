@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="CornerRadius.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -26,8 +25,11 @@ namespace Avalonia
             this.BottomLeft = this.BottomRight = this.TopLeft = this.TopRight = uniformRadius;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CornerRadius"/> struct.
+        /// </summary>
         public CornerRadius(double topLeft, double topRight, double bottomRight, double bottomLeft)
-            : this()
+                    : this()
         {
             this.TopLeft = topLeft;
             this.TopRight = topRight;

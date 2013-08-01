@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="DispatcherHooks.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -28,11 +27,11 @@ namespace Avalonia.Threading
         public event EventHandler DispatcherInactive;
 
         public event DispatcherHookEventHandler OperationAborted;
-        
+
         public event DispatcherHookEventHandler OperationCompleted;
-        
+
         public event DispatcherHookEventHandler OperationPosted;
-        
+
         public event DispatcherHookEventHandler OperationPriorityChanged;
 
         internal void EmitOperationPosted(DispatcherOperation op)

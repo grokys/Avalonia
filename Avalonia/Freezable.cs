@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------
 // <copyright file="Freezable.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -17,8 +16,6 @@ namespace Avalonia
         protected Freezable()
         {
         }
-
-        public event EventHandler Changed;
 
         public bool CanFreeze
         {

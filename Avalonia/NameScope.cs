@@ -1,3 +1,9 @@
+// -----------------------------------------------------------------------
+// <copyright file="NameScope.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Avalonia
 {
     using System;
@@ -6,30 +12,13 @@ namespace Avalonia
 
     public class NameScope : INameScope
     {
-        Dictionary<string, object> scope = new Dictionary<string, object>();
-
-        public object FindName(string name)
-        {
-            object result;
-            this.scope.TryGetValue(name, out result);
-            return result;
-        }
-
         public static readonly DependencyProperty NameScopeProperty =
             DependencyProperty.RegisterAttached(
                 "NameScope",
                 typeof(NameScope),
                 typeof(NameScope));
 
-        public void RegisterName(string name, object scopedElement)
-        {
-            this.scope.Add(name, scopedElement);
-        }
-
-        public void UnregisterName(string name)
-        {
-            this.scope.Remove(name);
-        }
+        private Dictionary<string, object> scope = new Dictionary<string, object>();
 
         public static INameScope GetNameScope(DependencyObject dependencyObject)
         {
@@ -41,5 +30,21 @@ namespace Avalonia
             dependencyObject.SetValue(NameScopeProperty, value);
         }
 
+        public object FindName(string name)
+        {
+            object result;
+            this.scope.TryGetValue(name, out result);
+            return result;
+        }
+
+        public void RegisterName(string name, object scopedElement)
+        {
+            this.scope.Add(name, scopedElement);
+        }
+
+        public void UnregisterName(string name)
+        {
+            this.scope.Remove(name);
+        }
     }
 }

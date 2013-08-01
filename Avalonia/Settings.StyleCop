@@ -180,9 +180,25 @@
       </Rules>
       <AnalyzerSettings>
         <StringProperty Name="CompanyName">Steven Kirk</StringProperty>
-        <StringProperty Name="Copyright">Copyright 2013 MIT Licence
-See licence.md for more information</StringProperty>
+        <StringProperty Name="Copyright">Copyright 2013 MIT Licence. See licence.md for more information.</StringProperty>
       </AnalyzerSettings>
     </Analyzer>
+	<Analyzer AnalyzerId="Microsoft.StyleCop.CSharp.NamingRules">
+		<AnalyzerSettings>
+		  <CollectionProperty Name="Hungarian">
+			<Value>is</Value>
+			<Value>ui</Value>
+		  </CollectionProperty>
+		</AnalyzerSettings>
+	</Analyzer>  
   </Analyzers>
+  <Parsers>
+    <Parser ParserId="StyleCop.CSharp.CsParser">
+      <ParserSettings>
+        <CollectionProperty Name="GeneratedFileFilters">
+          <Value>TemporaryGeneratedFile_.*\.cs$</Value>
+        </CollectionProperty>
+      </ParserSettings>
+    </Parser>
+  </Parsers>
 </StyleCopSettings>

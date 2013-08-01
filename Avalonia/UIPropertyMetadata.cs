@@ -1,12 +1,13 @@
 // -----------------------------------------------------------------------
 // <copyright file="UIPropertyMetadata.cs" company="Steven Kirk">
-// Copyright 2013 MIT Licence
-// See licence.md for more information
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
 namespace Avalonia
 {
+    public delegate object CoerceValueCallback(DependencyObject d, object baseValue);
+
     public class UIPropertyMetadata : PropertyMetadata
     {
         private bool isAnimationProhibited;

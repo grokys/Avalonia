@@ -19,7 +19,7 @@ namespace Avalonia
         private Dictionary<DependencyProperty, object> properties =
             new Dictionary<DependencyProperty, object>();
 
-        private Dictionary<DependencyProperty, BindingExpressionBase> propertyExpressions =
+        private Dictionary<DependencyProperty, BindingExpressionBase> propertyBindings =
             new Dictionary<DependencyProperty, BindingExpressionBase>();
 
         private Dictionary<string, List<DependencyPropertyChangedEventHandler>> propertyChangedHandlers =
@@ -108,12 +108,12 @@ namespace Avalonia
         {
             BindingExpressionBase binding;
 
-            if (this.propertyExpressions.TryGetValue(dp, out binding))
+            if (this.propertyBindings.TryGetValue(dp, out binding))
             {
                 object value = this.GetValue(dp);
                 object oldValue = value;
 
-                value = binding.GetCurrentValue();
+                value = binding.GetValue();
 
                 if (!object.Equals(oldValue, value))
                 {
@@ -132,54 +132,76 @@ namespace Avalonia
             return val == null ? DependencyProperty.UnsetValue : val;
         }
 
+        public void SetBinding(DependencyProperty dp, string path)
+        {
+            this.SetBinding(dp, new Binding(path));
+        }
+
+        public void SetBinding(DependencyProperty dp, BindingBase binding)
+        {
+            Binding b = binding as Binding;
+
+            if (b == null)
+            {
+                throw new NotSupportedException("Unsupported binding type.");
+            }
+
+            this.SetBinding(dp, b);
+        }
+
+        [AvaloniaSpecific]
+        public BindingExpression SetBinding(DependencyProperty dp, Binding binding)
+        {
+            PropertyPathParser pathParser = new PropertyPathParser();
+            BindingExpression expression = new BindingExpression(pathParser, this, dp, binding);
+            object oldValue = this.GetValue(dp);
+            object newValue = expression.GetValue();
+
+            this.propertyBindings.Add(dp, expression);
+            this.properties[dp] = newValue;
+
+            if (!object.Equals(oldValue, newValue))
+            {
+                this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(dp, oldValue, newValue));
+            }
+
+            return expression;
+        }
+
         public void SetValue(DependencyProperty dp, object value)
         {
             if (this.IsSealed)
             {
-                throw new InvalidOperationException("Cannot manipulate property values on a sealed DependencyObject");
+                throw new InvalidOperationException("Cannot manipulate property values on a sealed DependencyObject.");
             }
 
-            if (!(value == DependencyProperty.UnsetValue || value is BindingExpressionBase || dp.IsValidType(value)))
+            if (value != DependencyProperty.UnsetValue && !dp.IsValidType(value))
             {
-                throw new ArgumentException("value not of the correct type for this DependencyProperty");
+                throw new ArgumentException("Value is not of the correct type for this DependencyProperty.");
             }
 
-            ValidateValueCallback validate = dp.ValidateValueCallback;
-
-            if (validate != null && !validate(value))
+            if (dp.ValidateValueCallback != null && !dp.ValidateValueCallback(value))
             {
-                throw new Exception("Value does not validate");
+                throw new Exception("Value does not validate.");
+            }
+
+            object oldValue = this.GetValue(dp);
+
+            if (value == DependencyProperty.UnsetValue)
+            {
+                this.properties.Remove(dp);
+                value = dp.DefaultMetadata.DefaultValue;
             }
             else
             {
-                object oldValue = this.GetValue(dp);
-                BindingExpressionBase binding = value as BindingExpressionBase;
+                this.properties[dp] = value;
+            }
 
-                if (value == DependencyProperty.UnsetValue)
-                {
-                    this.properties.Remove(dp);
-                    this.propertyExpressions.Remove(dp);
-                    value = this.GetValue(dp);
-                }
-                else
-                {
-                    if (binding != null)
-                    {
-                        this.propertyExpressions.Add(dp, binding);
-                        value = binding.GetCurrentValue();
-                    }
-                    else
-                    {
-                        this.propertyExpressions.Remove(dp);
-                    }
+            this.propertyBindings.Remove(dp);
 
-                    this.properties[dp] = value;
-                }
-
-                if (!object.Equals(oldValue, value))
-                {
-                    this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(dp, oldValue, value));
-                }
+            if (!object.Equals(oldValue, value))
+            {
+                this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(dp, oldValue, value));
             }
         }
 

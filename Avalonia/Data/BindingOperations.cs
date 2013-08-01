@@ -27,10 +27,7 @@ namespace Avalonia.Data
                 throw new NotSupportedException("Unsupported binding type.");
             }
 
-            PropertyPathParser pathParser = new PropertyPathParser();
-            BindingExpression expression = new BindingExpression(pathParser, target, dp, b);
-            target.SetValue(dp, expression);
-            return expression;
+            return target.SetBinding(dp, b);
         }
     }
 }

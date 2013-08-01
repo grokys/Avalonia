@@ -42,7 +42,7 @@ namespace Avalonia.UnitTests.Data
                 Control.BackgroundProperty,
                 binding);
 
-            target.GetCurrentValue();
+            target.GetValue();
 
             source.Verify(x => x.AttachPropertyChangedHandler("Foo", It.IsAny<DependencyPropertyChangedEventHandler>()));
             foo.Verify(x => x.AttachPropertyChangedHandler("Bar", It.IsAny<DependencyPropertyChangedEventHandler>()));

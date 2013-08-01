@@ -35,7 +35,7 @@ namespace Avalonia.Data
             throw new NotImplementedException();
         }
 
-        public object GetCurrentValue()
+        public object GetValue()
         {
             if (!this.evaluated)
             {

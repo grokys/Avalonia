@@ -11,6 +11,16 @@ namespace Avalonia.Controls
 
     public class TextBlock : FrameworkElement
     {
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register(
+                "Text",
+                typeof(string),
+                typeof(TextBlock),
+                new FrameworkPropertyMetadata(
+                    string.Empty,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBlock"/> class.
         /// </summary>

@@ -1,8 +1,15 @@
-﻿<Border xmlns='clr-namespace:Avalonia.Controls;assembly=Avalonia'
+﻿<Border xmlns="https://github.com/grokys/Avalonia"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Background="Red" 
         CornerRadius="8" 
         Margin="8" 
-        Padding="8">
-  <TextBlock Text="Goodbye Cruel World!"/>
+        Padding="8"
+        Name="border">
+  <Border.Resources>
+        <Style x:Key="Foo" TargetType="{x:Type TextBlock}">
+            <Setter Property="Text" Value="Goodbye Cruel World!"/>
+        </Style>
+    </Border.Resources>
+  <TextBlock Name="textBlock" Text="Hello World!"/>
 </Border>
 

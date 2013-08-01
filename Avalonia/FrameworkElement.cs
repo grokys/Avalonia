@@ -8,10 +8,12 @@
 namespace Avalonia
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows.Markup;
     using Avalonia.Media;
 
     public class FrameworkElement : UIElement
@@ -40,12 +42,30 @@ namespace Avalonia
             get { return this.RenderSize.Height; }
         }
 
+        protected internal virtual IEnumerator LogicalChildren
+        {
+            get { return new object[0].GetEnumerator(); }
+        }
+
         public Thickness Margin
         {
             get { return (Thickness)this.GetValue(MarginProperty); }
             set { this.SetValue(MarginProperty, value); }
         }
 
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public DependencyObject Parent
+        {
+            get;
+            private set;
+        }
+
+        [Ambient]
         public ResourceDictionary Resources
         {
             get;
@@ -61,6 +81,43 @@ namespace Avalonia
         public virtual bool ApplyTemplate()
         {
             return false;
+        }
+
+        public Object FindName(string name)
+        {
+            throw new NotImplementedException();
+            //INameScope nameScope = this.FindNameScope(this);
+            //return (nameScope != null) ? nameScope.FindName(name) : null;
+        }
+ 
+        protected internal void AddLogicalChild(object child)
+        {
+            FrameworkElement fe = child as FrameworkElement;
+
+            if (fe != null)
+            {
+                if (fe.Parent != null)
+                {
+                    throw new InvalidOperationException("FrameworkElement already has a parent.");
+                }
+
+                fe.Parent = this;
+            }
+        }
+
+        protected internal void RemoveLogicalChild(object child)
+        {
+            FrameworkElement fe = child as FrameworkElement;
+
+            if (fe != null)
+            {
+                if (fe.Parent != this)
+                {
+                    throw new InvalidOperationException("FrameworkElement is not a child of this object.");
+                }
+
+                fe.Parent = null;
+            }
         }
 
         protected sealed override Size MeasureCore(Size availableSize)

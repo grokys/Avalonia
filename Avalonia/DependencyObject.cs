@@ -190,6 +190,22 @@ namespace Avalonia
             this.SetValue(key.DependencyProperty, value);
         }
 
+        internal static DependencyProperty FromName(Type type, string name)
+        {
+            Dictionary<string, DependencyProperty> list;
+            DependencyProperty result;
+
+            if (propertyDeclarations.TryGetValue(type, out list))
+            {
+                if (list.TryGetValue(name, out result))
+                {
+                    return result;
+                }
+            }
+
+            throw new KeyNotFoundException("Dependency property not found.");
+        }
+
         internal static void Register(Type t, DependencyProperty dp)
         {
             if (!propertyDeclarations.ContainsKey(t))

@@ -9,7 +9,9 @@ namespace Avalonia
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
 
+    [TypeConverter(typeof(DependencyPropertyConverter))]
     public sealed class DependencyProperty
     {
         public static readonly object UnsetValue = new object();

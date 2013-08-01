@@ -15,6 +15,7 @@ namespace Avalonia
     using System.Windows.Markup;
     using Avalonia.Media;
 
+    [RuntimeNameProperty("Name")]
     public class FrameworkElement : UIElement
     {
         public static readonly DependencyProperty MarginProperty =
@@ -87,9 +88,8 @@ namespace Avalonia
 
         public object FindName(string name)
         {
-            throw new NotImplementedException();
-            //// INameScope nameScope = this.FindNameScope(this);
-            //// return (nameScope != null) ? nameScope.FindName(name) : null;
+            INameScope nameScope = this.FindNameScope(this);
+            return (nameScope != null) ? nameScope.FindName(name) : null;
         }
 
         protected internal void AddLogicalChild(object child)
@@ -154,6 +154,23 @@ namespace Avalonia
         protected virtual Size ArrangeOverride(Size finalSize)
         {
             return finalSize;
+        }
+
+        private INameScope FindNameScope(FrameworkElement e)
+        {
+            while (e != null)
+            {
+                INameScope nameScope = e as INameScope ?? NameScope.GetNameScope(e);
+
+                if (nameScope != null)
+                {
+                    return nameScope;
+                }
+
+                e = LogicalTreeHelper.GetParent(e) as FrameworkElement;
+            }
+
+            return null;
         }
     }
 }

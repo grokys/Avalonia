@@ -12,18 +12,22 @@ namespace Test
 {
     public class MainWindow : Window
     {
+        Border border;
+
         public MainWindow()
         {
-            object o = XamlServices.Load("Test.xaml");
-
-            this.Content = o;
-            this.Width = 500;
-            this.Height = 500;
+            InitializeComponent();
 
             this.MouseLeftButtonDown += (s, e) =>
             {
                 this.Background = new SolidColorBrush(Colors.Green);
             };
+        }
+
+        private void InitializeComponent()
+        {
+            Application.LoadComponent(this, new Uri("MainWindow.xaml", UriKind.Relative));
+            this.border = (Border)this.FindName("border");
         }
     }
 }

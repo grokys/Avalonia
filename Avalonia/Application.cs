@@ -11,6 +11,8 @@ namespace Avalonia
     using System.Linq;
     using System.Reflection;
     using Avalonia.Threading;
+    using System.Xaml;
+    using System.Xml;
 
     public class Application : DispatcherObject
     {
@@ -35,6 +37,33 @@ namespace Avalonia
         public Window MainWindow { get; set; }
 
         public Type PresentationSourceType { get; set; }
+
+        public static void LoadComponent(object component, Uri resourceLocator)
+        {
+            DependencyObject dependencyObject = component as DependencyObject;
+            NameScope nameScope = new NameScope();
+
+            if (dependencyObject != null)
+            {
+                NameScope.SetNameScope(dependencyObject, nameScope);
+            }
+
+            XmlReader xml = XmlReader.Create(resourceLocator.OriginalString);
+            XamlXmlReader reader = new XamlXmlReader(xml);
+            XamlObjectWriter writer = new XamlObjectWriter(
+                new XamlSchemaContext(),
+                new XamlObjectWriterSettings
+                {
+                    RootObjectInstance = component,
+                    ExternalNameScope = nameScope,
+                    RegisterNamesOnExternalNamescope = true,
+                });
+
+            while (reader.Read())
+            {
+                writer.WriteNode(reader);
+            }
+        }
 
         public void Run()
         {

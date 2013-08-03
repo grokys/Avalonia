@@ -718,6 +718,5 @@ namespace Avalonia.Media
         {
             get { return Color.FromUInt32(0xff9acd32); }
         }
-
     }
 }

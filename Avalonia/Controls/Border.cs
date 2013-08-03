@@ -24,6 +24,24 @@ namespace Avalonia.Controls
                     new SolidColorBrush(Colors.White),
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public static readonly DependencyProperty BorderBrushProperty =
+            DependencyProperty.Register(
+                "BorderBrush",
+                typeof(Brush),
+                typeof(Border),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
+
+        public static readonly DependencyProperty BorderThicknessProperty =
+            DependencyProperty.Register(
+                "BorderThickness",
+                typeof(Thickness),
+                typeof(Border),
+                new FrameworkPropertyMetadata(
+                    new Thickness(),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.Register(
                 "CornerRadius",
@@ -48,6 +66,18 @@ namespace Avalonia.Controls
             set { this.SetValue(BackgroundProperty, value); }
         }
 
+        public Brush BorderBrush
+        {
+            get { return (Brush)this.GetValue(BorderBrushProperty); }
+            set { this.SetValue(BorderBrushProperty, value); }
+        }
+
+        public Thickness BorderThickness
+        {
+            get { return (Thickness)this.GetValue(BorderThicknessProperty); }
+            set { this.SetValue(BorderThicknessProperty, value); }
+        }
+
         public CornerRadius CornerRadius
         {
             get { return (CornerRadius)this.GetValue(CornerRadiusProperty); }
@@ -63,12 +93,18 @@ namespace Avalonia.Controls
         protected internal override void OnRender(DrawingContext drawingContext)
         {
             Rect rect = new Rect(new Point(), new Size(this.ActualWidth, this.ActualHeight));
+            Pen pen = null;
+
+            if (this.BorderBrush != null && !this.BorderThickness.IsEmpty)
+            {
+                pen = new Pen(this.BorderBrush, this.BorderThickness.Left);
+            }
 
             if (this.CornerRadius.TopLeft > 0 || this.CornerRadius.BottomLeft > 0)
             {
                 drawingContext.DrawRoundedRectangle(
                     this.Background,
-                    null,
+                    pen,
                     rect,
                     this.CornerRadius.TopLeft,
                     this.CornerRadius.BottomLeft);
@@ -77,7 +113,7 @@ namespace Avalonia.Controls
             {
                 drawingContext.DrawRectangle(
                     this.Background,
-                    null,
+                    pen,
                     rect);
             }
         }

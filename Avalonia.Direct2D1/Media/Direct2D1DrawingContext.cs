@@ -67,7 +67,7 @@
             {
                 using (var brush2D = pen.Brush.ToSharpDX(this.target))
                 {
-                    this.target.FillRoundedRectangle(roundedRect, brush2D);
+                    this.target.DrawRoundedRectangle(roundedRect, brush2D, (float)pen.Thickness);
                 }
             }
         }

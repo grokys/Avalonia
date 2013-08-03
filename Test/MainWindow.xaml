@@ -7,7 +7,7 @@
             <Setter Property="Background" Value="Yellow"/>
         </Style>
     </Window.Resources>
-    <Border Background="Red" CornerRadius="8" Margin="8" Padding="8" Name="border">
+    <Border Background="Red" BorderBrush="Black" BorderThickness="4" CornerRadius="8" Margin="8" Padding="8" Name="border">
         <TextBlock Name="textBlock" Text="Hello World!"/>
     </Border>
 </Window>        

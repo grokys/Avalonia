@@ -7,8 +7,6 @@
             <Setter Property="Background" Value="Yellow"/>
         </Style>
     </Window.Resources>
-    <Border Background="Red" CornerRadius="8" Margin="8" Padding="8" Name="border">
-        <TextBlock Name="textBlock" Text="Hello World!"/>
-    </Border>
+    <Button Margin="16">Hello World!</Button>
 </Window>        
 

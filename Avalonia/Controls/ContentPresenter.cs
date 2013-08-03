@@ -94,21 +94,37 @@ namespace Avalonia.Controls
             ((ContentPresenter)sender).ContentChanged(e.OldValue, e.NewValue);
         }
 
+        private Visual ApplyDataTemplate(object value)
+        {
+            Visual visual = value as Visual;
+
+            if (visual == null)
+            {
+                visual = new TextBlock
+                {
+                    Text = value.ToString(),
+                };
+            }
+
+            return visual;
+        }
+
         private void ContentChanged(object oldValue, object newValue)
         {
             if (oldValue != null)
             {
                 this.RemoveLogicalChild(oldValue);
-                this.RemoveVisualChild((Visual)oldValue);
+                this.RemoveVisualChild(this.visualChild);
             }
+
+            this.visualChild = null;
 
             if (newValue != null)
             {
+                this.visualChild = this.ApplyDataTemplate(newValue);
                 this.AddLogicalChild(newValue);
-                this.AddVisualChild((Visual)newValue);
+                this.AddVisualChild(this.visualChild);
             }
-
-            this.visualChild = (Visual)newValue;
         }
     }
 }

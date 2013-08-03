@@ -21,7 +21,6 @@ namespace Avalonia
         static Window()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata(typeof(Window)));
-            DefaultStyleKeyProperty.GetMetadata(typeof(Window));
         }
 
         public Window()

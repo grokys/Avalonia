@@ -47,11 +47,13 @@
     <Compile Include="AvaloniaPresentationSource.cs" />
     <Compile Include="AvaloniaSpecificAttribute.cs" />
     <Compile Include="Controls\Border.cs" />
+    <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\ContentControl.cs" />
     <Compile Include="Controls\ContentPresenter.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\ControlTemplate.cs" />
     <Compile Include="Controls\Decorator.cs" />
+    <Compile Include="Controls\Primitives\ButtonBase.cs" />
     <Compile Include="Controls\TemplateContent.cs" />
     <Compile Include="Controls\TextBlock.cs" />
     <Compile Include="DependencyPropertyConverter.cs" />

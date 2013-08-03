@@ -22,7 +22,6 @@ namespace Avalonia.Controls
                     null,
                     FrameworkPropertyMetadataOptions.AffectsMeasure));
 
-
         public object Content
         {
             get { return this.GetValue(ContentProperty); }

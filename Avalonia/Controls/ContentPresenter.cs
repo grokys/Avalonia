@@ -89,6 +89,11 @@ namespace Avalonia.Controls
             return base.ArrangeOverride(finalSize);
         }
 
+        private static void ContentChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ((ContentPresenter)sender).ContentChanged(e.OldValue, e.NewValue);
+        }
+
         private void ContentChanged(object oldValue, object newValue)
         {
             if (oldValue != null)
@@ -104,11 +109,6 @@ namespace Avalonia.Controls
             }
 
             this.visualChild = (Visual)newValue;
-        }
-
-        private static void ContentChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            ((ContentPresenter)sender).ContentChanged(e.OldValue, e.NewValue);
         }
     }
 }

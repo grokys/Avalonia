@@ -55,7 +55,7 @@
   <ItemGroup>
     <Compile Include="Data\BindingExpressionTests.cs" />
     <Compile Include="Data\PropertyPathParserTests.cs" />
-    <Compile Include="MeasureArrangeTests.cs" />
+    <Compile Include="FrameworkElement_MeasureArrangeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

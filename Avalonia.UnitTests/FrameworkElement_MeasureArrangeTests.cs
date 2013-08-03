@@ -6,6 +6,44 @@
     public class FrameworkElement_MeasureArrangeTests
     {
         [TestMethod]
+        public void IsMeasureValid_Should_Initially_Be_True()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            Assert.IsTrue(target.IsMeasureValid);
+        }
+
+        [TestMethod]
+        public void IsArrangeValid_Should_Initially_Be_True()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            Assert.IsTrue(target.IsArrangeValid);
+        }
+
+        [TestMethod]
+        public void InvalidateMeasure_Should_Set_IsMeasureValid_To_False()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.InvalidateMeasure();
+
+            Assert.IsFalse(target.IsMeasureValid);
+            Assert.IsTrue(target.IsArrangeValid);
+        }
+
+        [TestMethod]
+        public void InvalidateArrange_Should_Set_IsArrangeValid_To_False()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.InvalidateArrange();
+
+            Assert.IsTrue(target.IsMeasureValid);
+            Assert.IsFalse(target.IsArrangeValid);
+        }
+
+        [TestMethod]
         public void Measure_Parameters_Should_Be_Passed_To_MeasureOverride()
         {
             FrameworkElementTest target = new FrameworkElementTest();
@@ -31,7 +69,18 @@
         }
 
         [TestMethod]
-        public void Arrange_Should_Call_MeasureOverride_When_Not_IsMeasureValid()
+        public void Measure_Result_Should_Be_Saved_In_DesiredSize()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.MeasureOutput = new Size(12, 34);
+            target.Measure(new Size(56, 78));
+
+            Assert.AreEqual(new Size(12, 34), target.DesiredSize);
+        }
+
+        [TestMethod]
+        public void Arrange_Should_Call_MeasureOverride()
         {
             FrameworkElementTest target = new FrameworkElementTest();
             Rect rect = new Rect(new Point(10, 20), new Size(30, 40));
@@ -40,8 +89,6 @@
             target.MeasureOutput = new Size(50, 60);
             target.Arrange(rect);
 
-            // Measure hasn't yet been called, therefore IsMeasureValid == false, therefore
-            // Measure should be called from Arrange.
             Assert.AreEqual(rect.Size, target.MeasureInput);
             Assert.AreEqual(target.MeasureOutput.Value, target.ArrangeInput);
         }

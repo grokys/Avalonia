@@ -7,6 +7,55 @@
     public class FrameworkElement_MeasureArrangeTests
     {
         [TestMethod]
+        public void IsMeasureValid_Should_Initially_Be_True()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            Assert.IsTrue(target.IsMeasureValid);
+        }
+
+        [TestMethod]
+        public void IsArrangeValid_Should_Initially_Be_True()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            Assert.IsTrue(target.IsArrangeValid);
+        }
+
+        [TestMethod]
+        public void InvalidateMeasure_Should_Set_IsMeasureValid_To_False()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.InvalidateMeasure();
+
+            Assert.IsFalse(target.IsMeasureValid);
+            Assert.IsTrue(target.IsArrangeValid);
+        }
+
+        [TestMethod]
+        public void InvalidateArrange_Should_Set_IsArrangeValid_To_False()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.InvalidateArrange();
+
+            Assert.IsTrue(target.IsMeasureValid);
+            Assert.IsFalse(target.IsArrangeValid);
+        }
+
+        [TestMethod]
+        public void Measure_Should_Set_IsMeasureValid_To_True()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.Measure(new Size(12, 23));
+
+            Assert.IsTrue(target.IsMeasureValid);
+            Assert.IsFalse(target.IsArrangeValid);
+        }
+
+        [TestMethod]
         public void Measure_Parameters_Should_Be_Passed_To_MeasureOverride()
         {
             FrameworkElementTest target = new FrameworkElementTest();
@@ -32,6 +81,29 @@
         }
 
         [TestMethod]
+        public void Measure_Result_Should_Be_Saved_In_DesiredSize()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.MeasureOutput = new Size(12, 34);
+            target.Measure(new Size(56, 78));
+
+            Assert.AreEqual(new Size(12, 34), target.DesiredSize);
+        }
+
+        [TestMethod]
+        public void Measure_Should_Not_Set_Actual_Or_Render_Size()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.Measure(new Size(12, 23));
+
+            Assert.AreEqual(0, target.ActualWidth);
+            Assert.AreEqual(0, target.ActualHeight);
+            Assert.AreEqual(new Size(), target.RenderSize);
+        }
+
+        [TestMethod]
         public void Arrange_Should_Call_MeasureOverride_When_Not_IsMeasureValid()
         {
             FrameworkElementTest target = new FrameworkElementTest();
@@ -45,6 +117,41 @@
             // Measure should be called from Arrange.
             Assert.AreEqual(rect.Size, target.MeasureInput);
             Assert.AreEqual(target.MeasureOutput.Value, target.ArrangeInput);
+        }
+
+        [TestMethod]
+        public void Arrange_Should_Set_IsMeasureValid_And_IsArrangeValid_To_True()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.Arrange(new Rect(new Point(12, 23), new Size(34, 45)));
+
+            Assert.IsTrue(target.IsMeasureValid);
+            Assert.IsTrue(target.IsArrangeValid);
+        }
+
+        [TestMethod]
+        public void Arrange_Should_Set_Actual_And_Render_Size()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.ArrangeOutput = new Size(12, 23);
+            target.Arrange(new Rect(new Point(34, 45), new Size(56, 67)));
+
+            Assert.AreEqual(12, target.ActualWidth);
+            Assert.AreEqual(23, target.ActualHeight);
+            Assert.AreEqual(new Size(12, 23), target.RenderSize);
+        }
+
+        [TestMethod]
+        public void Arrange_Should_Set_VisualOffset()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.ArrangeOutput = new Size(12, 23);
+            target.Arrange(new Rect(new Point(34, 45), new Size(56, 67)));
+
+            Assert.AreEqual(new Vector(34, 45), target.VisualOffset);
         }
 
         [TestMethod]
@@ -173,6 +280,12 @@
             public Size? MeasureInput { get; private set; }
             public Size? MeasureOutput { get; set; }
             public Size? ArrangeInput { get; private set; }
+            public Size? ArrangeOutput { get; set; }
+
+            public new Vector VisualOffset
+            {
+                get { return base.VisualOffset; }
+            }
 
             protected override Size MeasureOverride(Size constraint)
             {
@@ -191,7 +304,7 @@
                     this.ArrangeInput = finalSize;
                 }
 
-                return finalSize;
+                return this.ArrangeOutput ?? finalSize;
             }
         }
     }

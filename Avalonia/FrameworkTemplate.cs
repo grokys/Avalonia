@@ -16,7 +16,7 @@ namespace Avalonia
     public class FrameworkTemplate : DispatcherObject
     {
         [AmbientAttribute]
-        [XamlDeferLoad(typeof(TemplateContentLoader), typeof(Control))]
+        [XamlDeferLoad(typeof(TemplateContentLoader), typeof(TemplateContent))]
         public TemplateContent Template { get; set; }
 
         internal FrameworkElement CreateVisualTree(DependencyObject parent)

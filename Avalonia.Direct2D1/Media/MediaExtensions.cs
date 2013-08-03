@@ -14,10 +14,10 @@
         public static Color4 ToSharpDX(this Color color)
         {
             return new Color4(
-                (float)color.R,
-                (float)color.G,
-                (float)color.B,
-                (float)color.A);
+                (float)(color.R / 255.0),
+                (float)(color.G / 255.0),
+                (float)(color.B / 255.0),
+                (float)(color.A / 255.0));
         }
 
         public static Matrix3x2 ToSharpDX(this Matrix matrix)

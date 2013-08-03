@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace Avalonia.UnitTests.Data
+﻿namespace Avalonia.UnitTests.Data
 {
+    using System;
+    using System.Linq;
+    using Avalonia.Data;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class PropertyPathParserTests
     {

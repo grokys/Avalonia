@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Controls;
-using Avalonia.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-
-namespace Avalonia.UnitTests.Data
+﻿namespace Avalonia.UnitTests.Data
 {
+    using Avalonia.Controls;
+    using Avalonia.Data;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moq;
+
     [TestClass]
     public class BindingExpressionTests
     {

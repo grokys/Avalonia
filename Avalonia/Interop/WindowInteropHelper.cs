@@ -16,9 +16,6 @@ namespace Avalonia.Interop
     {
         private Window window;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WindowInteropHelper"/> class.
-        /// </summary>
         public WindowInteropHelper(Window window)
         {
             this.window = window;

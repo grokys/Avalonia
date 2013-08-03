@@ -14,16 +14,10 @@ namespace Avalonia.Data
 
     public class Binding : BindingBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Binding"/> class.
-        /// </summary>
         public Binding()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Binding"/> class.
-        /// </summary>
         public Binding(string path)
         {
             this.Path = new PropertyPath(path);

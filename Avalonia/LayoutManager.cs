@@ -16,9 +16,6 @@ namespace Avalonia
         private List<UIElement> entries = new List<UIElement>();
         private bool layoutPassQueued = false;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LayoutManager"/> class.
-        /// </summary>
         static LayoutManager()
         {
             Instance = new LayoutManager();

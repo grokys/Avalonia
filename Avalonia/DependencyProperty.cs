@@ -18,9 +18,6 @@ namespace Avalonia
         public static readonly object UnsetValue = new object();
         private Dictionary<Type, PropertyMetadata> metadataByType = new Dictionary<Type, PropertyMetadata>();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DependencyProperty"/> class.
-        /// </summary>
         private DependencyProperty(
                     bool isAttached,
                     string name,
@@ -194,38 +191,31 @@ namespace Avalonia
 
         public PropertyMetadata GetMetadata(Type forType)
         {
-            if (this.metadataByType.ContainsKey(forType))
+            Type type = forType;
+
+            while (type != null)
             {
-                return this.metadataByType[forType];
+                PropertyMetadata result;
+
+                if (this.metadataByType.TryGetValue(type, out result))
+                {
+                    return result;
+                }
+
+                type = type.BaseType;
             }
-            else
-            {
-                return this.DefaultMetadata;
-            }
+
+            return this.DefaultMetadata;
         }
 
         public PropertyMetadata GetMetadata(DependencyObject dependencyObject)
         {
-            if (this.metadataByType.ContainsKey(dependencyObject.GetType()))
-            {
-                return this.metadataByType[dependencyObject.GetType()];
-            }
-            else
-            {
-                return this.DefaultMetadata;
-            }
+            return this.GetMetadata(dependencyObject.GetType());
         }
 
         public PropertyMetadata GetMetadata(DependencyObjectType dependencyObjectType)
         {
-            if (this.metadataByType.ContainsKey(dependencyObjectType.SystemType))
-            {
-                return this.metadataByType[dependencyObjectType.SystemType];
-            }
-            else
-            {
-                return this.DefaultMetadata;
-            }
+            return this.GetMetadata(dependencyObjectType.SystemType);
         }
 
         public bool IsValidType(object value)

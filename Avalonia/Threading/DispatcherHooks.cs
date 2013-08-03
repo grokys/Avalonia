@@ -16,9 +16,6 @@ namespace Avalonia.Threading
     {
         private Dispatcher owner;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherHooks"/> class.
-        /// </summary>
         internal DispatcherHooks(Dispatcher owner)
         {
             this.owner = owner;

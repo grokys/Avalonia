@@ -12,9 +12,6 @@ namespace Avalonia.Threading
     {
         private Dispatcher dispatcher;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherEventArgs"/> class.
-        /// </summary>
         internal DispatcherEventArgs(Dispatcher dispatcher)
         {
             this.dispatcher = dispatcher;

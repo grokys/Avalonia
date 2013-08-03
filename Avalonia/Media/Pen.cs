@@ -10,9 +10,6 @@ namespace Avalonia.Media
 
     public class Pen : Animatable
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Pen"/> class.
-        /// </summary>
         public Pen(Brush brush, double thickness)
         {
             this.Brush = brush;

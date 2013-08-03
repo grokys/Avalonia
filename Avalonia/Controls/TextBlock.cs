@@ -28,9 +28,6 @@ namespace Avalonia.Controls
                     string.Empty,
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TextBlock"/> class.
-        /// </summary>
         public TextBlock()
         {
         }

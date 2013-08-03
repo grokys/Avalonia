@@ -17,9 +17,6 @@ namespace Avalonia.Data
         private bool evaluated;
         private object value;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BindingExpressionBase"/> class.
-        /// </summary>
         public BindingExpressionBase(DependencyObject target, DependencyProperty dp)
         {
             this.Target = target;

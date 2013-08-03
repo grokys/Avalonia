@@ -14,9 +14,6 @@ namespace Avalonia.Media
 
     public class PointHitTestResult : HitTestResult
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PointHitTestResult"/> class.
-        /// </summary>
         public PointHitTestResult(Visual visualHit, Point pointHit)
         {
             this.VisualHit = visualHit;

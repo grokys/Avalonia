@@ -16,9 +16,6 @@ namespace Avalonia
         private double x;
         private double y;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector"/> struct.
-        /// </summary>
         public Vector(double x, double y)
         {
             this.x = x;

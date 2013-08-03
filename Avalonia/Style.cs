@@ -20,26 +20,17 @@ namespace Avalonia
     {
         private NameScope nameScope = new NameScope();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Style"/> class.
-        /// </summary>
         public Style()
         {
             this.Setters = new SetterBaseCollection();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Style"/> class.
-        /// </summary>
         public Style(Type targetType)
                     : this()
         {
             this.TargetType = targetType;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Style"/> class.
-        /// </summary>
         public Style(Type targetType, Style basedOn)
                     : this()
         {

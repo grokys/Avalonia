@@ -28,32 +28,20 @@ namespace Avalonia
 
     public class FrameworkPropertyMetadata : UIPropertyMetadata
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkPropertyMetadata"/> class.
-        /// </summary>
         public FrameworkPropertyMetadata()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkPropertyMetadata"/> class.
-        /// </summary>
         public FrameworkPropertyMetadata(object defaultValue)
                     : base(defaultValue)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkPropertyMetadata"/> class.
-        /// </summary>
         public FrameworkPropertyMetadata(PropertyChangedCallback propertyChangedCallback)
                     : base(propertyChangedCallback)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkPropertyMetadata"/> class.
-        /// </summary>
         public FrameworkPropertyMetadata(
                     object defaultValue,
                     FrameworkPropertyMetadataOptions flags)
@@ -62,9 +50,6 @@ namespace Avalonia
             this.LoadFlags(flags);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkPropertyMetadata"/> class.
-        /// </summary>
         public FrameworkPropertyMetadata(
                     object defaultValue,
                     PropertyChangedCallback propertyChangedCallback)
@@ -72,9 +57,6 @@ namespace Avalonia
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkPropertyMetadata"/> class.
-        /// </summary>
         public FrameworkPropertyMetadata(
                     PropertyChangedCallback propertyChangedCallback,
                     CoerceValueCallback coerceValueCallback)
@@ -83,9 +65,6 @@ namespace Avalonia
             this.CoerceValueCallback = coerceValueCallback;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkPropertyMetadata"/> class.
-        /// </summary>
         public FrameworkPropertyMetadata(
                     object defaultValue,
                     FrameworkPropertyMetadataOptions flags,
@@ -95,9 +74,6 @@ namespace Avalonia
             this.LoadFlags(flags);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkPropertyMetadata"/> class.
-        /// </summary>
         public FrameworkPropertyMetadata(
                     object defaultValue,
                     PropertyChangedCallback propertyChangedCallback,
@@ -106,9 +82,6 @@ namespace Avalonia
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkPropertyMetadata"/> class.
-        /// </summary>
         public FrameworkPropertyMetadata(
                     object defaultValue,
                     FrameworkPropertyMetadataOptions flags,
@@ -119,9 +92,6 @@ namespace Avalonia
             this.LoadFlags(flags);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkPropertyMetadata"/> class.
-        /// </summary>
         public FrameworkPropertyMetadata(
                     object defaultValue,
                     FrameworkPropertyMetadataOptions flags,
@@ -133,9 +103,6 @@ namespace Avalonia
             this.LoadFlags(flags);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkPropertyMetadata"/> class.
-        /// </summary>
         public FrameworkPropertyMetadata(
                     object defaultValue,
                     FrameworkPropertyMetadataOptions flags,

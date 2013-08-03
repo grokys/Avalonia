@@ -17,33 +17,21 @@ namespace Avalonia
         private PropertyChangedCallback propertyChangedCallback;
         private CoerceValueCallback coerceValueCallback;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyMetadata"/> class.
-        /// </summary>
         public PropertyMetadata()
                     : this(null, null, null)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyMetadata"/> class.
-        /// </summary>
         public PropertyMetadata(object defaultValue)
                     : this(defaultValue, null, null)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyMetadata"/> class.
-        /// </summary>
         public PropertyMetadata(PropertyChangedCallback propertyChangedCallback)
                     : this(null, propertyChangedCallback, null)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyMetadata"/> class.
-        /// </summary>
         public PropertyMetadata(
                     object defaultValue,
                     PropertyChangedCallback propertyChangedCallback)
@@ -51,9 +39,6 @@ namespace Avalonia
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyMetadata"/> class.
-        /// </summary>
         public PropertyMetadata(
                     object defaultValue,
                     PropertyChangedCallback propertyChangedCallback,

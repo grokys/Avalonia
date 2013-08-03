@@ -14,9 +14,6 @@ namespace Avalonia.Media
 
     public class PointHitTestParameters : HitTestParameters
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PointHitTestParameters"/> class.
-        /// </summary>
         public PointHitTestParameters(Point point)
         {
             this.HitPoint = point;

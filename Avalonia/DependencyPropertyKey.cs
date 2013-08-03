@@ -12,9 +12,6 @@ namespace Avalonia
     {
         private DependencyProperty dependencyProperty;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DependencyPropertyKey"/> class.
-        /// </summary>
         internal DependencyPropertyKey(DependencyProperty dependencyProperty)
         {
             this.dependencyProperty = dependencyProperty;

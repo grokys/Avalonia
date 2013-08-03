@@ -18,9 +18,12 @@ namespace Avalonia
     {
         private bool isShown;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Window"/> class.
-        /// </summary>
+        static Window()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata(typeof(Window)));
+            DefaultStyleKeyProperty.GetMetadata(typeof(Window));
+        }
+
         public Window()
         {
             this.PresentationSource = (AvaloniaPresentationSource)
@@ -31,7 +34,6 @@ namespace Avalonia
             this.PresentationSource.Resized += (s, e) => this.DoMeasureArrange();
 
             this.Background = new SolidColorBrush(Colors.White);
-            this.Template = new WindowTemplate();
         }
 
         public event EventHandler Closed;
@@ -135,27 +137,6 @@ namespace Avalonia
             if (performPop)
             {
                 drawingContext.Pop();
-            }
-        }
-
-        // HACK to work around the fact we don't have xaml support.
-        private class WindowTemplate : ControlTemplate
-        {
-            public override Visual CreateVisualTree(DependencyObject parent)
-            {
-                Window window = parent as Window;
-
-                Border border = new Border
-                {
-                    TemplatedParent = parent,
-                    Child = new ContentPresenter(window),
-                };
-
-                Binding binding = new Binding("Background");
-                binding.RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent);
-                BindingOperations.SetBinding(border, Border.BackgroundProperty, binding);
-
-                return border;
             }
         }
     }

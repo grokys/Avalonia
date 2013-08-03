@@ -14,16 +14,10 @@ namespace Avalonia.Media
 
     public class SolidColorBrush : Brush
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SolidColorBrush"/> class.
-        /// </summary>
         public SolidColorBrush()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SolidColorBrush"/> class.
-        /// </summary>
         public SolidColorBrush(Color color)
         {
             this.Color = color;

@@ -14,9 +14,6 @@ namespace Avalonia.Threading
     {
         private DispatcherOperation operation;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherHookEventArgs"/> class.
-        /// </summary>
         public DispatcherHookEventArgs(DispatcherOperation operation)
         {
             this.operation = operation;

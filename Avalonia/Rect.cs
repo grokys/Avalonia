@@ -17,9 +17,6 @@ namespace Avalonia
         private double width;
         private double height;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Rect"/> struct.
-        /// </summary>
         public Rect(Size size)
         {
             this.x = this.y = 0.0;
@@ -27,17 +24,11 @@ namespace Avalonia
             this.height = size.Height;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Rect"/> struct.
-        /// </summary>
         public Rect(Point point, Vector vector)
                     : this(point, Point.Add(point, vector))
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Rect"/> struct.
-        /// </summary>
         public Rect(Point point1, Point point2)
         {
             if (point1.X < point2.X)
@@ -63,9 +54,6 @@ namespace Avalonia
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Rect"/> struct.
-        /// </summary>
         public Rect(double x, double y, double width, double height)
         {
             if (width < 0 || height < 0)
@@ -79,9 +67,6 @@ namespace Avalonia
             this.height = height;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Rect"/> struct.
-        /// </summary>
         public Rect(Point location, Size size)
         {
             this.x = location.X;

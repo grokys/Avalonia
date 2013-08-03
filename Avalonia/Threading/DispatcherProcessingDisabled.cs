@@ -10,9 +10,6 @@ namespace Avalonia.Threading
 
     public struct DispatcherProcessingDisabled : IDisposable
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherProcessingDisabled"/> struct.
-        /// </summary>
         internal DispatcherProcessingDisabled(int foo)
         {
         }

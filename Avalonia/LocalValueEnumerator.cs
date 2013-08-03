@@ -16,9 +16,6 @@ namespace Avalonia
         private Dictionary<DependencyProperty, object> properties;
         private int count;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LocalValueEnumerator"/> struct.
-        /// </summary>
         internal LocalValueEnumerator(Dictionary<DependencyProperty, object> properties)
         {
             this.count = properties.Count;

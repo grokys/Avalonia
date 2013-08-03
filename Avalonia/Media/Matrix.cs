@@ -17,9 +17,6 @@ namespace Avalonia.Media
         private double offsetX;
         private double offsetY;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Matrix"/> struct.
-        /// </summary>
         public Matrix(
             double m11,
             double m12,

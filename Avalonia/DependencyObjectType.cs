@@ -14,9 +14,6 @@ namespace Avalonia
         private static Dictionary<Type, DependencyObjectType> typeMap = new Dictionary<Type, DependencyObjectType>();
         private static int currentId;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DependencyObjectType"/> class.
-        /// </summary>
         private DependencyObjectType(int id, Type systemType)
         {
             this.Id = id;

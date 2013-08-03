@@ -10,61 +10,78 @@ namespace Avalonia
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Avalonia.Threading;
-    using System.Xaml;
     using System.Xml;
+    using Avalonia.Data;
+    using Avalonia.Media;
+    using Avalonia.Threading;
 
     public class Application : DispatcherObject
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Application"/> class.
-        /// </summary>
+        private ResourceDictionary genericTheme;
+
         static Application()
         {
             RegisterDependencyProperties();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Application"/> class.
-        /// </summary>
         public Application()
         {
             Application.Current = this;
+
+            this.Resources = new ResourceDictionary();
+            this.genericTheme = new ResourceDictionary();
+
+            LoadComponent(this.genericTheme, new Uri("Themes/Generic.xaml", UriKind.Relative));
         }
 
-        public static Application Current { get; private set; }
+        public static Application Current 
+        { 
+            get; 
+            private set; 
+        }
 
-        public Window MainWindow { get; set; }
+        public Window MainWindow 
+        { 
+            get; 
+            set; 
+        }
 
-        public Type PresentationSourceType { get; set; }
+        public Type PresentationSourceType 
+        { 
+            get; 
+            set; 
+        }
+
+        public ResourceDictionary Resources
+        {
+            get;
+            private set;
+        }
 
         public static void LoadComponent(object component, Uri resourceLocator)
         {
-            DependencyObject dependencyObject = component as DependencyObject;
-            NameScope nameScope = new NameScope();
-
-            if (dependencyObject != null)
-            {
-                NameScope.SetNameScope(dependencyObject, nameScope);
-            }
-
-            XmlReader xml = XmlReader.Create(resourceLocator.OriginalString);
-            XamlXmlReader reader = new XamlXmlReader(xml);
-            XamlObjectWriter writer = new XamlObjectWriter(
-                new XamlSchemaContext(),
-                new XamlObjectWriterSettings
-                {
-                    RootObjectInstance = component,
-                    ExternalNameScope = nameScope,
-                    RegisterNamesOnExternalNamescope = true,
-                });
-
-            while (reader.Read())
-            {
-                writer.WriteNode(reader);
-            }
+            XamlReader.Load(resourceLocator.OriginalString, component);
         }
+        
+        public object FindResource(object resourceKey)
+        {
+            object result = this.Resources[resourceKey];
 
+            if (result == null)
+            {
+                result = this.genericTheme[resourceKey];
+            }
+
+            if (result == null)
+            {
+                throw new ResourceReferenceKeyNotFoundException(
+                    string.Format("'{0}' resource not found", resourceKey),
+                    resourceKey);
+            }
+
+            return result;
+        }
+        
         public void Run()
         {
             this.Run(this.MainWindow);

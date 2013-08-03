@@ -17,9 +17,6 @@ namespace Avalonia.Threading
         private Exception exception;
         private bool requestCatch;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherUnhandledExceptionFilterEventArgs"/> class.
-        /// </summary>
         internal DispatcherUnhandledExceptionFilterEventArgs(Dispatcher dispatcher, Exception exception)
                     : base(dispatcher)
         {

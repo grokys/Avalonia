@@ -16,18 +16,12 @@ namespace Avalonia
     [TypeConverter(typeof(CornerRadiusConverter))]
     public struct CornerRadius
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CornerRadius"/> struct.
-        /// </summary>
         public CornerRadius(double uniformRadius)
             : this()
         {
             this.BottomLeft = this.BottomRight = this.TopLeft = this.TopRight = uniformRadius;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CornerRadius"/> struct.
-        /// </summary>
         public CornerRadius(double topLeft, double topRight, double bottomRight, double bottomLeft)
                     : this()
         {

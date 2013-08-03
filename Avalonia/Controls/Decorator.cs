@@ -9,6 +9,7 @@ namespace Avalonia.Controls
     using System;
     using System.Windows.Markup;
     using Avalonia.Media;
+    using System.Linq;
 
     [ContentProperty("Child")]
     public class Decorator : FrameworkElement
@@ -27,6 +28,7 @@ namespace Avalonia.Controls
                 if (this.child != null)
                 {
                     this.RemoveVisualChild(this.child);
+                    this.RemoveLogicalChild(this.child);
                 }
 
                 this.child = value;
@@ -34,6 +36,7 @@ namespace Avalonia.Controls
                 if (this.child != null)
                 {
                     this.AddVisualChild(this.child);
+                    this.AddLogicalChild(this.child);
                 }
             }
         }
@@ -51,6 +54,21 @@ namespace Avalonia.Controls
             }
 
             return this.Child;
+        }
+
+        protected internal override System.Collections.IEnumerator LogicalChildren
+        {
+            get
+            {
+                if (this.child != null)
+                {
+                    return Enumerable.Repeat<object>(this.child, 1).GetEnumerator();
+                }
+                else
+                {
+                    return Enumerable.Empty<object>().GetEnumerator();
+                }
+            }
         }
 
         protected override Size MeasureOverride(Size constraint)

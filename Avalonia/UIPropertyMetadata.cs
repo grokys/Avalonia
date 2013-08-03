@@ -12,32 +12,20 @@ namespace Avalonia
     {
         private bool isAnimationProhibited;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UIPropertyMetadata"/> class.
-        /// </summary>
         public UIPropertyMetadata()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UIPropertyMetadata"/> class.
-        /// </summary>
         public UIPropertyMetadata(object defaultValue)
                     : base(defaultValue)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UIPropertyMetadata"/> class.
-        /// </summary>
         public UIPropertyMetadata(PropertyChangedCallback propertyChangedCallback)
                     : base(propertyChangedCallback)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UIPropertyMetadata"/> class.
-        /// </summary>
         public UIPropertyMetadata(
                     object defaultValue,
                     PropertyChangedCallback propertyChangedCallback)
@@ -45,9 +33,6 @@ namespace Avalonia
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UIPropertyMetadata"/> class.
-        /// </summary>
         public UIPropertyMetadata(
                     object defaultValue,
                     PropertyChangedCallback propertyChangedCallback,
@@ -56,9 +41,6 @@ namespace Avalonia
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UIPropertyMetadata"/> class.
-        /// </summary>
         public UIPropertyMetadata(
                     object defaultValue,
                     PropertyChangedCallback propertyChangedCallback,

@@ -6,8 +6,10 @@
 
 namespace Avalonia.Data
 {
+    using System.Collections.Generic;
+
     public interface IPropertyPathParser
     {
-        PropertyPathToken[] Parse(object source, string path);
+        IEnumerable<PropertyPathToken> Parse(object source, string path);
     }
 }

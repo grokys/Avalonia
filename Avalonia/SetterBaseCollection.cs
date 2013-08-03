@@ -15,9 +15,6 @@ namespace Avalonia
 
     public sealed class SetterBaseCollection : Collection<SetterBase>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SetterBaseCollection"/> class.
-        /// </summary>
         public SetterBaseCollection()
         {
         }

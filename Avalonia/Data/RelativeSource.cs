@@ -22,16 +22,10 @@ namespace Avalonia.Data
 
     public class RelativeSource
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RelativeSource"/> class.
-        /// </summary>
         public RelativeSource()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RelativeSource"/> class.
-        /// </summary>
         public RelativeSource(RelativeSourceMode mode)
         {
             this.Mode = mode;

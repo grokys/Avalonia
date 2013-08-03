@@ -16,27 +16,18 @@ namespace Avalonia
 
     public class Setter : SetterBase
     {
-        Dictionary<FrameworkElement, object> oldValues = new Dictionary<FrameworkElement, object>();
+        private Dictionary<FrameworkElement, object> oldValues = new Dictionary<FrameworkElement, object>();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Setter"/> class.
-        /// </summary>
         public Setter()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Setter"/> class.
-        /// </summary>
         public Setter(DependencyProperty property, object value)
         {
             this.Property = property;
             this.Value = value;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Setter"/> class.
-        /// </summary>
         public Setter(DependencyProperty property, object value, string targetName)
         {
             this.Property = property;
@@ -78,7 +69,7 @@ namespace Avalonia
 
         internal void Detach(FrameworkElement frameworkElement)
         {
-            frameworkElement.SetValue(this.Property, oldValues[frameworkElement]);
+            frameworkElement.SetValue(this.Property, this.oldValues[frameworkElement]);
         }
 
         private object ConvertValue(object value)

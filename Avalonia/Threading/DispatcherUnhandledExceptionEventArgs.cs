@@ -15,9 +15,6 @@ namespace Avalonia.Threading
         private Exception exception;
         private bool handled;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherUnhandledExceptionEventArgs"/> class.
-        /// </summary>
         internal DispatcherUnhandledExceptionEventArgs(Dispatcher dispatcher, Exception exception)
                     : base(dispatcher)
         {

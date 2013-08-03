@@ -15,7 +15,7 @@ namespace Avalonia
         public static readonly DependencyProperty NameScopeProperty =
             DependencyProperty.RegisterAttached(
                 "NameScope",
-                typeof(NameScope),
+                typeof(INameScope),
                 typeof(NameScope));
 
         private Dictionary<string, object> scope = new Dictionary<string, object>();

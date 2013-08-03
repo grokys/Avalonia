@@ -30,9 +30,6 @@ namespace Avalonia.Threading
         private Delegate delegateMethod;
         private object[] delegateArgs;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherOperation"/> class.
-        /// </summary>
         internal DispatcherOperation(Dispatcher dis, DispatcherPriority prio)
         {
             this.dispatcher = dis;
@@ -47,18 +44,12 @@ namespace Avalonia.Threading
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherOperation"/> class.
-        /// </summary>
         internal DispatcherOperation(Dispatcher dis, DispatcherPriority prio, Delegate d)
                     : this(dis, prio)
         {
             this.delegateMethod = d;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherOperation"/> class.
-        /// </summary>
         internal DispatcherOperation(Dispatcher dis, DispatcherPriority prio, Delegate d, object arg)
                     : this(dis, prio)
         {
@@ -67,9 +58,6 @@ namespace Avalonia.Threading
             this.delegateArgs[0] = arg;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherOperation"/> class.
-        /// </summary>
         internal DispatcherOperation(Dispatcher dis, DispatcherPriority prio, Delegate d, object arg, object[] args)
                     : this(dis, prio)
         {

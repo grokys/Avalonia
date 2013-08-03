@@ -13,7 +13,21 @@ namespace Avalonia.Controls
     [ContentProperty("Content")]
     public class ContentControl : Control
     {
-        public object Content { get; set; }
+        public static readonly DependencyProperty ContentProperty =
+            DependencyProperty.Register(
+                "Content",
+                typeof(object),
+                typeof(ContentControl),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+
+        public object Content
+        {
+            get { return this.GetValue(ContentProperty); }
+            set { this.SetValue(ContentProperty, value); }
+        }
 
         protected override Size MeasureOverride(Size constraint)
         {

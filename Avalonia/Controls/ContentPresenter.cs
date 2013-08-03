@@ -15,45 +15,36 @@ namespace Avalonia.Controls
 
     public class ContentPresenter : FrameworkElement
     {
+        public static readonly DependencyProperty ContentProperty =
+            DependencyProperty.Register(
+                "Content",
+                typeof(object),
+                typeof(ContentPresenter),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure,
+                    ContentChanged));
+
         private Visual visualChild;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ContentPresenter"/> class.
-        /// </summary>
         public ContentPresenter()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ContentPresenter"/> class.
-        /// </summary>
         internal ContentPresenter(ContentControl templatedParent)
         {
             this.Content = templatedParent.Content;
         }
 
-        public object Content { get; set; }
+        public object Content 
+        {
+            get { return (DependencyObject)this.GetValue(ContentProperty); }
+            set { this.SetValue(ContentProperty, value); }
+        }
 
         protected internal override int VisualChildrenCount
         {
             get { return (this.visualChild != null) ? 1 : 0; }
-        }
-
-        public override bool ApplyTemplate()
-        {
-            if (this.visualChild == null)
-            {
-                this.visualChild = this.Content as Visual;
-
-                if (this.visualChild != null)
-                {
-                    this.AddVisualChild(this.visualChild);
-                }
-
-                return true;
-            }
-
-            return false;
         }
 
         protected internal override Visual GetVisualChild(int index)
@@ -96,6 +87,28 @@ namespace Avalonia.Controls
             }
 
             return base.ArrangeOverride(finalSize);
+        }
+
+        private void ContentChanged(object oldValue, object newValue)
+        {
+            if (oldValue != null)
+            {
+                this.RemoveLogicalChild(oldValue);
+                this.RemoveVisualChild((Visual)oldValue);
+            }
+
+            if (newValue != null)
+            {
+                this.AddLogicalChild(newValue);
+                this.AddVisualChild((Visual)newValue);
+            }
+
+            this.visualChild = (Visual)newValue;
+        }
+
+        private static void ContentChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ((ContentPresenter)sender).ContentChanged(e.OldValue, e.NewValue);
         }
     }
 }

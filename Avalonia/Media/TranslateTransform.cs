@@ -14,18 +14,12 @@ namespace Avalonia.Media
 
     public class TranslateTransform : Transform
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TranslateTransform"/> class.
-        /// </summary>
         public TranslateTransform(double x, double y)
         {
             this.X = x;
             this.Y = y;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TranslateTransform"/> class.
-        /// </summary>
         public TranslateTransform(Vector offset)
         {
             this.X = offset.X;

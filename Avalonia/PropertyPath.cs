@@ -14,18 +14,12 @@ namespace Avalonia
 
     public sealed class PropertyPath
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyPath"/> class.
-        /// </summary>
         public PropertyPath(string path)
         {
             this.Path = path;
             this.PathParameters = new Collection<object>();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyPath"/> class.
-        /// </summary>
         public PropertyPath(string path, params object[] pathParameters)
         {
             this.Path = path;

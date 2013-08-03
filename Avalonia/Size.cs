@@ -13,9 +13,6 @@ namespace Avalonia
         private double width;
         private double height;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Size"/> struct.
-        /// </summary>
         public Size(double width, double height)
         {
             if (width < 0 || height < 0)

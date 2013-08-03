@@ -12,9 +12,6 @@ namespace Avalonia
 
     public struct DependencyPropertyChangedEventArgs
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DependencyPropertyChangedEventArgs"/> struct.
-        /// </summary>
         public DependencyPropertyChangedEventArgs(DependencyProperty property, object oldValue, object newValue)
                     : this()
         {

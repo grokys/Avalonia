@@ -6,6 +6,7 @@
 
 namespace Avalonia.Controls
 {
+    using System;
     using System.Collections.Generic;
     using Avalonia.Media;
 
@@ -20,11 +21,18 @@ namespace Avalonia.Controls
                     new SolidColorBrush(Colors.White),
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public static readonly DependencyProperty TemplateProperty =
+            DependencyProperty.Register(
+                "Template",
+                typeof(ControlTemplate),
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        private bool templateApplied;
         private List<Visual> visualChildren;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Control"/> class.
-        /// </summary>
         public Control()
         {
             this.visualChildren = new List<Visual>();
@@ -37,7 +45,11 @@ namespace Avalonia.Controls
             set { this.SetValue(BackgroundProperty, value); }
         }
 
-        public ControlTemplate Template { get; set; }
+        public ControlTemplate Template 
+        {
+            get { return (ControlTemplate)this.GetValue(TemplateProperty); }
+            set { this.SetValue(TemplateProperty, value); }
+        }
 
         protected internal override int VisualChildrenCount
         {
@@ -46,22 +58,43 @@ namespace Avalonia.Controls
 
         public override bool ApplyTemplate()
         {
-            if (this.visualChildren.Count == 0)
+            if (!this.templateApplied)
             {
-                Visual child = this.Template.CreateVisualTree(this);
-                this.visualChildren.Add(child);
-                this.AddVisualChild(child);
-                return true;
+                this.templateApplied = true;
+
+                if (this.Template == null)
+                {
+                    this.ApplyTheme();
+                }
+
+                if (this.Template != null)
+                {
+                    FrameworkElement child = this.Template.CreateVisualTree(this);
+                    this.visualChildren.Add(child);
+                    this.AddVisualChild(child);
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         protected internal override Visual GetVisualChild(int index)
         {
             return this.visualChildren[index];
+        }
+
+        private void ApplyTheme()
+        {
+            object defaultStyleKey = this.DefaultStyleKey;
+
+            if (defaultStyleKey == null)
+            {
+                throw new InvalidOperationException("DefaultStyleKey must be set.");
+            }
+
+            Style style = (Style)this.FindResource(this.DefaultStyleKey);
+            style.Attach(this);
         }
     }
 }

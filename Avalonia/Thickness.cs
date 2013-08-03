@@ -16,18 +16,12 @@ namespace Avalonia
     [TypeConverter(typeof(ThicknessConverter))]
     public struct Thickness
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Thickness"/> struct.
-        /// </summary>
         public Thickness(double uniformLength)
             : this()
         {
             this.Left = this.Top = this.Right = this.Bottom = uniformLength;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Thickness"/> struct.
-        /// </summary>
         public Thickness(double left, double top, double right, double bottom)
                     : this()
         {

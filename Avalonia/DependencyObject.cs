@@ -97,8 +97,8 @@ namespace Avalonia
 
             if (!this.properties.TryGetValue(dp, out val))
             {
-                val = dp.DefaultMetadata.DefaultValue;
-                this.properties[dp] = val;
+                PropertyMetadata metadata = dp.GetMetadata(this);
+                val = metadata.DefaultValue;
             }
 
             return val;
@@ -214,21 +214,25 @@ namespace Avalonia
         {
             Dictionary<string, DependencyProperty> list;
             DependencyProperty result;
+            Type t = type;
 
-            if (propertyDeclarations.TryGetValue(type, out list))
+            while (t != null)
             {
-                if (list.TryGetValue(name, out result))
+                if (propertyDeclarations.TryGetValue(t, out list))
                 {
-                    return result;
+                    if (list.TryGetValue(name, out result))
+                    {
+                        return result;
+                    }
                 }
+
+                t = t.BaseType;
             }
 
-            throw new KeyNotFoundException("Dependency property not found.");
-        }
-
-        internal bool IsUnset(DependencyProperty dependencyProperty)
-        {
-            return !this.properties.ContainsKey(dependencyProperty);
+            throw new KeyNotFoundException(string.Format(
+                "Dependency property '{0}' could not be found on type '{1}'.",
+                name,
+                type.FullName));
         }
 
         internal static void Register(Type t, DependencyProperty dp)
@@ -247,6 +251,11 @@ namespace Avalonia
             {
                 throw new ArgumentException("A property named " + dp.Name + " already exists on " + t.Name);
             }
+        }
+
+        internal bool IsUnset(DependencyProperty dependencyProperty)
+        {
+            return !this.properties.ContainsKey(dependencyProperty);
         }
 
         protected virtual void OnPropertyChanged(DependencyPropertyChangedEventArgs e)

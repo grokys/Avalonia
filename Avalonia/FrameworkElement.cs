@@ -9,6 +9,7 @@ namespace Avalonia
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -18,6 +19,15 @@ namespace Avalonia
     [RuntimeNameProperty("Name")]
     public class FrameworkElement : UIElement
     {
+        public static readonly DependencyProperty DefaultStyleKeyProperty =
+            DependencyProperty.Register(
+                "DefaultStyleKey",
+                typeof(object),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         public static readonly DependencyProperty MarginProperty =
             DependencyProperty.Register(
                 "Margin",
@@ -37,9 +47,13 @@ namespace Avalonia
                     FrameworkPropertyMetadataOptions.AffectsMeasure,
                     StyleChanged));
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkElement"/> class.
-        /// </summary>
+        internal static readonly DependencyProperty TemplatedParentProperty =
+            DependencyProperty.Register(
+                "TemplatedParent",
+                typeof(DependencyObject),
+                typeof(FrameworkElement),
+                new PropertyMetadata(TemplatedParentChanged));
+
         public FrameworkElement()
         {
             this.Resources = new ResourceDictionary();
@@ -88,8 +102,14 @@ namespace Avalonia
 
         public DependencyObject TemplatedParent
         {
-            get;
-            internal set;
+            get { return (DependencyObject)this.GetValue(TemplatedParentProperty); }
+            internal set { this.SetValue(TemplatedParentProperty, value); }
+        }
+
+        protected internal object DefaultStyleKey
+        {
+            get { return this.GetValue(DefaultStyleKeyProperty); }
+            set { this.SetValue(DefaultStyleKeyProperty, value); }
         }
 
         protected internal virtual IEnumerator LogicalChildren
@@ -108,6 +128,26 @@ namespace Avalonia
             return (nameScope != null) ? nameScope.FindName(name) : null;
         }
 
+        public object FindResource(object resourceKey)
+        {
+            FrameworkElement element = this;
+            object resource;
+
+            while (element != null)
+            {
+                resource = element.Resources[resourceKey];
+
+                if (resource != null)
+                {
+                    return resource;
+                }
+
+                element = (FrameworkElement)LogicalTreeHelper.GetParent(element);
+            }
+
+            return Application.Current.FindResource(resourceKey);
+        }
+
         protected internal void AddLogicalChild(object child)
         {
             FrameworkElement fe = child as FrameworkElement;
@@ -120,6 +160,11 @@ namespace Avalonia
                 }
 
                 fe.Parent = this;
+
+                if (this.TemplatedParent != null)
+                {
+                    this.PropagateTemplatedParent(fe, this.TemplatedParent);
+                }
             }
         }
 
@@ -135,6 +180,19 @@ namespace Avalonia
                 }
 
                 fe.Parent = null;
+            }
+        }
+
+        protected internal virtual void OnStyleChanged(Style oldStyle, Style newStyle)
+        {
+            if (oldStyle != null)
+            {
+                oldStyle.Detach(this);
+            }
+
+            if (newStyle != null)
+            {
+                newStyle.Attach(this);
             }
         }
 
@@ -172,22 +230,15 @@ namespace Avalonia
             return finalSize;
         }
 
-        protected internal virtual void OnStyleChanged(Style oldStyle, Style newStyle)
-        {
-            if (oldStyle != null)
-            {
-                oldStyle.Detach(this);
-            }
-
-            if (newStyle != null)
-            {
-                newStyle.Attach(this);
-            }
-        }
-
         private static void StyleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ((FrameworkElement)sender).OnStyleChanged((Style)e.OldValue, (Style)e.NewValue);
+        }
+
+        private static void TemplatedParentChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            FrameworkElement element = (FrameworkElement)sender;
+            element.PropagateTemplatedParent(element, element.TemplatedParent);
         }
 
         private INameScope FindNameScope(FrameworkElement e)
@@ -205,6 +256,16 @@ namespace Avalonia
             }
 
             return null;
+        }
+
+        private void PropagateTemplatedParent(FrameworkElement element, DependencyObject templatedParent)
+        {
+            element.TemplatedParent = templatedParent;
+
+            foreach (FrameworkElement child in LogicalTreeHelper.GetChildren(element).OfType<FrameworkElement>())
+            {
+                child.TemplatedParent = templatedParent;
+            }
         }
     }
 }

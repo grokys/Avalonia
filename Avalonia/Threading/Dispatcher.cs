@@ -59,9 +59,6 @@ namespace Avalonia.Threading
 
         private DispatcherFrame currentFrame;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Dispatcher"/> class.
-        /// </summary>
         private Dispatcher(Thread t)
         {
             this.baseThread = t;
@@ -581,17 +578,11 @@ namespace Avalonia.Threading
             private int size, head, tail;
             private object[] array;
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="PokableQueue"/> class.
-            /// </summary>
             internal PokableQueue(int capacity)
             {
                 this.array = new object[capacity];
             }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="PokableQueue"/> class.
-            /// </summary>
             internal PokableQueue()
                 : this(InitialCapacity)
             {

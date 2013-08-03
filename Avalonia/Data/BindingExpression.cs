@@ -19,9 +19,6 @@ namespace Avalonia.Data
         private IPropertyPathParser pathParser;
         private PropertyPathToken[] chain;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BindingExpression"/> class.
-        /// </summary>
         public BindingExpression(
                     IPropertyPathParser pathParser,
                     DependencyObject target,
@@ -58,16 +55,47 @@ namespace Avalonia.Data
 
         protected override object Evaluate()
         {
-            this.chain = this.pathParser.Parse(this.GetSource(), this.ParentBinding.Path.Path);
-            this.AttachListeners();
-            return this.chain.Last().Object;
+            Tuple<object, string> o = this.RewritePath(this.ParentBinding.Path.Path);
+            this.chain = this.pathParser.Parse(o.Item1, o.Item2).ToArray();
+
+            if (this.chain != null)
+            {
+                this.AttachListeners();
+
+                PropertyPathToken last = this.chain.Last();
+
+                if (last.Type == PropertyPathTokenType.FinalValue)
+                {
+                    return last.Object;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        private object GetSource()
+        private static FrameworkElement GetRoot(DependencyObject o)
+        {
+            DependencyObject parent;
+
+            while ((parent = LogicalTreeHelper.GetParent(o)) != null)
+            {
+                o = LogicalTreeHelper.GetParent(parent);
+            }
+
+            return (FrameworkElement)o;
+        }
+
+        private Tuple<object, string> RewritePath(string path)
         {
             if (this.DataItem != null)
             {
-                return this.DataItem;
+                return Tuple.Create(this.DataItem, path);
             }
             else
             {
@@ -80,7 +108,7 @@ namespace Avalonia.Data
 
                             if (fe != null)
                             {
-                                return fe.TemplatedParent;
+                                return Tuple.Create((object)fe, "TemplatedParent." + path);
                             }
                             else
                             {

@@ -8,9 +8,6 @@ namespace Avalonia.Threading
 {
     public class DispatcherObject
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherObject"/> class.
-        /// </summary>
         public DispatcherObject()
         {
             this.Dispatcher = Dispatcher.CurrentDispatcher;

@@ -52,15 +52,20 @@
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\ControlTemplate.cs" />
     <Compile Include="Controls\Decorator.cs" />
+    <Compile Include="Controls\TemplateContent.cs" />
     <Compile Include="Controls\TextBlock.cs" />
     <Compile Include="DependencyPropertyConverter.cs" />
     <Compile Include="LogicalTreeHelper.cs" />
+    <Compile Include="Media\XamlReader.cs" />
     <Compile Include="NameScope.cs" />
     <Compile Include="ResourceDictionary.cs" />
+    <Compile Include="ResourceReferenceKeyNotFoundException.cs" />
     <Compile Include="Setter.cs" />
     <Compile Include="SetterBase.cs" />
     <Compile Include="SetterBaseCollection.cs" />
     <Compile Include="Style.cs" />
+    <Compile Include="TemplateBindingExtension.cs" />
+    <Compile Include="TemplateContentLoader.cs" />
     <Compile Include="ThicknessConverter.cs" />
     <Compile Include="CornerRadius.cs" />
     <Compile Include="CornerRadiusConverter.cs" />
@@ -139,10 +144,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Themes\Generic.xaml">
+    <None Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Resource>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

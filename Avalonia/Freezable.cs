@@ -10,9 +10,6 @@ namespace Avalonia
 
     public abstract class Freezable : DependencyObject
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Freezable"/> class.
-        /// </summary>
         protected Freezable()
         {
         }

@@ -13,9 +13,6 @@ namespace Avalonia
         private DependencyProperty property;
         private object value;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LocalValueEntry"/> struct.
-        /// </summary>
         internal LocalValueEntry(DependencyProperty property, object value)
         {
             this.property = property;

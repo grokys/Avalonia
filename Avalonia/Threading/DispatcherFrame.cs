@@ -10,18 +10,12 @@ namespace Avalonia.Threading
 
     public class DispatcherFrame : DispatcherObject
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherFrame"/> class.
-        /// </summary>
         public DispatcherFrame()
         {
             this.ExitOnRequest = true;
             this.Continue = true;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherFrame"/> class.
-        /// </summary>
         public DispatcherFrame(bool exitWhenRequested)
         {
             this.ExitOnRequest = exitWhenRequested;

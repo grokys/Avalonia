@@ -1,5 +1,9 @@
 ﻿namespace Avalonia.UnitTests
 {
+#if TEST_WPF
+    using System.Windows;
+#endif
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -44,6 +48,17 @@
         }
 
         [TestMethod]
+        public void Measure_Should_Set_IsMeasureValid_To_True()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.Measure(new Size(12, 23));
+
+            Assert.IsTrue(target.IsMeasureValid);
+            Assert.IsFalse(target.IsArrangeValid);
+        }
+
+        [TestMethod]
         public void Measure_Parameters_Should_Be_Passed_To_MeasureOverride()
         {
             FrameworkElementTest target = new FrameworkElementTest();
@@ -80,7 +95,19 @@
         }
 
         [TestMethod]
-        public void Arrange_Should_Call_MeasureOverride()
+        public void Measure_Should_Not_Set_Actual_Or_Render_Size()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.Measure(new Size(12, 23));
+
+            Assert.AreEqual(0, target.ActualWidth);
+            Assert.AreEqual(0, target.ActualHeight);
+            Assert.AreEqual(new Size(), target.RenderSize);
+        }
+
+        [TestMethod]
+        public void Arrange_Should_Call_MeasureOverride_When_Not_IsMeasureValid()
         {
             FrameworkElementTest target = new FrameworkElementTest();
             Rect rect = new Rect(new Point(10, 20), new Size(30, 40));
@@ -89,8 +116,34 @@
             target.MeasureOutput = new Size(50, 60);
             target.Arrange(rect);
 
+            // Measure hasn't yet been called, therefore IsMeasureValid == false, therefore
+            // Measure should be called from Arrange.
             Assert.AreEqual(rect.Size, target.MeasureInput);
             Assert.AreEqual(target.MeasureOutput.Value, target.ArrangeInput);
+        }
+
+        [TestMethod]
+        public void Arrange_Should_Set_IsMeasureValid_And_IsArrangeValid_To_True()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.Arrange(new Rect(new Point(12, 23), new Size(34, 45)));
+
+            Assert.IsTrue(target.IsMeasureValid);
+            Assert.IsTrue(target.IsArrangeValid);
+        }
+
+        [TestMethod]
+        public void Arrange_Should_Set_Actual_And_Render_Size()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.ArrangeOutput = new Size(12, 23);
+            target.Arrange(new Rect(new Point(34, 45), new Size(56, 67)));
+
+            Assert.AreEqual(12, target.ActualWidth);
+            Assert.AreEqual(23, target.ActualHeight);
+            Assert.AreEqual(new Size(12, 23), target.RenderSize);
         }
 
         [TestMethod]
@@ -219,6 +272,7 @@
             public Size? MeasureInput { get; private set; }
             public Size? MeasureOutput { get; set; }
             public Size? ArrangeInput { get; private set; }
+            public Size? ArrangeOutput { get; set; }
 
             protected override Size MeasureOverride(Size constraint)
             {
@@ -237,7 +291,7 @@
                     this.ArrangeInput = finalSize;
                 }
 
-                return finalSize;
+                return this.ArrangeOutput ?? finalSize;
             }
         }
     }

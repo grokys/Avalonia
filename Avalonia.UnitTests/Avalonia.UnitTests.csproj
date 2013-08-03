@@ -57,6 +57,7 @@
     <Compile Include="Data\PropertyPathParserTests.cs" />
     <Compile Include="FrameworkElement_MeasureArrangeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIElement_MeasureArrangeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

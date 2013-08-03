@@ -71,16 +71,6 @@
         }
 
         [TestMethod]
-        public void Measure_Should_Not_Set_VisualOffset()
-        {
-            UIElementTest target = new UIElementTest();
-
-            target.Measure(new Size(12, 34));
-
-            Assert.AreEqual(new Vector(), target.VisualOffset);
-        }
-
-        [TestMethod]
         public void Measure_Result_Should_Be_Saved_In_DesiredSize()
         {
             UIElementTest target = new UIElementTest();
@@ -99,6 +89,55 @@
             target.Measure(new Size(12, 23));
 
             Assert.AreEqual(new Size(), target.RenderSize);
+        }
+
+        [TestMethod]
+        public void Measure_Should_Not_Set_VisualOffset()
+        {
+            UIElementTest target = new UIElementTest();
+
+            target.Measure(new Size(12, 34));
+
+            Assert.AreEqual(new Vector(), target.VisualOffset);
+        }
+
+        [TestMethod]
+        public void Arrange_Should_Call_Measure_When_Not_Already_Run()
+        {
+            UIElementTest target = new UIElementTest();
+
+            target.RecordInputs = true;
+            target.Arrange(new Rect(new Point(12, 23), new Size(34, 45)));
+
+            Assert.AreEqual(new Size(34, 45), target.MeasureInput);
+        }
+
+        [TestMethod]
+        public void Arrange_Should_Not_Call_Measure_When_Already_Run()
+        {
+            UIElementTest target = new UIElementTest();
+
+            target.Measure(new Size(12, 23));
+
+            target.RecordInputs = true;
+            target.Arrange(new Rect(new Point(34, 45), new Size(56, 67)));
+
+            Assert.IsNull(target.MeasureInput);
+        }
+
+        [TestMethod]
+        public void Arrange_Should_Call_Measure_When_Not_IsMeasureValid_With_Previous_Constraint()
+        {
+            UIElementTest target = new UIElementTest();
+
+            target.MeasureOutput = new Size(78, 89);
+            target.Measure(new Size(12, 23));
+            target.InvalidateMeasure();
+
+            target.RecordInputs = true;
+            target.Arrange(new Rect(new Point(34, 45), new Size(56, 67)));
+
+            Assert.AreEqual(new Size(12, 23), target.MeasureInput);
         }
 
         [TestMethod]

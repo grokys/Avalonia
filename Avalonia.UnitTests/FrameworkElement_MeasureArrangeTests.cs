@@ -107,19 +107,13 @@
         }
 
         [TestMethod]
-        public void Arrange_Should_Call_MeasureOverride_When_Not_IsMeasureValid()
+        public void Measure_Should_Not_Set_VisualOffset()
         {
             FrameworkElementTest target = new FrameworkElementTest();
-            Rect rect = new Rect(new Point(10, 20), new Size(30, 40));
 
-            target.RecordInputs = true;
-            target.MeasureOutput = new Size(50, 60);
-            target.Arrange(rect);
+            target.Measure(new Size(12, 34));
 
-            // Measure hasn't yet been called, therefore IsMeasureValid == false, therefore
-            // Measure should be called from Arrange.
-            Assert.AreEqual(rect.Size, target.MeasureInput);
-            Assert.AreEqual(target.MeasureOutput.Value, target.ArrangeInput);
+            Assert.AreEqual(new Vector(), target.VisualOffset);
         }
 
         [TestMethod]
@@ -266,6 +260,16 @@
             Assert.AreEqual(new Size(12, 23), target.ArrangeInput);
         }
 
+        [TestMethod]
+        public void Arrange_Should_Set_VisualOffset()
+        {
+            FrameworkElementTest target = new FrameworkElementTest();
+
+            target.Arrange(new Rect(new Point(12, 23), new Size(12, 34)));
+
+            Assert.AreEqual(new Vector(12, 23), target.VisualOffset);
+        }
+
         private class FrameworkElementTest : FrameworkElement
         {
             public bool RecordInputs { get; set; }
@@ -273,6 +277,11 @@
             public Size? MeasureOutput { get; set; }
             public Size? ArrangeInput { get; private set; }
             public Size? ArrangeOutput { get; set; }
+
+            public new Vector VisualOffset
+            {
+                get { return base.VisualOffset; }
+            }
 
             protected override Size MeasureOverride(Size constraint)
             {

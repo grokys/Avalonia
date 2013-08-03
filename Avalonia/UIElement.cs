@@ -36,8 +36,12 @@ namespace Avalonia
 
         public void Arrange(Rect finalRect)
         {
-            this.Measure(finalRect.Size);
-            this.ArrangeCore(new Rect(finalRect.Location, this.DesiredSize));
+            if (!this.IsMeasureValid)
+            {
+                this.Measure(finalRect.Size);
+            }
+
+            this.ArrangeCore(finalRect);
             this.IsArrangeValid = true;
         }
 

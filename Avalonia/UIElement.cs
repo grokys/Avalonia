@@ -27,14 +27,22 @@ namespace Avalonia
             if (!this.IsMeasureValid)
             {
                 this.DesiredSize = this.MeasureCore(availableSize);
+                this.IsMeasureValid = true;
             }
         }
 
         public void Arrange(Rect finalRect)
         {
+            if (!this.IsMeasureValid)
+            {
+                this.Measure(finalRect.Size);
+                finalRect = new Rect(finalRect.Location, this.DesiredSize);
+            }
+
             if (!this.IsArrangeValid)
             {
                 this.ArrangeCore(finalRect);
+                this.IsArrangeValid = true;
             }
         }
 

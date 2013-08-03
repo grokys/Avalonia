@@ -16,6 +16,22 @@ namespace Avalonia
     using System.Windows.Markup;
     using Avalonia.Media;
 
+    public enum HorizontalAlignment
+    {
+        Left,
+        Center,
+        Right,
+        Stretch,
+    }
+
+    public enum VerticalAlignment
+    {
+        Top = 0,
+        Center = 1,
+        Bottom = 2,
+        Stretch = 3,
+    }
+
     [RuntimeNameProperty("Name")]
     public class FrameworkElement : UIElement
     {
@@ -27,6 +43,15 @@ namespace Avalonia
                 new FrameworkPropertyMetadata(
                     null,
                     FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        public static readonly DependencyProperty HorizontalAlignmentProperty =
+            DependencyProperty.Register(
+                "HorizontalAlignment",
+                typeof(HorizontalAlignment),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    HorizontalAlignment.Stretch,
+                    FrameworkPropertyMetadataOptions.AffectsArrange));
 
         public static readonly DependencyProperty MarginProperty =
             DependencyProperty.Register(
@@ -54,6 +79,15 @@ namespace Avalonia
                 typeof(FrameworkElement),
                 new PropertyMetadata(TemplatedParentChanged));
 
+        public static readonly DependencyProperty VerticalAlignmentProperty =
+            DependencyProperty.Register(
+                "VerticalAlignment",
+                typeof(VerticalAlignment),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    VerticalAlignment.Stretch,
+                    FrameworkPropertyMetadataOptions.AffectsArrange));
+
         public FrameworkElement()
         {
             this.Resources = new ResourceDictionary();
@@ -67,6 +101,12 @@ namespace Avalonia
         public double ActualHeight
         {
             get { return this.RenderSize.Height; }
+        }
+
+        public HorizontalAlignment HorizontalAlignment 
+        {
+            get { return (HorizontalAlignment)this.GetValue(HorizontalAlignmentProperty); }
+            set { this.SetValue(HorizontalAlignmentProperty, value); }
         }
 
         public Thickness Margin
@@ -104,6 +144,12 @@ namespace Avalonia
         {
             get { return (DependencyObject)this.GetValue(TemplatedParentProperty); }
             internal set { this.SetValue(TemplatedParentProperty, value); }
+        }
+
+        public VerticalAlignment VerticalAlignment
+        {
+            get { return (VerticalAlignment)this.GetValue(VerticalAlignmentProperty); }
+            set { this.SetValue(VerticalAlignmentProperty, value); }
         }
 
         protected internal object DefaultStyleKey
@@ -217,9 +263,20 @@ namespace Avalonia
             Point origin = new Point(
                 finalRect.Left + this.Margin.Left,
                 finalRect.Top + this.Margin.Top);
+            
             Size size = new Size(
                 Math.Max(0, finalRect.Width - this.Margin.Left - this.Margin.Right),
                 Math.Max(0, finalRect.Height - this.Margin.Top - this.Margin.Bottom));
+
+            if (this.HorizontalAlignment != HorizontalAlignment.Stretch)
+            {
+                size = new Size(Math.Min(size.Width, this.DesiredSize.Width), size.Height);
+            }
+
+            if (this.VerticalAlignment != VerticalAlignment.Stretch)
+            {
+                size = new Size(size.Width, Math.Min(size.Height, this.DesiredSize.Height));
+            }
 
             size = this.ArrangeOverride(size);
             base.ArrangeCore(new Rect(origin, size));

@@ -43,5 +43,16 @@ namespace Avalonia.Media
                 B = b,
             };
         }
+
+        internal static Color FromUInt32(uint value)
+        {
+            return new Color
+            {
+                A = (byte)((value >> 24) & 0xff),
+                R = (byte)((value >> 16) & 0xff),
+                G = (byte)((value >> 8) & 0xff),
+                B = (byte)(value & 0xff),
+            };
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace Avalonia
     using Avalonia.Data;
     using Avalonia.Input;
     using Avalonia.Media;
+    using Avalonia.Platform;
 
     public class Window : ContentControl
     {
@@ -25,9 +26,7 @@ namespace Avalonia
 
         public Window()
         {
-            this.PresentationSource = (AvaloniaPresentationSource)
-                Activator.CreateInstance(Application.Current.PresentationSourceType);
-
+            this.PresentationSource = PlatformFactory.Instance.CreatePresentationSource();
             this.PresentationSource.Closed += (s, e) => this.OnClosed(EventArgs.Empty);
             this.PresentationSource.MouseLeftButtonDown += (s, e) => this.OnMouseLeftButtonDown(e);
             this.PresentationSource.Resized += (s, e) => this.DoMeasureArrange();
@@ -67,7 +66,7 @@ namespace Avalonia
             }
         }
 
-        internal AvaloniaPresentationSource PresentationSource
+        internal PlatformPresentationSource PresentationSource
         {
             get;
             private set;

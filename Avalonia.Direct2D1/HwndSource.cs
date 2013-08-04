@@ -6,10 +6,11 @@
     using Avalonia.Direct2D1.Interop;
     using Avalonia.Input;
     using Avalonia.Media;
+    using Avalonia.Platform;
     using SharpDX.Direct2D1;
     using SharpDX.DXGI;
 
-    public class HwndSource : AvaloniaPresentationSource, IDisposable
+    public class HwndSource : PlatformPresentationSource, IDisposable
     {
         private string className;
         private WindowRenderTarget renderTarget;

@@ -1,17 +1,17 @@
 // -----------------------------------------------------------------------
-// <copyright file="AvaloniaPresentationSource.cs" company="Steven Kirk">
+// <copyright file="PlatformPresentationSource.cs" company="Steven Kirk">
 // Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Avalonia
+namespace Avalonia.Platform
 {
     using System;
     using Avalonia.Input;
     using Avalonia.Media;
 
     [AvaloniaSpecific]
-    public abstract class AvaloniaPresentationSource : PresentationSource
+    public abstract class PlatformPresentationSource : PresentationSource
     {
         public event EventHandler Closed;
 

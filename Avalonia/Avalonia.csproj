@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -25,7 +25,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -44,7 +44,8 @@
   <ItemGroup>
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
-    <Compile Include="AvaloniaPresentationSource.cs" />
+    <Compile Include="Platform\PlatformFactory.cs" />
+    <Compile Include="Platform\PlatformPresentationSource.cs" />
     <Compile Include="AvaloniaSpecificAttribute.cs" />
     <Compile Include="Controls\Border.cs" />
     <Compile Include="Controls\ContentControl.cs" />
@@ -131,7 +132,7 @@
     <Compile Include="Threading\DispatcherProcessingDisabled.cs" />
     <Compile Include="Threading\DispatcherUnhandledExceptionEventArgs.cs" />
     <Compile Include="Threading\DispatcherUnhandledExceptionFilterEventArgs.cs" />
-    <Compile Include="Threading\IPlatformDispatcherImpl.cs" />
+    <Compile Include="Platform\IPlatformDispatcher.cs" />
     <Compile Include="UIElement.cs" />
     <Compile Include="UIPropertyMetadata.cs" />
     <Compile Include="Vector.cs" />

@@ -42,12 +42,6 @@ namespace Avalonia
             set; 
         }
 
-        public Type PresentationSourceType 
-        { 
-            get; 
-            set; 
-        }
-
         public ResourceDictionary Resources
         {
             get;

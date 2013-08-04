@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Direct2DPlatformFactory.cs" />
     <Compile Include="HwndSource.cs" />
     <Compile Include="HwndSourceParameters.cs" />
     <Compile Include="Interop\UnmanagedMethods.cs" />

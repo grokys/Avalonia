@@ -12,6 +12,7 @@ namespace Avalonia.Threading
     using System.ComponentModel;
     using System.Security;
     using System.Threading;
+    using Avalonia.Platform;
 
     public enum DispatcherPriority
     {
@@ -62,6 +63,7 @@ namespace Avalonia.Threading
         private Dispatcher(Thread t)
         {
             this.baseThread = t;
+
             for (int i = 1; i <= (int)DispatcherPriority.Send; i++)
             {
                 this.priorityQueues[i] = new PokableQueue();
@@ -73,8 +75,6 @@ namespace Avalonia.Threading
         public event EventHandler ShutdownStarted;
 
         public event EventHandler ShutdownFinished;
-
-        public static IPlatformDispatcherImpl PlatformDispatcher { get; set; }
 
         public static Dispatcher CurrentDispatcher
         {
@@ -427,7 +427,7 @@ namespace Avalonia.Threading
         public void InvokeShutdown()
         {
             this.flags |= Flags.ShutdownStarted;
-            PlatformDispatcher.SendMessage();
+            PlatformFactory.Instance.Dispatcher.SendMessage();
         }
 
         [SecurityCritical]
@@ -471,7 +471,7 @@ namespace Avalonia.Threading
 
             if (Thread.CurrentThread != this.baseThread)
             {
-                PlatformDispatcher.SendMessage();
+                PlatformFactory.Instance.Dispatcher.SendMessage();
             }
         }
 
@@ -560,7 +560,7 @@ namespace Avalonia.Threading
                 }
 
                 this.hooks.EmitInactive();
-                PlatformDispatcher.ProcessMessage();
+                PlatformFactory.Instance.Dispatcher.ProcessMessage();
 
                 if (this.HasShutdownStarted)
                 {

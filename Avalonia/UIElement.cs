@@ -12,6 +12,15 @@ namespace Avalonia
 
     public class UIElement : Visual
     {
+        private bool measureCalled;
+        private Size previousMeasureSize;
+
+        public UIElement()
+        {
+            this.IsMeasureValid = true;
+            this.IsArrangeValid = true;
+        }
+
         public event MouseButtonEventHandler MouseLeftButtonDown;
 
         public Size DesiredSize { get; set; }
@@ -24,28 +33,27 @@ namespace Avalonia
 
         public void Measure(Size availableSize)
         {
-            if (!this.IsMeasureValid)
-            {
-                this.DesiredSize = this.MeasureCore(availableSize);
-            }
+            this.measureCalled = true;
+            this.previousMeasureSize = availableSize;
+            this.DesiredSize = this.MeasureCore(availableSize);
+            this.IsMeasureValid = true;
+            this.IsArrangeValid = false;
         }
 
         public void Arrange(Rect finalRect)
         {
-            if (!this.IsMeasureValid)
+            if (!this.measureCalled || !this.IsMeasureValid)
             {
-                this.Measure(finalRect.Size);
+                this.Measure(this.measureCalled ? previousMeasureSize : finalRect.Size);
             }
 
-            if (!this.IsArrangeValid)
-            {
-                this.ArrangeCore(finalRect);
-            }
+            this.ArrangeCore(finalRect);
+            this.IsArrangeValid = true;
         }
 
         public void InvalidateMeasure()
         {
-            this.IsMeasureValid = this.IsArrangeValid = false;
+            this.IsMeasureValid = false;
             LayoutManager.Instance.QueueMeasure(this);
         }
 

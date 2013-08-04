@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Direct2D1", "Avalo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.UnitTests", "Avalonia.UnitTests\Avalonia.UnitTests.csproj", "{F492E4E9-1BC3-4A5F-867D-ABD26A0757FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTests", "WpfTests\WpfTests.csproj", "{24314F2B-3FC8-472E-9BCB-D19CE2C561AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{F492E4E9-1BC3-4A5F-867D-ABD26A0757FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F492E4E9-1BC3-4A5F-867D-ABD26A0757FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F492E4E9-1BC3-4A5F-867D-ABD26A0757FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24314F2B-3FC8-472E-9BCB-D19CE2C561AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24314F2B-3FC8-472E-9BCB-D19CE2C561AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24314F2B-3FC8-472E-9BCB-D19CE2C561AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24314F2B-3FC8-472E-9BCB-D19CE2C561AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

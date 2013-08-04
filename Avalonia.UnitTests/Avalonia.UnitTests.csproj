@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Controls\ContentControl_MeasureArrangeTests.cs" />
     <Compile Include="Data\BindingExpressionTests.cs" />
     <Compile Include="Data\PropertyPathParserTests.cs" />
     <Compile Include="FrameworkElement_MeasureArrangeTests.cs" />

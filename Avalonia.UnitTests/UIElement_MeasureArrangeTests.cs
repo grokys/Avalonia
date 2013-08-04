@@ -159,13 +159,13 @@
         }
 
         [TestMethod]
-        public void Arrange_Should_Not_Set_Render_Size()
+        public void Arrange_Should_Set_Render_Size()
         {
             UIElementTest target = new UIElementTest();
 
             target.Arrange(new Rect(new Point(34, 45), new Size(56, 67)));
 
-            Assert.AreEqual(new Size(), target.RenderSize);
+            Assert.AreEqual(new Size(56, 67), target.RenderSize);
         }
 
         [TestMethod]
@@ -175,7 +175,7 @@
 
             target.Arrange(new Rect(new Point(12, 23), new Size(34, 45)));
 
-            Assert.AreEqual(new Vector(), target.VisualOffset);
+            Assert.AreEqual(new Vector(12, 23), target.VisualOffset);
         }
 
         private class UIElementTest : UIElement
@@ -206,6 +206,8 @@
                 {
                     this.ArrangeInput = finalRect;
                 }
+
+                base.ArrangeCore(finalRect);
             }
         }
     }

@@ -72,13 +72,6 @@ namespace Avalonia
                     FrameworkPropertyMetadataOptions.AffectsMeasure,
                     StyleChanged));
 
-        internal static readonly DependencyProperty TemplatedParentProperty =
-            DependencyProperty.Register(
-                "TemplatedParent",
-                typeof(DependencyObject),
-                typeof(FrameworkElement),
-                new PropertyMetadata(TemplatedParentChanged));
-
         public static readonly DependencyProperty VerticalAlignmentProperty =
             DependencyProperty.Register(
                 "VerticalAlignment",
@@ -87,6 +80,13 @@ namespace Avalonia
                 new FrameworkPropertyMetadata(
                     VerticalAlignment.Stretch,
                     FrameworkPropertyMetadataOptions.AffectsArrange));
+
+        internal static readonly DependencyProperty TemplatedParentProperty =
+            DependencyProperty.Register(
+                "TemplatedParent",
+                typeof(DependencyObject),
+                typeof(FrameworkElement),
+                new PropertyMetadata(TemplatedParentChanged));
 
         public FrameworkElement()
         {
@@ -177,21 +177,34 @@ namespace Avalonia
         public object FindResource(object resourceKey)
         {
             FrameworkElement element = this;
-            object resource;
+            object resource = null;
 
-            while (element != null)
+            while (resource == null && element != null)
             {
                 resource = element.Resources[resourceKey];
-
-                if (resource != null)
-                {
-                    return resource;
-                }
-
                 element = (FrameworkElement)LogicalTreeHelper.GetParent(element);
             }
 
-            return Application.Current.FindResource(resourceKey);
+            if (resource == null && Application.Current != null)
+            {
+                resource = Application.Current.Resources[resourceKey];
+            }
+
+            if (resource == null)
+            {
+                resource = Application.GenericTheme[resourceKey];
+            }
+
+            if (resource != null)
+            {
+                return resource;
+            }
+            else
+            {
+                throw new ResourceReferenceKeyNotFoundException(
+                    string.Format("'{0}' resource not found", resourceKey),
+                    resourceKey);
+            }
         }
 
         protected internal void AddLogicalChild(object child)
@@ -279,6 +292,27 @@ namespace Avalonia
             }
 
             size = this.ArrangeOverride(size);
+
+            switch (this.HorizontalAlignment)
+            {
+                case HorizontalAlignment.Center:
+                    origin = new Point((finalRect.Right - size.Width) / 2, origin.Y);
+                    break;
+                case HorizontalAlignment.Right:
+                    origin = new Point(finalRect.Right - size.Width, origin.Y);
+                    break;
+            }
+
+            switch (this.VerticalAlignment)
+            {
+                case VerticalAlignment.Center:
+                    origin = new Point(origin.X, (finalRect.Bottom - size.Height) / 2);
+                    break;
+                case VerticalAlignment.Bottom:
+                    origin = new Point(origin.X, finalRect.Bottom - size.Height);
+                    break;
+            }
+
             base.ArrangeCore(new Rect(origin, size));
         }
 

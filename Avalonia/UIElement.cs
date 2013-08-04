@@ -44,7 +44,7 @@ namespace Avalonia
         {
             if (!this.measureCalled || !this.IsMeasureValid)
             {
-                this.Measure(this.measureCalled ? previousMeasureSize : finalRect.Size);
+                this.Measure(this.measureCalled ? this.previousMeasureSize : finalRect.Size);
             }
 
             this.ArrangeCore(finalRect);

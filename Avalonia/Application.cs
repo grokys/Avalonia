@@ -17,21 +17,17 @@ namespace Avalonia
 
     public class Application : DispatcherObject
     {
-        private ResourceDictionary genericTheme;
-
         static Application()
         {
             RegisterDependencyProperties();
+            GenericTheme = new ResourceDictionary();
+            LoadComponent(GenericTheme, new Uri("Themes/Generic.xaml", UriKind.Relative));
         }
 
         public Application()
         {
             Application.Current = this;
-
-            this.Resources = new ResourceDictionary();
-            this.genericTheme = new ResourceDictionary();
-
-            LoadComponent(this.genericTheme, new Uri("Themes/Generic.xaml", UriKind.Relative));
+            this.Resources = new ResourceDictionary();            
         }
 
         public static Application Current 
@@ -58,6 +54,12 @@ namespace Avalonia
             private set;
         }
 
+        internal static ResourceDictionary GenericTheme
+        {
+            get;
+            private set;
+        }
+
         public static void LoadComponent(object component, Uri resourceLocator)
         {
             XamlReader.Load(resourceLocator.OriginalString, component);
@@ -66,11 +68,6 @@ namespace Avalonia
         public object FindResource(object resourceKey)
         {
             object result = this.Resources[resourceKey];
-
-            if (result == null)
-            {
-                result = this.genericTheme[resourceKey];
-            }
 
             if (result == null)
             {

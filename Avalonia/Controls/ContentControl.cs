@@ -22,6 +22,13 @@ namespace Avalonia.Controls
                     null,
                     FrameworkPropertyMetadataOptions.AffectsMeasure));
 
+        static ContentControl()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(
+                typeof(ContentControl), 
+                new FrameworkPropertyMetadata(typeof(ContentControl)));
+        }
+
         public object Content
         {
             get { return this.GetValue(ContentProperty); }
@@ -49,6 +56,7 @@ namespace Avalonia.Controls
             if (this.VisualChildrenCount > 0)
             {
                 UIElement ui = this.GetVisualChild(0) as UIElement;
+                FrameworkElement fe = ui as FrameworkElement;
 
                 if (ui != null)
                 {

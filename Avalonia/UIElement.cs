@@ -12,6 +12,9 @@ namespace Avalonia
 
     public class UIElement : Visual
     {
+        private bool measureCalled;
+        private Size previousMeasureSize;
+
         public UIElement()
         {
             this.IsMeasureValid = true;
@@ -30,15 +33,18 @@ namespace Avalonia
 
         public void Measure(Size availableSize)
         {
+            this.measureCalled = true;
+            this.previousMeasureSize = availableSize;
             this.DesiredSize = this.MeasureCore(availableSize);
             this.IsMeasureValid = true;
+            this.IsArrangeValid = false;
         }
 
         public void Arrange(Rect finalRect)
         {
-            if (!this.IsMeasureValid)
+            if (!this.measureCalled || !this.IsMeasureValid)
             {
-                this.Measure(finalRect.Size);
+                this.Measure(this.measureCalled ? previousMeasureSize : finalRect.Size);
             }
 
             this.ArrangeCore(finalRect);
@@ -47,7 +53,7 @@ namespace Avalonia
 
         public void InvalidateMeasure()
         {
-            this.IsMeasureValid = this.IsArrangeValid = false;
+            this.IsMeasureValid = false;
             LayoutManager.Instance.QueueMeasure(this);
         }
 

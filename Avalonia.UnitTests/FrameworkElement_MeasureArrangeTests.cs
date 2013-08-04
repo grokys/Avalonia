@@ -7,7 +7,11 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
+#if TEST_WPF    
+    public class Wpf_FrameworkElement_MeasureArrangeTests
+#else
     public class FrameworkElement_MeasureArrangeTests
+#endif
     {
         [TestMethod]
         public void IsMeasureValid_Should_Initially_Be_True()

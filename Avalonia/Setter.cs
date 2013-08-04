@@ -78,6 +78,10 @@ namespace Avalonia
             {
                 return value;
             }
+            else if (value is string && this.Property.PropertyType.IsEnum)
+            {
+                return Enum.Parse(this.Property.PropertyType, (string)value);
+            }
             else
             {
                 TypeConverterAttribute attribute =

@@ -1,4 +1,4 @@
-﻿namespace Avalonia.Media
+﻿namespace Avalonia.Direct2D1.Media
 {
     using System;
     using Avalonia.Media;

@@ -1,10 +1,10 @@
 // -----------------------------------------------------------------------
-// <copyright file="IPlatformDispatcherImpl.cs" company="Steven Kirk">
+// <copyright file="IPlatformDispatcher.cs" company="Steven Kirk">
 // Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Avalonia.Threading
+namespace Avalonia.Platform
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace Avalonia.Threading
     using System.Threading.Tasks;
 
     [AvaloniaSpecific]
-    public interface IPlatformDispatcherImpl
+    public interface IPlatformDispatcher
     {
         void ProcessMessage();
 

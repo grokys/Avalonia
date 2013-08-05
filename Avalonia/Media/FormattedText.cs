@@ -8,12 +8,53 @@ namespace Avalonia.Media
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Avalonia.Platform;
 
     public class FormattedText
     {
-        public string Text { get; set; }
+        public FormattedText(
+            string textToFormat,
+            CultureInfo culture,
+            FlowDirection flowDirection,
+            Typeface typeface,
+            double emSize,
+            Brush foreground)
+        {
+            this.PlatformImpl = PlatformFactory.Instance.CreateFormattedText(textToFormat);
+            this.Text = textToFormat;
+        }
+
+        public string Text 
+        { 
+            get; 
+            private set; 
+        }
+
+        public double Width
+        {
+            get
+            {
+                return this.PlatformImpl.Width;
+            }
+        }
+
+        public double Height
+        {
+            get
+            {
+                return this.PlatformImpl.Height;
+            }
+        }
+
+        [AvaloniaSpecific]
+        public IPlatformFormattedText PlatformImpl
+        {
+            get;
+            private set;
+        }
     }
 }

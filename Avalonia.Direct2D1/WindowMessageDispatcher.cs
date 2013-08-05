@@ -3,9 +3,10 @@
     using System;
     using Avalonia.Direct2D1.Interop;
     using Avalonia.Interop;
+    using Avalonia.Platform;
     using Avalonia.Threading;
 
-    public class WindowMessageDispatcher : IPlatformDispatcherImpl
+    public class WindowMessageDispatcher : IPlatformDispatcher
     {
         public void ProcessMessage()
         {

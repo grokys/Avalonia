@@ -56,10 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Direct2D1PlatformFactory.cs" />
     <Compile Include="HwndSource.cs" />
     <Compile Include="HwndSourceParameters.cs" />
     <Compile Include="Interop\UnmanagedMethods.cs" />
     <Compile Include="Media\Direct2D1DrawingContext.cs" />
+    <Compile Include="Media\Direct2D1FormattedText.cs" />
     <Compile Include="Media\MediaExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowMessageDispatcher.cs" />

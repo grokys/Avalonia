@@ -12,6 +12,13 @@ namespace Avalonia
 
     public class UIElement : Visual
     {
+        public static readonly RoutedEvent MouseMoveEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseMove",
+                RoutingStrategy.Bubble,
+                typeof(MouseEventHandler),
+                typeof(UIElement));
+
         private bool measureCalled;
         private Size previousMeasureSize;
 
@@ -30,6 +37,8 @@ namespace Avalonia
         public bool IsArrangeValid { get; private set; }
 
         public Size RenderSize { get; private set; }
+
+        public event MouseEventHandler MouseMove;
 
         public void Measure(Size availableSize)
         {
@@ -78,6 +87,14 @@ namespace Avalonia
         internal override Rect GetHitTestBounds()
         {
             return new Rect((Point)this.VisualOffset, this.RenderSize);
+        }
+
+        protected virtual void OnMouseMove(MouseEventArgs e)
+        {
+            if (this.MouseMove != null)
+            {
+                this.MouseMove(this, e);
+            }
         }
 
         protected internal virtual void OnRender(DrawingContext drawingContext)

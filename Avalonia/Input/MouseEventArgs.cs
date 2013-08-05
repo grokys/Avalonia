@@ -12,6 +12,8 @@ namespace Avalonia.Input
     using System.Text;
     using System.Threading.Tasks;
 
+    public delegate void MouseEventHandler(object sender, MouseEventArgs e);
+
     public class MouseEventArgs : RoutedEventArgs
     {
     }

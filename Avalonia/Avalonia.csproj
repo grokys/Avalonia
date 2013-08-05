@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="EventManager.cs" />
     <Compile Include="FlowDirection.cs" />
     <Compile Include="Media\Typeface.cs" />
     <Compile Include="Platform\IPlatformFormattedText.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="NameScope.cs" />
     <Compile Include="ResourceDictionary.cs" />
     <Compile Include="ResourceReferenceKeyNotFoundException.cs" />
+    <Compile Include="RoutedEvent.cs" />
     <Compile Include="Setter.cs" />
     <Compile Include="SetterBase.cs" />
     <Compile Include="SetterBaseCollection.cs" />

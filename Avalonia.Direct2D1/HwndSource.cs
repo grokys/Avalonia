@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Runtime.InteropServices;
     using Avalonia.Direct2D1.Interop;
+    using Avalonia.Direct2D1.Media;
     using Avalonia.Input;
     using Avalonia.Media;
     using Avalonia.Platform;

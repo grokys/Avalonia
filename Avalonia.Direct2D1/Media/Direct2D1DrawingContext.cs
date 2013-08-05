@@ -1,9 +1,13 @@
-﻿namespace Avalonia.Media
+﻿namespace Avalonia.Direct2D1.Media
 {
     using System.Collections.Generic;
     using SharpDX;
     using SharpDX.Direct2D1;
     using SharpDX.DirectWrite;
+    using Avalonia.Media;
+
+    using Brush = Avalonia.Media.Brush;
+    using SolidColorBrush = Avalonia.Media.SolidColorBrush;
 
     internal class Direct2D1DrawingContext : DrawingContext
     {
@@ -74,16 +78,9 @@
 
         public override void DrawText(FormattedText formattedText, Point origin)
         {
-            TextFormat format = new TextFormat(
-                new SharpDX.DirectWrite.Factory(),
-                "Segoe UI",
-                FontWeight.Light,
-                FontStyle.Normal,
-                12);
-
             this.target.DrawText(
                 formattedText.Text,
-                format,
+                ((Direct2D1FormattedText)formattedText.PlatformImpl).DirectWriteTextLayout,
                 new RectangleF(0, 0, 1000, 1000),
                 new SolidColorBrush(Colors.Black).ToSharpDX(this.target),
                 DrawTextOptions.None);

@@ -8,7 +8,9 @@
         </Style>
     </Window.Resources>
     <Border Background="Red" BorderBrush="Black" BorderThickness="4" CornerRadius="8" Margin="8" Padding="8" Name="border">
-        <TextBlock Name="textBlock" Text="Hello World!"/>
+        <TextBlock Name="textBlock" VerticalAlignment="Center" HorizontalAlignment="Center">
+            Hello World!
+        </TextBlock>
     </Border>
 </Window>        
 

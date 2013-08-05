@@ -44,6 +44,9 @@
   <ItemGroup>
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="FlowDirection.cs" />
+    <Compile Include="Media\Typeface.cs" />
+    <Compile Include="Platform\IPlatformFormattedText.cs" />
     <Compile Include="Platform\PlatformFactory.cs" />
     <Compile Include="Platform\PlatformPresentationSource.cs" />
     <Compile Include="AvaloniaSpecificAttribute.cs" />

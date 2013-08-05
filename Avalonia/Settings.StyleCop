@@ -1,4 +1,13 @@
 <StyleCopSettings Version="105">
+  <Parsers>
+    <Parser ParserId="StyleCop.CSharp.CsParser">
+      <ParserSettings>
+        <CollectionProperty Name="GeneratedFileFilters">
+          <Value>TemporaryGeneratedFile_.*\.cs$</Value>
+        </CollectionProperty>
+      </ParserSettings>
+    </Parser>
+  </Parsers>
   <Analyzers>
     <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
       <Rules>
@@ -183,22 +192,14 @@
         <StringProperty Name="Copyright">Copyright 2013 MIT Licence. See licence.md for more information.</StringProperty>
       </AnalyzerSettings>
     </Analyzer>
-	<Analyzer AnalyzerId="Microsoft.StyleCop.CSharp.NamingRules">
-		<AnalyzerSettings>
-		  <CollectionProperty Name="Hungarian">
-			<Value>is</Value>
-			<Value>ui</Value>
-		  </CollectionProperty>
-		</AnalyzerSettings>
-	</Analyzer>  
-  </Analyzers>
-  <Parsers>
-    <Parser ParserId="StyleCop.CSharp.CsParser">
-      <ParserSettings>
-        <CollectionProperty Name="GeneratedFileFilters">
-          <Value>TemporaryGeneratedFile_.*\.cs$</Value>
+    <Analyzer AnalyzerId="StyleCop.CSharp.NamingRules">
+      <AnalyzerSettings>
+        <CollectionProperty Name="Hungarian">
+          <Value>em</Value>
+          <Value>is</Value>
+          <Value>ui</Value>
         </CollectionProperty>
-      </ParserSettings>
-    </Parser>
-  </Parsers>
+      </AnalyzerSettings>
+    </Analyzer>
+  </Analyzers>
 </StyleCopSettings>

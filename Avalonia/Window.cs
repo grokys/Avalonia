@@ -90,10 +90,6 @@ namespace Avalonia
             }
         }
 
-        protected internal override void OnRender(DrawingContext drawingContext)
-        {
-        }
-
         protected virtual void OnClosed(EventArgs e)
         {
             if (this.Closed != null)

@@ -32,7 +32,7 @@ namespace Avalonia.Platform
 #if WINDOWS
                     string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                     Assembly platform = Assembly.LoadFile(Path.Combine(path, "Avalonia.Direct2D1.dll"));
-                    Type factoryType = platform.GetType("Avalonia.Direct2D1.Direct2DPlatformFactory");
+                    Type factoryType = platform.GetType("Avalonia.Direct2D1.Direct2D1PlatformFactory");
                     instance = (PlatformFactory)Activator.CreateInstance(factoryType);
 #else
                     throw new NotSupportedException("This platform is not supported.");
@@ -64,5 +64,12 @@ namespace Avalonia.Platform
         /// The newly created presentation source.
         /// </returns>
         public abstract PlatformPresentationSource CreatePresentationSource();
+
+        /// <summary>
+        /// Create a new platform-specific <see cref="FormattedText"/>.
+        /// </summary>
+        /// <param name="textToFormat">The text.</param>
+        /// <returns>The formatted text object.</returns>
+        public abstract IPlatformFormattedText CreateFormattedText(string textToFormat);
     }
 }

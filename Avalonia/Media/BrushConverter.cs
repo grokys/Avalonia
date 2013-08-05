@@ -24,15 +24,36 @@ namespace Avalonia.Media
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            PropertyInfo p = typeof(Colors).GetProperty(value.ToString(), BindingFlags.Public | BindingFlags.Static);
+            string s = (string)value;
 
-            if (p != null)
+            if (s.StartsWith("#"))
             {
-                return new SolidColorBrush((Color)p.GetValue(null));
+                s = s.Substring(1);
+
+                if (s.Length == 6)
+                {
+                    s = "ff" + s;
+                }
+
+                if (s.Length != 8)
+                {
+                    throw new NotSupportedException("Invalid color string.");
+                }
+
+                return new SolidColorBrush(Color.FromUInt32(uint.Parse(s.Substring(1), NumberStyles.HexNumber)));
             }
             else
             {
-                throw new NotSupportedException();
+                PropertyInfo p = typeof(Colors).GetProperty(s, BindingFlags.Public | BindingFlags.Static);
+
+                if (p != null)
+                {
+                    return new SolidColorBrush((Color)p.GetValue(null));
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
             }
         }
     }

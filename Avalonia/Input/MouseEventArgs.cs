@@ -16,5 +16,7 @@ namespace Avalonia.Input
 
     public class MouseEventArgs : RoutedEventArgs
     {
+        [AvaloniaSpecific]
+        public Point AbsolutePosition { get; set; }
     }
 }

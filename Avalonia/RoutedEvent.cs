@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -----------------------------------------------------------------------
+// <copyright file="RoutedEvent.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Avalonia
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public sealed class RoutedEvent
     {
         internal RoutedEvent(
@@ -24,7 +30,7 @@ namespace Avalonia
                 throw new ArgumentNullException("handlerType");
             }
 
-            if (!handlerType.IsAssignableFrom(typeof(Delegate)))
+            if (!typeof(Delegate).IsAssignableFrom(handlerType))
             {
                 throw new ArgumentException("'handlerType' must be a delegate type.");
             }
@@ -41,8 +47,11 @@ namespace Avalonia
         }
 
         public Type HandlerType { get; private set; }
+
         public string Name { get; private set; }
+        
         public Type OwnerType { get; private set; }
+        
         public RoutingStrategy RoutingStrategy { get; private set; }
     }
 }

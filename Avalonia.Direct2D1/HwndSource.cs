@@ -212,6 +212,12 @@
                     this.OnMouseButtonDown(new MouseButtonEventArgs());
                     break;
 
+                case UnmanagedMethods.WindowsMessage.WM_MOUSEMOVE:
+                    MouseEventArgs mouseMove = new MouseEventArgs();
+                    mouseMove.AbsolutePosition = new Point((int)lParam & 0xffff, (int)lParam >> 16);
+                    this.OnMouseMove(mouseMove);
+                    break;
+
                 case UnmanagedMethods.WindowsMessage.WM_SIZE:
                     if (this.renderTarget != null)
                     {

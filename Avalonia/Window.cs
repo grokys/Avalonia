@@ -28,7 +28,8 @@ namespace Avalonia
         {
             this.PresentationSource = PlatformFactory.Instance.CreatePresentationSource();
             this.PresentationSource.Closed += (s, e) => this.OnClosed(EventArgs.Empty);
-            this.PresentationSource.MouseLeftButtonDown += (s, e) => this.OnMouseLeftButtonDown(e);
+            this.PresentationSource.MouseLeftButtonDown += (s, e) => this.RaiseEvent(e);
+            this.PresentationSource.MouseMove += RaiseMouseMove;
             this.PresentationSource.Resized += (s, e) => this.DoMeasureArrange();
 
             this.Background = new SolidColorBrush(Colors.White);
@@ -132,6 +133,13 @@ namespace Avalonia
             {
                 drawingContext.Pop();
             }
+        }
+
+        private void RaiseMouseMove(object sender, MouseEventArgs e)
+        {
+            e.Source = e.OriginalSource = this.InputHitTest(e.AbsolutePosition);
+            e.RoutedEvent = UIElement.MouseMoveEvent;
+            this.RaiseEvent(e);
         }
     }
 }

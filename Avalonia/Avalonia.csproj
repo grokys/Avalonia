@@ -46,6 +46,7 @@
     <Compile Include="Application.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="FlowDirection.cs" />
+    <Compile Include="IInputElement.cs" />
     <Compile Include="Media\Typeface.cs" />
     <Compile Include="Platform\IPlatformFormattedText.cs" />
     <Compile Include="Platform\PlatformFactory.cs" />

@@ -14,9 +14,16 @@ namespace Avalonia.Input
 
     public delegate void MouseEventHandler(object sender, MouseEventArgs e);
 
-    public class MouseEventArgs : RoutedEventArgs
+    public class MouseEventArgs : InputEventArgs
     {
-        [AvaloniaSpecific]
-        public Point AbsolutePosition { get; set; }
+        public MouseEventArgs(MouseDevice mouse, int timestamp)
+            : base(mouse, timestamp)
+        {
+        }
+
+        public Point GetPosition(IInputElement relativeTo)
+        {
+            return ((MouseDevice)this.Device).GetPosition(relativeTo);
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xaml;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
 
 namespace Test
@@ -20,11 +21,6 @@ namespace Test
             InitializeComponent();
 
             this.textBlock.Style = (Style)this.Resources["Yellow"];
-
-            this.MouseLeftButtonDown += (s, e) =>
-            {
-                this.textBlock.Style = null;
-            };
         }
 
         private void InitializeComponent()
@@ -32,6 +28,11 @@ namespace Test
             Application.LoadComponent(this, new Uri("MainWindow.xaml", UriKind.Relative));
             this.border = (Border)this.FindName("border");
             this.textBlock = (TextBlock)this.FindName("textBlock");
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            Console.WriteLine(e.GetPosition(this.textBlock));
         }
     }
 }

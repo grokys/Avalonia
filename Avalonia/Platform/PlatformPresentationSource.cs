@@ -15,10 +15,6 @@ namespace Avalonia.Platform
     {
         public event EventHandler Closed;
 
-        public event MouseButtonEventHandler MouseLeftButtonDown;
-
-        public event MouseEventHandler MouseMove;
-
         public event EventHandler Resized;
 
         public abstract Size ClientSize { get; }
@@ -36,22 +32,6 @@ namespace Avalonia.Platform
             if (this.Closed != null)
             {
                 this.Closed(this, EventArgs.Empty);
-            }
-        }
-
-        protected void OnMouseButtonDown(MouseButtonEventArgs e)
-        {
-            if (this.MouseLeftButtonDown != null)
-            {
-                this.MouseLeftButtonDown(this, e);
-            }
-        }
-
-        protected void OnMouseMove(MouseEventArgs e)
-        {
-            if (this.MouseMove != null)
-            {
-                this.MouseMove(this, e);
             }
         }
 

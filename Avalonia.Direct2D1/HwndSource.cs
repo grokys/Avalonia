@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel;
     using System.Runtime.InteropServices;
+    using Avalonia.Direct2D1.Input;
     using Avalonia.Direct2D1.Interop;
     using Avalonia.Direct2D1.Media;
     using Avalonia.Input;
@@ -15,6 +16,7 @@
     {
         private string className;
         private WindowRenderTarget renderTarget;
+        private MouseDevice mouse;
 
         [AvaloniaSpecific]
         public HwndSource()
@@ -29,6 +31,8 @@
             };
 
             this.Initialize(parameters);
+
+            this.mouse = new Win32MouseDevice(this);
         }
 
         public HwndSource(HwndSourceParameters parameters)
@@ -209,13 +213,10 @@
                     break;
 
                 case UnmanagedMethods.WindowsMessage.WM_LBUTTONDOWN:
-                    this.OnMouseButtonDown(new MouseButtonEventArgs());
                     break;
 
                 case UnmanagedMethods.WindowsMessage.WM_MOUSEMOVE:
-                    MouseEventArgs mouseMove = new MouseEventArgs();
-                    mouseMove.AbsolutePosition = new Point((int)lParam & 0xffff, (int)lParam >> 16);
-                    this.OnMouseMove(mouseMove);
+                    InputManager.Current.ProcessInput(new RawMouseMoveEventArgs(mouse, 0, this));
                     break;
 
                 case UnmanagedMethods.WindowsMessage.WM_SIZE:

@@ -62,6 +62,18 @@ namespace Avalonia.Media
             return null;
         }
 
+        [AvaloniaSpecific]
+        public static IEnumerable<DependencyObject> GetAncestors(DependencyObject dependencyObject)
+        {
+            dependencyObject = GetParent(dependencyObject);
+
+            while (dependencyObject != null)
+            {
+                yield return dependencyObject;
+                dependencyObject = GetParent(dependencyObject);
+            }
+        }
+
         public static Transform GetTransform(Visual reference)
         {
             return GetVisual(reference).VisualTransform;

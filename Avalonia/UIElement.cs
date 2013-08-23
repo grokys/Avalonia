@@ -33,8 +33,6 @@ namespace Avalonia
             this.AddHandler(MouseMoveEvent, (MouseEventHandler)((s, e) => this.OnMouseMove(e)));
         }
 
-        public event MouseButtonEventHandler MouseLeftButtonDown;
-
         public event MouseEventHandler MouseMove
         {
             add { this.AddHandler(MouseMoveEvent, value); }
@@ -207,12 +205,12 @@ namespace Avalonia
 
             while (target != null)
             {
-                this.DoRaiseEvent(e);
+                target.RaiseEventImpl(e);
                 target = VisualTreeHelper.GetAncestor<UIElement>(target);
             }
         }
 
-        private void DoRaiseEvent(RoutedEventArgs e)
+        private void RaiseEventImpl(RoutedEventArgs e)
         {
             List<Delegate> delegates;
 

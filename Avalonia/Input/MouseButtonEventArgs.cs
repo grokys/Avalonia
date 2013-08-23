@@ -16,5 +16,9 @@ namespace Avalonia.Input
 
     public class MouseButtonEventArgs : MouseEventArgs
     {
+        public MouseButtonEventArgs(MouseDevice device, int timestamp)
+            : base(device, timestamp)
+        {
+        }
     }
 }

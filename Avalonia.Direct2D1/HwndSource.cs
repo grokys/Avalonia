@@ -16,7 +16,7 @@
     {
         private string className;
         private WindowRenderTarget renderTarget;
-        private MouseDevice mouse;
+        private Win32MouseDevice mouse;
 
         [AvaloniaSpecific]
         public HwndSource()
@@ -30,9 +30,9 @@
                 WindowStyle = (int)UnmanagedMethods.WindowStyles.WS_OVERLAPPEDWINDOW
             };
 
-            this.Initialize(parameters);
-
             this.mouse = new Win32MouseDevice(this);
+
+            this.Initialize(parameters);
         }
 
         public HwndSource(HwndSourceParameters parameters)
@@ -206,6 +206,8 @@
 
         private IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
+            this.mouse.UpdateCursorPos();
+
             switch ((UnmanagedMethods.WindowsMessage)msg)
             {
                 case UnmanagedMethods.WindowsMessage.WM_DESTROY:
@@ -213,10 +215,15 @@
                     break;
 
                 case UnmanagedMethods.WindowsMessage.WM_LBUTTONDOWN:
+                    InputManager.Current.ProcessInput(new RawMouseEventArgs(mouse, RawMouseEventType.LeftButtonDown));
+                    break;
+
+                case UnmanagedMethods.WindowsMessage.WM_LBUTTONUP:
+                    InputManager.Current.ProcessInput(new RawMouseEventArgs(mouse, RawMouseEventType.LeftButtonUp));
                     break;
 
                 case UnmanagedMethods.WindowsMessage.WM_MOUSEMOVE:
-                    InputManager.Current.ProcessInput(new RawMouseEventArgs(mouse, 0));
+                    InputManager.Current.ProcessInput(new RawMouseEventArgs(mouse, RawMouseEventType.Move));
                     break;
 
                 case UnmanagedMethods.WindowsMessage.WM_SIZE:

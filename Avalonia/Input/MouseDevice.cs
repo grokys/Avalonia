@@ -81,21 +81,35 @@ namespace Avalonia.Input
 
         private bool ProcessRawMouseEvent(RawMouseEventArgs input)
         {
+            MouseEventArgs e = null;
+
             switch (input.Type)
             {
                 case RawMouseEventType.Move:
-                    this.ProcessRawMouseMove(input);
-                    return true;
-                default:
-                    return false;
-            }
-        }
+                    e = new MouseEventArgs(this, input.Timestamp);
+                    e.RoutedEvent = UIElement.MouseMoveEvent;
+                    break;
 
-        private void ProcessRawMouseMove(RawMouseEventArgs input)
-        {
-            MouseEventArgs e = new MouseEventArgs(this, input.Timestamp);
-            e.RoutedEvent = UIElement.MouseMoveEvent;
-            InputManager.Current.ProcessInput(e);
+                case RawMouseEventType.LeftButtonDown:
+                    e = new MouseButtonEventArgs(this, input.Timestamp);
+                    e.RoutedEvent = UIElement.MouseLeftButtonDownEvent;
+                    break;
+
+                case RawMouseEventType.LeftButtonUp:
+                    e = new MouseButtonEventArgs(this, input.Timestamp);
+                    e.RoutedEvent = UIElement.MouseLeftButtonUpEvent;
+                    break;
+            }
+
+            if (e != null)
+            {
+                InputManager.Current.ProcessInput(e);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void UpdateUIElementMouseOvers()

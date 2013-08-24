@@ -34,6 +34,20 @@ namespace Avalonia
                 typeof(MouseEventHandler),
                 typeof(UIElement));
 
+        public static readonly RoutedEvent MouseLeftButtonDownEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseLeftButtonDown",
+                RoutingStrategy.Bubble,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
+
+        public static readonly RoutedEvent MouseLeftButtonUpEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseLeftButtonUp",
+                RoutingStrategy.Bubble,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
+
         public static readonly RoutedEvent MouseMoveEvent =
             EventManager.RegisterRoutedEvent(
                 "MouseMove",
@@ -50,6 +64,10 @@ namespace Avalonia
             this.IsMeasureValid = true;
             this.IsArrangeValid = true;
 
+            this.AddHandler(MouseEnterEvent, (MouseEventHandler)((s, e) => this.OnMouseEnter(e)));
+            this.AddHandler(MouseLeaveEvent, (MouseEventHandler)((s, e) => this.OnMouseLeave(e)));
+            this.AddHandler(MouseLeftButtonDownEvent, (MouseButtonEventHandler)((s, e) => this.OnMouseLeftButtonDown(e)));
+            this.AddHandler(MouseLeftButtonUpEvent, (MouseButtonEventHandler)((s, e) => this.OnMouseLeftButtonUp(e)));
             this.AddHandler(MouseMoveEvent, (MouseEventHandler)((s, e) => this.OnMouseMove(e)));
         }
 
@@ -63,6 +81,18 @@ namespace Avalonia
         {
             add { this.AddHandler(MouseLeaveEvent, value); }
             remove { this.RemoveHandler(MouseLeaveEvent, value); }
+        }
+
+        public event MouseButtonEventHandler MouseLeftButtonDown
+        {
+            add { this.AddHandler(MouseLeftButtonDownEvent, value); }
+            remove { this.RemoveHandler(MouseLeftButtonDownEvent, value); }
+        }
+
+        public event MouseButtonEventHandler MouseLeftButtonUp
+        {
+            add { this.AddHandler(MouseLeftButtonUpEvent, value); }
+            remove { this.RemoveHandler(MouseLeftButtonUpEvent, value); }
         }
 
         public event MouseEventHandler MouseMove
@@ -234,7 +264,19 @@ namespace Avalonia
             this.RenderSize = finalRect.Size;
         }
 
+        protected virtual void OnMouseEnter(MouseEventArgs e)
+        {
+        }
+
+        protected virtual void OnMouseLeave(MouseEventArgs e)
+        {
+        }
+
         protected virtual void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+        }
+
+        protected virtual void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
         }
 

@@ -1,4 +1,10 @@
-﻿namespace Avalonia.Direct2D1
+﻿// -----------------------------------------------------------------------
+// <copyright file="WindowMessageDispatcher.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia.Direct2D1
 {
     using System;
     using Avalonia.Direct2D1.Interop;

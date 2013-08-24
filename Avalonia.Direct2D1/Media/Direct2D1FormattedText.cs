@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Platform;
-using SharpDX.DirectWrite;
+﻿// -----------------------------------------------------------------------
+// <copyright file="Direct2D1FormattedText.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Avalonia.Direct2D1.Media
 {
+    using Avalonia.Platform;
+    using SharpDX.DirectWrite;
+
     public class Direct2D1FormattedText : IPlatformFormattedText
     {
         public Direct2D1FormattedText(string text)

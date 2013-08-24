@@ -1,11 +1,15 @@
-﻿namespace Avalonia.Direct2D1.Media
+﻿// -----------------------------------------------------------------------
+// <copyright file="Direct2D1DrawingContext.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia.Direct2D1.Media
 {
     using System.Collections.Generic;
+    using Avalonia.Media;
     using SharpDX;
     using SharpDX.Direct2D1;
-    using SharpDX.DirectWrite;
-    using Avalonia.Media;
-
     using Brush = Avalonia.Media.Brush;
     using SolidColorBrush = Avalonia.Media.SolidColorBrush;
 
@@ -99,15 +103,6 @@
             this.target.Transform = this.target.Transform * Invert(top);
         }
 
-        private RectangleF CreateRectangleF(Rect rect)
-        {
-            return new RectangleF(
-                (float)rect.Left,
-                (float)rect.Top,
-                (float)rect.Width,
-                (float)rect.Height);
-        }
-
         // This should be added to SharpDX.
         private static Matrix3x2 Invert(Matrix3x2 value)
         {
@@ -121,16 +116,25 @@
             }
 
             float invdet = 1.0f / determinant;
-            float _offsetX = value.M31;
-            float _offsetY = value.M32;
+            float offsetX = value.M31;
+            float offsetY = value.M32;
 
             return new Matrix3x2(
                 value.M22 * invdet,
                 -value.M12 * invdet,
                 -value.M21 * invdet,
                 value.M11 * invdet,
-                (value.M21 * _offsetY - _offsetX * value.M22) * invdet,
-                (_offsetX * value.M12 - value.M11 * _offsetY) * invdet);
+                ((value.M21 * offsetY) - (offsetX * value.M22)) * invdet,
+                ((offsetX * value.M12) - (value.M11 * offsetY)) * invdet);
+        }
+
+        private RectangleF CreateRectangleF(Rect rect)
+        {
+            return new RectangleF(
+                (float)rect.Left,
+                (float)rect.Top,
+                (float)rect.Width,
+                (float)rect.Height);
         }
     }
 }

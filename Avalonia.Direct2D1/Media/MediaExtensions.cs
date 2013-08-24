@@ -1,12 +1,17 @@
-﻿namespace Avalonia.Direct2D1.Media
+﻿// -----------------------------------------------------------------------
+// <copyright file="MediaExtensions.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia.Direct2D1.Media
 {
     using System;
     using Avalonia.Media;
+    using Brush2D = SharpDX.Direct2D1.Brush;
     using Color4 = SharpDX.Color4;
     using Matrix3x2 = SharpDX.Matrix3x2;
-    using Brush2D = SharpDX.Direct2D1.Brush;
     using RenderTarget2D = SharpDX.Direct2D1.RenderTarget;
-    using RoundedRectangle2D = SharpDX.Direct2D1.RoundedRectangle;
     using SolidColorBrush2D = SharpDX.Direct2D1.SolidColorBrush;
 
     public static class MediaExtensions

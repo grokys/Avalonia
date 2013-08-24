@@ -1,7 +1,14 @@
-﻿namespace Avalonia.Direct2D1
+﻿// -----------------------------------------------------------------------
+// <copyright file="HwndSource.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia.Direct2D1
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using Avalonia.Direct2D1.Input;
     using Avalonia.Direct2D1.Interop;
@@ -37,6 +44,7 @@
             this.Initialize(parameters);
         }
 
+        [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Using Win32 naming for consistency.")]
         public HwndSource(int classStyle, int style, int exStyle, int x, int y, string name, IntPtr parent)
             : this(new HwndSourceParameters
             {
@@ -51,6 +59,7 @@
         {
         }
 
+        [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Using Win32 naming for consistency.")]
         public HwndSource(int classStyle, int style, int exStyle, int x, int y, int width, int height, string name, IntPtr parent)
             : this(new HwndSourceParameters
             {
@@ -65,9 +74,9 @@
                 ParentWindow = parent,
             })
         {
-
         }
 
+        [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Using Win32 naming for consistency.")]
         public HwndSource(int classStyle, int style, int exStyle, int x, int y, int width, int height, string name, IntPtr parent, bool adjustSizingForNonClientArea)
             : this(new HwndSourceParameters
             {
@@ -154,7 +163,7 @@
                 lpfnWndProc = this.WndProc,
                 hInstance = Marshal.GetHINSTANCE(this.GetType().Module),
                 hCursor = UnmanagedMethods.LoadCursor(IntPtr.Zero, (int)UnmanagedMethods.Cursor.IDC_ARROW),
-                lpszClassName = className,
+                lpszClassName = this.className,
             };
 
             ushort atom = UnmanagedMethods.RegisterClassEx(ref wndClassEx);
@@ -201,6 +210,7 @@
                 });
         }
 
+        [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Using Win32 naming for consistency.")]
         private IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
             Win32MouseDevice mouse = Win32MouseDevice.Instance;

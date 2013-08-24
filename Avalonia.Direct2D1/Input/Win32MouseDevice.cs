@@ -44,7 +44,7 @@ namespace Avalonia.Direct2D1.Input
 
         public override void Capture(IInputElement element)
         {
-            if (element != null && ActiveSource != null)
+            if (element != null && this.ActiveSource != null)
             {
                 UnmanagedMethods.SetCapture(((HwndSource)ActiveSource).Handle);
             }

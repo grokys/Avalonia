@@ -14,6 +14,26 @@ namespace Avalonia
 
     public class UIElement : Visual, IInputElement
     {
+        public static readonly DependencyProperty IsMouseOverProperty =
+            DependencyProperty.Register(
+                "IsMouseOver",
+                typeof(bool),
+                typeof(FrameworkElement));
+
+        public static readonly RoutedEvent MouseEnterEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseEnter",
+                RoutingStrategy.Direct,
+                typeof(MouseEventHandler),
+                typeof(UIElement));
+
+        public static readonly RoutedEvent MouseLeaveEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseLeave",
+                RoutingStrategy.Direct,
+                typeof(MouseEventHandler),
+                typeof(UIElement));
+
         public static readonly RoutedEvent MouseMoveEvent =
             EventManager.RegisterRoutedEvent(
                 "MouseMove",
@@ -33,6 +53,18 @@ namespace Avalonia
             this.AddHandler(MouseMoveEvent, (MouseEventHandler)((s, e) => this.OnMouseMove(e)));
         }
 
+        public event MouseEventHandler MouseEnter
+        {
+            add { this.AddHandler(MouseEnterEvent, value); }
+            remove { this.RemoveHandler(MouseEnterEvent, value); }
+        }
+
+        public event MouseEventHandler MouseLeave
+        {
+            add { this.AddHandler(MouseLeaveEvent, value); }
+            remove { this.RemoveHandler(MouseLeaveEvent, value); }
+        }
+
         public event MouseEventHandler MouseMove
         {
             add { this.AddHandler(MouseMoveEvent, value); }
@@ -46,6 +78,11 @@ namespace Avalonia
         public bool IsArrangeValid { get; private set; }
 
         public Size RenderSize { get; private set; }
+
+        public bool IsMouseOver
+        {
+            get { return (bool)this.GetValue(IsMouseOverProperty); }
+        }
 
         public void Measure(Size availableSize)
         {
@@ -165,6 +202,9 @@ namespace Avalonia
             {
                 case RoutingStrategy.Bubble:
                     this.BubbleEvent(e);
+                    break;
+                case RoutingStrategy.Direct:
+                    this.RaiseEventImpl(e);
                     break;
                 default:
                     throw new NotImplementedException();

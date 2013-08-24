@@ -21,6 +21,18 @@ namespace Test
             InitializeComponent();
 
             this.textBlock.Style = (Style)this.Resources["Yellow"];
+            this.textBlock.MouseEnter += textBlock_MouseEnter;
+            this.textBlock.MouseLeave += textBlock_MouseLeave;
+        }
+
+        void textBlock_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("Enter");
+        }
+
+        void textBlock_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("Leave");
         }
 
         private void InitializeComponent()
@@ -28,11 +40,6 @@ namespace Test
             Application.LoadComponent(this, new Uri("MainWindow.xaml", UriKind.Relative));
             this.border = (Border)this.FindName("border");
             this.textBlock = (TextBlock)this.FindName("textBlock");
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            Console.WriteLine(e.GetPosition(this.textBlock));
         }
     }
 }

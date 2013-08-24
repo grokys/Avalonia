@@ -53,5 +53,11 @@ namespace Avalonia
         public Type OwnerType { get; private set; }
         
         public RoutingStrategy RoutingStrategy { get; private set; }
+
+        public RoutedEvent AddOwner(Type type)
+        {
+            // TODO: Register owner somewhere.
+            return this;
+        }
     }
 }

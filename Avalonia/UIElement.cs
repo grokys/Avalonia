@@ -21,39 +21,19 @@ namespace Avalonia
                 typeof(FrameworkElement));
 
         public static readonly RoutedEvent MouseEnterEvent =
-            EventManager.RegisterRoutedEvent(
-                "MouseEnter",
-                RoutingStrategy.Direct,
-                typeof(MouseEventHandler),
-                typeof(UIElement));
+            Mouse.MouseEnterEvent.AddOwner(typeof(UIElement));
 
         public static readonly RoutedEvent MouseLeaveEvent =
-            EventManager.RegisterRoutedEvent(
-                "MouseLeave",
-                RoutingStrategy.Direct,
-                typeof(MouseEventHandler),
-                typeof(UIElement));
+            Mouse.MouseLeaveEvent.AddOwner(typeof(UIElement));
 
         public static readonly RoutedEvent MouseLeftButtonDownEvent =
-            EventManager.RegisterRoutedEvent(
-                "MouseLeftButtonDown",
-                RoutingStrategy.Bubble,
-                typeof(MouseButtonEventHandler),
-                typeof(UIElement));
+            Mouse.MouseLeftButtonDownEvent.AddOwner(typeof(UIElement));
 
         public static readonly RoutedEvent MouseLeftButtonUpEvent =
-            EventManager.RegisterRoutedEvent(
-                "MouseLeftButtonUp",
-                RoutingStrategy.Bubble,
-                typeof(MouseButtonEventHandler),
-                typeof(UIElement));
+            Mouse.MouseLeftButtonUpEvent.AddOwner(typeof(UIElement));
 
         public static readonly RoutedEvent MouseMoveEvent =
-            EventManager.RegisterRoutedEvent(
-                "MouseMove",
-                RoutingStrategy.Bubble,
-                typeof(MouseEventHandler),
-                typeof(UIElement));
+            Mouse.MouseMoveEvent.AddOwner(typeof(UIElement));
 
         private bool measureCalled;
         private Size previousMeasureSize;

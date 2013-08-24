@@ -45,6 +45,7 @@
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Controls\Panel.cs" />
+    <Compile Include="Input\Mouse.cs" />
     <Compile Include="Input\PreProcessInputEventArgs.cs" />
     <Compile Include="Trigger.cs" />
     <Compile Include="EventManager.cs" />

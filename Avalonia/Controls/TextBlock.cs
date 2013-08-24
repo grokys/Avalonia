@@ -73,6 +73,11 @@ namespace Avalonia.Controls
             return new Size(this.formattedText.Width, this.formattedText.Height);
         }
 
+        private static void TextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((TextBlock)d).formattedText = null;
+        }
+
         private FormattedText CreateFormattedText()
         {
             return new FormattedText(
@@ -82,11 +87,6 @@ namespace Avalonia.Controls
                 new Typeface(),
                 12,
                 new SolidColorBrush(Colors.Black));
-        }
-
-        private static void TextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((TextBlock)d).formattedText = null;
         }
     }
 }

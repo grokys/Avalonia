@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xaml;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
 
 namespace Test

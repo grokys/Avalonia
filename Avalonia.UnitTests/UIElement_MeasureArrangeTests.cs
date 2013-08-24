@@ -17,7 +17,7 @@
         public void IsMeasureValid_Should_Initially_Be_True()
         {
             UIElementTest target = new UIElementTest();
-
+            
             Assert.IsTrue(target.IsMeasureValid);
         }
 

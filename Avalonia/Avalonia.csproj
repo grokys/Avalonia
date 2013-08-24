@@ -44,7 +44,13 @@
   <ItemGroup>
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="EventManager.cs" />
     <Compile Include="FlowDirection.cs" />
+    <Compile Include="IInputElement.cs" />
+    <Compile Include="Input\InputDevice.cs" />
+    <Compile Include="Input\InputEventArgs.cs" />
+    <Compile Include="Input\InputManager.cs" />
+    <Compile Include="Input\MouseDevice.cs" />
     <Compile Include="Media\Typeface.cs" />
     <Compile Include="Platform\IPlatformFormattedText.cs" />
     <Compile Include="Platform\PlatformFactory.cs" />
@@ -64,8 +70,10 @@
     <Compile Include="LogicalTreeHelper.cs" />
     <Compile Include="Media\XamlReader.cs" />
     <Compile Include="NameScope.cs" />
+    <Compile Include="Platform\RawMouseMoveEventArgs.cs" />
     <Compile Include="ResourceDictionary.cs" />
     <Compile Include="ResourceReferenceKeyNotFoundException.cs" />
+    <Compile Include="RoutedEvent.cs" />
     <Compile Include="Setter.cs" />
     <Compile Include="SetterBase.cs" />
     <Compile Include="SetterBaseCollection.cs" />

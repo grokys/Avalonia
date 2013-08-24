@@ -59,6 +59,7 @@
     <Compile Include="Direct2D1PlatformFactory.cs" />
     <Compile Include="HwndSource.cs" />
     <Compile Include="HwndSourceParameters.cs" />
+    <Compile Include="Input\Win32MouseDevice.cs" />
     <Compile Include="Interop\UnmanagedMethods.cs" />
     <Compile Include="Media\Direct2D1DrawingContext.cs" />
     <Compile Include="Media\Direct2D1FormattedText.cs" />
@@ -75,6 +76,7 @@
       <Name>Avalonia</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

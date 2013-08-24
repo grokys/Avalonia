@@ -7,6 +7,7 @@
 namespace Avalonia.Media
 {
     using System;
+    using System.Collections.Generic;
 
     public static class VisualTreeHelper
     {
@@ -20,6 +21,17 @@ namespace Avalonia.Media
             return GetVisual(reference).VisualChildrenCount;
         }
 
+        [AvaloniaSpecific]
+        public static IEnumerable<DependencyObject> GetChildren(DependencyObject reference)
+        {
+            int count = GetChildrenCount(reference);
+
+            for (int i = 0; i < count; ++i)
+            {
+                yield return GetChild(reference, i);
+            }
+        }
+
         public static Vector GetOffset(Visual reference)
         {
             return GetVisual(reference).VisualOffset;
@@ -28,6 +40,38 @@ namespace Avalonia.Media
         public static DependencyObject GetParent(DependencyObject reference)
         {
             return GetVisual(reference).VisualParent;
+        }
+
+        [AvaloniaSpecific]
+        public static T GetAncestor<T>(UIElement target) where T : DependencyObject
+        {
+            DependencyObject o = GetParent(target);
+
+            while (o != null)
+            {
+                if (o is T)
+                {
+                    return (T)o;
+                }
+                else
+                {
+                    o = GetParent(o);
+                }
+            }
+
+            return null;
+        }
+
+        [AvaloniaSpecific]
+        public static IEnumerable<DependencyObject> GetAncestors(DependencyObject dependencyObject)
+        {
+            dependencyObject = GetParent(dependencyObject);
+
+            while (dependencyObject != null)
+            {
+                yield return dependencyObject;
+                dependencyObject = GetParent(dependencyObject);
+            }
         }
 
         public static Transform GetTransform(Visual reference)

@@ -7,21 +7,69 @@
 namespace Avalonia
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Avalonia.Input;
     using Avalonia.Media;
 
-    public class UIElement : Visual
+    public class UIElement : Visual, IInputElement
     {
+        public static readonly DependencyProperty IsMouseOverProperty =
+            DependencyProperty.Register(
+                "IsMouseOver",
+                typeof(bool),
+                typeof(FrameworkElement));
+
+        public static readonly RoutedEvent MouseEnterEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseEnter",
+                RoutingStrategy.Direct,
+                typeof(MouseEventHandler),
+                typeof(UIElement));
+
+        public static readonly RoutedEvent MouseLeaveEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseLeave",
+                RoutingStrategy.Direct,
+                typeof(MouseEventHandler),
+                typeof(UIElement));
+
+        public static readonly RoutedEvent MouseMoveEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseMove",
+                RoutingStrategy.Bubble,
+                typeof(MouseEventHandler),
+                typeof(UIElement));
+
         private bool measureCalled;
         private Size previousMeasureSize;
+        private Dictionary<RoutedEvent, List<Delegate>> eventHandlers = new Dictionary<RoutedEvent, List<Delegate>>();
 
         public UIElement()
         {
             this.IsMeasureValid = true;
             this.IsArrangeValid = true;
+
+            this.AddHandler(MouseMoveEvent, (MouseEventHandler)((s, e) => this.OnMouseMove(e)));
         }
 
-        public event MouseButtonEventHandler MouseLeftButtonDown;
+        public event MouseEventHandler MouseEnter
+        {
+            add { this.AddHandler(MouseEnterEvent, value); }
+            remove { this.RemoveHandler(MouseEnterEvent, value); }
+        }
+
+        public event MouseEventHandler MouseLeave
+        {
+            add { this.AddHandler(MouseLeaveEvent, value); }
+            remove { this.RemoveHandler(MouseLeaveEvent, value); }
+        }
+
+        public event MouseEventHandler MouseMove
+        {
+            add { this.AddHandler(MouseMoveEvent, value); }
+            remove { this.RemoveHandler(MouseMoveEvent, value); }
+        }
 
         public Size DesiredSize { get; set; }
 
@@ -30,6 +78,11 @@ namespace Avalonia
         public bool IsArrangeValid { get; private set; }
 
         public Size RenderSize { get; private set; }
+
+        public bool IsMouseOver
+        {
+            get { return (bool)this.GetValue(IsMouseOverProperty); }
+        }
 
         public void Measure(Size availableSize)
         {
@@ -75,6 +128,89 @@ namespace Avalonia
             this.Arrange(new Rect(new Point(), size));
         }
 
+        public IInputElement InputHitTest(Point point)
+        {
+            Rect bounds = new Rect(new Point(), this.RenderSize);
+
+            if (bounds.Contains(point))
+            {
+                foreach (UIElement child in VisualTreeHelper.GetChildren(this).OfType<UIElement>())
+                {
+                    Point offsetPoint = point - child.VisualOffset;
+                    IInputElement hit = child.InputHitTest(offsetPoint);
+
+                    if (hit != null)
+                    {
+                        return hit;
+                    }
+                }
+
+                return this;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void AddHandler(RoutedEvent routedEvent, Delegate handler)
+        {
+            if (routedEvent == null)
+            {
+                throw new ArgumentNullException("routedEvent");
+            }
+
+            if (handler == null)
+            {
+                throw new ArgumentNullException("handler");
+            }
+
+            List<Delegate> delegates;
+
+            if (!this.eventHandlers.TryGetValue(routedEvent, out delegates))
+            {
+                delegates = new List<Delegate>();
+                this.eventHandlers.Add(routedEvent, delegates);
+            }
+
+            delegates.Add(handler);
+        }
+
+        public void RemoveHandler(RoutedEvent routedEvent, Delegate handler)
+        {
+            if (routedEvent == null)
+            {
+                throw new ArgumentNullException("routedEvent");
+            }
+
+            if (handler == null)
+            {
+                throw new ArgumentNullException("handler");
+            }
+
+            List<Delegate> delegates;
+
+            if (this.eventHandlers.TryGetValue(routedEvent, out delegates))
+            {
+                delegates.Remove(handler);
+            }
+        }
+
+        public void RaiseEvent(RoutedEventArgs e)
+        {
+            switch (e.RoutedEvent.RoutingStrategy)
+            {
+                case RoutingStrategy.Bubble:
+                    this.BubbleEvent(e);
+                    break;
+                case RoutingStrategy.Direct:
+                    this.RaiseEventImpl(e);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         internal override Rect GetHitTestBounds()
         {
             return new Rect((Point)this.VisualOffset, this.RenderSize);
@@ -95,11 +231,36 @@ namespace Avalonia
             this.RenderSize = finalRect.Size;
         }
 
-        protected void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected virtual void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (this.MouseLeftButtonDown != null)
+        }
+
+        protected virtual void OnMouseMove(MouseEventArgs e)
+        {
+        }
+
+        private void BubbleEvent(RoutedEventArgs e)
+        {
+            UIElement target = this;
+
+            while (target != null)
             {
-                this.MouseLeftButtonDown(this, e);
+                target.RaiseEventImpl(e);
+                target = VisualTreeHelper.GetAncestor<UIElement>(target);
+            }
+        }
+
+        private void RaiseEventImpl(RoutedEventArgs e)
+        {
+            List<Delegate> delegates;
+
+            if (this.eventHandlers.TryGetValue(e.RoutedEvent, out delegates))
+            {
+                foreach (Delegate handler in delegates)
+                {
+                    // TODO: Implement the Handled stuff.
+                    handler.DynamicInvoke(this, e);
+                }
             }
         }
     }

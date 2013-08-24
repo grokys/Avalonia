@@ -63,7 +63,6 @@
             {
                 using (var brush2D = brush.ToSharpDX(this.target))
                 {
-                    System.Console.WriteLine(((SharpDX.Direct2D1.SolidColorBrush)brush2D).Color);
                     this.target.FillRoundedRectangle(roundedRect, brush2D);
                 }
             }

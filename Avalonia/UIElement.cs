@@ -20,6 +20,12 @@ namespace Avalonia
                 typeof(bool),
                 typeof(FrameworkElement));
 
+        public static readonly DependencyProperty IsMouseCapturedProperty =
+            DependencyProperty.Register(
+                "IsMouseCaptured",
+                typeof(bool),
+                typeof(FrameworkElement));
+
         public static readonly RoutedEvent MouseEnterEvent =
             Mouse.MouseEnterEvent.AddOwner(typeof(UIElement));
 
@@ -94,9 +100,16 @@ namespace Avalonia
             get { return (bool)this.GetValue(IsMouseOverProperty); }
         }
 
+        public bool IsMouseCaptured
+        {
+            get { return (bool)this.GetValue(IsMouseCapturedProperty); }
+            private set { this.SetValue(IsMouseCapturedProperty, value); }
+        }
+
         public void CaptureMouse()
         {
             Mouse.Capture(this);
+            this.IsMouseCaptured = true;
         }
 
         public void ReleaseMouseCapture()
@@ -104,6 +117,7 @@ namespace Avalonia
             if (Mouse.Captured == this)
             {
                 Mouse.Capture(null);
+                this.IsMouseCaptured = false;
             }
         }
 

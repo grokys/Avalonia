@@ -7,5 +7,6 @@ namespace Avalonia.Input
 {
     public abstract class InputDevice : DependencyObject
     {
+        public abstract IInputElement Target { get; }
     }
 }

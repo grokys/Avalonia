@@ -45,6 +45,7 @@
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Controls\Panel.cs" />
+    <Compile Include="Input\PreProcessInputEventArgs.cs" />
     <Compile Include="Trigger.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="FlowDirection.cs" />
@@ -72,7 +73,7 @@
     <Compile Include="LogicalTreeHelper.cs" />
     <Compile Include="Media\XamlReader.cs" />
     <Compile Include="NameScope.cs" />
-    <Compile Include="Platform\RawMouseMoveEventArgs.cs" />
+    <Compile Include="Platform\RawMouseEventArgs.cs" />
     <Compile Include="ResourceDictionary.cs" />
     <Compile Include="ResourceReferenceKeyNotFoundException.cs" />
     <Compile Include="RoutedEvent.cs" />

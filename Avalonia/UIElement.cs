@@ -198,16 +198,19 @@ namespace Avalonia
 
         public void RaiseEvent(RoutedEventArgs e)
         {
-            switch (e.RoutedEvent.RoutingStrategy)
+            if (e.RoutedEvent != null)
             {
-                case RoutingStrategy.Bubble:
-                    this.BubbleEvent(e);
-                    break;
-                case RoutingStrategy.Direct:
-                    this.RaiseEventImpl(e);
-                    break;
-                default:
-                    throw new NotImplementedException();
+                switch (e.RoutedEvent.RoutingStrategy)
+                {
+                    case RoutingStrategy.Bubble:
+                        this.BubbleEvent(e);
+                        break;
+                    case RoutingStrategy.Direct:
+                        this.RaiseEventImpl(e);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
             }
         }
 

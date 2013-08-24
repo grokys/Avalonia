@@ -13,15 +13,20 @@ namespace Avalonia.Platform
     using System.Threading.Tasks;
     using Avalonia.Input;
 
-    [AvaloniaSpecific]
-    public class RawMouseMoveEventArgs : InputEventArgs
+    public enum RawMouseEventType
     {
-        public RawMouseMoveEventArgs(MouseDevice device, int timestamp, PresentationSource presentationSource)
-            : base(device, timestamp)
+        Move,
+    }
+
+    [AvaloniaSpecific]
+    public class RawMouseEventArgs : InputEventArgs
+    {
+        public RawMouseEventArgs(MouseDevice device, RawMouseEventType type)
+            : base(device, Environment.TickCount)
         {
-            this.PresentationSource = presentationSource;
+            this.Type = type;
         }
 
-        public PresentationSource PresentationSource { get; set; }
+        public RawMouseEventType Type { get; private set; }
     }
 }

@@ -14,8 +14,19 @@ namespace Avalonia.Direct2D1.Input
         private HwndSource source;
 
         public Win32MouseDevice(HwndSource source)
+            : base(source)
         {
             this.source = source;
+        }
+
+        public override IInputElement Target
+        {
+            get 
+            {
+                Point p = this.GetClientPosition();
+                UIElement ui = source.RootVisual as UIElement;
+                return ui.InputHitTest(p);
+            }
         }
 
         protected override Point GetClientPosition()

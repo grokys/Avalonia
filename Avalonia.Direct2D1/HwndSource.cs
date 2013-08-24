@@ -216,7 +216,7 @@
                     break;
 
                 case UnmanagedMethods.WindowsMessage.WM_MOUSEMOVE:
-                    InputManager.Current.ProcessInput(new RawMouseMoveEventArgs(mouse, 0, this));
+                    InputManager.Current.ProcessInput(new RawMouseEventArgs(mouse, 0));
                     break;
 
                 case UnmanagedMethods.WindowsMessage.WM_SIZE:

@@ -12,3 +12,4 @@ Implemented to some extent so far:
 - Xaml Loading
 - Control templates
 - Styles/Setters
+- Triggers

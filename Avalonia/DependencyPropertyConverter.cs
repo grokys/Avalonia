@@ -33,7 +33,7 @@ namespace Avalonia
             Type targetType = style.TargetType;
 
             // And get the dependency property.
-            return DependencyObject.FromName(targetType, (string)value);
+            return DependencyObject.PropertyFromName(targetType, (string)value);
         }
     }
 }

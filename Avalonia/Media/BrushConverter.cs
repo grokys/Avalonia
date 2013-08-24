@@ -40,7 +40,7 @@ namespace Avalonia.Media
                     throw new NotSupportedException("Invalid color string.");
                 }
 
-                return new SolidColorBrush(Color.FromUInt32(uint.Parse(s.Substring(1), NumberStyles.HexNumber)));
+                return new SolidColorBrush(Color.FromUInt32(uint.Parse(s, NumberStyles.HexNumber)));
             }
             else
             {

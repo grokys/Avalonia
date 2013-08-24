@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="Controls\Panel.cs" />
+    <Compile Include="Trigger.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="FlowDirection.cs" />
     <Compile Include="IInputElement.cs" />
@@ -146,6 +148,8 @@
     <Compile Include="Threading\DispatcherUnhandledExceptionEventArgs.cs" />
     <Compile Include="Threading\DispatcherUnhandledExceptionFilterEventArgs.cs" />
     <Compile Include="Platform\IPlatformDispatcher.cs" />
+    <Compile Include="TriggerBase.cs" />
+    <Compile Include="TriggerCollection.cs" />
     <Compile Include="UIElement.cs" />
     <Compile Include="UIPropertyMetadata.cs" />
     <Compile Include="Vector.cs" />

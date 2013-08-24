@@ -15,8 +15,20 @@ namespace Avalonia
 
     public sealed class SetterBaseCollection : Collection<SetterBase>
     {
-        public SetterBaseCollection()
+        internal void Attach(FrameworkElement element)
         {
+            foreach (SetterBase setter in this)
+            {
+                setter.Attach(element);
+            }
+        }
+
+        internal void Detach(FrameworkElement element)
+        {
+            foreach (SetterBase setter in this)
+            {
+                setter.Detach(element);
+            }
         }
     }
 }

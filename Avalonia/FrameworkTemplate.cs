@@ -13,13 +13,37 @@ namespace Avalonia
     using Avalonia.Threading;
 
     [ContentProperty("Template")]
-    public class FrameworkTemplate : DispatcherObject
+    public class FrameworkTemplate : DispatcherObject, INameScope, IQueryAmbient
     {
-        [AmbientAttribute]
+        private NameScope nameScope = new NameScope();
+
+        [Ambient]
         [XamlDeferLoad(typeof(TemplateContentLoader), typeof(TemplateContent))]
         public TemplateContent Template { get; set; }
 
-        internal FrameworkElement CreateVisualTree(DependencyObject parent)
+        public void RegisterName(string name, object scopedElement)
+        {
+            this.nameScope.RegisterName(name, scopedElement);
+        }
+
+        public void UnregisterName(string name)
+        {
+            this.nameScope.UnregisterName(name);
+        }
+
+        object INameScope.FindName(string name)
+        {
+            return this.nameScope.FindName(name);
+        }
+
+        bool IQueryAmbient.IsAmbientPropertyAvailable(string propertyName)
+        {
+            // TODO: this should be more complex but I can't understand the docs:
+            // http://msdn.microsoft.com/en-us/library/system.windows.markup.iqueryambient.aspx
+            return true;
+        }
+
+        internal virtual FrameworkElement CreateVisualTree(DependencyObject parent)
         {
             FrameworkElement result = this.Template.Load() as FrameworkElement;
             result.TemplatedParent = parent;

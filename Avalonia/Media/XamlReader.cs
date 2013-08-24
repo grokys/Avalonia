@@ -85,7 +85,7 @@ namespace Avalonia.Media
                     RegisterNamesOnExternalNamescope = true,
                     XamlSetValueHandler = SetValue,
                 });
-
+            
             while (reader.Read())
             {
                 writer.WriteNode(reader);
@@ -98,7 +98,7 @@ namespace Avalonia.Media
 
             if (binding != null)
             {
-                DependencyProperty dp = DependencyObject.FromName(
+                DependencyProperty dp = DependencyObject.PropertyFromName(
                     e.Member.DeclaringType.UnderlyingType, 
                     e.Member.Name);
                 ((FrameworkElement)sender).SetBinding(dp, binding);

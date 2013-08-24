@@ -53,7 +53,7 @@ namespace Avalonia
             set;
         }
 
-        internal void Attach(FrameworkElement frameworkElement)
+        internal override void Attach(FrameworkElement frameworkElement)
         {
             object oldValue = DependencyProperty.UnsetValue;
 
@@ -67,9 +67,10 @@ namespace Avalonia
             frameworkElement.SetValue(this.Property, this.ConvertValue(this.Value));
         }
 
-        internal void Detach(FrameworkElement frameworkElement)
+        internal override void Detach(FrameworkElement frameworkElement)
         {
             frameworkElement.SetValue(this.Property, this.oldValues[frameworkElement]);
+            this.oldValues.Remove(frameworkElement);
         }
 
         private object ConvertValue(object value)

@@ -12,7 +12,34 @@ namespace Avalonia.Controls
 
     public class ControlTemplate : FrameworkTemplate
     {
+        public ControlTemplate()
+        {
+            this.Triggers = new TriggerCollection();
+        }
+
         [AmbientAttribute]
-        public Type TargetType { get; set; }
+        public Type TargetType 
+        { 
+            get; 
+            set; 
+        }
+
+        public TriggerCollection Triggers 
+        { 
+            get; 
+            private set; 
+        }
+
+        internal override FrameworkElement CreateVisualTree(DependencyObject parent)
+        {
+            FrameworkElement result = base.CreateVisualTree(parent);
+
+            foreach (TriggerBase trigger in this.Triggers)
+            {
+                trigger.Attach(result, parent);
+            }
+
+            return result;
+        }
     }
 }

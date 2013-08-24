@@ -14,7 +14,7 @@ namespace Avalonia.Input
     {
         public Point GetPosition(IInputElement relativeTo)
         {
-            Point p = GetClientPosition();
+            Point p = this.GetClientPosition();
             Visual v = (Visual)relativeTo;
 
             if (v != null)

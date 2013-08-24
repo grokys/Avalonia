@@ -184,6 +184,7 @@ namespace Avalonia
             }
 
             this.OverrideMetadata(ownerType, typeMetadata);
+            DependencyObject.Register(ownerType, this);
 
             // MS seems to always return the same DependencyProperty
             return this;

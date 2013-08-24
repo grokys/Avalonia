@@ -8,15 +8,13 @@ namespace Avalonia.Controls
 {
     using System;
     using System.Collections.Generic;
-    using Avalonia.Media;
     using System.ComponentModel;
+    using Avalonia.Media;
 
     public class Control : FrameworkElement
     {
         public static readonly DependencyProperty BackgroundProperty =
-            DependencyProperty.Register(
-                "Background",
-                typeof(Brush),
+            Panel.BackgroundProperty.AddOwner(
                 typeof(Control),
                 new FrameworkPropertyMetadata(
                     new SolidColorBrush(Colors.White),

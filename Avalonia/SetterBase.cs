@@ -20,6 +20,10 @@ namespace Avalonia
             internal set;
         }
 
+        internal abstract void Attach(FrameworkElement frameworkElement);
+
+        internal abstract void Detach(FrameworkElement frameworkElement);
+
         protected void CheckSealed()
         {
             if (this.IsSealed)

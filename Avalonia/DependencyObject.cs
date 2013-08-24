@@ -210,7 +210,7 @@ namespace Avalonia
             this.SetValue(key.DependencyProperty, value);
         }
 
-        internal static DependencyProperty FromName(Type type, string name)
+        internal static DependencyProperty PropertyFromName(Type type, string name)
         {
             Dictionary<string, DependencyProperty> list;
             DependencyProperty result;

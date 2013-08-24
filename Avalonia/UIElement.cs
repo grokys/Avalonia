@@ -94,6 +94,19 @@ namespace Avalonia
             get { return (bool)this.GetValue(IsMouseOverProperty); }
         }
 
+        public void CaptureMouse()
+        {
+            Mouse.Capture(this);
+        }
+
+        public void ReleaseMouseCapture()
+        {
+            if (Mouse.Captured == this)
+            {
+                Mouse.Capture(null);
+            }
+        }
+
         public void Measure(Size availableSize)
         {
             this.measureCalled = true;

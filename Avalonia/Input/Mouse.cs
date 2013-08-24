@@ -60,5 +60,10 @@ namespace Avalonia.Input
             get;
             private set;
         }
+
+        public static void Capture(IInputElement element)
+        {
+            PrimaryDevice.Capture(element);
+        }
     }
 }

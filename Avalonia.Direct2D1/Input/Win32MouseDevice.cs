@@ -29,10 +29,31 @@ namespace Avalonia.Direct2D1.Input
         {
             get 
             {
-                Point p = this.GetClientPosition();
-                UIElement ui = this.ActiveSource.RootVisual as UIElement;
-                return ui.InputHitTest(p);
+                if (this.Captured != null)
+                {
+                    return this.Captured;
+                }
+                else
+                {
+                    Point p = this.GetClientPosition();
+                    UIElement ui = this.ActiveSource.RootVisual as UIElement;
+                    return ui.InputHitTest(p);
+                }
             }
+        }
+
+        public override void Capture(IInputElement element)
+        {
+            if (element != null && ActiveSource != null)
+            {
+                UnmanagedMethods.SetCapture(((HwndSource)ActiveSource).Handle);
+            }
+            else
+            {
+                UnmanagedMethods.ReleaseCapture();
+            }
+
+            base.Capture(element);
         }
 
         internal void SetActiveSource(PresentationSource source)

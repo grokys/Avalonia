@@ -26,12 +26,14 @@ namespace Avalonia.Controls.Primitives
         {
             this.IsPressed = true;
             e.Handled = true;
+            this.CaptureMouse();
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             this.IsPressed = false;
             e.Handled = true;
+            this.ReleaseMouseCapture();
         }
     }
 }

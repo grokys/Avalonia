@@ -38,6 +38,16 @@ namespace Avalonia.Input
             private set;
         }
 
+        public IInputElement DirectlyOver 
+        {
+            get { return this.Target; }
+        }
+
+        public virtual void Capture(IInputElement element)
+        {
+            this.Captured = element;
+        }
+
         public void Dispose()
         {
             this.Dispose(true);

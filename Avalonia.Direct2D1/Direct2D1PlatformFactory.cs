@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Direct2D1.Input;
 using Avalonia.Direct2D1.Media;
+using Avalonia.Input;
 using Avalonia.Platform;
 
 namespace Avalonia.Direct2D1
@@ -26,6 +28,11 @@ namespace Avalonia.Direct2D1
         { 
             get; 
             protected set; 
+        }
+
+        public override MouseDevice MouseDevice
+        {
+            get { return Win32MouseDevice.Instance; }
         }
 
         public override PlatformPresentationSource CreatePresentationSource()

@@ -16,7 +16,6 @@
     {
         private string className;
         private WindowRenderTarget renderTarget;
-        private Win32MouseDevice mouse;
 
         [AvaloniaSpecific]
         public HwndSource()
@@ -29,8 +28,6 @@
                 Height = UnmanagedMethods.CW_USEDEFAULT,
                 WindowStyle = (int)UnmanagedMethods.WindowStyles.WS_OVERLAPPEDWINDOW
             };
-
-            this.mouse = new Win32MouseDevice(this);
 
             this.Initialize(parameters);
         }
@@ -206,7 +203,14 @@
 
         private IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
-            this.mouse.UpdateCursorPos();
+            Win32MouseDevice mouse = Win32MouseDevice.Instance;
+
+            mouse.SetActiveSource(this);
+
+            // Only update the mouse cursor pos each time we receive a message; otherwise when 
+            // debugging the mouse class will report the actual mouse position which makes things
+            // a lot more difficult.
+            mouse.UpdateCursorPos();
 
             switch ((UnmanagedMethods.WindowsMessage)msg)
             {

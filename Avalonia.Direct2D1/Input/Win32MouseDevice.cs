@@ -6,18 +6,23 @@
 
 namespace Avalonia.Direct2D1.Input
 {
+    using System;
     using Avalonia.Direct2D1.Interop;
     using Avalonia.Input;
 
     public class Win32MouseDevice : MouseDevice
     {
-        private HwndSource source;
+        private static Win32MouseDevice instance = new Win32MouseDevice();
+
         private UnmanagedMethods.POINT cursorPos;
 
-        public Win32MouseDevice(HwndSource source)
-            : base(source)
+        private Win32MouseDevice()
         {
-            this.source = source;
+        }
+
+        public static Win32MouseDevice Instance
+        {
+            get { return instance; }
         }
 
         public override IInputElement Target
@@ -25,9 +30,14 @@ namespace Avalonia.Direct2D1.Input
             get 
             {
                 Point p = this.GetClientPosition();
-                UIElement ui = source.RootVisual as UIElement;
+                UIElement ui = this.ActiveSource.RootVisual as UIElement;
                 return ui.InputHitTest(p);
             }
+        }
+
+        internal void SetActiveSource(PresentationSource source)
+        {
+            this.ActiveSource = source;
         }
 
         internal void UpdateCursorPos()
@@ -37,8 +47,9 @@ namespace Avalonia.Direct2D1.Input
 
         protected override Point GetClientPosition()
         {
+            IntPtr handle = ((HwndSource)ActiveSource).Handle;
             UnmanagedMethods.POINT p = this.cursorPos;
-            UnmanagedMethods.ScreenToClient(this.source.Handle, ref p);
+            UnmanagedMethods.ScreenToClient(handle, ref p);
             return new Point(p.X, p.Y);
         }
 

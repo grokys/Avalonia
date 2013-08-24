@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -----------------------------------------------------------------------
+// <copyright file="Mouse.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Avalonia.Input
 {
+    using Avalonia.Platform;
+
     public static class Mouse
     {
         public static readonly RoutedEvent MouseEnterEvent =
@@ -42,5 +44,21 @@ namespace Avalonia.Input
                 RoutingStrategy.Bubble,
                 typeof(MouseEventHandler),
                 typeof(Mouse));
+
+        static Mouse()
+        {
+            PrimaryDevice = PlatformFactory.Instance.MouseDevice;
+        }
+
+        public static IInputElement Captured 
+        {
+            get { return PrimaryDevice.Captured; }
+        }
+
+        public static MouseDevice PrimaryDevice
+        {
+            get;
+            private set;
+        }
     }
 }

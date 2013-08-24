@@ -9,6 +9,7 @@ namespace Avalonia.Platform
     using System;
     using System.IO;
     using System.Reflection;
+using Avalonia.Input;
 
     /// <summary>
     /// Provides platform-specific implementations.
@@ -55,6 +56,14 @@ namespace Avalonia.Platform
         {
             get;
             protected set;
+        }
+
+        /// <summary>
+        /// Gets the platform-specific mouse device.
+        /// </summary>
+        public abstract MouseDevice MouseDevice
+        {
+            get;
         }
 
         /// <summary>

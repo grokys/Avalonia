@@ -16,7 +16,7 @@ namespace Avalonia.Input
     {
         private List<UIElement> mouseOvers = new List<UIElement>();
 
-        public MouseDevice(PresentationSource presentationSource)
+        public MouseDevice()
         {
             InputManager.Current.PreProcessInput += PreProcessMouseInput;
         }
@@ -24,6 +24,18 @@ namespace Avalonia.Input
         ~MouseDevice()
         {
             this.Dispose(false);
+        }
+
+        public PresentationSource ActiveSource
+        {
+            get;
+            protected set;
+        }
+
+        public IInputElement Captured
+        {
+            get;
+            private set;
         }
 
         public void Dispose()

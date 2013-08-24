@@ -44,6 +44,27 @@
         }
 
         [TestMethod]
+        public void PreProcessInput_Should_Be_Called()
+        {
+            bool called = false;
+
+            PreProcessInputEventHandler preProcess = (sender, ev) =>
+            {
+                called = true;
+            };
+
+            InputElement element = new InputElement();
+            TestEventArgs e = new TestEventArgs(element);
+            e.RoutedEvent = InputElement.RawEvent;
+
+            InputManager.Current.PreProcessInput += preProcess;
+            InputManager.Current.ProcessInput(e);
+            InputManager.Current.PreProcessInput -= preProcess;
+
+            Assert.IsTrue(called);
+        }
+
+        [TestMethod]
         public void PreNotifyInput_Should_Be_Called()
         {
             bool notified = false;
@@ -87,6 +108,104 @@
             InputManager.Current.PreNotifyInput += preNotify;
             InputManager.Current.ProcessInput(e);
             InputManager.Current.PreNotifyInput -= preNotify;
+            InputManager.Current.PreProcessInput -= preProcess;
+
+            Assert.IsFalse(notified);
+        }
+
+        [TestMethod]
+        public void PostNotifyInput_Should_Be_Called()
+        {
+            bool notified = false;
+
+            NotifyInputEventHandler postNotify = (sender, ev) =>
+            {
+                notified = true;
+            };
+
+            InputElement element = new InputElement();
+            TestEventArgs e = new TestEventArgs(element);
+            e.RoutedEvent = InputElement.RawEvent;
+
+            InputManager.Current.PostNotifyInput += postNotify;
+            InputManager.Current.ProcessInput(e);
+            InputManager.Current.PostNotifyInput -= postNotify;
+
+            Assert.IsTrue(notified);
+        }
+
+        [TestMethod]
+        public void PostNotifyInput_Should_Not_Be_Called_If_Cancelled()
+        {
+            bool notified = false;
+
+            PreProcessInputEventHandler preProcess = (sender, ev) =>
+            {
+                ev.Cancel();
+            };
+
+            NotifyInputEventHandler postNotify = (sender, ev) =>
+            {
+                notified = true;
+            };
+
+            InputElement element = new InputElement();
+            TestEventArgs e = new TestEventArgs(element);
+            e.RoutedEvent = InputElement.RawEvent;
+
+            InputManager.Current.PreProcessInput += preProcess;
+            InputManager.Current.PostNotifyInput += postNotify;
+            InputManager.Current.ProcessInput(e);
+            InputManager.Current.PostNotifyInput -= postNotify;
+            InputManager.Current.PreProcessInput -= preProcess;
+
+            Assert.IsFalse(notified);
+        }
+
+        [TestMethod]
+        public void PostProcessInput_Should_Be_Called()
+        {
+            bool notified = false;
+
+            ProcessInputEventHandler postProcess = (sender, ev) =>
+            {
+                notified = true;
+            };
+
+            InputElement element = new InputElement();
+            TestEventArgs e = new TestEventArgs(element);
+            e.RoutedEvent = InputElement.RawEvent;
+
+            InputManager.Current.PostProcessInput += postProcess;
+            InputManager.Current.ProcessInput(e);
+            InputManager.Current.PostProcessInput -= postProcess;
+
+            Assert.IsTrue(notified);
+        }
+
+        [TestMethod]
+        public void PostProcessInput_Should_Not_Be_Called_If_Cancelled()
+        {
+            bool notified = false;
+
+            PreProcessInputEventHandler preProcess = (sender, ev) =>
+            {
+                ev.Cancel();
+            };
+
+            ProcessInputEventHandler postProcess = (sender, ev) =>
+            {
+                notified = true;
+            };
+
+            InputElement element = new InputElement();
+            TestEventArgs e = new TestEventArgs(element);
+            e.RoutedEvent = InputElement.RawEvent;
+
+            InputManager.Current.PreProcessInput += preProcess;
+            InputManager.Current.PostProcessInput += postProcess;
+            InputManager.Current.ProcessInput(e);
+            InputManager.Current.PostProcessInput += postProcess;
             InputManager.Current.PreProcessInput -= preProcess;
 
             Assert.IsFalse(notified);
@@ -178,6 +297,120 @@
         }
 
         [TestMethod]
+        public void PreNotify_Event_Should_Be_Called_With_Mutated_Event()
+        {
+            bool calledWithMutated = false;
+
+            PreProcessInputEventHandler preProcess = (sender, ev) =>
+            {
+                if (ev.StagingItem.Input.RoutedEvent == InputElement.RawEvent)
+                {
+                    TestEventArgs mutated = new TestEventArgs(ev.StagingItem.Input.Device.Target);
+                    mutated.RoutedEvent = InputElement.MutatedEvent;
+                    StagingAreaInputItem stagingItem = CreateStagingItem(mutated);
+                    ev.PushInput(stagingItem);
+                    ev.Cancel();
+                }
+            };
+
+            NotifyInputEventHandler preNotify = (sender, ev) =>
+            {
+                if (ev.StagingItem.Input.RoutedEvent == InputElement.MutatedEvent)
+                {
+                    calledWithMutated = true;
+                }
+            };
+
+            InputElement element = new InputElement();
+            TestEventArgs e = new TestEventArgs(element);
+            e.RoutedEvent = InputElement.RawEvent;
+
+            InputManager.Current.PreProcessInput += preProcess;
+            InputManager.Current.PreNotifyInput += preNotify;
+            InputManager.Current.ProcessInput(e);
+            InputManager.Current.PreNotifyInput -= preNotify;
+            InputManager.Current.PreProcessInput -= preProcess;
+
+            Assert.IsTrue(calledWithMutated);
+        }
+
+        [TestMethod]
+        public void PostNotify_Event_Should_Be_Called_With_Mutated_Event()
+        {
+            bool calledWithMutated = false;
+
+            PreProcessInputEventHandler preProcess = (sender, ev) =>
+            {
+                if (ev.StagingItem.Input.RoutedEvent == InputElement.RawEvent)
+                {
+                    TestEventArgs mutated = new TestEventArgs(ev.StagingItem.Input.Device.Target);
+                    mutated.RoutedEvent = InputElement.MutatedEvent;
+                    StagingAreaInputItem stagingItem = CreateStagingItem(mutated);
+                    ev.PushInput(stagingItem);
+                    ev.Cancel();
+                }
+            };
+
+            NotifyInputEventHandler postNotify = (sender, ev) =>
+            {
+                if (ev.StagingItem.Input.RoutedEvent == InputElement.MutatedEvent)
+                {
+                    calledWithMutated = true;
+                }
+            };
+
+            InputElement element = new InputElement();
+            TestEventArgs e = new TestEventArgs(element);
+            e.RoutedEvent = InputElement.RawEvent;
+
+            InputManager.Current.PreProcessInput += preProcess;
+            InputManager.Current.PostNotifyInput += postNotify;
+            InputManager.Current.ProcessInput(e);
+            InputManager.Current.PostNotifyInput += postNotify;
+            InputManager.Current.PreProcessInput -= preProcess;
+
+            Assert.IsTrue(calledWithMutated);
+        }
+
+        [TestMethod]
+        public void PostProcess_Event_Should_Be_Called_With_Mutated_Event()
+        {
+            bool calledWithMutated = false;
+
+            PreProcessInputEventHandler preProcess = (sender, ev) =>
+            {
+                if (ev.StagingItem.Input.RoutedEvent == InputElement.RawEvent)
+                {
+                    TestEventArgs mutated = new TestEventArgs(ev.StagingItem.Input.Device.Target);
+                    mutated.RoutedEvent = InputElement.MutatedEvent;
+                    StagingAreaInputItem stagingItem = CreateStagingItem(mutated);
+                    ev.PushInput(stagingItem);
+                    ev.Cancel();
+                }
+            };
+
+            ProcessInputEventHandler postProcess = (sender, ev) =>
+            {
+                if (ev.StagingItem.Input.RoutedEvent == InputElement.MutatedEvent)
+                {
+                    calledWithMutated = true;
+                }
+            };
+
+            InputElement element = new InputElement();
+            TestEventArgs e = new TestEventArgs(element);
+            e.RoutedEvent = InputElement.RawEvent;
+
+            InputManager.Current.PreProcessInput += preProcess;
+            InputManager.Current.PostProcessInput += postProcess;
+            InputManager.Current.ProcessInput(e);
+            InputManager.Current.PostProcessInput += postProcess;
+            InputManager.Current.PreProcessInput -= preProcess;
+
+            Assert.IsTrue(calledWithMutated);
+        }
+
+        [TestMethod]
         public void ProcessInput_Should_Return_False_If_No_Events_Handled()
         {
             PreProcessInputEventHandler preProcess = (sender, ev) =>
@@ -230,6 +463,38 @@
             Assert.IsTrue(element.RawEventRaised);
             Assert.IsTrue(element.MutatedEventRaised);
             Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void Mutated_Event_Should_Be_Raised_With_Nested_ProcessInput()
+        {
+            bool calledWithMutated = false;
+
+            PreProcessInputEventHandler preProcess = (sender, ev) =>
+            {
+                if (ev.StagingItem.Input.RoutedEvent == InputElement.RawEvent)
+                {
+                    TestEventArgs mutated = new TestEventArgs(ev.StagingItem.Input.Device.Target);
+                    mutated.RoutedEvent = InputElement.MutatedEvent;
+                    InputManager.Current.ProcessInput(mutated);
+                }
+                else if (ev.StagingItem.Input.RoutedEvent == InputElement.MutatedEvent)
+                {
+                    calledWithMutated = true;
+                }
+            };
+
+            InputElement element = new InputElement();
+            TestEventArgs e = new TestEventArgs(element);
+            e.RoutedEvent = InputElement.RawEvent;
+
+            InputManager.Current.PreProcessInput += preProcess;
+            InputManager.Current.ProcessInput(e);
+            InputManager.Current.PreProcessInput -= preProcess;
+
+            Assert.IsTrue(element.RawEventRaised);
+            Assert.IsTrue(element.MutatedEventRaised);
+            Assert.IsTrue(calledWithMutated);
         }
 
         private static StagingAreaInputItem CreateStagingItem(TestEventArgs e)

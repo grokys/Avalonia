@@ -63,6 +63,7 @@
     <Compile Include="..\Avalonia.UnitTests\UIElement_MeasureArrangeTests.cs">
       <Link>UIElement_MeasureArrangeTests.cs</Link>
     </Compile>
+    <Compile Include="Input\InputManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Choose>

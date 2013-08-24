@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -----------------------------------------------------------------------
+// <copyright file="PreProcessInputEventArgs.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Avalonia.Input
 {
+    using System;
+
     public delegate void PreProcessInputEventHandler(object sender, PreProcessInputEventArgs e);
 
     public class PreProcessInputEventArgs : EventArgs

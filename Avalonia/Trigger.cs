@@ -67,7 +67,7 @@ namespace Avalonia
             }
 
             IObservableDependencyObject observable = (IObservableDependencyObject)source;
-            observable.AttachPropertyChangedHandler(this.Property.Name, ValueChanged);
+            observable.AttachPropertyChangedHandler(this.Property.Name, this.ValueChanged);
         }
 
         private bool CheckCondition(DependencyObject source)
@@ -82,7 +82,7 @@ namespace Avalonia
 
             if (this.CheckCondition(source))
             {
-                if (!applied.Contains(target))
+                if (!this.applied.Contains(target))
                 {
                     this.Setters.Attach(target);
                     this.applied.Add(target);
@@ -90,7 +90,7 @@ namespace Avalonia
             }
             else
             {
-                if (applied.Contains(target))
+                if (this.applied.Contains(target))
                 {
                     this.Setters.Detach(target);
                     this.applied.Remove(target);

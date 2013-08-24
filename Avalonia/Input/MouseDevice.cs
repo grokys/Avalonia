@@ -18,7 +18,7 @@ namespace Avalonia.Input
 
         public MouseDevice()
         {
-            InputManager.Current.PreProcessInput += PreProcessMouseInput;
+            InputManager.Current.PreProcessInput += this.PreProcessMouseInput;
         }
 
         ~MouseDevice()
@@ -75,7 +75,7 @@ namespace Avalonia.Input
 
         protected virtual void Dispose(bool disposing)
         {
-            InputManager.Current.PreProcessInput -= PreProcessMouseInput;
+            InputManager.Current.PreProcessInput -= this.PreProcessMouseInput;
         }
 
         protected abstract Point GetClientPosition();
@@ -90,7 +90,7 @@ namespace Avalonia.Input
 
                 if (rawMouseEvent != null)
                 {
-                    if (ProcessRawMouseEvent(rawMouseEvent))
+                    if (this.ProcessRawMouseEvent(rawMouseEvent))
                     {
                         e.Cancel();
                     }

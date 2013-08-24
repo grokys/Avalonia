@@ -12,6 +12,8 @@ namespace Avalonia
     using System.Text;
     using System.Threading.Tasks;
 
+    public delegate void RoutedEventHandler(object sender, RoutedEventArgs e);
+
     public class RoutedEventArgs : EventArgs
     {
         public RoutedEventArgs()

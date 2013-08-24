@@ -46,6 +46,7 @@ namespace Avalonia.Input
         public virtual void Capture(IInputElement element)
         {
             this.Captured = element;
+            this.UpdateUIElementMouseOvers();
         }
 
         public void Dispose()
@@ -161,9 +162,17 @@ namespace Avalonia.Input
 
         private IEnumerable<UIElement> ElementAndAncestors(IInputElement mouseOver)
         {
-            return new[] { (DependencyObject)mouseOver }
-                .Concat(VisualTreeHelper.GetAncestors((DependencyObject)mouseOver))
-                .OfType<UIElement>();
+            UIElement mo = (UIElement)mouseOver;
+
+            if (mo != null)
+            {
+                yield return mo;
+
+                foreach (UIElement e in VisualTreeHelper.GetAncestors(mo).OfType<UIElement>())
+                {
+                    yield return e;
+                }
+            }
         }
     }
 }

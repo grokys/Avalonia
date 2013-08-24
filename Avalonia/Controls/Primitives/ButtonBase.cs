@@ -16,10 +16,26 @@ namespace Avalonia.Controls.Primitives
                 typeof(bool),
                 typeof(ButtonBase));
 
-        public bool IsPressed 
+        public static readonly RoutedEvent ClickEvent =
+            EventManager.RegisterRoutedEvent(
+                "Click",
+                RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler),
+                typeof(ButtonBase));
+
+        public ButtonBase()
+        {
+            this.AddHandler(ClickEvent, (RoutedEventHandler)((s, e) => this.OnClick()));
+        }
+
+        public bool IsPressed
         {
             get { return (bool)this.GetValue(IsPressedProperty); }
             protected set { this.SetValue(IsPressedProperty, value); }
+        }
+
+        protected virtual void OnClick()
+        {
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -31,9 +47,27 @@ namespace Avalonia.Controls.Primitives
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            this.IsPressed = false;
             e.Handled = true;
             this.ReleaseMouseCapture();
+
+            if (this.IsPressed)
+            {
+                this.IsPressed = false;
+                this.RaiseEvent(new RoutedEventArgs(ClickEvent));
+            }
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (this.IsMouseCaptured)
+            {
+                this.IsPressed = this.WithinBounds(e.GetPosition(this));
+            }
+        }
+
+        private bool WithinBounds(Point p)
+        {
+            return p.X > 0 && p.X < this.ActualWidth && p.Y > 0 && p.Y < this.ActualHeight;
         }
     }
 }

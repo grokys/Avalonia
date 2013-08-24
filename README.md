@@ -9,7 +9,9 @@ Implemented to some extent so far:
 - Bindings
 - Border
 - TextBlock
-- Xaml Loading
+- Button
+- Xaml loading
 - Control templates
 - Styles/Setters
+- Routed events
 - Triggers

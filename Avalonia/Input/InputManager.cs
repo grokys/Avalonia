@@ -15,7 +15,7 @@ namespace Avalonia.Input
 
     public sealed class InputManager : DispatcherObject
     {
-        Dictionary<PresentationSource, List<UIElement>> mouseOvers = 
+        private Dictionary<PresentationSource, List<UIElement>> mouseOvers = 
             new Dictionary<PresentationSource, List<UIElement>>();
 
         static InputManager()

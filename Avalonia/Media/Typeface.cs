@@ -23,8 +23,11 @@ namespace Avalonia.Media
         }
 
         public FontFamily FontFamily { get; private set; }
+
         public FontStretch Stretch { get; private set; }
+        
         public FontStyle Style { get; private set; }
+        
         public FontWeight Weight { get; private set; }
     }
 }

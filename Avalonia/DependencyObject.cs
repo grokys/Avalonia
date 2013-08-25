@@ -98,7 +98,7 @@ namespace Avalonia
 
             if (!this.properties.TryGetValue(dp, out val))
             {
-                val = GetDefaultValue(dp);
+                val = this.GetDefaultValue(dp);
             }
 
             return val;

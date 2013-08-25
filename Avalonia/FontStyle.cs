@@ -8,11 +8,11 @@ namespace Avalonia
 {
     public struct FontStyle
     {
-        internal int style;
+        internal int Style;
 
         internal FontStyle(int style)
         {
-            this.style = style;
+            this.Style = style;
         }
     }
 }

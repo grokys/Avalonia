@@ -6,6 +6,9 @@
 
 namespace Avalonia.Media
 {
+    using System.ComponentModel;
+
+    [TypeConverter(typeof(FontFamilyConverter))]
     public class FontFamily
     {
         public FontFamily()

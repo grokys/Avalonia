@@ -4,8 +4,8 @@
         Width="500" Height="500">
     <StackPanel Margin="16">
         <TextBlock>TextBlock</TextBlock>
-        <TextBox Text="TextBox"/>
         <Button>Button</Button>
+        <TextBox Text="TextBox"/>
     </StackPanel>
 </Window>        
 

@@ -58,6 +58,7 @@ namespace Avalonia.Controls
         public virtual int Add(UIElement element)
         {
             this.items.Add(element);
+            this.SetLogicalParent(element);
             return items.Count - 1;
         }
         
@@ -71,6 +72,11 @@ namespace Avalonia.Controls
             if (this.logicalParent != null)
             {
                 this.logicalParent.RemoveLogicalChild(element);
+            }
+
+            if (this.visualParent != null)
+            {
+                this.visualParent.RemoveVisualChild(element);
             }
         }
         
@@ -106,17 +112,22 @@ namespace Avalonia.Controls
         
         public virtual void Remove(UIElement element)
         {
-            this.items.Remove(element);
+            if (this.items.Remove(element))
+            {
+                this.ClearLogicalParent(element);
+            }
         }
         
         public virtual void RemoveAt(int index)
         {
+            UIElement element = this.items[index];
             this.items.RemoveAt(index);
+            this.ClearLogicalParent(element);
         }
         
         public virtual void RemoveRange(int index, int count)
         {
-            this.items.RemoveRange(index, count);
+            throw new NotImplementedException();
         }
         
         protected void SetLogicalParent(UIElement element)
@@ -124,6 +135,11 @@ namespace Avalonia.Controls
             if (this.logicalParent != null)
             {
                 this.logicalParent.AddLogicalChild(element);
+            }
+
+            if (this.visualParent != null)
+            {
+                this.logicalParent.AddVisualChild(element);
             }
         }
 

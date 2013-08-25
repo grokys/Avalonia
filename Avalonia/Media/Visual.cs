@@ -75,14 +75,16 @@ namespace Avalonia.Media
         /// Adds a child <see cref="Visual"/> to the visual tree.
         /// </summary>
         /// <param name="child">The child visual.</param>
-        protected void AddVisualChild(Visual child)
+        protected internal void AddVisualChild(Visual child)
         {
-            if (child.VisualParent != null)
+            if (child == null)
             {
-                throw new InvalidOperationException("Child already has a visual parent.");
+                throw new ArgumentNullException("child");
             }
 
+            DependencyObject oldParent = child.VisualParent;
             child.VisualParent = this;
+            child.OnVisualParentChanged(oldParent);
         }
 
         /// <summary>
@@ -98,11 +100,15 @@ namespace Avalonia.Media
                 new PointHitTestResult(this, hitTestParameters.HitPoint) : null;
         }
 
+        protected internal virtual void OnVisualParentChanged(DependencyObject oldParent)
+        {
+        }
+
         /// <summary>
         /// Removes a child <see cref="Visual"/> from the visual tree.
         /// </summary>
         /// <param name="child">The child visual.</param>
-        protected void RemoveVisualChild(Visual child)
+        protected internal void RemoveVisualChild(Visual child)
         {
             child.VisualParent = this;
         }

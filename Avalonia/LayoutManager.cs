@@ -57,7 +57,7 @@ namespace Avalonia
 
             foreach (UIElement entry in this.entries)
             {
-                Window window = this.FindWindow(entry);
+                Window window = VisualTreeHelper.GetAncestor<Window>(entry);
 
                 if (window != null)
                 {
@@ -72,18 +72,6 @@ namespace Avalonia
 
             this.entries.Clear();
             this.layoutPassQueued = false;
-        }
-
-        private Window FindWindow(UIElement entry)
-        {
-            Visual visual = entry;
-
-            while (visual != null && !(visual is Window))
-            {
-                visual = visual.VisualParent as Visual;
-            }
-
-            return visual as Window;
         }
     }
 }

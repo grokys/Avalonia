@@ -55,21 +55,13 @@ namespace Avalonia
         }
 
         [AvaloniaSpecific]
-        public static Size operator +(Size size, Thickness thickness)
+        public static Thickness operator +(Thickness a, Thickness b)
         {
-            return new Size(
-                size.Width + thickness.Left + thickness.Right, 
-                size.Height + thickness.Top + thickness.Bottom);
-        }
-
-        [AvaloniaSpecific]
-        public static Rect operator -(Rect rect, Thickness thickness)
-        {
-            return new Rect(
-                rect.Left + thickness.Left,
-                rect.Top + thickness.Top,
-                Math.Max(0.0, rect.Width - thickness.Left - thickness.Right),
-                Math.Max(0.0, rect.Height - thickness.Top - thickness.Bottom));
+            return new Thickness(
+                a.Left + b.Left,
+                a.Top + b.Top,
+                a.Right + b.Right,
+                a.Bottom + b.Bottom);
         }
 
         public override bool Equals(object obj)

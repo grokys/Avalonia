@@ -162,12 +162,12 @@ namespace Avalonia
         {
             Size size = this.RenderSize;
             this.Measure(size);
-            this.Arrange(new Rect(new Point(), size));
+            this.Arrange(new Rect(size));
         }
 
         public IInputElement InputHitTest(Point point)
         {
-            Rect bounds = new Rect(new Point(), this.RenderSize);
+            Rect bounds = new Rect(this.RenderSize);
 
             if (bounds.Contains(point))
             {

@@ -85,7 +85,7 @@ namespace Avalonia
             {
                 Size clientSize = this.PresentationSource.ClientSize;
                 this.Measure(clientSize);
-                this.Arrange(new Rect(new Point(), clientSize));
+                this.Arrange(new Rect(clientSize));
                 this.DoRender();
             }
         }

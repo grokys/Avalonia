@@ -90,7 +90,7 @@ namespace Avalonia.Controls
 
         protected internal override void OnRender(DrawingContext drawingContext)
         {
-            Rect rect = new Rect(new Point(), new Size(this.ActualWidth, this.ActualHeight));
+            Rect rect = new Rect(new Size(this.ActualWidth, this.ActualHeight));
             Pen pen = null;
 
             if (this.BorderBrush != null && !this.BorderThickness.IsEmpty)
@@ -120,7 +120,7 @@ namespace Avalonia.Controls
         {
             if (this.Child != null)
             {
-                Rect rect = new Rect(new Point(), constraint) - this.Padding - this.BorderThickness;
+                constraint -= this.Padding + this.BorderThickness;
                 this.Child.Measure(constraint);
                 return this.Child.DesiredSize + this.Padding + this.BorderThickness;
             }
@@ -134,7 +134,7 @@ namespace Avalonia.Controls
         {
             if (this.Child != null)
             {
-                Rect rect = new Rect(new Point(), finalSize) - this.Padding - this.BorderThickness;
+                Rect rect = new Rect(finalSize) - this.Padding - this.BorderThickness;
                 this.Child.Arrange(rect);
             }
 

@@ -346,6 +346,16 @@ namespace Avalonia
             return rect1.Location == rect2.Location && rect1.Size == rect2.Size;
         }
 
+        [AvaloniaSpecific]
+        public static Rect operator -(Rect rect, Thickness thickness)
+        {
+            return new Rect(
+                rect.Left + thickness.Left,
+                rect.Top + thickness.Top,
+                Math.Max(0.0, rect.Width - thickness.Left - thickness.Right),
+                Math.Max(0.0, rect.Height - thickness.Top - thickness.Bottom));
+        }
+
         public void Union(Point point)
         {
             this.Union(new Rect(point, point));

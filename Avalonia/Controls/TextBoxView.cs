@@ -15,7 +15,7 @@ namespace Avalonia.Controls
 
         protected internal override void OnRender(DrawingContext drawingContext)
         {
-            Rect rect = new Rect(new Point(), new Size(this.ActualWidth, this.ActualHeight));
+            Rect rect = new Rect(new Size(this.ActualWidth, this.ActualHeight));
 
             if (this.formattedText == null)
             {

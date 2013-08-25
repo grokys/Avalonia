@@ -109,6 +109,22 @@ namespace Avalonia
             return !size1.Equals(size2);
         }
 
+        [AvaloniaSpecific]
+        public static Size operator +(Size size, Thickness thickness)
+        {
+            return new Size(
+                size.width + thickness.Left + thickness.Right,
+                size.height + thickness.Top + thickness.Bottom);
+        }
+
+        [AvaloniaSpecific]
+        public static Size operator -(Size size, Thickness thickness)
+        {
+            return new Size(
+                size.width - thickness.Left - thickness.Right,
+                size.height - thickness.Top - thickness.Bottom);
+        }
+
         public static explicit operator Point(Size size)
         {
             return new Point(size.Width, size.Height);

@@ -86,7 +86,7 @@ namespace Avalonia.Direct2D1.Media
                 formattedText.Text,
                 ((Direct2D1FormattedText)formattedText.PlatformImpl).DirectWriteTextLayout,
                 new RectangleF(0, 0, 1000, 1000),
-                new SolidColorBrush(Colors.Black).ToSharpDX(this.target),
+                formattedText.Foreground.ToSharpDX(this.target),
                 DrawTextOptions.None);
         }
 

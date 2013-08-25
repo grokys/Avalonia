@@ -56,6 +56,13 @@ namespace Avalonia.Controls
                     FontWeights.Normal,
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
+        public static readonly DependencyProperty ForegroundProperty =
+            TextElement.ForegroundProperty.AddOwner(
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                    new SolidColorBrush(Colors.Black),
+                    FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender | FrameworkPropertyMetadataOptions.Inherits));
+
         public static readonly DependencyProperty HorizontalContentAlignmentProperty =
             DependencyProperty.Register(
                 "HorizontalContentAlignment",
@@ -122,6 +129,12 @@ namespace Avalonia.Controls
         {
             get { return (FontWeight)this.GetValue(FontWeightProperty); }
             set { this.SetValue(FontWeightProperty, value); }
+        }
+
+        public Brush Foreground
+        {
+            get { return (Brush)this.GetValue(ForegroundProperty); }
+            set { this.SetValue(ForegroundProperty, value); }
         }
 
         public HorizontalAlignment HorizontalContentAlignment 

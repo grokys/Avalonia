@@ -24,5 +24,10 @@ namespace Avalonia.Media
         }
 
         public Color Color { get; set; }
+
+        public override string ToString()
+        {
+            return this.Color.ToString();
+        }
     }
 }

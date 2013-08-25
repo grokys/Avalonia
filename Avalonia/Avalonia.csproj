@@ -45,8 +45,14 @@
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Controls\Panel.cs" />
+    <Compile Include="FontStretch.cs" />
+    <Compile Include="FontWeight.cs" />
+    <Compile Include="FontStyles.cs" />
+    <Compile Include="FontStyle.cs" />
+    <Compile Include="FontWeights.cs" />
     <Compile Include="Input\Mouse.cs" />
     <Compile Include="Input\PreProcessInputEventArgs.cs" />
+    <Compile Include="Media\FontFamily.cs" />
     <Compile Include="Trigger.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="FlowDirection.cs" />

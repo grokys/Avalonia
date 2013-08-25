@@ -13,17 +13,17 @@ namespace Avalonia
     public enum FrameworkPropertyMetadataOptions
     {
         None = 0,
-        AffectsMeasure = 0x01,
-        AffectsArrange = 0x02,
-        AffectsParentMeasure = 0x04,
-        AffectsParentArrange = 0x08,
-        AffectsRender = 0x10,
-        Inherits = 0x11,
-        OverridesInheritanceBehavior = 0x12,
-        NotDataBindable = 0x14,
-        BindsTwoWayByDefault = 0x18,
-        Journal = 0x400,
-        SubPropertiesDoNotAffectRender = 0x800,
+        AffectsMeasure = 0x0001,
+        AffectsArrange = 0x0002,
+        AffectsParentMeasure = 0x0004,
+        AffectsParentArrange = 0x0008,
+        AffectsRender = 0x0010,
+        Inherits = 0x0020,
+        OverridesInheritanceBehavior = 0x0040,
+        NotDataBindable = 0x0080,
+        BindsTwoWayByDefault = 0x0100,
+        Journal = 0x0200,
+        SubPropertiesDoNotAffectRender = 0x0400,
     }
 
     public class FrameworkPropertyMetadata : UIPropertyMetadata

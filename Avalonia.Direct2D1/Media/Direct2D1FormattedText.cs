@@ -6,16 +6,20 @@
 
 namespace Avalonia.Direct2D1.Media
 {
-    using Avalonia.Platform;
-    using SharpDX.DirectWrite;
+    using Avalonia.Media;
+using Avalonia.Platform;
+using SharpDX.DirectWrite;
 
     public class Direct2D1FormattedText : IPlatformFormattedText
     {
-        public Direct2D1FormattedText(string text)
+        public Direct2D1FormattedText(string text, Typeface typeface, double fontSize)
         {
             Factory factory = ((Direct2D1PlatformFactory)PlatformFactory.Instance).DirectWriteFactory;
 
-            TextFormat format = new TextFormat(factory, "Segoe UI", 16);
+            TextFormat format = new TextFormat(
+                factory, 
+                typeface.FontFamily.Source, 
+                (float)fontSize);
 
             this.DirectWriteTextLayout = new TextLayout(
                 factory,

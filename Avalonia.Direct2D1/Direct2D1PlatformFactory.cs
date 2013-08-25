@@ -7,9 +7,10 @@
 namespace Avalonia.Direct2D1
 {
     using Avalonia.Direct2D1.Input;
-    using Avalonia.Direct2D1.Media;
-    using Avalonia.Input;
-    using Avalonia.Platform;
+using Avalonia.Direct2D1.Media;
+using Avalonia.Input;
+using Avalonia.Media;
+using Avalonia.Platform;
 
     public class Direct2D1PlatformFactory : PlatformFactory
     {
@@ -41,9 +42,12 @@ namespace Avalonia.Direct2D1
             return new HwndSource();
         }
 
-        public override IPlatformFormattedText CreateFormattedText(string text)
+        public override IPlatformFormattedText CreateFormattedText(
+            string text, 
+            Typeface typeface, 
+            double fontSize)
         {
-            return new Direct2D1FormattedText(text);
+            return new Direct2D1FormattedText(text, typeface, fontSize);
         }
     }
 }

@@ -22,6 +22,51 @@ namespace Avalonia.Controls
                     new SolidColorBrush(Colors.Transparent),
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public static readonly DependencyProperty FontFamilyProperty =
+            DependencyProperty.RegisterAttached(
+                "FontFamily",
+                typeof(FontFamily),
+                typeof(TextBlock),
+                new FrameworkPropertyMetadata(
+                    new FontFamily("Segoe UI"),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static readonly DependencyProperty FontSizeProperty =
+            DependencyProperty.RegisterAttached(
+                "FontSize",
+                typeof(double),
+                typeof(TextBlock),
+                new FrameworkPropertyMetadata(
+                    12.0,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static readonly DependencyProperty FontStretchProperty =
+            DependencyProperty.RegisterAttached(
+                "FontStretch",
+                typeof(FontStretch),
+                typeof(TextBlock),
+                new FrameworkPropertyMetadata(
+                    new FontStretch(),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static readonly DependencyProperty FontStyleProperty =
+            DependencyProperty.RegisterAttached(
+                "FontStyle",
+                typeof(FontStyle),
+                typeof(TextBlock),
+                new FrameworkPropertyMetadata(
+                    FontStyles.Normal,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static readonly DependencyProperty FontWeightProperty =
+            DependencyProperty.RegisterAttached(
+                "FontWeight",
+                typeof(FontWeight),
+                typeof(TextBlock),
+                new FrameworkPropertyMetadata(
+                    FontWeights.Normal,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(
                 "Text",
@@ -38,6 +83,36 @@ namespace Avalonia.Controls
         {
             get { return (Brush)this.GetValue(BackgroundProperty); }
             set { this.SetValue(BackgroundProperty, value); }
+        }
+
+        public FontFamily FontFamily 
+        {
+            get { return (FontFamily)this.GetValue(FontFamilyProperty); }
+            set { this.SetValue(FontFamilyProperty, value); }
+        }
+
+        public double FontSize 
+        { 
+            get { return (double)this.GetValue(FontSizeProperty); }
+            set { this.SetValue(FontSizeProperty, value); }
+        }
+
+        public FontStretch FontStretch
+        {
+            get { return (FontStretch)this.GetValue(FontStretchProperty); }
+            set { this.SetValue(FontStretchProperty, value); }
+        }
+
+        public FontStyle FontStyle
+        {
+            get { return (FontStyle)this.GetValue(FontStyleProperty); }
+            set { this.SetValue(FontStyleProperty, value); }
+        }
+
+        public FontWeight FontWeight
+        {
+            get { return (FontWeight)this.GetValue(FontWeightProperty); }
+            set { this.SetValue(FontWeightProperty, value); }
         }
 
         public string Text 
@@ -84,8 +159,8 @@ namespace Avalonia.Controls
                 this.Text,
                 CultureInfo.CurrentCulture,
                 FlowDirection.LeftToRight,
-                new Typeface(),
-                12,
+                new Typeface(this.FontFamily, this.FontStyle, this.FontWeight, this.FontStretch),
+                this.FontSize,
                 new SolidColorBrush(Colors.Black));
         }
     }

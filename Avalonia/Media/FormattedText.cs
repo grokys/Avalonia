@@ -24,7 +24,10 @@ namespace Avalonia.Media
             double emSize,
             Brush foreground)
         {
-            this.PlatformImpl = PlatformFactory.Instance.CreateFormattedText(textToFormat);
+            this.PlatformImpl = PlatformFactory.Instance.CreateFormattedText(
+                textToFormat, 
+                typeface, 
+                emSize);
             this.Text = textToFormat;
         }
 

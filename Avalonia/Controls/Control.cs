@@ -20,6 +20,41 @@ namespace Avalonia.Controls
                     new SolidColorBrush(Colors.White),
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public static readonly DependencyProperty FontFamilyProperty =
+            TextBlock.FontFamilyProperty.AddOwner(
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                    new FontFamily("Segoe UI"),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static readonly DependencyProperty FontSizeProperty =
+            TextBlock.FontSizeProperty.AddOwner(
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                    12.0,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static readonly DependencyProperty FontStretchProperty =
+            TextBlock.FontStretchProperty.AddOwner(
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                    new FontStretch(),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static readonly DependencyProperty FontStyleProperty =
+            TextBlock.FontStyleProperty.AddOwner(
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                    FontStyles.Normal,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static readonly DependencyProperty FontWeightProperty =
+            TextBlock.FontWeightProperty.AddOwner(
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                    FontWeights.Normal,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
         public static readonly DependencyProperty HorizontalContentAlignmentProperty =
             DependencyProperty.Register(
                 "HorizontalContentAlignment",
@@ -56,6 +91,36 @@ namespace Avalonia.Controls
         {
             get { return (Brush)this.GetValue(BackgroundProperty); }
             set { this.SetValue(BackgroundProperty, value); }
+        }
+
+        public FontFamily FontFamily
+        {
+            get { return (FontFamily)this.GetValue(FontFamilyProperty); }
+            set { this.SetValue(FontFamilyProperty, value); }
+        }
+
+        public double FontSize
+        {
+            get { return (double)this.GetValue(FontSizeProperty); }
+            set { this.SetValue(FontSizeProperty, value); }
+        }
+
+        public FontStretch FontStretch
+        {
+            get { return (FontStretch)this.GetValue(FontStretchProperty); }
+            set { this.SetValue(FontStretchProperty, value); }
+        }
+
+        public FontStyle FontStyle
+        {
+            get { return (FontStyle)this.GetValue(FontStyleProperty); }
+            set { this.SetValue(FontStyleProperty, value); }
+        }
+
+        public FontWeight FontWeight
+        {
+            get { return (FontWeight)this.GetValue(FontWeightProperty); }
+            set { this.SetValue(FontWeightProperty, value); }
         }
 
         public HorizontalAlignment HorizontalContentAlignment 

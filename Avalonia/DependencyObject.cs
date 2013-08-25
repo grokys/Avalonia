@@ -9,6 +9,7 @@ namespace Avalonia
     using System;
     using System.Collections.Generic;
     using Avalonia.Data;
+    using Avalonia.Media;
     using Avalonia.Threading;
 
     public class DependencyObject : DispatcherObject, IObservableDependencyObject
@@ -97,8 +98,7 @@ namespace Avalonia
 
             if (!this.properties.TryGetValue(dp, out val))
             {
-                PropertyMetadata metadata = dp.GetMetadata(this);
-                val = metadata.DefaultValue;
+                val = GetDefaultValue(dp);
             }
 
             return val;
@@ -305,6 +305,25 @@ namespace Avalonia
         protected virtual bool ShouldSerializeProperty(DependencyProperty dp)
         {
             throw new NotImplementedException();
+        }
+
+        private object GetDefaultValue(DependencyProperty dp)
+        {
+            PropertyMetadata metadata = dp.GetMetadata(this);
+            FrameworkPropertyMetadata frameworkMetadata = metadata as FrameworkPropertyMetadata;
+            object result = metadata.DefaultValue;
+
+            if (frameworkMetadata != null && frameworkMetadata.Inherits)
+            {
+                DependencyObject parent = VisualTreeHelper.GetParent(this);
+
+                if (parent != null)
+                {
+                    result = parent.GetValue(dp);
+                }
+            }
+
+            return result;
         }
     }
 }

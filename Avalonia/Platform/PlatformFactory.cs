@@ -10,6 +10,7 @@ namespace Avalonia.Platform
     using System.IO;
     using System.Reflection;
 using Avalonia.Input;
+using Avalonia.Media;
 
     /// <summary>
     /// Provides platform-specific implementations.
@@ -78,7 +79,12 @@ using Avalonia.Input;
         /// Create a new platform-specific <see cref="FormattedText"/>.
         /// </summary>
         /// <param name="textToFormat">The text.</param>
+        /// <param name="typeface">The typeface.</param>
+        /// <param name="fontSize">The font size.</param>
         /// <returns>The formatted text object.</returns>
-        public abstract IPlatformFormattedText CreateFormattedText(string textToFormat);
+        public abstract IPlatformFormattedText CreateFormattedText(
+            string textToFormat, 
+            Typeface typeface,
+            double fontSize);
     }
 }

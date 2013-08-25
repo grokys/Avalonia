@@ -29,7 +29,7 @@ namespace Avalonia.Controls
                 new FrameworkPropertyMetadata(
                     new FontFamily("Segoe UI"),
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
-                    RecreateFormattedText));
+                    InvalidateFormattedText));
 
         public static readonly DependencyProperty FontSizeProperty =
             TextElement.FontSizeProperty.AddOwner(
@@ -37,7 +37,7 @@ namespace Avalonia.Controls
                 new FrameworkPropertyMetadata(
                     12.0,
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
-                    RecreateFormattedText));
+                    InvalidateFormattedText));
 
         public static readonly DependencyProperty FontStretchProperty =
             TextElement.FontStretchProperty.AddOwner(
@@ -45,7 +45,7 @@ namespace Avalonia.Controls
                 new FrameworkPropertyMetadata(
                     new FontStretch(),
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
-                    RecreateFormattedText));
+                    InvalidateFormattedText));
 
         public static readonly DependencyProperty FontStyleProperty =
             TextElement.FontStyleProperty.AddOwner(
@@ -53,7 +53,7 @@ namespace Avalonia.Controls
                 new FrameworkPropertyMetadata(
                     FontStyles.Normal,
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
-                    RecreateFormattedText));
+                    InvalidateFormattedText));
 
         public static readonly DependencyProperty FontWeightProperty =
             TextElement.FontWeightProperty.AddOwner(
@@ -61,7 +61,7 @@ namespace Avalonia.Controls
                 new FrameworkPropertyMetadata(
                     FontWeights.Normal,
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
-                    RecreateFormattedText));
+                    InvalidateFormattedText));
 
         public static readonly DependencyProperty ForegroundProperty =
             TextElement.ForegroundProperty.AddOwner(
@@ -69,7 +69,7 @@ namespace Avalonia.Controls
                 new FrameworkPropertyMetadata(
                     new SolidColorBrush(Colors.Black),
                     FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender | FrameworkPropertyMetadataOptions.Inherits,
-                    RecreateFormattedText));
+                    InvalidateFormattedText));
 
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(
@@ -79,7 +79,7 @@ namespace Avalonia.Controls
                 new FrameworkPropertyMetadata(
                     string.Empty,
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsMeasure,
-                    RecreateFormattedText));
+                    InvalidateFormattedText));
 
         private FormattedText formattedText;
 
@@ -158,7 +158,7 @@ namespace Avalonia.Controls
             return new Size(this.formattedText.Width, this.formattedText.Height);
         }
 
-        private static void RecreateFormattedText(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void InvalidateFormattedText(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((TextBlock)d).formattedText = null;
         }

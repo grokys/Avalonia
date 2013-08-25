@@ -120,7 +120,7 @@ namespace Avalonia.Controls
         {
             if (this.Child != null)
             {
-                Rect rect = Deflate(new Rect(new Point(), constraint), this.Padding);
+                Rect rect = Deflate(new Rect(new Point(), constraint), this.Padding);                
                 this.Child.Measure(constraint);
                 return this.Child.DesiredSize;
             }
@@ -135,6 +135,7 @@ namespace Avalonia.Controls
             if (this.Child != null)
             {
                 Rect rect = Deflate(new Rect(new Point(), finalSize), this.Padding);
+                rect = Deflate(rect, this.BorderThickness);
                 this.Child.Arrange(rect);
             }
 

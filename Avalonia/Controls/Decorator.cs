@@ -7,6 +7,7 @@
 namespace Avalonia.Controls
 {
     using System;
+    using System.Collections;
     using System.Linq;
     using System.Windows.Markup;
     using Avalonia.Media;
@@ -38,10 +39,12 @@ namespace Avalonia.Controls
                     this.AddVisualChild(this.child);
                     this.AddLogicalChild(this.child);
                 }
+
+                this.InvalidateMeasure();
             }
         }
 
-        protected internal override System.Collections.IEnumerator LogicalChildren
+        protected internal override IEnumerator LogicalChildren
         {
             get
             {
@@ -73,15 +76,10 @@ namespace Avalonia.Controls
 
         protected override Size MeasureOverride(Size constraint)
         {
-            if (this.VisualChildrenCount > 0)
+            if (this.child != null)
             {
-                UIElement ui = this.GetVisualChild(0) as UIElement;
-
-                if (ui != null)
-                {
-                    ui.Measure(constraint);
-                    return ui.DesiredSize;
-                }
+                this.child.Measure(constraint);
+                return this.child.DesiredSize;
             }
 
             return base.MeasureOverride(constraint);
@@ -89,15 +87,10 @@ namespace Avalonia.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (this.VisualChildrenCount > 0)
+            if (this.child != null)
             {
-                UIElement ui = this.GetVisualChild(0) as UIElement;
-
-                if (ui != null)
-                {
-                    ui.Arrange(new Rect(finalSize));
-                    return finalSize;
-                }
+                this.child.Arrange(new Rect(finalSize));
+                return finalSize;
             }
 
             return base.ArrangeOverride(finalSize);

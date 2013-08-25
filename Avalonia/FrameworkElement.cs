@@ -165,6 +165,9 @@ namespace Avalonia
 
         public virtual bool ApplyTemplate()
         {
+            // NOTE: this isn't virtual in WPF, but the Template property isn't defined until 
+            // Control so I don't see how it is applied at this level. Making it virtual makes 
+            // the most sense for now.
             return false;
         }
 
@@ -207,6 +210,10 @@ namespace Avalonia
             }
         }
 
+        public virtual void OnApplyTemplate()
+        {
+        }
+
         protected internal void AddLogicalChild(object child)
         {
             FrameworkElement fe = child as FrameworkElement;
@@ -240,6 +247,11 @@ namespace Avalonia
 
                 fe.Parent = null;
             }
+        }
+
+        protected internal virtual DependencyObject GetTemplateChild(string childName)
+        {
+            return null;
         }
 
         protected internal virtual void OnStyleChanged(Style oldStyle, Style newStyle)

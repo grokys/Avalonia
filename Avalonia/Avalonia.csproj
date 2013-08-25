@@ -45,6 +45,9 @@
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Controls\Panel.cs" />
+    <Compile Include="Controls\Primitives\TextBoxBase.cs" />
+    <Compile Include="Controls\TextBox.cs" />
+    <Compile Include="Controls\TextBoxView.cs" />
     <Compile Include="Document\TextElement.cs" />
     <Compile Include="FontStretch.cs" />
     <Compile Include="FontWeight.cs" />
@@ -55,6 +58,7 @@
     <Compile Include="Input\PreProcessInputEventArgs.cs" />
     <Compile Include="Media\FontFamily.cs" />
     <Compile Include="Media\FontFamilyConverter.cs" />
+    <Compile Include="TemplatePartAttribute.cs" />
     <Compile Include="Trigger.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="FlowDirection.cs" />

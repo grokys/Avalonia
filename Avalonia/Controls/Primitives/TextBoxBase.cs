@@ -1,17 +1,15 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IPlatformFormattedText.cs" company="Steven Kirk">
+// <copyright file="TextBoxBase.cs" company="Steven Kirk">
 // Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Avalonia.Platform
+namespace Avalonia.Controls.Primitives
 {
     using System;
 
-    public interface IPlatformFormattedText
+    [TemplatePartAttribute(Name = "PART_ContentHost", Type = typeof(FrameworkElement))]
+    public class TextBoxBase : Control
     {
-        double Width { get; }
-
-        double Height { get; }
     }
 }

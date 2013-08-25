@@ -7,6 +7,6 @@
             <Setter Property="Background" Value="Yellow"/>
         </Style>
     </Window.Resources>
-    <Button Margin="16">Hello World!</Button>
+    <TextBox Margin="16" Text="Hello World!"/>
 </Window>        
 

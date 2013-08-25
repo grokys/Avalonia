@@ -9,6 +9,7 @@ namespace Avalonia.Controls
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Windows.Markup;
     using Avalonia.Document;
     using Avalonia.Media;
 
@@ -86,12 +87,10 @@ namespace Avalonia.Controls
                 typeof(Control),
                 new FrameworkPropertyMetadata(VerticalAlignment.Top));
 
-        private bool templateApplied;
-        private List<Visual> visualChildren;
+        private Visual child;
 
         public Control()
         {
-            this.visualChildren = new List<Visual>();
             this.Background = new SolidColorBrush(Colors.White);
         }
 
@@ -157,15 +156,13 @@ namespace Avalonia.Controls
 
         protected internal override int VisualChildrenCount
         {
-            get { return this.visualChildren.Count; }
+            get { return (this.child != null) ? 1 : 0; }
         }
 
-        public override bool ApplyTemplate()
+        public sealed override bool ApplyTemplate()
         {
-            if (!this.templateApplied)
+            if (this.child == null)
             {
-                this.templateApplied = true;
-
                 if (this.Template == null)
                 {
                     this.ApplyTheme();
@@ -173,9 +170,9 @@ namespace Avalonia.Controls
 
                 if (this.Template != null)
                 {
-                    FrameworkElement child = this.Template.CreateVisualTree(this);
-                    this.visualChildren.Add(child);
-                    this.AddVisualChild(child);
+                    this.child = this.Template.CreateVisualTree(this);
+                    this.AddVisualChild(this.child);
+                    this.OnApplyTemplate();
                     return true;
                 }
             }
@@ -183,9 +180,57 @@ namespace Avalonia.Controls
             return false;
         }
 
+        protected internal sealed override DependencyObject GetTemplateChild(string childName)
+        {
+            if (this.child != null)
+            {
+                INameScope nameScope = NameScope.GetNameScope(this.child);
+
+                if (nameScope != null)
+                {
+                    return nameScope.FindName(childName) as DependencyObject;
+                }
+            }
+
+            return null;
+        }
+
         protected internal override Visual GetVisualChild(int index)
         {
-            return this.visualChildren[index];
+            if (this.child != null && index == 0)
+            {
+                return this.child;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+
+        protected override Size MeasureOverride(Size constraint)
+        {
+            UIElement ui = this.child as UIElement;
+
+            if (ui != null)
+            {
+                ui.Measure(constraint);
+                return ui.DesiredSize;
+            }
+
+            return base.MeasureOverride(constraint);
+        }
+
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            UIElement ui = this.child as UIElement;
+
+            if (ui != null)
+            {
+                ui.Arrange(new Rect(finalSize));
+                return finalSize;
+            }
+
+            return base.ArrangeOverride(finalSize);
         }
 
         private void ApplyTheme()

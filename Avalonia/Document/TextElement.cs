@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="TextBlock.cs" company="Steven Kirk">
+// <copyright file="TextElement.cs" company="Steven Kirk">
 // Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -59,5 +59,14 @@ namespace Avalonia.Document
                 new FrameworkPropertyMetadata(
                     FontWeights.Normal,
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static readonly DependencyProperty ForegroundProperty =
+            DependencyProperty.RegisterAttached(
+                "Foreground",
+                typeof(Brush),
+                typeof(TextElement),
+                new FrameworkPropertyMetadata(
+                    new SolidColorBrush(Colors.Black),
+                    FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender | FrameworkPropertyMetadataOptions.Inherits));
     }
 }

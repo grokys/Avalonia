@@ -29,7 +29,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
-                    <Border Name="border" Background="#fff0f0f0" BorderBrush="Black" BorderThickness="2" CornerRadius="4">
+                    <Border Name="border" Background="#fff0f0f0" BorderBrush="Black" BorderThickness="2" 
+                            CornerRadius="4">
                         <ContentPresenter Content="{TemplateBinding Content}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>

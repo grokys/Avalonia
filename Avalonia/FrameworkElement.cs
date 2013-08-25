@@ -231,6 +231,8 @@ namespace Avalonia
                 {
                     this.PropagateTemplatedParent(fe, this.TemplatedParent);
                 }
+
+                this.InvalidateMeasure();
             }
         }
 
@@ -246,6 +248,7 @@ namespace Avalonia
                 }
 
                 fe.Parent = null;
+                this.InvalidateMeasure();
             }
         }
 

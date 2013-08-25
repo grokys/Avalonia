@@ -44,10 +44,12 @@
   <ItemGroup>
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="Controls\StackPanel.cs" />
     <Compile Include="Controls\Panel.cs" />
     <Compile Include="Controls\Primitives\TextBoxBase.cs" />
     <Compile Include="Controls\TextBox.cs" />
     <Compile Include="Controls\TextBoxView.cs" />
+    <Compile Include="Controls\UIElementCollection.cs" />
     <Compile Include="Document\TextElement.cs" />
     <Compile Include="FontStretch.cs" />
     <Compile Include="FontWeight.cs" />

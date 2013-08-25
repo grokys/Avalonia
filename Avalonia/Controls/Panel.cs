@@ -6,6 +6,8 @@
 
 namespace Avalonia.Controls
 {
+    using System;
+    using System.Collections;
     using System.Windows.Markup;
     using Avalonia.Media;
 
@@ -20,5 +22,36 @@ namespace Avalonia.Controls
                 new FrameworkPropertyMetadata(
                     new SolidColorBrush(Colors.White),
                     FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Panel()
+        {
+            this.Children = new UIElementCollection(this, this);
+        }
+
+        public UIElementCollection Children
+        { 
+            get; 
+            private set; 
+        }
+
+        protected internal override IEnumerator LogicalChildren
+        {
+            get { return this.Children.GetEnumerator(); }
+        }
+
+        protected internal UIElementCollection InternalChildren
+        {
+            get { return this.Children; }
+        }
+        
+        protected internal override int VisualChildrenCount
+        {
+            get { return this.Children.Count; }
+        }
+
+        protected internal override Visual GetVisualChild(int index)
+        {
+            return this.InternalChildren[index];
+        }
     }
 }

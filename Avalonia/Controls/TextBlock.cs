@@ -8,6 +8,7 @@ namespace Avalonia.Controls
 {
     using System.Globalization;
     using System.Windows.Markup;
+    using Avalonia.Document;
     using Avalonia.Media;
 
     [ContentProperty("Text")]
@@ -23,50 +24,45 @@ namespace Avalonia.Controls
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty FontFamilyProperty =
-            DependencyProperty.RegisterAttached(
-                "FontFamily",
-                typeof(FontFamily),
+            TextElement.FontFamilyProperty.AddOwner(
                 typeof(TextBlock),
                 new FrameworkPropertyMetadata(
                     new FontFamily("Segoe UI"),
-                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
+                    FormattedTextChanged));
 
         public static readonly DependencyProperty FontSizeProperty =
-            DependencyProperty.RegisterAttached(
-                "FontSize",
-                typeof(double),
+            TextElement.FontSizeProperty.AddOwner(
                 typeof(TextBlock),
                 new FrameworkPropertyMetadata(
                     12.0,
-                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
+                    FormattedTextChanged));
 
         public static readonly DependencyProperty FontStretchProperty =
-            DependencyProperty.RegisterAttached(
-                "FontStretch",
-                typeof(FontStretch),
+            TextElement.FontStretchProperty.AddOwner(
                 typeof(TextBlock),
                 new FrameworkPropertyMetadata(
                     new FontStretch(),
-                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
+                    FormattedTextChanged));
 
         public static readonly DependencyProperty FontStyleProperty =
-            DependencyProperty.RegisterAttached(
-                "FontStyle",
-                typeof(FontStyle),
+            TextElement.FontStyleProperty.AddOwner(
                 typeof(TextBlock),
                 new FrameworkPropertyMetadata(
                     FontStyles.Normal,
-                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
+                    FormattedTextChanged));
 
         public static readonly DependencyProperty FontWeightProperty =
-            DependencyProperty.RegisterAttached(
-                "FontWeight",
-                typeof(FontWeight),
+            TextElement.FontWeightProperty.AddOwner(
                 typeof(TextBlock),
                 new FrameworkPropertyMetadata(
                     FontWeights.Normal,
-                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
-
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
+                    FormattedTextChanged));
+        
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(
                 "Text",
@@ -75,7 +71,7 @@ namespace Avalonia.Controls
                 new FrameworkPropertyMetadata(
                     string.Empty,
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsMeasure,
-                    TextChanged));
+                    FormattedTextChanged));
 
         private FormattedText formattedText;
 
@@ -148,7 +144,7 @@ namespace Avalonia.Controls
             return new Size(this.formattedText.Width, this.formattedText.Height);
         }
 
-        private static void TextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void FormattedTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((TextBlock)d).formattedText = null;
         }

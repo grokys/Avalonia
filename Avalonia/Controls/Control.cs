@@ -9,6 +9,7 @@ namespace Avalonia.Controls
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using Avalonia.Document;
     using Avalonia.Media;
 
     public class Control : FrameworkElement
@@ -21,35 +22,35 @@ namespace Avalonia.Controls
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty FontFamilyProperty =
-            TextBlock.FontFamilyProperty.AddOwner(
+            TextElement.FontFamilyProperty.AddOwner(
                 typeof(Control),
                 new FrameworkPropertyMetadata(
                     new FontFamily("Segoe UI"),
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         public static readonly DependencyProperty FontSizeProperty =
-            TextBlock.FontSizeProperty.AddOwner(
+            TextElement.FontSizeProperty.AddOwner(
                 typeof(Control),
                 new FrameworkPropertyMetadata(
                     12.0,
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         public static readonly DependencyProperty FontStretchProperty =
-            TextBlock.FontStretchProperty.AddOwner(
+            TextElement.FontStretchProperty.AddOwner(
                 typeof(Control),
                 new FrameworkPropertyMetadata(
                     new FontStretch(),
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         public static readonly DependencyProperty FontStyleProperty =
-            TextBlock.FontStyleProperty.AddOwner(
+            TextElement.FontStyleProperty.AddOwner(
                 typeof(Control),
                 new FrameworkPropertyMetadata(
                     FontStyles.Normal,
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         public static readonly DependencyProperty FontWeightProperty =
-            TextBlock.FontWeightProperty.AddOwner(
+            TextElement.FontWeightProperty.AddOwner(
                 typeof(Control),
                 new FrameworkPropertyMetadata(
                     FontWeights.Normal,

@@ -45,6 +45,7 @@
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Controls\Panel.cs" />
+    <Compile Include="Document\TextElement.cs" />
     <Compile Include="FontStretch.cs" />
     <Compile Include="FontWeight.cs" />
     <Compile Include="FontStyles.cs" />

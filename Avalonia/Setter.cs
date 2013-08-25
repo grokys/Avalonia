@@ -100,6 +100,10 @@ namespace Avalonia
                         return converter.ConvertFrom(value);
                     }
                 }
+                else
+                {
+                    return Convert.ChangeType(value, this.Property.PropertyType);
+                }
 
                 throw new NotSupportedException(string.Format(
                     "Could not convert the value '{0}' to '{1}",

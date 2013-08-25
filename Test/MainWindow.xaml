@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Test.MainWindow"
         xmlns="https://github.com/grokys/Avalonia"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Width="500" Height="500" FontSize="24" FontFamily="Courier New">
+        Width="500" Height="500">
     <Window.Resources>
         <Style x:Key="Yellow"  TargetType="{x:Type TextBlock}">
             <Setter Property="Background" Value="Yellow"/>

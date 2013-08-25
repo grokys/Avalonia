@@ -237,12 +237,14 @@ namespace Avalonia
 
         internal static void Register(Type t, DependencyProperty dp)
         {
-            if (!propertyDeclarations.ContainsKey(t))
+            Dictionary<string, DependencyProperty> typeDeclarations;
+
+            if (!propertyDeclarations.TryGetValue(t, out typeDeclarations))
             {
-                propertyDeclarations[t] = new Dictionary<string, DependencyProperty>();
+                typeDeclarations = new Dictionary<string, DependencyProperty>();
+                propertyDeclarations.Add(t, typeDeclarations);
             }
 
-            Dictionary<string, DependencyProperty> typeDeclarations = propertyDeclarations[t];
             if (!typeDeclarations.ContainsKey(dp.Name))
             {
                 typeDeclarations[dp.Name] = dp;
@@ -251,6 +253,20 @@ namespace Avalonia
             {
                 throw new ArgumentException("A property named " + dp.Name + " already exists on " + t.Name);
             }
+        }
+
+        internal bool IsRegistered(Type t, DependencyProperty dp)
+        {
+            Dictionary<string, DependencyProperty> typeDeclarations;
+            DependencyProperty found;
+
+            if (propertyDeclarations.TryGetValue(t, out typeDeclarations) &&
+                typeDeclarations.TryGetValue(dp.Name, out found))
+            {
+                return found == dp;
+            }
+
+            return false;
         }
 
         internal bool IsUnset(DependencyProperty dependencyProperty)
@@ -299,6 +315,14 @@ namespace Avalonia
                 {
                     uiElement.InvalidateVisual();
                 }
+
+                if (metadata.Inherits)
+                {
+                    foreach (DependencyObject child in VisualTreeHelper.GetChildren(this))
+                    {
+                        child.InheritedValueChanged(e);
+                    }
+                }
             }
         }
 
@@ -324,6 +348,21 @@ namespace Avalonia
             }
 
             return result;
+        }
+
+        private void InheritedValueChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (this.IsRegistered(this.GetType(), e.Property) && !this.properties.ContainsKey(e.Property))
+            {
+                this.OnPropertyChanged(e);
+            }
+            else
+            {
+                foreach (DependencyObject child in VisualTreeHelper.GetChildren(this))
+                {
+                    child.InheritedValueChanged(e);
+                }
+            }
         }
     }
 }

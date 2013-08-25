@@ -54,6 +54,24 @@ namespace Avalonia
             return !a.Equals(b);
         }
 
+        [AvaloniaSpecific]
+        public static Size operator +(Size size, Thickness thickness)
+        {
+            return new Size(
+                size.Width + thickness.Left + thickness.Right, 
+                size.Height + thickness.Top + thickness.Bottom);
+        }
+
+        [AvaloniaSpecific]
+        public static Rect operator -(Rect rect, Thickness thickness)
+        {
+            return new Rect(
+                rect.Left + thickness.Left,
+                rect.Top + thickness.Top,
+                Math.Max(0.0, rect.Width - thickness.Left - thickness.Right),
+                Math.Max(0.0, rect.Height - thickness.Top - thickness.Bottom));
+        }
+
         public override bool Equals(object obj)
         {
             if (obj is Thickness)

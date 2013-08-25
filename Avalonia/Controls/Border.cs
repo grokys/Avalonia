@@ -120,9 +120,9 @@ namespace Avalonia.Controls
         {
             if (this.Child != null)
             {
-                Rect rect = Deflate(new Rect(new Point(), constraint), this.Padding);                
+                Rect rect = new Rect(new Point(), constraint) - this.Padding - this.BorderThickness;
                 this.Child.Measure(constraint);
-                return this.Child.DesiredSize;
+                return this.Child.DesiredSize + this.Padding + this.BorderThickness;
             }
             else
             {
@@ -134,21 +134,11 @@ namespace Avalonia.Controls
         {
             if (this.Child != null)
             {
-                Rect rect = Deflate(new Rect(new Point(), finalSize), this.Padding);
-                rect = Deflate(rect, this.BorderThickness);
+                Rect rect = new Rect(new Point(), finalSize) - this.Padding - this.BorderThickness;
                 this.Child.Arrange(rect);
             }
 
             return finalSize;
-        }
-
-        private static Rect Deflate(Rect rect, Thickness thickness)
-        {
-            return new Rect(
-                rect.Left + thickness.Left,
-                rect.Top + thickness.Top,
-                Math.Max(0.0, rect.Width - thickness.Left - thickness.Right),
-                Math.Max(0.0, rect.Height - thickness.Top - thickness.Bottom));
         }
     }
 }

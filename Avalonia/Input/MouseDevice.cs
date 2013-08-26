@@ -26,12 +26,6 @@ namespace Avalonia.Input
             this.Dispose(false);
         }
 
-        public PresentationSource ActiveSource
-        {
-            get;
-            protected set;
-        }
-
         public IInputElement Captured
         {
             get;

@@ -59,6 +59,7 @@
     <Compile Include="Direct2D1PlatformFactory.cs" />
     <Compile Include="HwndSource.cs" />
     <Compile Include="HwndSourceParameters.cs" />
+    <Compile Include="Input\Win32KeyboardDevice.cs" />
     <Compile Include="Input\Win32MouseDevice.cs" />
     <Compile Include="Interop\UnmanagedMethods.cs" />
     <Compile Include="Media\Direct2D1DrawingContext.cs" />

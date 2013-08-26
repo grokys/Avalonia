@@ -60,6 +60,14 @@ using Avalonia.Media;
         }
 
         /// <summary>
+        /// Gets the platform-specific keyboard device.
+        /// </summary>
+        public abstract KeyboardDevice KeyboardDevice
+        {
+            get;
+        }
+
+        /// <summary>
         /// Gets the platform-specific mouse device.
         /// </summary>
         public abstract MouseDevice MouseDevice

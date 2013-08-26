@@ -16,10 +16,6 @@ namespace Avalonia.Direct2D1.Input
 
         private UnmanagedMethods.POINT cursorPos;
 
-        private Win32MouseDevice()
-        {
-        }
-
         public static Win32MouseDevice Instance
         {
             get { return instance; }

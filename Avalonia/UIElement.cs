@@ -14,17 +14,35 @@ namespace Avalonia
 
     public class UIElement : Visual, IInputElement
     {
+        public static readonly DependencyProperty FocusableProperty =
+            DependencyProperty.Register(
+                "Focusable",
+                typeof(bool),
+                typeof(UIElement));
+
+        public static readonly DependencyProperty IsKeyboardFocusedProperty =
+            DependencyProperty.Register(
+                "IsKeyboardFocused",
+                typeof(bool),
+                typeof(UIElement));
+
+        public static readonly DependencyProperty IsIsKeyboardFocusWithinProperty =
+            DependencyProperty.Register(
+                "IsIsKeyboardFocusWithin",
+                typeof(bool),
+                typeof(UIElement));
+
         public static readonly DependencyProperty IsMouseOverProperty =
             DependencyProperty.Register(
                 "IsMouseOver",
                 typeof(bool),
-                typeof(FrameworkElement));
+                typeof(UIElement));
 
         public static readonly DependencyProperty IsMouseCapturedProperty =
             DependencyProperty.Register(
                 "IsMouseCaptured",
                 typeof(bool),
-                typeof(FrameworkElement));
+                typeof(UIElement));
 
         public static readonly RoutedEvent MouseEnterEvent =
             Mouse.MouseEnterEvent.AddOwner(typeof(UIElement));
@@ -93,7 +111,32 @@ namespace Avalonia
 
         public bool IsArrangeValid { get; private set; }
 
+        public bool IsVisible 
+        { 
+            get
+            {
+                // TODO: Implement visibility.
+                return true;
+            }
+        }
+
         public Size RenderSize { get; private set; }
+
+        public bool Focusable
+        {
+            get { return (bool)this.GetValue(FocusableProperty); }
+            set { this.SetValue(FocusableProperty, value); }
+        }
+
+        public bool IsIsKeyboardFocused
+        {
+            get { return (bool)this.GetValue(IsKeyboardFocusedProperty); }
+        }
+
+        public bool IsIsKeyboardFocusWithin
+        {
+            get { return (bool)this.GetValue(IsIsKeyboardFocusWithinProperty); }
+        }
 
         public bool IsMouseOver
         {

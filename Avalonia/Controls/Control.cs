@@ -89,6 +89,11 @@ namespace Avalonia.Controls
 
         private Visual child;
 
+        static Control()
+        {
+            FocusableProperty.OverrideMetadata(typeof(Control), new PropertyMetadata(true));
+        }
+
         public Control()
         {
             this.Background = new SolidColorBrush(Colors.White);

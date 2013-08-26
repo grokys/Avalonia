@@ -32,6 +32,11 @@ using Avalonia.Platform;
             protected set; 
         }
 
+        public override KeyboardDevice KeyboardDevice
+        {
+            get { return Win32KeyboardDevice.Instance; }
+        }
+
         public override MouseDevice MouseDevice
         {
             get { return Win32MouseDevice.Instance; }

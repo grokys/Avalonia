@@ -56,6 +56,9 @@
     <Compile Include="FontStyles.cs" />
     <Compile Include="FontStyle.cs" />
     <Compile Include="FontWeights.cs" />
+    <Compile Include="Input\Keyboard.cs" />
+    <Compile Include="Input\KeyboardDevice.cs" />
+    <Compile Include="Input\KeyboardFocusChangedEventArgs.cs" />
     <Compile Include="Input\Mouse.cs" />
     <Compile Include="Input\PreProcessInputEventArgs.cs" />
     <Compile Include="Media\FontFamily.cs" />

@@ -1,15 +1,14 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="InputDevice.cs" company="Steven Kirk">
+// <copyright file="KeyboardFocusChangedEventArgs.cs" company="Steven Kirk">
 // Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
 namespace Avalonia.Input
 {
-    public abstract class InputDevice : DependencyObject
-    {
-        public PresentationSource ActiveSource { get; protected set; }
+    public delegate void KeyboardFocusChangedEventHandler(object sender, KeyboardFocusChangedEventArgs e);
 
-        public abstract IInputElement Target { get; }
+    public class KeyboardFocusChangedEventArgs : RoutedEventArgs
+    {
     }
 }

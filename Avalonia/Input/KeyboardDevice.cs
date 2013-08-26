@@ -12,7 +12,7 @@ namespace Avalonia.Input
 
     public abstract class KeyboardDevice : InputDevice
     {
-        private IInputElement target;
+        private UIElement target;
 
         public KeyboardDevice()
         {
@@ -81,10 +81,17 @@ namespace Avalonia.Input
         {
             if (element != this.target)
             {
-                element.SetValue(UIElement.IsKeyboardFocusedProperty, true);
-                element.SetValue(UIElement.IsIsKeyboardFocusWithinProperty, true);
-
                 // TODO: Set IsIsKeyboardFocusWithin for children, raise events.
+
+                if (this.target != null)
+                {
+                    this.target.SetValue(UIElement.IsKeyboardFocusedProperty, false);
+                }
+
+                if (element != null)
+                {
+                    element.SetValue(UIElement.IsKeyboardFocusedProperty, true);
+                }
 
                 this.target = element;
             }

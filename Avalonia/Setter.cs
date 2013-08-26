@@ -13,10 +13,18 @@ namespace Avalonia
     using System.Reflection;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows.Markup;
+    using System.Xaml;
+    using Avalonia.Controls;
 
-    public class Setter : SetterBase
+    [XamlSetTypeConverter("ReceiveTypeConverter")]
+    public class Setter : SetterBase, ISupportInitialize
     {
         private Dictionary<FrameworkElement, object> oldValues = new Dictionary<FrameworkElement, object>();
+
+        private string propertyName;
+
+        private IServiceProvider serviceProvider;
 
         public Setter()
         {
@@ -51,6 +59,54 @@ namespace Avalonia
         {
             get;
             set;
+        }
+
+
+        public static void ReceiveTypeConverter(Object targetObject, XamlSetTypeConverterEventArgs eventArgs)
+        {
+            // The DependencyProperty refered to by Property may depend on the value of TargetName,
+            // but we don't know that yet, so defer loading Property until EndInit().
+            if (eventArgs.Member.Name == "Property")
+            {
+                Setter setter = (Setter)targetObject;
+                setter.propertyName = (string)eventArgs.Value;
+                setter.serviceProvider = eventArgs.ServiceProvider;
+                eventArgs.Handled = true;
+            }
+        }
+
+        void ISupportInitialize.BeginInit()
+        {
+        }
+
+        void ISupportInitialize.EndInit()
+        {
+            if (this.propertyName != null)
+            {
+                if (this.TargetName == null)
+                {
+                    this.Property = DependencyPropertyConverter.Resolve(this.serviceProvider, this.propertyName);
+                }
+                else
+                {
+                    // TargetName is specified so we need to look in the containing template for the named element
+                    IAmbientProvider ambient = (IAmbientProvider)this.serviceProvider.GetService(typeof(IAmbientProvider));
+                    IXamlSchemaContextProvider schema = (IXamlSchemaContextProvider)this.serviceProvider.GetService(typeof(IXamlSchemaContextProvider));
+
+                    // Look up the FrameworkTemplate.Template property in the xaml schema.
+                    XamlType frameworkTemplateType = schema.SchemaContext.GetXamlType(typeof(FrameworkTemplate));
+                    XamlMember templateProperty = frameworkTemplateType.GetMember("Template");
+
+                    // Get the value of the first ambient FrameworkTemplate.Template property.
+                    TemplateContent templateContent = (TemplateContent)ambient.GetFirstAmbientValue(new[] { frameworkTemplateType }, templateProperty).Value;
+
+                    // Look in the template for the type of TargetName.
+                    Type targetType = templateContent.GetTypeForName(this.TargetName);
+
+                    // Finally, find the dependency property on the type.
+                    this.Property = DependencyObject.PropertyFromName(targetType, this.propertyName);
+                }
+            }
         }
 
         internal override void Attach(FrameworkElement frameworkElement)

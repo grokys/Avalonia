@@ -38,11 +38,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="Background" Value="#ffe0e0e0"/>
-                            <Setter TargetName="border" Property="FontSize" Value="24"/>
+                            <Setter Property="FontSize" Value="24"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="border" Property="Background" Value="#ff404040"/>
-                            <Setter TargetName="border" Property="Foreground" Value="White"/>
+                            <Setter Property="Foreground" Value="White"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -57,6 +57,11 @@
                     <Border Name="PART_ContentHost" Background="{TemplateBinding Background}" 
                             BorderBrush="Black" BorderThickness="1">
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="PART_ContentHost" Property="BorderBrush" Value="Blue"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

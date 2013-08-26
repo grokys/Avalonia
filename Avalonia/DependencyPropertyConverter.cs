@@ -20,8 +20,13 @@ namespace Avalonia
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            IAmbientProvider ambient = (IAmbientProvider)context.GetService(typeof(IAmbientProvider));
-            IXamlSchemaContextProvider schema = (IXamlSchemaContextProvider)context.GetService(typeof(IXamlSchemaContextProvider));
+            return Resolve(context, (string)value);
+        }
+
+        internal static DependencyProperty Resolve(IServiceProvider serviceProvider, string value)
+        {
+            IAmbientProvider ambient = (IAmbientProvider)serviceProvider.GetService(typeof(IAmbientProvider));
+            IXamlSchemaContextProvider schema = (IXamlSchemaContextProvider)serviceProvider.GetService(typeof(IXamlSchemaContextProvider));
 
             // Get the XamlType which represents the <Style> element.
             XamlType styleType = schema.SchemaContext.GetXamlType(typeof(Style));
@@ -33,7 +38,7 @@ namespace Avalonia
             Type targetType = style.TargetType;
 
             // And get the dependency property.
-            return DependencyObject.PropertyFromName(targetType, (string)value);
+            return DependencyObject.PropertyFromName(targetType, value);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Avalonia
     using System.Reflection;
     using System.Xml;
     using Avalonia.Data;
+    using Avalonia.Input;
     using Avalonia.Media;
     using Avalonia.Threading;
 

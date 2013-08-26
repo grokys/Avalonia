@@ -44,6 +44,12 @@ namespace Avalonia
                 typeof(bool),
                 typeof(UIElement));
 
+        public static readonly RoutedEvent GotKeyboardFocusEvent =
+            Keyboard.GotKeyboardFocusEvent.AddOwner(typeof(UIElement));
+
+        public static readonly RoutedEvent LostKeyboardFocusEvent =
+            Keyboard.LostKeyboardFocusEvent.AddOwner(typeof(UIElement));
+
         public static readonly RoutedEvent MouseEnterEvent =
             Mouse.MouseEnterEvent.AddOwner(typeof(UIElement));
 

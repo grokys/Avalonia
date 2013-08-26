@@ -16,25 +16,5 @@ namespace Avalonia.Input
         }
 
         public string Text { get; set; }
-
-        internal static TextComposition FromKey(InputManager inputManager, IInputElement inputElement, Key key)
-        {
-            string text = string.Empty;
-
-            if (key >= Key.D0 && key <= Key.D9)
-            {
-                text = ((char)(key - Key.D0)).ToString();
-            }
-            else if (key >= Key.A && key <= Key.Z)
-            {
-                text = key.ToString();
-            }
-            else
-            {
-                // TODO: Handle other keys here.
-            }
-
-            return new TextComposition(inputManager, inputElement, text);
-        }
     }
 }

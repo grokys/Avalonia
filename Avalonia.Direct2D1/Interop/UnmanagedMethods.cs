@@ -9,6 +9,7 @@ namespace Avalonia.Direct2D1.Interop
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
+    using System.Text;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Using Win32 naming for consistency.")]
     [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1307:AccessibleFieldsMustBeginWithUpperCaseLetter", Justification = "Using Win32 naming for consistency.")]
@@ -336,6 +337,9 @@ namespace Avalonia.Direct2D1.Interop
         public static extern bool GetCursorPos(out POINT lpPoint);
 
         [DllImport("user32.dll")]
+        public static extern bool GetKeyboardState(byte[] lpKeyState);
+
+        [DllImport("user32.dll")]
         public static extern sbyte GetMessage(out MSG lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
 
         [DllImport("kernel32.dll")]
@@ -367,6 +371,16 @@ namespace Avalonia.Direct2D1.Interop
 
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, uint nCmdShow);
+
+        [DllImport("user32.dll")]
+        public static extern int ToUnicode(
+            uint virtualKeyCode, 
+            uint scanCode,
+            byte[] keyboardState,
+            [Out, MarshalAs(UnmanagedType.LPWStr, SizeConst = 64)]
+            StringBuilder receivingBuffer,
+            int bufferSize, 
+            uint flags);
 
         [DllImport("user32.dll")]
         public static extern bool TranslateMessage(ref MSG lpMsg);

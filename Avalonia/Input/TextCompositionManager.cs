@@ -28,10 +28,10 @@ namespace Avalonia.Input
 
                 if (keyEventArgs != null)
                 {
-                    TextComposition composition = TextComposition.FromKey(
+                    TextComposition composition = new TextComposition(
                         InputManager.Current, 
                         keyEventArgs.Device.Target,
-                        keyEventArgs.Key);
+                        keyEventArgs.KeyboardDevice.KeyToString(keyEventArgs.Key));
 
                     TextCompositionEventArgs ev = new TextCompositionEventArgs(
                         keyEventArgs.Device,

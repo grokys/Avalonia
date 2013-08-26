@@ -364,12 +364,16 @@ namespace Avalonia.Direct2D1.Input
 
         public static Key KeyFromVirtualKey(int virtualKey)
         {
-            return keyFromVirtualKey[virtualKey];
+            Key result;
+            keyFromVirtualKey.TryGetValue(virtualKey, out result);
+            return result;
         }
 
         public static int VirtualKeyFromKey(Key key)
         {
-            return virtualKeyFromKey[key];
+            int result;
+            virtualKeyFromKey.TryGetValue(key, out result);
+            return result;
         }
     }
 }

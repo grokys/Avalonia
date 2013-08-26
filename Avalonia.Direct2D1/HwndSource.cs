@@ -217,11 +217,13 @@ namespace Avalonia.Direct2D1
             Win32MouseDevice mouse = Win32MouseDevice.Instance;
 
             mouse.SetActiveSource(this);
+            keyboard.SetActiveSource(this);
 
             // Only update the mouse cursor pos each time we receive a message; otherwise when 
             // debugging the mouse class will report the actual mouse position which makes things
-            // a lot more difficult.
+            // a lot more difficult. Do the same for the keyboard state.
             mouse.UpdateCursorPos();
+            keyboard.UpdateKeyStates();
 
             switch ((UnmanagedMethods.WindowsMessage)msg)
             {

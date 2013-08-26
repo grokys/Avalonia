@@ -11,6 +11,25 @@ namespace Avalonia.Input
     using Avalonia.Media;
     using Avalonia.Platform;
 
+    [Flags]
+    public enum ModifierKeys
+    {
+        None = 0,
+        Alt = 1,
+        Control = 2,
+        Shift = 4,
+        Windows = 8,
+    }
+
+    [Flags]
+    public enum KeyStates
+    {
+        None = 0,
+        Down = 1,
+        Toggled = 2,
+    }
+
+
     public abstract class KeyboardDevice : InputDevice
     {
         private UIElement target;
@@ -29,6 +48,40 @@ namespace Avalonia.Input
         public IInputElement FocusedElement
         {
             get { return this.target; }
+        }
+
+        public ModifierKeys Modifiers
+        {
+            get
+            {
+                ModifierKeys result = 0;
+
+                if (this.GetKeyStatesFromSystem(Key.LeftAlt) == KeyStates.Down || 
+                    this.GetKeyStatesFromSystem(Key.RightAlt) == KeyStates.Down) 
+                {
+                    result |= ModifierKeys.Alt;
+                }
+
+                if (this.GetKeyStatesFromSystem(Key.LeftCtrl) == KeyStates.Down ||
+                    this.GetKeyStatesFromSystem(Key.RightCtrl) == KeyStates.Down)
+                {
+                    result |= ModifierKeys.Control;
+                }
+
+                if (this.GetKeyStatesFromSystem(Key.LeftShift) == KeyStates.Down ||
+                    this.GetKeyStatesFromSystem(Key.RightShift) == KeyStates.Down)
+                {
+                    result |= ModifierKeys.Shift;
+                }
+
+                if (this.GetKeyStatesFromSystem(Key.LWin) == KeyStates.Down ||
+                    this.GetKeyStatesFromSystem(Key.RWin) == KeyStates.Down)
+                {
+                    result |= ModifierKeys.Windows;
+                }
+
+                return result;
+            }
         }
 
         public override IInputElement Target
@@ -50,6 +103,10 @@ namespace Avalonia.Input
 
             return this.target;
         }
+
+        protected internal abstract string KeyToString(Key key);
+
+        protected abstract KeyStates GetKeyStatesFromSystem(Key key);
 
         private void PreProcessMouseInput(object sender, PreProcessInputEventArgs e)
         {

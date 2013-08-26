@@ -7,11 +7,12 @@
 namespace Avalonia.Controls
 {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Windows.Markup;
-    using Avalonia.Document;
-    using Avalonia.Media;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Markup;
+using Avalonia.Document;
+using Avalonia.Input;
+using Avalonia.Media;
 
     public class Control : FrameworkElement
     {
@@ -97,6 +98,8 @@ namespace Avalonia.Controls
         public Control()
         {
             this.Background = new SolidColorBrush(Colors.White);
+
+            this.AddHandler(KeyDownEvent, (KeyEventHandler)((s, e) => this.OnKeyDown(e)));
         }
 
         public Brush Background
@@ -236,6 +239,10 @@ namespace Avalonia.Controls
             }
 
             return base.ArrangeOverride(finalSize);
+        }
+
+        protected virtual void OnKeyDown(KeyEventArgs e)
+        {
         }
 
         private void ApplyTheme()

@@ -21,9 +21,14 @@ namespace Avalonia.Input
         {
         }
 
+        public MouseDevice MouseDevice 
+        {
+            get { return (MouseDevice)this.Device; }
+        }
+
         public Point GetPosition(IInputElement relativeTo)
         {
-            return ((MouseDevice)this.Device).GetPosition(relativeTo);
+            return this.MouseDevice.GetPosition(relativeTo);
         }
     }
 }

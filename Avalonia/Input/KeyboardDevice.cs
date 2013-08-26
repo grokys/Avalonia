@@ -9,6 +9,7 @@ namespace Avalonia.Input
     using System;
     using Avalonia.Controls;
     using Avalonia.Media;
+    using Avalonia.Platform;
 
     public abstract class KeyboardDevice : InputDevice
     {
@@ -16,7 +17,13 @@ namespace Avalonia.Input
 
         public KeyboardDevice()
         {
+            InputManager.Current.PreProcessInput += this.PreProcessKeyboardInput;
             InputManager.Current.PreProcessInput += this.PreProcessMouseInput;
+        }
+
+        void Current_PreProcessInput(object sender, PreProcessInputEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public IInputElement FocusedElement
@@ -55,6 +62,31 @@ namespace Avalonia.Input
                     if (element != null)
                     {
                         this.Focus(element);
+                    }
+                }
+            }
+        }
+
+        private void PreProcessKeyboardInput(object sender, PreProcessInputEventArgs e)
+        {
+            if (e.Input.Device == this)
+            {
+                RawKeyEventArgs rawKeyEvent = e.Input as RawKeyEventArgs;
+
+                if (rawKeyEvent != null)
+                {
+                    switch (rawKeyEvent.Type)
+                    {
+                        case RawKeyEventType.KeyDown:
+                            KeyEventArgs ek = new KeyEventArgs(
+                                (KeyboardDevice)rawKeyEvent.Device,
+                                Mouse.PrimaryDevice.ActiveSource,
+                                rawKeyEvent.Timestamp,
+                                rawKeyEvent.Key);
+                            ek.RoutedEvent = Keyboard.KeyDownEvent;
+                            InputManager.Current.ProcessInput(ek);
+                            e.Cancel();
+                            break;
                     }
                 }
             }

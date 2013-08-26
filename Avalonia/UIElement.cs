@@ -50,6 +50,9 @@ namespace Avalonia
         public static readonly RoutedEvent LostKeyboardFocusEvent =
             Keyboard.LostKeyboardFocusEvent.AddOwner(typeof(UIElement));
 
+        public static readonly RoutedEvent KeyDownEvent =
+            Keyboard.KeyDownEvent.AddOwner(typeof(UIElement));
+
         public static readonly RoutedEvent MouseEnterEvent =
             Mouse.MouseEnterEvent.AddOwner(typeof(UIElement));
 
@@ -65,6 +68,9 @@ namespace Avalonia
         public static readonly RoutedEvent MouseMoveEvent =
             Mouse.MouseMoveEvent.AddOwner(typeof(UIElement));
 
+        public static readonly RoutedEvent TextInputEvent =
+            TextCompositionManager.TextInputEvent.AddOwner(typeof(UIElement));
+
         private bool measureCalled;
         private Size previousMeasureSize;
         private Dictionary<RoutedEvent, List<Delegate>> eventHandlers = new Dictionary<RoutedEvent, List<Delegate>>();
@@ -79,6 +85,13 @@ namespace Avalonia
             this.AddHandler(MouseLeftButtonDownEvent, (MouseButtonEventHandler)((s, e) => this.OnMouseLeftButtonDown(e)));
             this.AddHandler(MouseLeftButtonUpEvent, (MouseButtonEventHandler)((s, e) => this.OnMouseLeftButtonUp(e)));
             this.AddHandler(MouseMoveEvent, (MouseEventHandler)((s, e) => this.OnMouseMove(e)));
+            this.AddHandler(TextInputEvent, (TextCompositionEventHandler)((s, e) => this.OnTextInput(e)));
+        }
+
+        public event KeyEventHandler KeyDown
+        {
+            add { this.AddHandler(KeyDownEvent, value); }
+            remove { this.RemoveHandler(KeyDownEvent, value); }
         }
 
         public event MouseEventHandler MouseEnter
@@ -337,6 +350,10 @@ namespace Avalonia
         }
 
         protected virtual void OnMouseMove(MouseEventArgs e)
+        {
+        }
+
+        protected virtual void OnTextInput(TextCompositionEventArgs e)
         {
         }
 

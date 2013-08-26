@@ -13,6 +13,12 @@ namespace Avalonia.Controls
     {
         private FormattedText formattedText;
 
+        public void InvalidateText()
+        {
+            this.formattedText = null;
+            this.InvalidateMeasure();
+        }
+
         protected internal override void OnRender(DrawingContext drawingContext)
         {
             Rect rect = new Rect(new Size(this.ActualWidth, this.ActualHeight));

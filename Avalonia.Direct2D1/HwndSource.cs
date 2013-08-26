@@ -213,6 +213,7 @@ namespace Avalonia.Direct2D1
         [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Using Win32 naming for consistency.")]
         private IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
+            Win32KeyboardDevice keyboard = Win32KeyboardDevice.Instance;
             Win32MouseDevice mouse = Win32MouseDevice.Instance;
 
             mouse.SetActiveSource(this);
@@ -226,6 +227,14 @@ namespace Avalonia.Direct2D1
             {
                 case UnmanagedMethods.WindowsMessage.WM_DESTROY:
                     this.OnClosed();
+                    break;
+
+                case UnmanagedMethods.WindowsMessage.WM_KEYDOWN:
+                    InputManager.Current.ProcessInput(
+                        new RawKeyEventArgs(
+                            keyboard, 
+                            RawKeyEventType.KeyDown, 
+                            KeyInterop.KeyFromVirtualKey((int)wParam)));
                     break;
 
                 case UnmanagedMethods.WindowsMessage.WM_LBUTTONDOWN:

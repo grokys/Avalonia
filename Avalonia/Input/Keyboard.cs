@@ -24,6 +24,13 @@ namespace Avalonia.Input
                 typeof(KeyboardFocusChangedEventHandler),
                 typeof(Keyboard));
 
+        public static readonly RoutedEvent KeyDownEvent =
+            EventManager.RegisterRoutedEvent(
+                "KeyDown",
+                RoutingStrategy.Bubble,
+                typeof(KeyEventHandler),
+                typeof(Keyboard));
+
         static Keyboard()
         {
             PrimaryDevice = PlatformFactory.Instance.KeyboardDevice;

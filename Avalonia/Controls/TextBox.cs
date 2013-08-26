@@ -10,6 +10,7 @@ namespace Avalonia.Controls
     using System.Globalization;
     using System.Linq;
     using Avalonia.Controls.Primitives;
+    using Avalonia.Input;
     using Avalonia.Media;
 
     public class TextBox : TextBoxBase
@@ -21,7 +22,8 @@ namespace Avalonia.Controls
                 typeof(TextBox),
                 new FrameworkPropertyMetadata(
                     string.Empty,
-                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal,
+                    TextChanged));
 
         private TextBoxView textBoxView;
 
@@ -40,6 +42,21 @@ namespace Avalonia.Controls
         {
             base.OnApplyTemplate();
             this.CreateTextBoxView();
+        }
+
+        protected override void OnTextInput(TextCompositionEventArgs e)
+        {
+            this.Text += e.Text;
+        }
+
+        private static void TextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (textBox.textBoxView != null)
+            {
+                textBox.textBoxView.InvalidateText();
+            }
         }
 
         private void CreateTextBoxView()

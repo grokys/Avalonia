@@ -10,6 +10,7 @@ Implemented to some extent so far:
 - Border
 - TextBlock
 - Button
+- StackPanel
 - Xaml loading
 - Control templates
 - Styles/Setters

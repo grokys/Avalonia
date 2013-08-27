@@ -66,5 +66,10 @@ namespace Avalonia.Media
             get;
             private set;
         }
+
+        internal Point GetCaretPosition(int caretIndex)
+        {
+            return this.PlatformImpl.GetCaretPosition(caretIndex);
+        }
     }
 }

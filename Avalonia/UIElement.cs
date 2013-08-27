@@ -147,7 +147,7 @@ namespace Avalonia
             set { this.SetValue(FocusableProperty, value); }
         }
 
-        public bool IsIsKeyboardFocused
+        public bool IsKeyboardFocused
         {
             get { return (bool)this.GetValue(IsKeyboardFocusedProperty); }
         }

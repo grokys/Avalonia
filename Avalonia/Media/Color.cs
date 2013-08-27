@@ -60,5 +60,10 @@ namespace Avalonia.Media
                 B = (byte)(value & 0xff),
             };
         }
+
+        internal uint ToUint32()
+        {
+            return ((uint)this.A << 24) | ((uint)this.R << 16) | ((uint)this.G << 8) | (uint)this.B;
+        }
     }
 }

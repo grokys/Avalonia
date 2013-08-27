@@ -13,5 +13,7 @@ namespace Avalonia.Platform
         double Width { get; }
 
         double Height { get; }
+
+        Point GetCaretPosition(int caretIndex);
     }
 }

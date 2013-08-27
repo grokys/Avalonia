@@ -44,5 +44,13 @@ using SharpDX.DirectWrite;
         {
             get { return this.DirectWriteTextLayout.Metrics.Height; }
         }
+
+        public Point GetCaretPosition(int caretIndex)
+        {
+            float x;
+            float y;
+            this.DirectWriteTextLayout.HitTestTextPosition(caretIndex, false, out x, out y);
+            return new Point(x, y);
+        }
     }
 }

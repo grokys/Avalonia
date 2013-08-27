@@ -30,7 +30,7 @@ namespace Avalonia.Input
                 {
                     string text = keyEventArgs.KeyboardDevice.KeyToString(keyEventArgs.Key);
 
-                    if (text != string.Empty)
+                    if (text != string.Empty && !char.IsControl(text[0]))
                     {
                         TextComposition composition = new TextComposition(
                             InputManager.Current,

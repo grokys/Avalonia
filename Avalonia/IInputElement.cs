@@ -14,6 +14,6 @@ namespace Avalonia
 
     public interface IInputElement
     {
-        bool IsIsKeyboardFocused { get; }
+        bool IsKeyboardFocused { get; }
     }
 }

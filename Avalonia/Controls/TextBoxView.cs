@@ -11,7 +11,14 @@ namespace Avalonia.Controls
 
     internal class TextBoxView : FrameworkElement
     {
+        private TextBox parent;
+
         private FormattedText formattedText;
+
+        public TextBoxView(TextBox parent)
+        {
+            this.parent = parent;
+        }
 
         public void InvalidateText()
         {
@@ -29,6 +36,30 @@ namespace Avalonia.Controls
             }
 
             drawingContext.DrawText(this.formattedText, new Point());
+
+            if (this.parent.IsKeyboardFocused)
+            {
+                Point caretPos = this.formattedText.GetCaretPosition(this.parent.CaretIndex);
+                Brush caretBrush = this.parent.CaretBrush;
+
+                if (caretBrush == null)
+                {
+                    Color color = Colors.Black;
+                    SolidColorBrush background = this.parent.Background as SolidColorBrush;
+
+                    if (background != null)
+                    {
+                        color = Color.FromUInt32(0x00ffffffu ^ background.Color.ToUint32());
+                    }
+
+                    caretBrush = new SolidColorBrush(color);
+                }
+
+                drawingContext.DrawLine(
+                    new Pen(caretBrush, 1),
+                    caretPos,
+                    caretPos + new Vector(0, this.formattedText.Height));
+            }
         }
 
         protected override Size MeasureOverride(Size constraint)
@@ -43,15 +74,13 @@ namespace Avalonia.Controls
 
         private FormattedText CreateFormattedText()
         {
-            TextBox textBox = VisualTreeHelper.GetAncestor<TextBox>(this);
-
             return new FormattedText(
-                textBox.Text,
+                this.parent.Text,
                 CultureInfo.CurrentCulture,
                 FlowDirection.LeftToRight,
-                new Typeface(textBox.FontFamily, textBox.FontStyle, textBox.FontWeight, textBox.FontStretch),
-                textBox.FontSize,
-                textBox.Foreground);
+                new Typeface(this.parent.FontFamily, this.parent.FontStyle, this.parent.FontWeight, this.parent.FontStretch),
+                this.parent.FontSize,
+                this.parent.Foreground);
         }
     }
 }

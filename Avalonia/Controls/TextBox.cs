@@ -7,6 +7,7 @@
 namespace Avalonia.Controls
 {
     using System;
+    using System.Collections;
     using System.Globalization;
     using System.Linq;
     using Avalonia.Controls.Primitives;
@@ -27,9 +28,30 @@ namespace Avalonia.Controls
 
         private TextBoxView textBoxView;
 
+        private int caretIndex;
+
         static TextBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBox), new FrameworkPropertyMetadata(typeof(TextBox)));
+        }
+
+        public int CaretIndex 
+        { 
+            get
+            {
+                return this.caretIndex;
+            }
+            
+            set
+            {
+                value = Math.Min(Math.Max(value, 0), this.Text.Length);
+
+                if (this.caretIndex != value)
+                {
+                    this.caretIndex = value;
+                    this.textBoxView.InvalidateVisual();
+                }
+            }
         }
 
         public string Text
@@ -38,15 +60,56 @@ namespace Avalonia.Controls
             set { this.SetValue(TextProperty, value); }
         }
 
+        protected internal override IEnumerator LogicalChildren
+        {
+            get { return new[] { this.Text }.GetEnumerator(); }
+        }
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             this.CreateTextBoxView();
         }
 
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            string text = this.Text;
+
+            switch (e.Key)
+            {
+                case Key.Left:
+                    --this.CaretIndex;
+                    break;
+                
+                case Key.Right:
+                    ++this.CaretIndex;
+                    break;
+
+                case Key.Back:
+                    if (this.caretIndex > 0)
+                    {                        
+                        this.Text = text.Substring(0, this.caretIndex - 1) + text.Substring(this.caretIndex);
+                        --this.CaretIndex;
+                    }
+
+                    break;
+
+                case Key.Delete:
+                    if (this.caretIndex < text.Length)
+                    {
+                        this.Text = text.Substring(0, this.caretIndex) + text.Substring(this.caretIndex + 1);
+                    }
+
+                    break;
+            }
+        }
+
         protected override void OnTextInput(TextCompositionEventArgs e)
         {
-            this.Text += e.Text;
+            string text = this.Text;
+            this.Text = text.Substring(0, this.caretIndex) + e.Text + text.Substring(this.caretIndex);
+            ++this.CaretIndex;
+            e.Handled = true;
         }
 
         private static void TextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -66,7 +129,7 @@ namespace Avalonia.Controls
 
             if (contentHost != null)
             {
-                this.textBoxView = new TextBoxView();
+                this.textBoxView = new TextBoxView(this);
                 contentHost.Child = this.textBoxView;
             }
         }

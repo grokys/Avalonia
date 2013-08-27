@@ -30,6 +30,14 @@ namespace Avalonia.Direct2D1.Media
             this.target.EndDraw();
         }
 
+        public override void DrawLine(Pen pen, Point point0, Point point1)
+        {
+            this.target.DrawLine(
+                point0.ToSharpDX(),
+                point1.ToSharpDX(),
+                pen.Brush.ToSharpDX(this.target));
+        }
+
         public override void DrawRectangle(Brush brush, Pen pen, Rect rectangle)
         {
             if (brush != null)

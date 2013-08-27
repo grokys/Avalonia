@@ -37,7 +37,7 @@ using SharpDX.DirectWrite;
 
         public double Width
         {
-            get { return this.DirectWriteTextLayout.Metrics.Width; }
+            get { return this.DirectWriteTextLayout.Metrics.WidthIncludingTrailingWhitespace; }
         }
 
         public double Height

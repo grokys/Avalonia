@@ -15,6 +15,8 @@ namespace Avalonia.Input
 
     public sealed class InputManager : DispatcherObject
     {
+        private Stack<InputEventArgs> stack = new Stack<InputEventArgs>();
+
         static InputManager()
         {
             Current = new InputManager();
@@ -28,31 +30,39 @@ namespace Avalonia.Input
             private set;
         }
 
-        public bool ProcessInput(InputEventArgs input)
+        public void ProcessInput(InputEventArgs input)
         {
-            PreProcessInputEventArgs e = new PreProcessInputEventArgs(input);
+            this.stack.Push(input);
+        }
 
-            input.OriginalSource = input.Device.Target;
+        private void ProcessStack()
+        {
+            InputEventArgs input = stack.Pop();
 
-            if (this.PreProcessInput != null)
+            while (input != null)
             {
-                foreach (var handler in this.PreProcessInput.GetInvocationList().Reverse())
+                PreProcessInputEventArgs e = new PreProcessInputEventArgs(input);
+
+                input.OriginalSource = input.Device.Target;
+
+                if (this.PreProcessInput != null)
                 {
-                    handler.DynamicInvoke(this, e);
+                    foreach (var handler in this.PreProcessInput.GetInvocationList().Reverse())
+                    {
+                        handler.DynamicInvoke(this, e);
+                    }
+                }
+
+                if (!e.Canceled)
+                {
+                    UIElement uiElement = input.OriginalSource as UIElement;
+
+                    if (uiElement != null)
+                    {
+                        uiElement.RaiseEvent(input);
+                    }
                 }
             }
-
-            if (!e.Canceled)
-            {
-                UIElement uiElement = input.OriginalSource as UIElement;
-
-                if (uiElement != null)
-                {
-                    uiElement.RaiseEvent(input);
-                }
-            }
-
-            return input.Handled;
         }
     }
 }

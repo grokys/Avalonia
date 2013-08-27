@@ -61,7 +61,7 @@ namespace Avalonia
             set;
         }
 
-        public static void ReceiveTypeConverter(Object targetObject, XamlSetTypeConverterEventArgs eventArgs)
+        public static void ReceiveTypeConverter(object targetObject, XamlSetTypeConverterEventArgs eventArgs)
         {
             // The DependencyProperty refered to by Property may depend on the value of TargetName,
             // but we don't know that yet, so defer loading Property until EndInit().

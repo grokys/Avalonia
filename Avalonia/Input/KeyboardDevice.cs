@@ -29,7 +29,6 @@ namespace Avalonia.Input
         Toggled = 2,
     }
 
-
     public abstract class KeyboardDevice : InputDevice
     {
         private UIElement target;
@@ -38,11 +37,6 @@ namespace Avalonia.Input
         {
             InputManager.Current.PreProcessInput += this.PreProcessKeyboardInput;
             InputManager.Current.PreProcessInput += this.PreProcessMouseInput;
-        }
-
-        void Current_PreProcessInput(object sender, PreProcessInputEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         public IInputElement FocusedElement
@@ -171,7 +165,6 @@ namespace Avalonia.Input
             if (element != this.target)
             {
                 // TODO: Set IsIsKeyboardFocusWithin for children, raise events.
-
                 if (this.target != null)
                 {
                     this.target.SetValue(UIElement.IsKeyboardFocusedProperty, false);

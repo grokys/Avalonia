@@ -20,7 +20,7 @@ namespace Avalonia.Input
             InputManager.Current.PreProcessInput += PreProcessKeyboardInput;
         }
 
-        static void PreProcessKeyboardInput(object sender, PreProcessInputEventArgs e)
+        private static void PreProcessKeyboardInput(object sender, PreProcessInputEventArgs e)
         {
             if (e.Input.Device == Keyboard.PrimaryDevice)
             {

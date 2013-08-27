@@ -99,7 +99,7 @@ using Avalonia.Media;
         {
             this.Background = new SolidColorBrush(Colors.White);
 
-            this.AddHandler(KeyDownEvent, (KeyEventHandler)((s, e) => this.OnKeyDown(e)));
+            this.AddHandler(Control.KeyDownEvent, (KeyEventHandler)((s, e) => this.OnKeyDown(e)));
         }
 
         public Brush Background

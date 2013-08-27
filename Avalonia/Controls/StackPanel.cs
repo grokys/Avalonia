@@ -58,8 +58,8 @@ namespace Avalonia.Controls
         protected override Size ArrangeOverride(Size finalSize)
         {
             Orientation orientation = this.Orientation;
-            int xIncrement = (orientation == Orientation.Horizontal) ? 1 : 0;
-            int yIncrement = (orientation == Orientation.Vertical) ? 1 : 0;
+            int xinc = (orientation == Orientation.Horizontal) ? 1 : 0;
+            int yinc = (orientation == Orientation.Vertical) ? 1 : 0;
             Point position = new Point();
             double maxWidth = 0;
             double maxHeight = 0;
@@ -67,8 +67,8 @@ namespace Avalonia.Controls
             foreach (UIElement child in this.InternalChildren)
             {
                 child.Arrange(new Rect(position, child.DesiredSize));
-                position.X += child.RenderSize.Width * xIncrement;
-                position.Y += child.RenderSize.Height * yIncrement;
+                position.X += child.RenderSize.Width * xinc;
+                position.Y += child.RenderSize.Height * yinc;
                 maxWidth = Math.Max(maxWidth, child.RenderSize.Width);
                 maxHeight = Math.Max(maxHeight, child.RenderSize.Height);
             }

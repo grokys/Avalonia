@@ -88,18 +88,9 @@ namespace Avalonia.Media
         }
 
         /// <summary>
-        /// Determines whether a point is within the bounds of the visual.
+        /// Called when the visual parent changes.
         /// </summary>
-        /// <param name="hitTestParameters">The point to test.</param>
-        /// <returns>
-        /// A <see cref="PointHitTestResult"/> if the point was within the bounds; otherwise null.
-        /// </returns>
-        protected virtual HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
-        {
-            return this.GetHitTestBounds().Contains(hitTestParameters.HitPoint) ?
-                new PointHitTestResult(this, hitTestParameters.HitPoint) : null;
-        }
-
+        /// <param name="oldParent">The old visual parent.</param>
         protected internal virtual void OnVisualParentChanged(DependencyObject oldParent)
         {
         }
@@ -111,6 +102,19 @@ namespace Avalonia.Media
         protected internal void RemoveVisualChild(Visual child)
         {
             child.VisualParent = this;
+        }
+
+        /// <summary>
+        /// Determines whether a point is within the bounds of the visual.
+        /// </summary>
+        /// <param name="hitTestParameters">The point to test.</param>
+        /// <returns>
+        /// A <see cref="PointHitTestResult"/> if the point was within the bounds; otherwise null.
+        /// </returns>
+        protected virtual HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
+        {
+            return this.GetHitTestBounds().Contains(hitTestParameters.HitPoint) ?
+                new PointHitTestResult(this, hitTestParameters.HitPoint) : null;
         }
     }
 }

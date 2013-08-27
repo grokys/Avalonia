@@ -38,6 +38,7 @@ namespace Avalonia
                             {
                                 nextValueIsName = true;
                             }
+
                             break;
 
                         case XamlNodeType.Value:
@@ -46,6 +47,7 @@ namespace Avalonia
                                 typesByName.Add((string)xamlReader.Value, currentType);
                                 nextValueIsName = false;
                             }
+                            
                             break;
                     }
 

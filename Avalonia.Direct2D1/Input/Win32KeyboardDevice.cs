@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Win32MouseDevice.cs" company="Steven Kirk">
+// <copyright file="Win32KeyboardDevice.cs" company="Steven Kirk">
 // Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -24,7 +24,12 @@ namespace Avalonia.Direct2D1.Input
 
         internal void UpdateKeyStates()
         {
-            UnmanagedMethods.GetKeyboardState(keyStates);
+            UnmanagedMethods.GetKeyboardState(this.keyStates);
+        }
+
+        internal void SetActiveSource(PresentationSource source)
+        {
+            this.ActiveSource = source;
         }
 
         protected override string KeyToString(Key key)
@@ -43,7 +48,7 @@ namespace Avalonia.Direct2D1.Input
         protected override KeyStates GetKeyStatesFromSystem(Key key)
         {
             int vk = KeyInterop.VirtualKeyFromKey(key);
-            byte state = keyStates[vk];
+            byte state = this.keyStates[vk];
             KeyStates result = 0;
 
             if ((state & 0x80) != 0)
@@ -57,11 +62,6 @@ namespace Avalonia.Direct2D1.Input
             }
 
             return result;
-        }
-
-        internal void SetActiveSource(PresentationSource source)
-        {
-            this.ActiveSource = source;
         }
     }
 }

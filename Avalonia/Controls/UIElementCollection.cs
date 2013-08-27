@@ -30,13 +30,13 @@ namespace Avalonia.Controls
 
         public virtual int Capacity 
         {
-            get { return items.Capacity; }
-            set { items.Capacity = value; }
+            get { return this.items.Capacity; }
+            set { this.items.Capacity = value; }
         }
 
         public virtual int Count 
         {
-            get { return items.Count; }
+            get { return this.items.Count; }
         }
         
         public virtual bool IsSynchronized 
@@ -49,35 +49,53 @@ namespace Avalonia.Controls
             get { return null; }
         }
 
+        bool IList.IsFixedSize
+        {
+            get { return false; }
+        }
+
+        bool IList.IsReadOnly
+        {
+            get { return false; }
+        }
+
+        int ICollection.Count
+        {
+            get { return this.Count; }
+        }
+
+        bool ICollection.IsSynchronized
+        {
+            get { return this.IsSynchronized; }
+        }
+
+        object ICollection.SyncRoot
+        {
+            get { return this.SyncRoot; }
+        }
+
         public virtual UIElement this[int index] 
         {
             get { return this.items[index]; }
             set { this.items[index] = value; }
         }
 
+        object IList.this[int index]
+        {
+            get { return this[index]; }
+            set { this[index] = (UIElement)value; }
+        }
+
         public virtual int Add(UIElement element)
         {
             this.items.Add(element);
             this.SetLogicalParent(element);
-            return items.Count - 1;
+            return this.items.Count - 1;
         }
         
         public virtual void Clear()
         {
             this.items.Clear();
-        }
-        
-        protected void ClearLogicalParent(UIElement element)
-        {
-            if (this.logicalParent != null)
-            {
-                this.logicalParent.RemoveLogicalChild(element);
-            }
-
-            if (this.visualParent != null)
-            {
-                this.visualParent.RemoveVisualChild(element);
-            }
         }
         
         public virtual bool Contains(UIElement element)
@@ -129,19 +147,6 @@ namespace Avalonia.Controls
         {
             throw new NotImplementedException();
         }
-        
-        protected void SetLogicalParent(UIElement element)
-        {
-            if (this.logicalParent != null)
-            {
-                this.logicalParent.AddLogicalChild(element);
-            }
-
-            if (this.visualParent != null)
-            {
-                this.logicalParent.AddVisualChild(element);
-            }
-        }
 
         int IList.Add(object value)
         {
@@ -168,16 +173,6 @@ namespace Avalonia.Controls
             this.Insert(index, (UIElement)value);
         }
 
-        bool IList.IsFixedSize
-        {
-            get { return false; }
-        }
-
-        bool IList.IsReadOnly
-        {
-            get { return false; }
-        }
-
         void IList.Remove(object value)
         {
             this.Remove((UIElement)value);
@@ -188,35 +183,40 @@ namespace Avalonia.Controls
             this.RemoveAt(index);
         }
 
-        object IList.this[int index]
-        {
-            get { return this[index]; }
-            set { this[index] = (UIElement)value; }
-        }
-
         void ICollection.CopyTo(Array array, int index)
         {
             this.CopyTo(array, index);
         }
 
-        int ICollection.Count
-        {
-            get { return this.Count; }
-        }
-
-        bool ICollection.IsSynchronized
-        {
-            get { return this.IsSynchronized; }
-        }
-
-        object ICollection.SyncRoot
-        {
-            get { return this.SyncRoot; }
-        }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        protected void ClearLogicalParent(UIElement element)
+        {
+            if (this.logicalParent != null)
+            {
+                this.logicalParent.RemoveLogicalChild(element);
+            }
+
+            if (this.visualParent != null)
+            {
+                this.visualParent.RemoveVisualChild(element);
+            }
+        }
+
+        protected void SetLogicalParent(UIElement element)
+        {
+            if (this.logicalParent != null)
+            {
+                this.logicalParent.AddLogicalChild(element);
+            }
+
+            if (this.visualParent != null)
+            {
+                this.logicalParent.AddVisualChild(element);
+            }
         }
     }
 }

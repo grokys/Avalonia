@@ -28,17 +28,22 @@ namespace Avalonia.Input
 
                 if (keyEventArgs != null)
                 {
-                    TextComposition composition = new TextComposition(
-                        InputManager.Current, 
-                        keyEventArgs.Device.Target,
-                        keyEventArgs.KeyboardDevice.KeyToString(keyEventArgs.Key));
+                    string text = keyEventArgs.KeyboardDevice.KeyToString(keyEventArgs.Key);
 
-                    TextCompositionEventArgs ev = new TextCompositionEventArgs(
-                        keyEventArgs.Device,
-                        composition);
-                    ev.RoutedEvent = TextInputEvent;
+                    if (text != string.Empty)
+                    {
+                        TextComposition composition = new TextComposition(
+                            InputManager.Current,
+                            keyEventArgs.Device.Target,
+                            text);
 
-                    InputManager.Current.ProcessInput(ev);
+                        TextCompositionEventArgs ev = new TextCompositionEventArgs(
+                            keyEventArgs.Device,
+                            composition);
+                        ev.RoutedEvent = TextInputEvent;
+
+                        InputManager.Current.ProcessInput(ev);
+                    }
                 }
             }
         }

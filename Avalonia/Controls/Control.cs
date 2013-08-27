@@ -7,12 +7,10 @@
 namespace Avalonia.Controls
 {
     using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Markup;
-using Avalonia.Document;
-using Avalonia.Input;
-using Avalonia.Media;
+    using System.Windows.Markup;
+    using Avalonia.Document;
+    using Avalonia.Input;
+    using Avalonia.Media;
 
     public class Control : FrameworkElement
     {

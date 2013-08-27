@@ -40,13 +40,13 @@ namespace Avalonia.Input
 
         private void ProcessStack()
         {
-            if (!processing)
+            if (!this.processing)
             {
-                processing = true;
+                this.processing = true;
 
-                while (stack.Count > 0)
+                while (this.stack.Count > 0)
                 {
-                    InputEventArgs input = stack.Pop();
+                    InputEventArgs input = this.stack.Pop();
 
                     try
                     {
@@ -77,7 +77,7 @@ namespace Avalonia.Input
                     }
                 }
 
-                processing = false;
+                this.processing = false;
             }
         }
     }

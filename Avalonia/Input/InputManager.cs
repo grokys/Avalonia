@@ -47,26 +47,33 @@ namespace Avalonia.Input
                 while (stack.Count > 0)
                 {
                     InputEventArgs input = stack.Pop();
-                    PreProcessInputEventArgs e = new PreProcessInputEventArgs(input);
 
-                    input.OriginalSource = input.Device.Target;
-
-                    if (this.PreProcessInput != null)
+                    try
                     {
-                        foreach (var handler in this.PreProcessInput.GetInvocationList().Reverse())
+                        PreProcessInputEventArgs e = new PreProcessInputEventArgs(input);
+
+                        input.OriginalSource = input.Device.Target;
+
+                        if (this.PreProcessInput != null)
                         {
-                            handler.DynamicInvoke(this, e);
+                            foreach (var handler in this.PreProcessInput.GetInvocationList().Reverse())
+                            {
+                                handler.DynamicInvoke(this, e);
+                            }
+                        }
+
+                        if (!e.Canceled)
+                        {
+                            UIElement uiElement = input.OriginalSource as UIElement;
+
+                            if (uiElement != null)
+                            {
+                                uiElement.RaiseEvent(input);
+                            }
                         }
                     }
-
-                    if (!e.Canceled)
+                    catch
                     {
-                        UIElement uiElement = input.OriginalSource as UIElement;
-
-                        if (uiElement != null)
-                        {
-                            uiElement.RaiseEvent(input);
-                        }
                     }
                 }
 

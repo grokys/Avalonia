@@ -17,6 +17,8 @@ namespace Avalonia.Input
     {
         private Stack<InputEventArgs> stack = new Stack<InputEventArgs>();
 
+        private bool processing = false;
+
         static InputManager()
         {
             Current = new InputManager();
@@ -33,35 +35,42 @@ namespace Avalonia.Input
         public void ProcessInput(InputEventArgs input)
         {
             this.stack.Push(input);
+            this.ProcessStack();
         }
 
         private void ProcessStack()
         {
-            InputEventArgs input = stack.Pop();
-
-            while (input != null)
+            if (!processing)
             {
-                PreProcessInputEventArgs e = new PreProcessInputEventArgs(input);
+                processing = true;
 
-                input.OriginalSource = input.Device.Target;
-
-                if (this.PreProcessInput != null)
+                while (stack.Count > 0)
                 {
-                    foreach (var handler in this.PreProcessInput.GetInvocationList().Reverse())
+                    InputEventArgs input = stack.Pop();
+                    PreProcessInputEventArgs e = new PreProcessInputEventArgs(input);
+
+                    input.OriginalSource = input.Device.Target;
+
+                    if (this.PreProcessInput != null)
                     {
-                        handler.DynamicInvoke(this, e);
+                        foreach (var handler in this.PreProcessInput.GetInvocationList().Reverse())
+                        {
+                            handler.DynamicInvoke(this, e);
+                        }
+                    }
+
+                    if (!e.Canceled)
+                    {
+                        UIElement uiElement = input.OriginalSource as UIElement;
+
+                        if (uiElement != null)
+                        {
+                            uiElement.RaiseEvent(input);
+                        }
                     }
                 }
 
-                if (!e.Canceled)
-                {
-                    UIElement uiElement = input.OriginalSource as UIElement;
-
-                    if (uiElement != null)
-                    {
-                        uiElement.RaiseEvent(input);
-                    }
-                }
+                processing = false;
             }
         }
     }

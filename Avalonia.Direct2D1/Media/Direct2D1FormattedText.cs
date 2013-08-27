@@ -45,6 +45,20 @@ using SharpDX.DirectWrite;
             get { return this.DirectWriteTextLayout.Metrics.Height; }
         }
 
+        public int GetCaretIndex(Point p)
+        {
+            SharpDX.Bool isTrailingHit;
+            SharpDX.Bool isInside;
+
+            HitTestMetrics result = this.DirectWriteTextLayout.HitTestPoint(
+                (float)p.X,
+                (float)p.Y,
+                out isTrailingHit,
+                out isInside);
+
+            return result.TextPosition + (isTrailingHit ? 1 : 0);
+        }
+
         public Point GetCaretPosition(int caretIndex)
         {
             float x;

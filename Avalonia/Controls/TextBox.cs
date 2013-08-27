@@ -104,6 +104,11 @@ namespace Avalonia.Controls
             }
         }
 
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            this.CaretIndex = this.textBoxView.FormattedText.GetCaretIndex(e.GetPosition(this.textBoxView));
+        }
+
         protected override void OnTextInput(TextCompositionEventArgs e)
         {
             string text = this.Text;

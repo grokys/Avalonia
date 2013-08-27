@@ -20,6 +20,19 @@ namespace Avalonia.Controls
             this.parent = parent;
         }
 
+        public FormattedText FormattedText
+        {
+            get
+            {
+                if (this.formattedText == null)
+                {
+                    this.formattedText = this.CreateFormattedText();
+                }
+
+                return this.formattedText;
+            }
+        }
+
         public void InvalidateText()
         {
             this.formattedText = null;
@@ -30,16 +43,11 @@ namespace Avalonia.Controls
         {
             Rect rect = new Rect(new Size(this.ActualWidth, this.ActualHeight));
 
-            if (this.formattedText == null)
-            {
-                this.formattedText = this.CreateFormattedText();
-            }
-
-            drawingContext.DrawText(this.formattedText, new Point());
+            drawingContext.DrawText(this.FormattedText, new Point());
 
             if (this.parent.IsKeyboardFocused)
             {
-                Point caretPos = this.formattedText.GetCaretPosition(this.parent.CaretIndex);
+                Point caretPos = this.FormattedText.GetCaretPosition(this.parent.CaretIndex);
                 Brush caretBrush = this.parent.CaretBrush;
 
                 if (caretBrush == null)
@@ -58,18 +66,13 @@ namespace Avalonia.Controls
                 drawingContext.DrawLine(
                     new Pen(caretBrush, 1),
                     caretPos,
-                    caretPos + new Vector(0, this.formattedText.Height));
+                    caretPos + new Vector(0, this.FormattedText.Height));
             }
         }
 
         protected override Size MeasureOverride(Size constraint)
         {
-            if (this.formattedText == null)
-            {
-                this.formattedText = this.CreateFormattedText();
-            }
-
-            return new Size(this.formattedText.Width, this.formattedText.Height);
+            return new Size(this.FormattedText.Width, this.FormattedText.Height);
         }
 
         private FormattedText CreateFormattedText()

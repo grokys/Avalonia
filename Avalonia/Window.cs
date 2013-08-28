@@ -26,7 +26,7 @@ namespace Avalonia
 
         public Window()
         {
-            this.PresentationSource = PlatformFactory.Instance.CreatePresentationSource();
+            this.PresentationSource = PlatformInterface.Instance.CreatePresentationSource();
             this.PresentationSource.RootVisual = this;
             this.PresentationSource.Closed += (s, e) => this.OnClosed(EventArgs.Empty);
             this.PresentationSource.Resized += (s, e) => this.DoMeasureArrange();

@@ -15,17 +15,17 @@ using Avalonia.Media;
     /// <summary>
     /// Provides platform-specific implementations.
     /// </summary>
-    public abstract class PlatformFactory
+    public abstract class PlatformInterface
     {
         /// <summary>
         /// The platform factory instance.
         /// </summary>
-        private static PlatformFactory instance;
+        private static PlatformInterface instance;
 
         /// <summary>
-        /// Gets or sets the application-wide instance of the <see cref="PlatformFactory"/>.
+        /// Gets or sets the application-wide instance of the <see cref="PlatformInterface"/>.
         /// </summary>
-        public static PlatformFactory Instance
+        public static PlatformInterface Instance
         {
             get
             {
@@ -34,8 +34,8 @@ using Avalonia.Media;
 #if WINDOWS
                     string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                     Assembly platform = Assembly.LoadFile(Path.Combine(path, "Avalonia.Direct2D1.dll"));
-                    Type factoryType = platform.GetType("Avalonia.Direct2D1.Direct2D1PlatformFactory");
-                    instance = (PlatformFactory)Activator.CreateInstance(factoryType);
+                    Type factoryType = platform.GetType("Avalonia.Direct2D1.Direct2D1PlatformInterface");
+                    instance = (PlatformInterface)Activator.CreateInstance(factoryType);
 #else
                     throw new NotSupportedException("This platform is not supported.");
 #endif
@@ -94,5 +94,19 @@ using Avalonia.Media;
             string textToFormat, 
             Typeface typeface,
             double fontSize);
+
+        /// <summary>
+        /// Starts a new timer.
+        /// </summary>
+        /// <param name="interval">The timer interval.</param>
+        /// <param name="callback">The timer callback.</param>
+        /// <returns>A timer handle.</returns>
+        public abstract object StartTimer(TimeSpan interval, Action callback);
+
+        /// <summary>
+        /// Kills a running timer.
+        /// </summary>
+        /// <param name="handle">The timer handle.</param>
+        public abstract void KillTimer(object handle);
     }
 }

@@ -18,6 +18,7 @@ namespace Avalonia.Direct2D1.Interop
     {
         public const int CW_USEDEFAULT = unchecked((int)0x80000000);
 
+        public delegate void TimerProc(IntPtr hWnd, uint uMsg, IntPtr nIDEvent, uint dwTime);
         public delegate IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
         public enum Cursor
@@ -349,6 +350,9 @@ namespace Avalonia.Direct2D1.Interop
         public static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
 
         [DllImport("user32.dll")]
+        public static extern bool KillTimer(IntPtr hWnd, IntPtr uIDEvent);
+
+        [DllImport("user32.dll")]
         public static extern IntPtr LoadCursor(IntPtr hInstance, int lpCursorName);
 
         [DllImport("user32.dll")]
@@ -365,6 +369,9 @@ namespace Avalonia.Direct2D1.Interop
 
         [DllImport("user32.dll")]
         public static extern IntPtr SetCapture(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetTimer(IntPtr hWnd, IntPtr nIDEvent, uint uElapse, TimerProc lpTimerFunc);
 
         [DllImport("user32.dll")]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, SetWindowPosFlags uFlags);

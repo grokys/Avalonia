@@ -25,7 +25,7 @@ namespace Avalonia.Media
             Brush foreground)
         {
             this.Foreground = foreground;
-            this.PlatformImpl = PlatformFactory.Instance.CreateFormattedText(
+            this.PlatformImpl = PlatformInterface.Instance.CreateFormattedText(
                 textToFormat, 
                 typeface, 
                 emSize);

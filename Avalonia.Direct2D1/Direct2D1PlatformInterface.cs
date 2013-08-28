@@ -6,15 +6,20 @@
 
 namespace Avalonia.Direct2D1
 {
-    using Avalonia.Direct2D1.Input;
+    using System;
+using System.Collections.Generic;
+using Avalonia.Direct2D1.Input;
+using Avalonia.Direct2D1.Interop;
 using Avalonia.Direct2D1.Media;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Platform;
 
-    public class Direct2D1PlatformFactory : PlatformFactory
+    public class Direct2D1PlatformInterface : PlatformInterface
     {
-        public Direct2D1PlatformFactory()
+        private Dictionary<IntPtr, Action> timerCallbacks = new Dictionary<IntPtr, Action>();
+
+        public Direct2D1PlatformInterface()
         {
             this.Dispatcher = new WindowMessageDispatcher();
             this.DirectWriteFactory = new SharpDX.DirectWrite.Factory();
@@ -53,6 +58,27 @@ using Avalonia.Platform;
             double fontSize)
         {
             return new Direct2D1FormattedText(text, typeface, fontSize);
+        }
+
+        public override object StartTimer(TimeSpan interval, Action callback)
+        {
+            IntPtr handle = UnmanagedMethods.SetTimer(
+                IntPtr.Zero, 
+                IntPtr.Zero, 
+                (uint)interval.TotalMilliseconds, 
+                (hWnd, uMsg, nIDEvent, dwTime) => callback());
+            return handle;
+        }
+
+        public override void KillTimer(object handle)
+        {
+            this.timerCallbacks.Remove((IntPtr)handle);
+            UnmanagedMethods.KillTimer(IntPtr.Zero, (IntPtr)handle);
+        }
+
+        internal void TriggerTimer(IntPtr handle)
+        {
+            this.timerCallbacks[handle]();
         }
     }
 }

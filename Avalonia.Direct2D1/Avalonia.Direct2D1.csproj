@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Direct2D1PlatformFactory.cs" />
+    <Compile Include="Direct2D1PlatformInterface.cs" />
     <Compile Include="HwndSource.cs" />
     <Compile Include="HwndSourceParameters.cs" />
     <Compile Include="Input\KeyInterop.cs" />

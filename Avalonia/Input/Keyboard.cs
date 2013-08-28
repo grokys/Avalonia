@@ -33,7 +33,7 @@ namespace Avalonia.Input
 
         static Keyboard()
         {
-            PrimaryDevice = PlatformFactory.Instance.KeyboardDevice;
+            PrimaryDevice = PlatformInterface.Instance.KeyboardDevice;
         }
 
         public static KeyboardDevice PrimaryDevice

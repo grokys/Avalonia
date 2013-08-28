@@ -14,7 +14,7 @@ using SharpDX.DirectWrite;
     {
         public Direct2D1FormattedText(string text, Typeface typeface, double fontSize)
         {
-            Factory factory = ((Direct2D1PlatformFactory)PlatformFactory.Instance).DirectWriteFactory;
+            Factory factory = ((Direct2D1PlatformInterface)PlatformInterface.Instance).DirectWriteFactory;
 
             TextFormat format = new TextFormat(
                 factory, 

@@ -71,6 +71,7 @@
     <Compile Include="Media\FontFamilyConverter.cs" />
     <Compile Include="Platform\RawKeyEventArgs.cs" />
     <Compile Include="TemplatePartAttribute.cs" />
+    <Compile Include="Threading\DispatcherTimer.cs" />
     <Compile Include="Trigger.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="FlowDirection.cs" />
@@ -81,7 +82,7 @@
     <Compile Include="Input\MouseDevice.cs" />
     <Compile Include="Media\Typeface.cs" />
     <Compile Include="Platform\IPlatformFormattedText.cs" />
-    <Compile Include="Platform\PlatformFactory.cs" />
+    <Compile Include="Platform\PlatformInterface.cs" />
     <Compile Include="Platform\PlatformPresentationSource.cs" />
     <Compile Include="AvaloniaSpecificAttribute.cs" />
     <Compile Include="Controls\Border.cs" />

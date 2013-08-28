@@ -427,7 +427,7 @@ namespace Avalonia.Threading
         public void InvokeShutdown()
         {
             this.flags |= Flags.ShutdownStarted;
-            PlatformFactory.Instance.Dispatcher.SendMessage();
+            PlatformInterface.Instance.Dispatcher.SendMessage();
         }
 
         [SecurityCritical]
@@ -471,7 +471,7 @@ namespace Avalonia.Threading
 
             if (Thread.CurrentThread != this.baseThread)
             {
-                PlatformFactory.Instance.Dispatcher.SendMessage();
+                PlatformInterface.Instance.Dispatcher.SendMessage();
             }
         }
 
@@ -560,7 +560,7 @@ namespace Avalonia.Threading
                 }
 
                 this.hooks.EmitInactive();
-                PlatformFactory.Instance.Dispatcher.ProcessMessage();
+                PlatformInterface.Instance.Dispatcher.ProcessMessage();
 
                 if (this.HasShutdownStarted)
                 {

@@ -47,7 +47,7 @@ namespace Avalonia.Input
 
         static Mouse()
         {
-            PrimaryDevice = PlatformFactory.Instance.MouseDevice;
+            PrimaryDevice = PlatformInterface.Instance.MouseDevice;
         }
 
         public static IInputElement Captured 

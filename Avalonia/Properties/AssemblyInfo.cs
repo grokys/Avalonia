@@ -44,5 +44,6 @@ using System.Windows.Markup;
 
 [assembly: XmlnsDefinition("https://github.com/grokys/Avalonia", "Avalonia")]
 [assembly: XmlnsDefinition("https://github.com/grokys/Avalonia", "Avalonia.Controls")]
+[assembly: XmlnsDefinition("https://github.com/grokys/Avalonia", "Avalonia.Data")]
 
 [assembly: InternalsVisibleTo("Avalonia.UnitTests")]

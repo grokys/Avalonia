@@ -28,5 +28,10 @@ namespace Avalonia.Data
         public RelativeSource RelativeSource { get; set; }
 
         public object Source { get; set; }
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return this;
+        }
     }
 }

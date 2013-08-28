@@ -26,12 +26,6 @@ namespace Avalonia
                 typeof(bool),
                 typeof(UIElement));
 
-        public static readonly DependencyProperty IsIsKeyboardFocusWithinProperty =
-            DependencyProperty.Register(
-                "IsIsKeyboardFocusWithin",
-                typeof(bool),
-                typeof(UIElement));
-
         public static readonly DependencyProperty IsMouseOverProperty =
             DependencyProperty.Register(
                 "IsMouseOver",
@@ -80,6 +74,8 @@ namespace Avalonia
             this.IsMeasureValid = true;
             this.IsArrangeValid = true;
 
+            this.AddHandler(GotKeyboardFocusEvent, (KeyboardFocusChangedEventHandler)((s, e) => this.OnGotKeyboardFocus(e)));
+            this.AddHandler(LostKeyboardFocusEvent, (KeyboardFocusChangedEventHandler)((s, e) => this.OnLostKeyboardFocus(e)));
             this.AddHandler(MouseEnterEvent, (MouseEventHandler)((s, e) => this.OnMouseEnter(e)));
             this.AddHandler(MouseLeaveEvent, (MouseEventHandler)((s, e) => this.OnMouseLeave(e)));
             this.AddHandler(MouseLeftButtonDownEvent, (MouseButtonEventHandler)((s, e) => this.OnMouseLeftButtonDown(e)));
@@ -150,11 +146,6 @@ namespace Avalonia
         public bool IsKeyboardFocused
         {
             get { return (bool)this.GetValue(IsKeyboardFocusedProperty); }
-        }
-
-        public bool IsIsKeyboardFocusWithin
-        {
-            get { return (bool)this.GetValue(IsIsKeyboardFocusWithinProperty); }
         }
 
         public bool IsMouseOver
@@ -331,6 +322,14 @@ namespace Avalonia
         {
             this.VisualOffset = (Vector)finalRect.TopLeft;
             this.RenderSize = finalRect.Size;
+        }
+
+        protected virtual void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
+        {
+        }
+
+        protected virtual void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs e)
+        {
         }
 
         protected virtual void OnMouseEnter(MouseEventArgs e)

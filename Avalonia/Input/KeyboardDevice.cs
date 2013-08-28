@@ -164,15 +164,24 @@ namespace Avalonia.Input
         {
             if (element != this.target)
             {
-                // TODO: Set IsIsKeyboardFocusWithin for children, raise events.
                 if (this.target != null)
                 {
                     this.target.SetValue(UIElement.IsKeyboardFocusedProperty, false);
+
+                    KeyboardFocusChangedEventArgs e = new KeyboardFocusChangedEventArgs();
+                    e.OriginalSource = e.Source = this.target;
+                    e.RoutedEvent = UIElement.LostKeyboardFocusEvent;
+                    this.target.RaiseEvent(e);
                 }
 
                 if (element != null)
                 {
                     element.SetValue(UIElement.IsKeyboardFocusedProperty, true);
+
+                    KeyboardFocusChangedEventArgs e = new KeyboardFocusChangedEventArgs();
+                    e.OriginalSource = e.Source = element;
+                    e.RoutedEvent = UIElement.GotKeyboardFocusEvent;
+                    element.RaiseEvent(e);
                 }
 
                 this.target = element;

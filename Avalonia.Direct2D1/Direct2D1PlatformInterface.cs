@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Direct2D1PlatformFactory.cs" company="Steven Kirk">
+// <copyright file="Direct2D1PlatformInterface.cs" company="Steven Kirk">
 // Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -7,13 +7,13 @@
 namespace Avalonia.Direct2D1
 {
     using System;
-using System.Collections.Generic;
-using Avalonia.Direct2D1.Input;
-using Avalonia.Direct2D1.Interop;
-using Avalonia.Direct2D1.Media;
-using Avalonia.Input;
-using Avalonia.Media;
-using Avalonia.Platform;
+    using System.Collections.Generic;
+    using Avalonia.Direct2D1.Input;
+    using Avalonia.Direct2D1.Interop;
+    using Avalonia.Direct2D1.Media;
+    using Avalonia.Input;
+    using Avalonia.Media;
+    using Avalonia.Platform;
 
     public class Direct2D1PlatformInterface : PlatformInterface
     {

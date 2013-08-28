@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="PlatformFactory.cs" company="Steven Kirk">
+// <copyright file="PlatformInterface.cs" company="Steven Kirk">
 // Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -9,8 +9,8 @@ namespace Avalonia.Platform
     using System;
     using System.IO;
     using System.Reflection;
-using Avalonia.Input;
-using Avalonia.Media;
+    using Avalonia.Input;
+    using Avalonia.Media;
 
     /// <summary>
     /// Provides platform-specific implementations.

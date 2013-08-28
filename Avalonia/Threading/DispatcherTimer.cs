@@ -51,6 +51,8 @@ namespace Avalonia.Threading
             }
         }
 
+        public event EventHandler Tick;
+
         public Dispatcher Dispatcher 
         { 
             get; 
@@ -102,8 +104,6 @@ namespace Avalonia.Threading
             set; 
         }
 
-        public event EventHandler Tick;
-        
         public void Start()
         {
             if (!this.IsEnabled)

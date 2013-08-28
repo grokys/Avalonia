@@ -39,6 +39,7 @@
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Xaml" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -64,6 +65,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Avalonia.Direct2D1\Avalonia.Direct2D1.csproj">
+      <Project>{8f7013fa-16c2-4fda-99a3-509fbbea645e}</Project>
+      <Name>Avalonia.Direct2D1</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Avalonia\Avalonia.csproj">
       <Project>{46ea210f-dff1-4ac0-b7bf-6362141dc61a}</Project>
       <Name>Avalonia</Name>

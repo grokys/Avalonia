@@ -6,8 +6,11 @@
 
 namespace Avalonia.Controls
 {
+    using System;
     using System.Globalization;
     using Avalonia.Media;
+    using Avalonia.Platform;
+    using Avalonia.Threading;
 
     internal class TextBoxView : FrameworkElement
     {
@@ -15,8 +18,15 @@ namespace Avalonia.Controls
 
         private FormattedText formattedText;
 
+        private DispatcherTimer caretTimer;
+
+        private bool caretBlink;
+
         public TextBoxView(TextBox parent)
         {
+            this.caretTimer = new DispatcherTimer();
+            this.caretTimer.Interval = PlatformInterface.Instance.CaretBlinkTime;
+            this.caretTimer.Tick += this.CaretTimerTick;
             this.parent = parent;
         }
 
@@ -31,6 +41,18 @@ namespace Avalonia.Controls
 
                 return this.formattedText;
             }
+        }
+
+        public void GotFocus()
+        {
+            this.caretBlink = true;
+            this.caretTimer.Start();
+        }
+
+        public void LostFocus()
+        {
+            this.caretTimer.Stop();
+            this.InvalidateVisual();
         }
 
         public void InvalidateText()
@@ -63,10 +85,13 @@ namespace Avalonia.Controls
                     caretBrush = new SolidColorBrush(color);
                 }
 
-                drawingContext.DrawLine(
-                    new Pen(caretBrush, 1),
-                    caretPos,
-                    caretPos + new Vector(0, this.FormattedText.Height));
+                if (this.caretBlink)
+                {
+                    drawingContext.DrawLine(
+                        new Pen(caretBrush, 1),
+                        caretPos,
+                        caretPos + new Vector(0, this.FormattedText.Height));
+                }
             }
         }
 
@@ -84,6 +109,12 @@ namespace Avalonia.Controls
                 new Typeface(this.parent.FontFamily, this.parent.FontStyle, this.parent.FontWeight, this.parent.FontStretch),
                 this.parent.FontSize,
                 this.parent.Foreground);
+        }
+
+        private void CaretTimerTick(object sender, EventArgs e)
+        {
+            this.caretBlink = !this.caretBlink;
+            this.InvalidateVisual();
         }
     }
 }

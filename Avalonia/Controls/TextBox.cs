@@ -71,6 +71,18 @@ namespace Avalonia.Controls
             this.CreateTextBoxView();
         }
 
+        protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
+        {
+            this.textBoxView.GotFocus();
+            base.OnGotKeyboardFocus(e);
+        }
+
+        protected override void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs e)
+        {
+            this.textBoxView.LostFocus();
+            base.OnLostKeyboardFocus(e);
+        }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             string text = this.Text;

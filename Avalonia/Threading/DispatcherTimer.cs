@@ -117,6 +117,7 @@ namespace Avalonia.Threading
             if (this.IsEnabled)
             {
                 PlatformInterface.Instance.KillTimer(this.timerHandle);
+                this.timerHandle = null;
             }
         }
 

@@ -50,6 +50,11 @@ namespace Avalonia.Platform
             }
         }
 
+        public abstract TimeSpan CaretBlinkTime
+        {
+            get;
+        }
+
         /// <summary>
         /// Gets the platform-specific dispatcher implementation.
         /// </summary>

@@ -333,6 +333,9 @@ namespace Avalonia.Direct2D1.Interop
         public static extern bool DestroyWindow(IntPtr hwnd);
 
         [DllImport("user32.dll")]
+        public static extern uint GetCaretBlinkTime();
+
+        [DllImport("user32.dll")]
         public static extern bool GetClientRect(IntPtr hwnd, out RECT lpRect);
 
         [DllImport("user32.dll")]

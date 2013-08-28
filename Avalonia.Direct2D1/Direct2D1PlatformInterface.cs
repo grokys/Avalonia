@@ -25,6 +25,15 @@ namespace Avalonia.Direct2D1
             this.DirectWriteFactory = new SharpDX.DirectWrite.Factory();
         }
 
+        public override TimeSpan CaretBlinkTime
+        {
+            get 
+            {
+                uint t = UnmanagedMethods.GetCaretBlinkTime();
+                return new TimeSpan(0, 0, 0, 0, (int)t);
+            }
+        }
+
         public SharpDX.DirectWrite.Factory DirectWriteFactory
         {
             get;

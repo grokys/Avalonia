@@ -35,6 +35,15 @@ namespace Avalonia
     [RuntimeNameProperty("Name")]
     public class FrameworkElement : UIElement
     {
+        public static readonly DependencyProperty DataContextProperty =
+            DependencyProperty.Register(
+                "DataContext",
+                typeof(object),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.Inherits));
+
         public static readonly DependencyProperty DefaultStyleKeyProperty =
             DependencyProperty.Register(
                 "DefaultStyleKey",
@@ -103,7 +112,13 @@ namespace Avalonia
             get { return this.RenderSize.Height; }
         }
 
-        public HorizontalAlignment HorizontalAlignment 
+        public object DataContext 
+        {
+            get { return this.GetValue(DataContextProperty); }
+            set { this.SetValue(DataContextProperty, value); }
+        }
+
+        public HorizontalAlignment HorizontalAlignment
         {
             get { return (HorizontalAlignment)this.GetValue(HorizontalAlignmentProperty); }
             set { this.SetValue(HorizontalAlignmentProperty, value); }

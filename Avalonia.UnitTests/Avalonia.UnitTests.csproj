@@ -55,6 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Controls\ContentControl_MeasureArrangeTests.cs" />
+    <Compile Include="DependencyObjectTests_Inheritance.cs" />
     <Compile Include="DependencyPropertyTests_IsValidType.cs" />
     <Compile Include="DependencyPropertyTests_AddOwner.cs" />
     <Compile Include="DependencyPropertyTests_RegisterAttached.cs" />

@@ -57,6 +57,9 @@
     <Compile Include="..\Avalonia.UnitTests\Controls\ContentControl_MeasureArrangeTests.cs">
       <Link>Controls\ContentControl_MeasureArrangeTests.cs</Link>
     </Compile>
+    <Compile Include="..\Avalonia.UnitTests\DependencyObjectTests_Inheritance.cs">
+      <Link>DependencyObjectTests_Inheritance.cs</Link>
+    </Compile>
     <Compile Include="..\Avalonia.UnitTests\DependencyPropertyTests_AddOwner.cs">
       <Link>DependencyPropertyTests_AddOwner.cs</Link>
     </Compile>

@@ -154,12 +154,12 @@
         }
 
         [TestMethod]
-        public void Should_Set_VaidateValueCallback()
+        public void Should_Set_ValidateValueCallback()
         {
             ValidateValueCallback validateValueCallback = v => { return true; };
 
             DependencyProperty dp = DependencyProperty.Register(
-                "Register_Should_Set_VaidateValueCallback",
+                "Register_Should_Set_ValidateValueCallback",
                 typeof(string),
                 typeof(TestClass1),
                 null,
@@ -169,7 +169,7 @@
         }
 
         [TestMethod]
-        public void Should_Call_VaidateValueCallback_With_Default_Value()
+        public void Should_Call_ValidateValueCallback_With_Default_Value()
         {
             bool validateValueCalled = false;
             ValidateValueCallback validateValueCallback = v => 
@@ -179,7 +179,7 @@
             };
 
             DependencyProperty dp = DependencyProperty.Register(
-                "Register_Should_Call_VaidateValueCallback_With_Default_Value",
+                "Register_Should_Call_ValidateValueCallback_With_Default_Value",
                 typeof(string),
                 typeof(TestClass1),
                 new PropertyMetadata("foobar"),

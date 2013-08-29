@@ -26,10 +26,10 @@
         }
 
         [TestMethod]
-        public void Null_Is_Invalid_Value_For_Reference_Type()
+        public void Null_Is_Invalid_Value_For_Value_Type()
         {
             DependencyProperty dp = DependencyProperty.Register(
-                "Null_Is_Invalid_Value_For_Reference_Type",
+                "Null_Is_Invalid_Value_For_Value_Type",
                 typeof(int),
                 typeof(TestClass1));
 

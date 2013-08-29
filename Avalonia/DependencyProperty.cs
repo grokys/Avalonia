@@ -26,8 +26,13 @@ namespace Avalonia
                     PropertyMetadata defaultMetadata,
                     ValidateValueCallback validateValueCallback)
         {
+            if (defaultMetadata == null)
+            {
+                throw new ArgumentNullException("defaultMetadata");
+            }
+
             this.IsAttached = isAttached;
-            this.DefaultMetadata = (defaultMetadata == null) ? new PropertyMetadata() : defaultMetadata;
+            this.DefaultMetadata = defaultMetadata;
             this.Name = name;
             this.OwnerType = ownerType;
             this.PropertyType = propertyType;
@@ -74,14 +79,15 @@ namespace Avalonia
             PropertyMetadata typeMetadata,
             ValidateValueCallback validateValueCallback)
         {
+            PropertyMetadata defaultMetadata;
+            
             if (typeMetadata == null)
             {
-                typeMetadata = new PropertyMetadata();
-
-                if (propertyType.IsValueType && Nullable.GetUnderlyingType(propertyType) == null)
-                {
-                    typeMetadata.DefaultValue = Activator.CreateInstance(propertyType);
-                }
+                defaultMetadata = typeMetadata = new PropertyMetadata();
+            }
+            else
+            {
+                defaultMetadata = new PropertyMetadata(typeMetadata.DefaultValue);
             }
 
             DependencyProperty dp = new DependencyProperty(
@@ -89,7 +95,7 @@ namespace Avalonia
                 name,
                 propertyType,
                 ownerType,
-                typeMetadata,
+                defaultMetadata,
                 validateValueCallback);
 
             DependencyObject.Register(ownerType, dp);
@@ -120,6 +126,11 @@ namespace Avalonia
             PropertyMetadata defaultMetadata,
             ValidateValueCallback validateValueCallback)
         {
+            if (defaultMetadata == null)
+            {
+                defaultMetadata = new PropertyMetadata();
+            }
+
             DependencyProperty dp = new DependencyProperty(
                 true,
                 name,
@@ -221,7 +232,15 @@ namespace Avalonia
 
         public bool IsValidType(object value)
         {
-            return value == null || this.PropertyType.IsInstanceOfType(value);
+            if (value == null)
+            {
+                return !this.PropertyType.IsValueType || 
+                    Nullable.GetUnderlyingType(this.PropertyType) != null;
+            }
+            else
+            {
+                return this.PropertyType.IsInstanceOfType(value);
+            }
         }
 
         public bool IsValidValue(object value)

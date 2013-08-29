@@ -55,7 +55,7 @@ namespace Avalonia.Data
 
         protected override object Evaluate()
         {
-            Tuple<object, string> o = this.RewritePath(this.ParentBinding.Path.Path);
+            Tuple<object, string> o = this.RewritePath(this.ParentBinding.Path);
             this.chain = this.pathParser.Parse(o.Item1, o.Item2).ToArray();
 
             if (this.chain != null)
@@ -91,30 +91,47 @@ namespace Avalonia.Data
             return (FrameworkElement)o;
         }
 
-        private Tuple<object, string> RewritePath(string path)
+        private Tuple<object, string> RewritePath(PropertyPath path)
         {
+            string pathString = ((path != null) ? path.Path : null) ?? string.Empty;
+
             if (this.DataItem != null)
             {
-                return Tuple.Create(this.DataItem, path);
+                return Tuple.Create(this.DataItem, pathString);
             }
             else
             {
+                FrameworkElement fe = this.Target as FrameworkElement;
+                string prefix = null;
+
                 if (this.ParentBinding.RelativeSource != null)
                 {
                     switch (this.ParentBinding.RelativeSource.Mode)
                     {
                         case RelativeSourceMode.TemplatedParent:
-                            FrameworkElement fe = this.Target as FrameworkElement;
-
                             if (fe != null)
                             {
-                                return Tuple.Create((object)fe, "TemplatedParent." + path);
+                                prefix = "TemplatedParent";
                             }
-                            else
-                            {
-                                throw new InvalidOperationException("Cannot get TemplatedParent outside a Template.");
-                            }
+
+                            break;
                     }
+                }
+                else
+                {
+                    prefix = "DataContext";
+                }
+
+                if (prefix != null)
+                {
+                    string result = prefix;
+
+                    if (!string.IsNullOrWhiteSpace(pathString))
+                    {
+                        result += "." + pathString;
+                    }
+
+                    return Tuple.Create((object)fe, result);
                 }
             }
 

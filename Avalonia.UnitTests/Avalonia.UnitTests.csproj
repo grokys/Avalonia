@@ -55,8 +55,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Controls\ContentControl_MeasureArrangeTests.cs" />
+    <Compile Include="DependencyPropertyTests_IsValidType.cs" />
+    <Compile Include="DependencyPropertyTests_AddOwner.cs" />
+    <Compile Include="DependencyPropertyTests_RegisterAttached.cs" />
     <Compile Include="Data\BindingExpressionTests.cs" />
     <Compile Include="Data\PropertyPathParserTests.cs" />
+    <Compile Include="DependencyPropertyTests_Register.cs" />
     <Compile Include="FrameworkElement_MeasureArrangeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIElement_MeasureArrangeTests.cs" />

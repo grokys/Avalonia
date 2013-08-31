@@ -30,21 +30,38 @@
         }
 
         [TestMethod]
-        public void Should_Use_Base_Metadata_If_None_Supplied()
+        public void Should_Return_Same_DependencyProperty()
         {
             PropertyMetadata metadata1 = new PropertyMetadata("foo");
-            DependencyProperty dp = DependencyProperty.Register(
-                "Should_Use_Base_Metadata_If_None_Supplied",
+            DependencyProperty dp1 = DependencyProperty.Register(
+                "Should_Return_Same_DependencyProperty",
                 typeof(string),
                 typeof(TestClass1),
                 metadata1);
 
+            DependencyProperty dp2 = dp1.AddOwner(typeof(TestClass2));
+
+            Assert.AreSame(dp1, dp2);
+        }
+
+        [TestMethod]
+        public void Should_Use_Base_Metadata_If_None_Supplied()
+        {
+            FrameworkPropertyMetadata metadata = new FrameworkPropertyMetadata("foo");
+            DependencyProperty dp = DependencyProperty.Register(
+                "Should_Use_Base_Metadata_If_None_Supplied",
+                typeof(string),
+                typeof(TestClass1),
+                metadata);
+
             dp.AddOwner(typeof(TestClass2));
             dp.AddOwner(typeof(TestClass3));
 
+            PropertyMetadata metadata1 = dp.GetMetadata(typeof(TestClass1));
             PropertyMetadata metadata2 = dp.GetMetadata(typeof(TestClass2));
             PropertyMetadata metadata3 = dp.GetMetadata(typeof(TestClass3));
 
+            Assert.AreSame(metadata, metadata1);
             Assert.AreSame(metadata1, metadata2);
             Assert.AreSame(metadata2, metadata3);
         }
@@ -52,12 +69,11 @@
         [TestMethod]
         public void Should_Merge_Metadata_If_Supplied()
         {
-            PropertyMetadata metadata1 = new PropertyMetadata
-            {
-                DefaultValue = "foo",
-                PropertyChangedCallback = this.PropertyChangedCallback1,
-                CoerceValueCallback = this.CoerceCallback1,
-            };
+            FrameworkPropertyMetadata metadata1 = new FrameworkPropertyMetadata(
+                "foo",
+                FrameworkPropertyMetadataOptions.Inherits,
+                this.PropertyChangedCallback1,
+                this.CoerceCallback1);
 
             DependencyProperty dp = DependencyProperty.Register(
                 "Should_Merge_Metadata_If_Supplied",
@@ -65,20 +81,22 @@
                 typeof(TestClass1),
                 metadata1);
 
-            PropertyMetadata metadata2 = new PropertyMetadata
-            {
-                DefaultValue = "bar",
-                PropertyChangedCallback = this.PropertyChangedCallback2,
-                CoerceValueCallback = this.CoerceCallback2,
-            };
+            FrameworkPropertyMetadata metadata2 = new FrameworkPropertyMetadata(
+                "bar",
+                FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender,
+                this.PropertyChangedCallback2,
+                this.CoerceCallback2);
 
             dp.AddOwner(typeof(TestClass2), metadata2);
 
-            PropertyMetadata result = dp.GetMetadata(typeof(TestClass2));
+            FrameworkPropertyMetadata result = dp.GetMetadata(typeof(TestClass2)) as FrameworkPropertyMetadata;
 
+            Assert.IsNotNull(result);
             Assert.AreNotSame(metadata1, result);
             Assert.AreSame(metadata2, result);
             Assert.AreEqual("bar", result.DefaultValue);
+            Assert.IsTrue(result.Inherits);
+            Assert.IsTrue(result.AffectsRender);
             Assert.AreEqual(2, result.PropertyChangedCallback.GetInvocationList().Length);
             Assert.AreEqual(1, result.CoerceValueCallback.GetInvocationList().Length);
         }

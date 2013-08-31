@@ -63,6 +63,9 @@
     <Compile Include="..\Avalonia.UnitTests\DependencyPropertyTests_AddOwner.cs">
       <Link>DependencyPropertyTests_AddOwner.cs</Link>
     </Compile>
+    <Compile Include="..\Avalonia.UnitTests\DependencyPropertyTests_GetMetadata.cs">
+      <Link>DependencyPropertyTests_GetMetadata.cs</Link>
+    </Compile>
     <Compile Include="..\Avalonia.UnitTests\DependencyPropertyTests_IsValidType.cs">
       <Link>DependencyPropertyTests_IsValidType.cs</Link>
     </Compile>

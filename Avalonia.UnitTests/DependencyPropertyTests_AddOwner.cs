@@ -101,6 +101,27 @@
             Assert.AreEqual(1, result.CoerceValueCallback.GetInvocationList().Length);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Should_Throw_Exception_If_Overridden_With_Less_Derived_Metadata()
+        {
+            FrameworkPropertyMetadata metadata1 = new FrameworkPropertyMetadata(
+                "foo",
+                FrameworkPropertyMetadataOptions.Inherits,
+                this.PropertyChangedCallback1,
+                this.CoerceCallback1);
+
+            DependencyProperty dp = DependencyProperty.Register(
+                "Should_Merge_Metadata_If_Supplied",
+                typeof(string),
+                typeof(TestClass1),
+                metadata1);
+
+            PropertyMetadata metadata2 = new PropertyMetadata("bar");
+
+            dp.AddOwner(typeof(TestClass2), metadata2);
+        }
+
         private void PropertyChangedCallback1(object sender, DependencyPropertyChangedEventArgs e)
         {
             throw new NotImplementedException();

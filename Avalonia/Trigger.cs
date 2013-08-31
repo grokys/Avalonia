@@ -72,7 +72,8 @@ namespace Avalonia
 
         private bool CheckCondition(DependencyObject source)
         {
-            return source.GetValue(this.Property).Equals(Convert.ChangeType(this.Value, this.Property.PropertyType));
+            object value = source.GetValue(this.Property);
+            return value != null && value.Equals(Convert.ChangeType(this.Value, this.Property.PropertyType));
         }
 
         private void ValueChanged(object sender, DependencyPropertyChangedEventArgs e)

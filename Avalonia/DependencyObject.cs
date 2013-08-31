@@ -99,6 +99,11 @@ namespace Avalonia
             if (!this.properties.TryGetValue(dp, out val))
             {
                 val = this.GetDefaultValue(dp);
+
+                if (val == null && dp.PropertyType.IsValueType)
+                {
+                    val = Activator.CreateInstance(dp.PropertyType);
+                }
             }
 
             return val;

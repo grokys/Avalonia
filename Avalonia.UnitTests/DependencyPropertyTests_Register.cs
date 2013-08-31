@@ -190,6 +190,35 @@
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
+        public void Should_Throw_ArgumentException_If_Already_Registered()
+        {
+            DependencyProperty dp = DependencyProperty.Register(
+                "Register_Should_Throw_ArgumentException_If_Already_Registered",
+                typeof(string),
+                typeof(TestClass1));
+
+            DependencyProperty.Register(
+                "Register_Should_Throw_ArgumentException_If_Already_Registered",
+                typeof(string),
+                typeof(TestClass1));
+        }
+
+        [TestMethod]
+        public void Should_Not_Throw_ArgumentException_If_Already_Registered_On_Base()
+        {
+            DependencyProperty dp = DependencyProperty.Register(
+                "Register_Should_Not_Throw_ArgumentException_If_Already_Registered_On_Base",
+                typeof(string),
+                typeof(TestClass1));
+
+            DependencyProperty.Register(
+                "Register_Should_Not_Throw_ArgumentException_If_Already_Registered_On_Base",
+                typeof(string),
+                typeof(TestClass2));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void Should_Throw_ArgumentException_If_DefaultValid_Is_Invalid()
         {
             ValidateValueCallback validateValueCallback = v =>
@@ -216,6 +245,10 @@
         }
 
         private class TestClass1 : DependencyObject
+        {
+        }
+
+        private class TestClass2 : TestClass1
         {
         }
 

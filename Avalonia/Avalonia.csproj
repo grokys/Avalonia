@@ -50,6 +50,9 @@
     <Compile Include="Controls\TextBox.cs" />
     <Compile Include="Controls\TextBoxView.cs" />
     <Compile Include="Controls\UIElementCollection.cs" />
+    <Compile Include="DataTemplateKey.cs" />
+    <Compile Include="TemplateKey.cs" />
+    <Compile Include="DataTemplate.cs" />
     <Compile Include="Document\TextElement.cs" />
     <Compile Include="FontStretch.cs" />
     <Compile Include="FontWeight.cs" />
@@ -70,6 +73,7 @@
     <Compile Include="Media\FontFamily.cs" />
     <Compile Include="Media\FontFamilyConverter.cs" />
     <Compile Include="Platform\RawKeyEventArgs.cs" />
+    <Compile Include="ResourceKey.cs" />
     <Compile Include="TemplatePartAttribute.cs" />
     <Compile Include="Threading\DispatcherTimer.cs" />
     <Compile Include="Trigger.cs" />

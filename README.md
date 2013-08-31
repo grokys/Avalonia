@@ -14,6 +14,7 @@ Implemented to some extent so far:
 - StackPanel
 - Xaml loading
 - Control templates
+- Data templates
 - Styles/Setters
 - Routed events
 - Triggers

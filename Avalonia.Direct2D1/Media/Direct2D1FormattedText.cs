@@ -23,7 +23,7 @@ using SharpDX.DirectWrite;
 
             this.DirectWriteTextLayout = new TextLayout(
                 factory,
-                text,
+                text ?? string.Empty,
                 format,
                 float.MaxValue,
                 float.MaxValue);

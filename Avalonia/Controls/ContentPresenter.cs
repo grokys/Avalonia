@@ -38,7 +38,7 @@ namespace Avalonia.Controls
 
         public object Content 
         {
-            get { return (DependencyObject)this.GetValue(ContentProperty); }
+            get { return this.GetValue(ContentProperty); }
             set { this.SetValue(ContentProperty, value); }
         }
 
@@ -89,21 +89,44 @@ namespace Avalonia.Controls
             return base.ArrangeOverride(finalSize);
         }
 
+        protected internal override void OnVisualParentChanged(DependencyObject oldParent)
+        {
+            this.visualChild = this.ApplyDataTemplate();
+            base.OnVisualParentChanged(oldParent);
+        }
+
         private static void ContentChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ((ContentPresenter)sender).ContentChanged(e.OldValue, e.NewValue);
         }
 
-        private Visual ApplyDataTemplate(object value)
+        private Visual ApplyDataTemplate()
         {
-            Visual visual = value as Visual;
+            Visual visual = this.Content as Visual;
 
-            if (visual == null)
+            if (visual == null && this.Content != null)
             {
-                visual = new TextBlock
+                DataTemplateKey key = new DataTemplateKey(this.Content.GetType());
+                DataTemplate dataTemplate = this.TryFindResource(key) as DataTemplate;
+
+                if (dataTemplate != null)
                 {
-                    Text = value.ToString(),
-                };
+                    visual = dataTemplate.CreateVisualTree(this);
+
+                    FrameworkElement fe = visual as FrameworkElement;
+
+                    if (fe != null)
+                    {
+                        fe.DataContext = this.Content;
+                    }
+                }
+                else
+                {
+                    visual = new TextBlock
+                    {
+                        Text = this.Content.ToString(),
+                    };
+                }
             }
 
             return visual;
@@ -121,7 +144,7 @@ namespace Avalonia.Controls
 
             if (newValue != null)
             {
-                this.visualChild = this.ApplyDataTemplate(newValue);
+                this.visualChild = this.ApplyDataTemplate();
                 this.AddLogicalChild(newValue);
                 this.AddVisualChild(this.visualChild);
             }

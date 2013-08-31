@@ -1,11 +1,22 @@
 ﻿<Window x:Class="Test.MainWindow"
         xmlns="https://github.com/grokys/Avalonia"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Test;assembly=Test"
         Width="500" Height="500">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type local:ViewModel}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}"/>
+                <TextBlock Text="{Binding Description}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
     <StackPanel Margin="16">
         <TextBlock>TextBlock</TextBlock>
-        <Button>Button</Button>
+        <Button Name="button">Button</Button>
         <TextBox Text="TextBox"/>
+        <ContentControl Content="{Binding}"/>
     </StackPanel>
 </Window>        
 

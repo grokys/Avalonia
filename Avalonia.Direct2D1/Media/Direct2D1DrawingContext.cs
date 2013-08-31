@@ -91,9 +91,9 @@ namespace Avalonia.Direct2D1.Media
         public override void DrawText(FormattedText formattedText, Point origin)
         {
             this.target.DrawText(
-                formattedText.Text,
+                formattedText.Text ?? string.Empty,
                 ((Direct2D1FormattedText)formattedText.PlatformImpl).DirectWriteTextLayout,
-                new RectangleF(0, 0, 1000, 1000),
+                new RectangleF((float)origin.X, (float)origin.Y, float.PositiveInfinity, float.PositiveInfinity),
                 formattedText.Foreground.ToSharpDX(this.target),
                 DrawTextOptions.None);
         }

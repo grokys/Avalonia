@@ -194,24 +194,7 @@ namespace Avalonia
 
         public object FindResource(object resourceKey)
         {
-            FrameworkElement element = this;
-            object resource = null;
-
-            while (resource == null && element != null)
-            {
-                resource = element.Resources[resourceKey];
-                element = (FrameworkElement)LogicalTreeHelper.GetParent(element);
-            }
-
-            if (resource == null && Application.Current != null)
-            {
-                resource = Application.Current.Resources[resourceKey];
-            }
-
-            if (resource == null)
-            {
-                resource = Application.GenericTheme[resourceKey];
-            }
+            object resource = this.TryFindResource(resourceKey);
 
             if (resource != null)
             {
@@ -227,6 +210,30 @@ namespace Avalonia
 
         public virtual void OnApplyTemplate()
         {
+        }
+
+        public object TryFindResource(object resourceKey)
+        {
+            FrameworkElement element = this;
+            object resource = null;
+
+            while (resource == null && element != null)
+            {
+                resource = element.Resources[resourceKey];
+                element = (FrameworkElement)VisualTreeHelper.GetParent(element);
+            }
+
+            if (resource == null && Application.Current != null)
+            {
+                resource = Application.Current.Resources[resourceKey];
+            }
+
+            if (resource == null)
+            {
+                resource = Application.GenericTheme[resourceKey];
+            }
+
+            return resource;
         }
 
         protected internal void AddLogicalChild(object child)

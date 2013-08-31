@@ -17,11 +17,18 @@ namespace Test
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new ViewModel { Name = "Data", Description = "Template" };
         }
 
         private void InitializeComponent()
         {
             Application.LoadComponent(this, new Uri("MainWindow.xaml", UriKind.Relative));
         }
+    }
+
+    public class ViewModel
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

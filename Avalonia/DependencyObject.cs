@@ -120,7 +120,7 @@ namespace Avalonia
 
                 value = binding.GetValue();
 
-                if (!object.Equals(oldValue, value))
+                if (!this.AreEqual(oldValue, value))
                 {
                     this.properties[dp] = value;
                     this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(
@@ -165,7 +165,7 @@ namespace Avalonia
             this.propertyBindings.Add(dp, expression);
             this.properties[dp] = newValue;
 
-            if (!object.Equals(oldValue, newValue))
+            if (!this.AreEqual(oldValue, newValue))
             {
                 this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(dp, oldValue, newValue));
             }
@@ -204,7 +204,7 @@ namespace Avalonia
 
             this.propertyBindings.Remove(dp);
 
-            if (!object.Equals(oldValue, value))
+            if (!this.AreEqual(oldValue, value))
             {
                 this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(dp, oldValue, value));
             }
@@ -334,6 +334,11 @@ namespace Avalonia
         protected virtual bool ShouldSerializeProperty(DependencyProperty dp)
         {
             throw new NotImplementedException();
+        }
+
+        private bool AreEqual(object a, object b)
+        {
+            return object.Equals(a, b);
         }
 
         private object GetDefaultValue(DependencyProperty dp)

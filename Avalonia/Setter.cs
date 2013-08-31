@@ -100,7 +100,7 @@ namespace Avalonia
                     Type targetType = templateContent.GetTypeForName(this.TargetName);
 
                     // Finally, find the dependency property on the type.
-                    this.Property = DependencyObject.PropertyFromName(targetType, this.propertyName);
+                    this.Property = DependencyObject.GetPropertyFromName(targetType, this.propertyName);
                 }
             }
         }

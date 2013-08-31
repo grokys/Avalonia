@@ -8,6 +8,7 @@ namespace Avalonia
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Avalonia.Data;
     using Avalonia.Media;
     using Avalonia.Threading;
@@ -26,6 +27,8 @@ namespace Avalonia
         private Dictionary<string, List<DependencyPropertyChangedEventHandler>> propertyChangedHandlers =
             new Dictionary<string, List<DependencyPropertyChangedEventHandler>>();
 
+        private DependencyObject dependencyParent;
+
         public bool IsSealed
         {
             get { return false; }
@@ -34,6 +37,45 @@ namespace Avalonia
         public DependencyObjectType DependencyObjectType
         {
             get { return DependencyObjectType.FromSystemType(this.GetType()); }
+        }
+
+        internal DependencyObject DependencyParent
+        {
+            get
+            {
+                return this.dependencyParent;
+            }
+
+            set
+            {
+                if (this.dependencyParent != value)
+                {
+                    DependencyProperty[] inheriting = this.GetInheritingProperties().ToArray();
+                    Dictionary<DependencyProperty, object> oldValues = new Dictionary<DependencyProperty, object>();
+
+                    foreach (DependencyProperty dp in inheriting)
+                    {
+                        oldValues[dp] = this.GetValue(dp);
+                    }
+
+                    this.dependencyParent = value;
+
+                    foreach (DependencyProperty dp in inheriting)
+                    {
+                        object oldValue = oldValues[dp];
+                        object newValue = this.GetValue(dp);
+
+                        if (!this.AreEqual(oldValues[dp], newValue))
+                        {
+                            DependencyPropertyChangedEventArgs e = new DependencyPropertyChangedEventArgs(
+                                dp,
+                                oldValue,
+                                newValue);
+                            this.OnPropertyChanged(e);
+                        }
+                    }
+                }
+            }
         }
 
         void IObservableDependencyObject.AttachPropertyChangedHandler(
@@ -215,7 +257,27 @@ namespace Avalonia
             this.SetValue(key.DependencyProperty, value);
         }
 
-        internal static DependencyProperty PropertyFromName(Type type, string name)
+        internal static IEnumerable<DependencyProperty> GetAllProperties(Type type)
+        {
+            Type t = type;
+
+            while (t != null)
+            {
+                Dictionary<string, DependencyProperty> list;
+
+                if (propertyDeclarations.TryGetValue(t, out list))
+                {
+                    foreach (DependencyProperty dp in list.Values)
+                    {
+                        yield return dp;
+                    }
+                }
+
+                t = t.BaseType;
+            }
+        }
+
+        internal static DependencyProperty GetPropertyFromName(Type type, string name)
         {
             Dictionary<string, DependencyProperty> list;
             DependencyProperty result;
@@ -262,16 +324,7 @@ namespace Avalonia
 
         internal bool IsRegistered(Type t, DependencyProperty dp)
         {
-            Dictionary<string, DependencyProperty> typeDeclarations;
-            DependencyProperty found;
-
-            if (propertyDeclarations.TryGetValue(t, out typeDeclarations) &&
-                typeDeclarations.TryGetValue(dp.Name, out found))
-            {
-                return found == dp;
-            }
-
-            return false;
+            return GetAllProperties(t).Contains(dp);
         }
 
         internal bool IsUnset(DependencyProperty dependencyProperty)
@@ -349,15 +402,27 @@ namespace Avalonia
 
             if (frameworkMetadata != null && frameworkMetadata.Inherits)
             {
-                DependencyObject parent = VisualTreeHelper.GetParent(this);
-
-                if (parent != null)
+                if (this.dependencyParent != null)
                 {
-                    result = parent.GetValue(dp);
+                    result = this.dependencyParent.GetValue(dp);
                 }
             }
 
             return result;
+        }
+
+        private IEnumerable<DependencyProperty> GetInheritingProperties()
+        {
+            foreach (DependencyProperty dp in GetAllProperties(this.GetType()))
+            {
+                FrameworkPropertyMetadata metadata =
+                    dp.GetMetadata(this.GetType()) as FrameworkPropertyMetadata;
+
+                if (metadata != null && metadata.Inherits)
+                {
+                    yield return dp;
+                }
+            }
         }
 
         private void InheritedValueChanged(DependencyPropertyChangedEventArgs e)

@@ -79,6 +79,7 @@ namespace Avalonia.Media
             }
 
             DependencyObject oldParent = child.VisualParent;
+            child.DependencyParent = this;
             child.VisualParent = this;
             child.OnVisualParentChanged(oldParent);
         }
@@ -97,7 +98,8 @@ namespace Avalonia.Media
         /// <param name="child">The child visual.</param>
         protected internal void RemoveVisualChild(Visual child)
         {
-            child.VisualParent = this;
+            child.VisualParent = null;
+            child.DependencyParent = null;
         }
 
         /// <summary>

@@ -98,7 +98,7 @@ namespace Avalonia.Media
 
             if (binding != null)
             {
-                DependencyProperty dp = DependencyObject.PropertyFromName(
+                DependencyProperty dp = DependencyObject.GetPropertyFromName(
                     e.Member.DeclaringType.UnderlyingType, 
                     e.Member.Name);
                 ((FrameworkElement)sender).SetBinding(dp, binding);

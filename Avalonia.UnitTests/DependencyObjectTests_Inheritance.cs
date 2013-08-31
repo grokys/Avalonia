@@ -137,7 +137,7 @@
                 DependencyProperty.Register(
                     "TestProperty",
                     typeof(string),
-                    typeof(UIElement),
+                    typeof(ParentControl),
                     new FrameworkPropertyMetadata(
                         "foo",
                         FrameworkPropertyMetadataOptions.Inherits,
@@ -150,16 +150,8 @@
             }
         }
 
-        private class ChildControl : FrameworkElement
+        private class ChildControl : ParentControl
         {
-            public static readonly DependencyProperty TestProperty =
-                ParentControl.TestProperty.AddOwner(typeof(ChildControl));
-
-            public string Test
-            {
-                get { return (string)this.GetValue(TestProperty); }
-                set { this.SetValue(TestProperty, value); }
-            }
         }
     }
 }

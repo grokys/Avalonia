@@ -16,6 +16,7 @@ namespace Avalonia
 
     [Ambient]
     [ContentProperty("Setters")]
+    [DictionaryKeyPropertyAttribute("TargetType")]
     public class Style : DispatcherObject, INameScope
     {
         private NameScope nameScope = new NameScope();

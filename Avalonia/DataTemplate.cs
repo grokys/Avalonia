@@ -8,7 +8,7 @@ namespace Avalonia
 {
     using System.Windows.Markup;
 
-    [DictionaryKeyPropertyAttribute("DataTemplateKey")]
+    [DictionaryKeyProperty("DataTemplateKey")]
     public class DataTemplate : FrameworkTemplate
     {
         public DataTemplate()

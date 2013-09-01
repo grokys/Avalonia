@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="https://github.com/grokys/Avalonia"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="{x:Type ContentControl}" TargetType="{x:Type ContentControl}">
+    <Style TargetType="{x:Type ContentControl}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContentControl}">
@@ -11,7 +11,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type Window}" TargetType="{x:Type Window}">
+    <Style TargetType="{x:Type Window}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
@@ -23,7 +23,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}">
+    <Style TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
@@ -50,7 +50,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBox}">
+    <Style TargetType="{x:Type TextBox}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">

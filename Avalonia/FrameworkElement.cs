@@ -33,7 +33,7 @@ namespace Avalonia
     }
 
     [RuntimeNameProperty("Name")]
-    public class FrameworkElement : UIElement
+    public class FrameworkElement : UIElement, ISupportInitialize
     {
         public static readonly DependencyProperty DataContextProperty =
             DependencyProperty.Register(
@@ -97,10 +97,14 @@ namespace Avalonia
                 typeof(FrameworkElement),
                 new PropertyMetadata(TemplatedParentChanged));
 
+        private bool isInitialized;
+
         public FrameworkElement()
         {
             this.Resources = new ResourceDictionary();
         }
+
+        public event EventHandler Initialized;
 
         public double ActualWidth
         {
@@ -122,6 +126,24 @@ namespace Avalonia
         {
             get { return (HorizontalAlignment)this.GetValue(HorizontalAlignmentProperty); }
             set { this.SetValue(HorizontalAlignmentProperty, value); }
+        }
+
+        public bool IsInitialized
+        { 
+            get
+            {
+                return this.isInitialized;
+            }
+
+            internal set
+            {
+                this.isInitialized = value;
+
+                if (this.isInitialized)
+                {
+                    this.OnInitialized(EventArgs.Empty);
+                }
+            }
         }
 
         public Thickness Margin
@@ -234,6 +256,15 @@ namespace Avalonia
             }
 
             return resource;
+        }
+
+        void ISupportInitialize.BeginInit()
+        {
+        }
+
+        void ISupportInitialize.EndInit()
+        {
+            this.IsInitialized = true;
         }
 
         protected internal void AddLogicalChild(object child)
@@ -356,6 +387,22 @@ namespace Avalonia
         protected virtual Size ArrangeOverride(Size finalSize)
         {
             return finalSize;
+        }
+
+        protected virtual void OnInitialized(EventArgs e)
+        {
+            if (this.Initialized != null)
+            {
+                this.Initialized(this, e);
+            }
+        }
+
+        protected internal override void OnVisualParentChanged(DependencyObject oldParent)
+        {
+            if (this.VisualParent != null)
+            {
+                this.IsInitialized = true;
+            }
         }
 
         private static void StyleChanged(object sender, DependencyPropertyChangedEventArgs e)

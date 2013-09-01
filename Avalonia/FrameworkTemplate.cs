@@ -19,7 +19,17 @@ namespace Avalonia
 
         [Ambient]
         [XamlDeferLoad(typeof(TemplateContentLoader), typeof(TemplateContent))]
-        public TemplateContent Template { get; set; }
+        public TemplateContent Template
+        {
+            get;
+            set;
+        }
+
+        public FrameworkElementFactory VisualTree 
+        { 
+            get; 
+            set; 
+        }
 
         public void RegisterName(string name, object scopedElement)
         {
@@ -45,9 +55,23 @@ namespace Avalonia
 
         internal virtual FrameworkElement CreateVisualTree(DependencyObject parent)
         {
-            FrameworkElement result = this.Template.Load() as FrameworkElement;
-            result.TemplatedParent = parent;
-            return result;
+            if (this.Template != null)
+            {
+                FrameworkElement result = this.Template.Load() as FrameworkElement;
+                result.TemplatedParent = parent;
+                return result;
+            }
+            else if (this.VisualTree != null)
+            {
+                FrameworkElement result = this.VisualTree.Load() as FrameworkElement;
+                result.TemplatedParent = parent;
+                return result;
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    "One of the Template or VisualTree properties must be set on a FrameworkTemplate.");
+            }
         }
     }
 }

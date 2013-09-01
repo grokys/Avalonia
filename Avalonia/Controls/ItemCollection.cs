@@ -25,7 +25,7 @@ namespace Avalonia.Controls
 
         public int Add(object value)
         {
-            this.items.Add(items);
+            this.items.Add(value);
             return this.items.Count - 1;
         }
 

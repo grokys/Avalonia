@@ -208,7 +208,7 @@ namespace Avalonia.Controls
 
         public sealed override bool ApplyTemplate()
         {
-            if (this.child == null)
+            if (this.IsInitialized && this.child == null)
             {
                 if (this.Template == null)
                 {

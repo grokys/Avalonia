@@ -21,7 +21,10 @@ namespace Avalonia.Direct2D1
 
     public class HwndSource : PlatformPresentationSource, IDisposable
     {
+        private UnmanagedMethods.WndProc wndProcDelegate;
+
         private string className;
+        
         private WindowRenderTarget renderTarget;
 
         [AvaloniaSpecific]
@@ -35,6 +38,9 @@ namespace Avalonia.Direct2D1
                 Height = UnmanagedMethods.CW_USEDEFAULT,
                 WindowStyle = (int)UnmanagedMethods.WindowStyles.WS_OVERLAPPEDWINDOW
             };
+
+            // Ensure that the delegate doesn't get garbage collected by storing it as a field.
+            this.wndProcDelegate = new UnmanagedMethods.WndProc(this.WndProc);
 
             this.Initialize(parameters);
         }
@@ -160,7 +166,7 @@ namespace Avalonia.Direct2D1
             {
                 cbSize = Marshal.SizeOf(typeof(UnmanagedMethods.WNDCLASSEX)),
                 style = parameters.WindowClassStyle,
-                lpfnWndProc = this.WndProc,
+                lpfnWndProc = this.wndProcDelegate,
                 hInstance = Marshal.GetHINSTANCE(this.GetType().Module),
                 hCursor = UnmanagedMethods.LoadCursor(IntPtr.Zero, (int)UnmanagedMethods.Cursor.IDC_ARROW),
                 lpszClassName = this.className,

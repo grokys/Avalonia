@@ -74,6 +74,23 @@ namespace Avalonia.Media
             }
         }
 
+        [AvaloniaSpecific]
+        public static IEnumerable<T> GetDescendents<T>(DependencyObject reference) where T : DependencyObject
+        {
+            foreach (DependencyObject child in GetChildren(reference))
+            {
+                if (child is T)
+                {
+                    yield return (T)child;
+                }
+
+                foreach (T descendent in GetDescendents<T>(child))
+                {
+                    yield return descendent;
+                }
+            }
+        }
+
         public static Transform GetTransform(Visual reference)
         {
             return GetVisual(reference).VisualTransform;

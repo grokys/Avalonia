@@ -21,7 +21,7 @@ namespace Test
         {
             InitializeComponent();
             this.DataContext = new ViewModel { Name = "Data", Description = "Template" };
-            this.button.Click += button_Click;
+            //this.button.Click += button_Click;
         }
 
         private void InitializeComponent()

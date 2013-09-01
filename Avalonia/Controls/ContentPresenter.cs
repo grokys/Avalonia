@@ -55,6 +55,60 @@ namespace Avalonia.Controls
             set { this.SetValue(ContentTemplateProperty, value); }
         }
 
+        public override bool ApplyTemplate()
+        {
+            if (this.IsInitialized)
+            {
+                if (this.visualChild != null)
+                {
+                    this.RemoveVisualChild(this.visualChild);
+                    this.visualChild = null;
+                }
+
+                Visual visual = this.Content as Visual;
+
+                if (visual == null && this.Content != null)
+                {
+                    DataTemplate template = this.ContentTemplate;
+
+                    if (template == null)
+                    {
+                        DataTemplateKey key = new DataTemplateKey(this.Content.GetType());
+                        template = this.TryFindResource(key) as DataTemplate;
+                    }
+
+                    if (template != null)
+                    {
+                        visual = template.CreateVisualTree(this);
+
+                        FrameworkElement fe = visual as FrameworkElement;
+
+                        if (fe != null)
+                        {
+                            fe.DataContext = this.Content;
+                        }
+                    }
+                    else
+                    {
+                        visual = new TextBlock
+                        {
+                            Text = this.Content.ToString(),
+                        };
+                    }
+                }
+
+                if (visual != null)
+                {
+                    this.visualChild = visual;
+                    this.AddVisualChild(this.visualChild);
+                    this.OnApplyTemplate();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         protected internal override int VisualChildrenCount
         {
             get { return (this.visualChild != null) ? 1 : 0; }
@@ -102,52 +156,9 @@ namespace Avalonia.Controls
             return base.ArrangeOverride(finalSize);
         }
 
-        protected internal override void OnVisualParentChanged(DependencyObject oldParent)
-        {
-            this.visualChild = this.ApplyDataTemplate();
-            base.OnVisualParentChanged(oldParent);
-        }
-
         private static void ContentChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ((ContentPresenter)sender).ContentChanged(e.OldValue, e.NewValue);
-        }
-
-        private Visual ApplyDataTemplate()
-        {
-            Visual visual = this.Content as Visual;
-
-            if (visual == null && this.Content != null)
-            {
-                DataTemplate template = this.ContentTemplate;
-
-                if (template == null)
-                {
-                    DataTemplateKey key = new DataTemplateKey(this.Content.GetType());
-                    template = this.TryFindResource(key) as DataTemplate;
-                }
-
-                if (template != null)
-                {
-                    visual = template.CreateVisualTree(this);
-
-                    FrameworkElement fe = visual as FrameworkElement;
-
-                    if (fe != null)
-                    {
-                        fe.DataContext = this.Content;
-                    }
-                }
-                else
-                {
-                    visual = new TextBlock
-                    {
-                        Text = this.Content.ToString(),
-                    };
-                }
-            }
-
-            return visual;
         }
 
         private void ContentChanged(object oldValue, object newValue)
@@ -155,17 +166,14 @@ namespace Avalonia.Controls
             if (oldValue != null)
             {
                 this.RemoveLogicalChild(oldValue);
-                this.RemoveVisualChild(this.visualChild);
             }
-
-            this.visualChild = null;
 
             if (newValue != null)
             {
-                this.visualChild = this.ApplyDataTemplate();
                 this.AddLogicalChild(newValue);
-                this.AddVisualChild(this.visualChild);
             }
+
+            this.ApplyTemplate();
         }
     }
 }

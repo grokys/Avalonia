@@ -23,25 +23,32 @@ namespace Avalonia.Controls
                     new SolidColorBrush(Colors.White),
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
+        private bool isItemsPanel;
+
         public Panel()
         {
-            this.Children = new UIElementCollection(this, this);
+            this.InternalChildren = new UIElementCollection(this, this);
         }
 
         public UIElementCollection Children
         { 
-            get; 
-            private set; 
+            get { return (isItemsPanel) ? null : this.InternalChildren; }
+        }
+
+        internal void MakeItemsPanel()
+        {
+            this.isItemsPanel = true;
         }
 
         protected internal override IEnumerator LogicalChildren
         {
-            get { return this.Children.GetEnumerator(); }
+            get { return this.InternalChildren.GetEnumerator(); }
         }
 
         protected internal UIElementCollection InternalChildren
         {
-            get { return this.Children; }
+            get;
+            private set;
         }
         
         protected internal override int VisualChildrenCount

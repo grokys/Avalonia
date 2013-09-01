@@ -17,6 +17,11 @@
         <Button Name="button">Button</Button>
         <TextBox Text="TextBox"/>
         <ContentControl Content="{Binding}"/>
+        <ItemsControl>
+            <local:ViewModel Name="Item" Description="1"/>
+            <local:ViewModel Name="Item" Description="2"/>
+            <local:ViewModel Name="Item" Description="3"/>
+        </ItemsControl>
     </StackPanel>
 </Window>        
 

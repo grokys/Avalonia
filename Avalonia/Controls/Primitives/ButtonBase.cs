@@ -25,7 +25,12 @@ namespace Avalonia.Controls.Primitives
 
         public ButtonBase()
         {
-            this.AddHandler(ClickEvent, (RoutedEventHandler)((s, e) => this.OnClick()));
+        }
+
+        public event RoutedEventHandler Click
+        {
+            add { this.AddHandler(ClickEvent, value); }
+            remove { this.RemoveHandler(ClickEvent, value); }
         }
 
         public bool IsPressed
@@ -36,6 +41,7 @@ namespace Avalonia.Controls.Primitives
 
         protected virtual void OnClick()
         {
+            this.RaiseEvent(new RoutedEventArgs(ClickEvent));
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -53,7 +59,7 @@ namespace Avalonia.Controls.Primitives
             if (this.IsPressed)
             {
                 this.IsPressed = false;
-                this.RaiseEvent(new RoutedEventArgs(ClickEvent));
+                this.OnClick();
             }
         }
 

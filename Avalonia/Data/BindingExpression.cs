@@ -149,10 +149,15 @@ namespace Avalonia.Data
         private void AttachListener(PropertyPathToken link)
         {
             IObservableDependencyObject dependencyObject = link.Object as IObservableDependencyObject;
+            INotifyPropertyChanged inpc = link.Object as INotifyPropertyChanged;
 
             if (dependencyObject != null)
             {
                 dependencyObject.AttachPropertyChangedHandler(link.PropertyName, this.DependencyPropertyChanged);
+            }
+            else if (inpc != null)
+            {
+                inpc.PropertyChanged += this.PropertyChanged;
             }
         }
 
@@ -167,17 +172,46 @@ namespace Avalonia.Data
         private void DetachListener(PropertyPathToken link)
         {
             IObservableDependencyObject dependencyObject = link.Object as IObservableDependencyObject;
+            INotifyPropertyChanged inpc = link.Object as INotifyPropertyChanged;
 
             if (dependencyObject != null)
             {
                 dependencyObject.RemovePropertyChangedHandler(link.PropertyName, this.DependencyPropertyChanged);
             }
+            else if (inpc != null)
+            {
+                inpc.PropertyChanged -= this.PropertyChanged;
+            }
+        }
+
+        private PropertyPathToken FindLinkInChain(object o)
+        {
+            foreach (PropertyPathToken t in this.chain)
+            {
+                if (t.Object == o)
+                {
+                    return t;
+                }
+            }
+
+            throw new InvalidOperationException("Internal error: Could not find bound object.");
         }
 
         private void DependencyPropertyChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             this.DetachListeners();
             this.Invalidate();
+        }
+
+        private void PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            PropertyPathToken link = this.FindLinkInChain(sender);
+
+            if (e.PropertyName == link.PropertyName)
+            {
+                this.DetachListeners();
+                this.Invalidate();
+            }
         }
     }
 }

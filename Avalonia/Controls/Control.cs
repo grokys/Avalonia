@@ -21,6 +21,20 @@ namespace Avalonia.Controls
                     new SolidColorBrush(Colors.White),
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public static readonly DependencyProperty BorderBrushProperty =
+            Border.BorderBrushProperty.AddOwner(
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                    new SolidColorBrush(Colors.White),
+                    FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public static readonly DependencyProperty BorderThicknessProperty =
+            Border.BorderThicknessProperty.AddOwner(
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                    new Thickness(),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
         public static readonly DependencyProperty FontFamilyProperty =
             TextElement.FontFamilyProperty.AddOwner(
                 typeof(Control),
@@ -70,6 +84,15 @@ namespace Avalonia.Controls
                 typeof(Control),
                 new FrameworkPropertyMetadata(HorizontalAlignment.Left));
 
+        public static readonly DependencyProperty PaddingProperty =
+            DependencyProperty.Register(
+                "Padding",
+                typeof(Thickness),
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                    new Thickness(),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         public static readonly DependencyProperty TemplateProperty =
             DependencyProperty.Register(
                 "Template",
@@ -104,6 +127,18 @@ namespace Avalonia.Controls
         {
             get { return (Brush)this.GetValue(BackgroundProperty); }
             set { this.SetValue(BackgroundProperty, value); }
+        }
+
+        public Brush BorderBrush
+        {
+            get { return (Brush)this.GetValue(BorderBrushProperty); }
+            set { this.SetValue(BorderBrushProperty, value); }
+        }
+
+        public Thickness BorderThickness
+        {
+            get { return (Thickness)this.GetValue(BorderThicknessProperty); }
+            set { this.SetValue(BorderThicknessProperty, value); }
         }
 
         public FontFamily FontFamily
@@ -146,6 +181,12 @@ namespace Avalonia.Controls
         {
             get { return (HorizontalAlignment)this.GetValue(HorizontalContentAlignmentProperty); } 
             set { this.SetValue(HorizontalContentAlignmentProperty, value); } 
+        }
+
+        public Thickness Padding
+        {
+            get { return (Thickness)this.GetValue(PaddingProperty); }
+            set { this.SetValue(PaddingProperty, value); }
         }
 
         public ControlTemplate Template 

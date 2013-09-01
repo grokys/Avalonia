@@ -66,7 +66,10 @@ namespace Avalonia.Controls
 
             foreach (UIElement child in this.InternalChildren)
             {
-                child.Arrange(new Rect(position, child.DesiredSize));
+                Size size = (orientation == Orientation.Horizontal) ?
+                    new Size(child.DesiredSize.Width, this.DesiredSize.Height) :
+                    new Size(this.DesiredSize.Width, child.DesiredSize.Height);
+                child.Arrange(new Rect(position, size));
                 position.X += child.RenderSize.Width * xinc;
                 position.Y += child.RenderSize.Height * yinc;
                 maxWidth = Math.Max(maxWidth, child.RenderSize.Width);

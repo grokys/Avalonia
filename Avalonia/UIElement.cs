@@ -38,6 +38,12 @@ namespace Avalonia
                 typeof(bool),
                 typeof(UIElement));
 
+        public static readonly DependencyProperty SnapsToDevicePixelsProperty =
+            DependencyProperty.Register(
+                "SnapsToDevicePixels",
+                typeof(bool),
+                typeof(UIElement));
+
         public static readonly RoutedEvent GotKeyboardFocusEvent =
             Keyboard.GotKeyboardFocusEvent.AddOwner(typeof(UIElement));
 
@@ -157,6 +163,13 @@ namespace Avalonia
         {
             get { return (bool)this.GetValue(IsMouseCapturedProperty); }
             private set { this.SetValue(IsMouseCapturedProperty, value); }
+        }
+
+        // TODO: Actually implement this.
+        public bool SnapsToDevicePixels
+        {
+            get { return (bool)this.GetValue(SnapsToDevicePixelsProperty); }
+            set { this.SetValue(SnapsToDevicePixelsProperty, value); }
         }
 
         public void CaptureMouse()

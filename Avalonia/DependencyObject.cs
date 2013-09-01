@@ -157,19 +157,9 @@ namespace Avalonia
 
             if (this.propertyBindings.TryGetValue(dp, out binding))
             {
-                object value = this.GetValue(dp);
-                object oldValue = value;
-
-                value = binding.GetValue();
-
-                if (!this.AreEqual(oldValue, value))
-                {
-                    this.properties[dp] = value;
-                    this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(
-                        dp,
-                        oldValue,
-                        value));
-                }
+                object oldValue = this.GetValue(dp);
+                object newValue = binding.GetValue();
+                this.SetValueInternal(dp, oldValue, newValue);
             }
         }
 
@@ -205,12 +195,7 @@ namespace Avalonia
             object newValue = expression.GetValue();
 
             this.propertyBindings.Add(dp, expression);
-            this.properties[dp] = newValue;
-
-            if (!this.AreEqual(oldValue, newValue))
-            {
-                this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(dp, oldValue, newValue));
-            }
+            this.SetValueInternal(dp, oldValue, newValue);
 
             return expression;
         }
@@ -233,23 +218,8 @@ namespace Avalonia
             }
 
             object oldValue = this.GetValue(dp);
-
-            if (value == DependencyProperty.UnsetValue)
-            {
-                this.properties.Remove(dp);
-                value = dp.DefaultMetadata.DefaultValue;
-            }
-            else
-            {
-                this.properties[dp] = value;
-            }
-
             this.propertyBindings.Remove(dp);
-
-            if (!this.AreEqual(oldValue, value))
-            {
-                this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(dp, oldValue, value));
-            }
+            this.SetValueInternal(dp, oldValue, value);
         }
 
         public void SetValue(DependencyPropertyKey key, object value)
@@ -437,6 +407,24 @@ namespace Avalonia
                 {
                     child.InheritedValueChanged(e);
                 }
+            }
+        }
+
+        private void SetValueInternal(DependencyProperty dp, object oldValue, object newValue)
+        {
+            if (newValue != DependencyProperty.UnsetValue && dp.IsValidValue(newValue))
+            {
+                this.properties[dp] = newValue;
+            }
+            else
+            {
+                this.properties.Remove(dp);
+                newValue = this.GetValue(dp);
+            }
+
+            if (!this.AreEqual(oldValue, newValue))
+            {
+                this.OnPropertyChanged(new DependencyPropertyChangedEventArgs(dp, oldValue, newValue));
             }
         }
     }

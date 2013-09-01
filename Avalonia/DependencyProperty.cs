@@ -232,19 +232,27 @@ namespace Avalonia
 
         public bool IsValidType(object value)
         {
+            if (value == UnsetValue)
+            {
+                return true;
+            }
+
             if (value == null)
             {
                 return !this.PropertyType.IsValueType || 
                     Nullable.GetUnderlyingType(this.PropertyType) != null;
             }
-            else
-            {
-                return this.PropertyType.IsInstanceOfType(value);
-            }
+
+            return this.PropertyType.IsInstanceOfType(value);
         }
 
         public bool IsValidValue(object value)
         {
+            if (value == UnsetValue)
+            {
+                return true;
+            }
+
             if (!this.IsValidType(value))
             {
                 return false;

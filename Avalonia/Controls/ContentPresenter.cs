@@ -25,6 +25,13 @@ namespace Avalonia.Controls
                     FrameworkPropertyMetadataOptions.AffectsMeasure,
                     ContentChanged));
 
+        public static readonly DependencyProperty ContentTemplateProperty =
+            ContentControl.ContentTemplateProperty.AddOwner(
+                typeof(ContentPresenter),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         private Visual visualChild;
 
         public ContentPresenter()
@@ -40,6 +47,12 @@ namespace Avalonia.Controls
         {
             get { return this.GetValue(ContentProperty); }
             set { this.SetValue(ContentProperty, value); }
+        }
+
+        public DataTemplate ContentTemplate
+        {
+            get { return (DataTemplate)this.GetValue(ContentTemplateProperty); }
+            set { this.SetValue(ContentTemplateProperty, value); }
         }
 
         protected internal override int VisualChildrenCount
@@ -106,12 +119,17 @@ namespace Avalonia.Controls
 
             if (visual == null && this.Content != null)
             {
-                DataTemplateKey key = new DataTemplateKey(this.Content.GetType());
-                DataTemplate dataTemplate = this.TryFindResource(key) as DataTemplate;
+                DataTemplate template = this.ContentTemplate;
 
-                if (dataTemplate != null)
+                if (template == null)
                 {
-                    visual = dataTemplate.CreateVisualTree(this);
+                    DataTemplateKey key = new DataTemplateKey(this.Content.GetType());
+                    template = this.TryFindResource(key) as DataTemplate;
+                }
+
+                if (template != null)
+                {
+                    visual = template.CreateVisualTree(this);
 
                     FrameworkElement fe = visual as FrameworkElement;
 

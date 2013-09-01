@@ -66,7 +66,7 @@ namespace Avalonia.Data
                 }
                 else
                 {
-                    return null;
+                    return DependencyProperty.UnsetValue;
                 }
             }
             else

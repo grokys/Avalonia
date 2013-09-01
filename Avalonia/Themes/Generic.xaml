@@ -5,7 +5,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContentControl}">
-                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -16,7 +17,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <Border Background="{TemplateBinding Background}">
-                        <ContentPresenter Content="{TemplateBinding Content}"/>
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -41,6 +43,7 @@
                             SnapsToDevicePixels="True">
                         <ContentPresenter x:Name="contentPresenter" 
                                           Content="{TemplateBinding Content}" 
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" 
                                           Focusable="False" 
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                           Margin="{TemplateBinding Padding}" 

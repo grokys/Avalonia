@@ -22,6 +22,15 @@ namespace Avalonia.Controls
                     null,
                     FrameworkPropertyMetadataOptions.AffectsMeasure));
 
+        public static readonly DependencyProperty ContentTemplateProperty =
+            DependencyProperty.Register(
+                "ContentTemplate",
+                typeof(DataTemplate),
+                typeof(ContentControl),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         static ContentControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
@@ -33,6 +42,12 @@ namespace Avalonia.Controls
         {
             get { return this.GetValue(ContentProperty); }
             set { this.SetValue(ContentProperty, value); }
+        }
+
+        public DataTemplate ContentTemplate
+        {
+            get { return (DataTemplate)this.GetValue(ContentTemplateProperty); }
+            set { this.SetValue(ContentTemplateProperty, value); }
         }
 
         protected override Size MeasureOverride(Size constraint)

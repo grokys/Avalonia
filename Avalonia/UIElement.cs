@@ -165,6 +165,7 @@ namespace Avalonia
             private set { this.SetValue(IsMouseCapturedProperty, value); }
         }
 
+        // TODO: Actually implement this.
         public bool SnapsToDevicePixels
         {
             get { return (bool)this.GetValue(SnapsToDevicePixelsProperty); }

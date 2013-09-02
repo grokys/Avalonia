@@ -2,7 +2,7 @@
         xmlns="https://github.com/grokys/Avalonia"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Test;assembly=Test"
-        Width="500" Height="500">
+        Height="350" Width="525">
     <Window.Resources>
         <DataTemplate DataType="{x:Type local:ViewModel}">
             <StackPanel Orientation="Horizontal">
@@ -12,16 +12,25 @@
         </DataTemplate>
     </Window.Resources>
 
-    <StackPanel Margin="16">
-        <TextBlock>TextBlock</TextBlock>
-        <Button Name="button">Button</Button>
-        <TextBox Text="TextBox"/>
+    <StackPanel Name="stackPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBox Name="textBox" Text="TextBox"></TextBox>
+        <Button>Button</Button>
+        <Border Name="border"/>
         <ContentControl Content="{Binding}"/>
-        <ItemsControl>
-            <local:ViewModel Name="Item" Description="1"/>
-            <local:ViewModel Name="Item" Description="2"/>
-            <local:ViewModel Name="Item" Description="3"/>
-        </ItemsControl>
+
+        <Border BorderBrush="Gray" BorderThickness="1" Margin="2">
+            <StackPanel Orientation="Horizontal" Margin="8">
+                <ItemsControl Margin="4" Padding="4" BorderBrush="Blue" BorderThickness="1">
+                    <local:ViewModel Name="Item" Description="1"/>
+                    <local:ViewModel Name="Item" Description="2"/>
+                    <local:ViewModel Name="Item" Description="3"/>
+                </ItemsControl>
+                <StackPanel>
+                    <Button Name="add" Margin="4">Add</Button>
+                    <Button Name="remove" Margin="4">Remove</Button>
+                </StackPanel>
+            </StackPanel>
+        </Border>
     </StackPanel>
 </Window>        
 

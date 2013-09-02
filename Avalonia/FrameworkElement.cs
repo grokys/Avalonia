@@ -429,7 +429,13 @@ namespace Avalonia
                 Math.Max(0, availableSize.Width - this.Margin.Left - this.Margin.Right),
                 Math.Max(0, availableSize.Height - this.Margin.Top - this.Margin.Bottom));
 
-            return this.MeasureOverride(availableSize);
+            Size size = this.MeasureOverride(availableSize);
+
+            size = new Size(
+                Math.Min(availableSize.Width, size.Width + this.Margin.Left + this.Margin.Right),
+                Math.Min(availableSize.Height, size.Height + this.Margin.Top + this.Margin.Bottom));
+
+            return size;
         }
 
         protected virtual Size MeasureOverride(Size constraint)

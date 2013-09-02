@@ -53,6 +53,15 @@ namespace Avalonia
                     null,
                     FrameworkPropertyMetadataOptions.AffectsMeasure));
 
+        public static readonly DependencyProperty HeightProperty =
+            DependencyProperty.Register(
+                "Height",
+                typeof(double),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    double.NaN,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         public static readonly DependencyProperty HorizontalAlignmentProperty =
             DependencyProperty.Register(
                 "HorizontalAlignment",
@@ -69,6 +78,42 @@ namespace Avalonia
                 typeof(FrameworkElement),
                 new FrameworkPropertyMetadata(
                     new Thickness(),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        public static readonly DependencyProperty MaxHeightProperty =
+            DependencyProperty.Register(
+                "MaxHeight",
+                typeof(double),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    double.PositiveInfinity,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        public static readonly DependencyProperty MaxWidthProperty =
+            DependencyProperty.Register(
+                "MaxWidth",
+                typeof(double),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    double.PositiveInfinity,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        public static readonly DependencyProperty MinHeightProperty =
+            DependencyProperty.Register(
+                "MinHeight",
+                typeof(double),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    0.0,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        public static readonly DependencyProperty MinWidthProperty =
+            DependencyProperty.Register(
+                "MinWidth",
+                typeof(double),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    0.0,
                     FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         public static readonly DependencyProperty StyleProperty =
@@ -89,6 +134,15 @@ namespace Avalonia
                 new FrameworkPropertyMetadata(
                     VerticalAlignment.Stretch,
                     FrameworkPropertyMetadataOptions.AffectsArrange));
+
+        public static readonly DependencyProperty WidthProperty =
+            DependencyProperty.Register(
+                "Width",
+                typeof(double),
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    double.NaN,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         internal static readonly DependencyProperty TemplatedParentProperty =
             DependencyProperty.Register(
@@ -122,6 +176,12 @@ namespace Avalonia
             set { this.SetValue(DataContextProperty, value); }
         }
 
+        public double Height
+        {
+            get { return (double)this.GetValue(HeightProperty); }
+            set { this.SetValue(HeightProperty, value); }
+        }
+
         public HorizontalAlignment HorizontalAlignment
         {
             get { return (HorizontalAlignment)this.GetValue(HorizontalAlignmentProperty); }
@@ -150,6 +210,30 @@ namespace Avalonia
         {
             get { return (Thickness)this.GetValue(MarginProperty); }
             set { this.SetValue(MarginProperty, value); }
+        }
+
+        public double MaxHeight
+        {
+            get { return (double)this.GetValue(MaxHeightProperty); }
+            set { this.SetValue(MaxHeightProperty, value); }
+        }
+
+        public double MaxWidth
+        {
+            get { return (double)this.GetValue(MaxWidthProperty); }
+            set { this.SetValue(MaxWidthProperty, value); }
+        }
+
+        public double MinHeight
+        {
+            get { return (double)this.GetValue(MinHeightProperty); }
+            set { this.SetValue(MinHeightProperty, value); }
+        }
+
+        public double MinWidth
+        {
+            get { return (double)this.GetValue(MinWidthProperty); }
+            set { this.SetValue(MinWidthProperty, value); }
         }
 
         public string Name
@@ -187,6 +271,12 @@ namespace Avalonia
         {
             get { return (VerticalAlignment)this.GetValue(VerticalAlignmentProperty); }
             set { this.SetValue(VerticalAlignmentProperty, value); }
+        }
+
+        public double Width
+        {
+            get { return (double)this.GetValue(WidthProperty); }
+            set { this.SetValue(WidthProperty, value); }
         }
 
         protected internal object DefaultStyleKey

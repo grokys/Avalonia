@@ -22,6 +22,8 @@ namespace Avalonia
         static Window()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata(typeof(Window)));
+            WidthProperty.OverrideMetadata(typeof(Window), new PropertyMetadata(WidthChanged));
+            HeightProperty.OverrideMetadata(typeof(Window), new PropertyMetadata(HeightChanged));
         }
 
         public Window()
@@ -68,6 +70,22 @@ namespace Avalonia
             {
                 this.Closed(this, e);
             }
+        }
+
+        private static void WidthChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Window window = (Window)sender;
+            Rect rect = window.PresentationSource.BoundingRect;
+            rect.Width = (double)e.NewValue;
+            window.PresentationSource.BoundingRect = rect;
+        }
+
+        private static void HeightChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Window window = (Window)sender;
+            Rect rect = window.PresentationSource.BoundingRect;
+            rect.Height = (double)e.NewValue;
+            window.PresentationSource.BoundingRect = rect;
         }
 
         private void DoRender()

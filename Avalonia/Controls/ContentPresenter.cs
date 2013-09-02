@@ -55,6 +55,11 @@ namespace Avalonia.Controls
             set { this.SetValue(ContentTemplateProperty, value); }
         }
 
+        protected internal override int VisualChildrenCount
+        {
+            get { return (this.visualChild != null) ? 1 : 0; }
+        }
+
         public override bool ApplyTemplate()
         {
             if (this.IsInitialized)
@@ -107,11 +112,6 @@ namespace Avalonia.Controls
             }
 
             return false;
-        }
-
-        protected internal override int VisualChildrenCount
-        {
-            get { return (this.visualChild != null) ? 1 : 0; }
         }
 
         protected internal override Visual GetVisualChild(int index)

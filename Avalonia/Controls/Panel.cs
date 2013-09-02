@@ -32,12 +32,7 @@ namespace Avalonia.Controls
 
         public UIElementCollection Children
         { 
-            get { return (isItemsPanel) ? null : this.InternalChildren; }
-        }
-
-        internal void MakeItemsPanel()
-        {
-            this.isItemsPanel = true;
+            get { return this.isItemsPanel ? null : this.InternalChildren; }
         }
 
         protected internal override IEnumerator LogicalChildren
@@ -50,10 +45,15 @@ namespace Avalonia.Controls
             get;
             private set;
         }
-        
+
         protected internal override int VisualChildrenCount
         {
             get { return this.Children.Count; }
+        }
+
+        internal void MakeItemsPanel()
+        {
+            this.isItemsPanel = true;
         }
 
         protected internal override Visual GetVisualChild(int index)

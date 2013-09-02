@@ -64,7 +64,7 @@ namespace Avalonia.Controls
             }
 
             // Measure our children to get our extents
-            foreach (UIElement child in Children)
+            foreach (UIElement child in this.Children)
             {
                 child.Measure(childAvailable);
                 Size size = child.DesiredSize;
@@ -89,12 +89,16 @@ namespace Avalonia.Controls
             Size arranged = finalSize;
 
             if (Orientation == Orientation.Vertical)
+            {
                 arranged.Height = 0;
+            }
             else
+            {
                 arranged.Width = 0;
+            }
 
             // Arrange our children
-            foreach (UIElement child in Children)
+            foreach (UIElement child in this.Children)
             {
                 Size size = child.DesiredSize;
 
@@ -105,9 +109,13 @@ namespace Avalonia.Controls
                     Rect childFinal = new Rect(0, arranged.Height, size.Width, size.Height);
 
                     if (childFinal.IsEmpty)
+                    {
                         child.Arrange(new Rect());
+                    }
                     else
+                    {
                         child.Arrange(childFinal);
+                    }
 
                     arranged.Width = Math.Max(arranged.Width, size.Width);
                     arranged.Height += size.Height;
@@ -117,10 +125,15 @@ namespace Avalonia.Controls
                     size.Height = finalSize.Height;
 
                     Rect childFinal = new Rect(arranged.Width, 0, size.Width, size.Height);
+
                     if (childFinal.IsEmpty)
+                    {
                         child.Arrange(new Rect());
+                    }
                     else
+                    {
                         child.Arrange(childFinal);
+                    }
 
                     arranged.Width += size.Width;
                     arranged.Height = Math.Max(arranged.Height, size.Height);
@@ -128,9 +141,13 @@ namespace Avalonia.Controls
             }
 
             if (Orientation == Orientation.Vertical)
+            {
                 arranged.Height = Math.Max(arranged.Height, finalSize.Height);
+            }
             else
+            {
                 arranged.Width = Math.Max(arranged.Width, finalSize.Width);
+            }
 
             return arranged;
         }

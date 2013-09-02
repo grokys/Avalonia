@@ -413,6 +413,14 @@ namespace Avalonia
             }
         }
 
+        protected internal override void OnVisualParentChanged(DependencyObject oldParent)
+        {
+            if (this.VisualParent != null)
+            {
+                this.IsInitialized = true;
+            }
+        }
+
         protected sealed override Size MeasureCore(Size availableSize)
         {
             this.ApplyTemplate();
@@ -484,14 +492,6 @@ namespace Avalonia
             if (this.Initialized != null)
             {
                 this.Initialized(this, e);
-            }
-        }
-
-        protected internal override void OnVisualParentChanged(DependencyObject oldParent)
-        {
-            if (this.VisualParent != null)
-            {
-                this.IsInitialized = true;
             }
         }
 

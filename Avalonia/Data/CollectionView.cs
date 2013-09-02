@@ -18,17 +18,6 @@ namespace Avalonia.Data
             this.SourceCollection = collection;
         }
 
-        public virtual IEnumerable SourceCollection
-        {
-            get;
-            private set;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.SourceCollection.GetEnumerator();
-        }
-
         event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
         {
             add { throw new System.NotImplementedException(); }
@@ -39,6 +28,17 @@ namespace Avalonia.Data
         {
             add { throw new System.NotImplementedException(); }
             remove { throw new System.NotImplementedException(); }
+        }
+
+        public virtual IEnumerable SourceCollection
+        {
+            get;
+            private set;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.SourceCollection.GetEnumerator();
         }
     }
 }

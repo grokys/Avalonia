@@ -4,15 +4,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Avalonia.Data;
-
 namespace Avalonia.Controls
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Avalonia.Data;
+
     public sealed class ItemCollection : CollectionView, IList, IWeakEventListener
     {
         private List<object> items;
@@ -21,12 +21,6 @@ namespace Avalonia.Controls
             : base(new List<object>())
         {
             this.items = (List<object>)this.SourceCollection;
-        }
-
-        public int Add(object value)
-        {
-            this.items.Add(value);
-            return this.items.Count - 1;
         }
 
         public int Count
@@ -46,7 +40,7 @@ namespace Avalonia.Controls
 
         public bool IsSynchronized
         {
-            get { return false; ; }
+            get { return false; }
         }
 
         public object SyncRoot
@@ -58,6 +52,12 @@ namespace Avalonia.Controls
         {
             get { return this.items[index]; }
             set { this.items[index] = value; }
+        }
+
+        public int Add(object value)
+        {
+            this.items.Add(value);
+            return this.items.Count - 1;
         }
 
         public void Clear()

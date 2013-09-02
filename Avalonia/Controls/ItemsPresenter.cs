@@ -85,6 +85,5 @@ namespace Avalonia.Controls
 
             return base.ArrangeOverride(finalSize);
         }
-
     }
 }

@@ -12,6 +12,7 @@ Implemented to some extent so far:
 - Button
 - TextBox
 - StackPanel
+- ItemsControl
 - Xaml loading
 - Control templates
 - Data templates

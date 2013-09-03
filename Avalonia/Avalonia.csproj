@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="AvaloniaCollection.cs" />
     <Compile Include="Controls\GenerationState.cs" />
     <Compile Include="Controls\ItemCollection.cs" />
     <Compile Include="Controls\ItemContainerGenerator.cs" />

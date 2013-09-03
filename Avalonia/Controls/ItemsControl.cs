@@ -220,29 +220,29 @@ namespace Avalonia.Controls
                 case NotifyCollectionChangedAction.Add:
                     for (int i = 0; i < e.NewItems.Count; i++)
                     {
-                        this.Items.InsertImpl(e.NewStartingIndex + i, e.NewItems[i]);
+                        this.Items.InsertInternal(e.NewStartingIndex + i, e.NewItems[i]);
                     }
 
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     for (int i = 0; i < e.OldItems.Count; i++)
                     {
-                        this.Items.RemoveAtImpl(e.OldStartingIndex);
+                        this.Items.RemoveAtInternal(e.OldStartingIndex);
                     }
                     
                     break;
                 case NotifyCollectionChangedAction.Replace:
                     for (int i = 0; i < e.NewItems.Count; i++)
                     {
-                        this.Items.SetItemImpl(e.NewStartingIndex + i, e.NewItems[i]);
+                        this.Items.SetItemInternal(e.NewStartingIndex + i, e.NewItems[i]);
                     }
 
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    this.Items.ClearImpl();
+                    this.Items.ClearInternal();
                     foreach (var v in this.ItemsSource)
                     {
-                        this.Items.AddImpl(v);
+                        this.Items.AddInternal(v);
                     }
 
                     break;
@@ -285,11 +285,11 @@ namespace Avalonia.Controls
 
                 this.Items.SetIsReadOnly(true);
                 this.itemsIsDataBound = true;
-                this.Items.ClearImpl();
+                this.Items.ClearInternal();
 
                 foreach (object v in newSource)
                 {
-                    this.Items.AddImpl(v);
+                    this.Items.AddInternal(v);
                 }
 
                 // Setting itemsIsDataBound to true prevents normal notifications from propagating, so do it manually here
@@ -299,7 +299,7 @@ namespace Avalonia.Controls
             {
                 this.itemsIsDataBound = false;
                 this.Items.SetIsReadOnly(false);
-                this.Items.ClearImpl();
+                this.Items.ClearInternal();
             }
 
             // Yes this is stupid and shouldn't be here, but DRT 348 sets an empty collection as the ItemsSource

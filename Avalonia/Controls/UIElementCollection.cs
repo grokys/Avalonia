@@ -123,6 +123,7 @@ namespace Avalonia.Controls
         public virtual void Insert(int index, UIElement element)
         {
             this.items.Insert(index, element);
+            this.SetLogicalParent(element);
         }
         
         public virtual void Remove(UIElement element)

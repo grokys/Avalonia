@@ -9,6 +9,7 @@ namespace Avalonia.Controls
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
     using System.Linq;
     using System.Text;
     using Avalonia.Data;
@@ -16,12 +17,17 @@ namespace Avalonia.Controls
     public sealed class ItemCollection : CollectionView, IList, IWeakEventListener
     {
         private List<object> items;
+        private bool readOnly;
 
         public ItemCollection()
             : base(new List<object>())
         {
             this.items = (List<object>)this.SourceCollection;
         }
+
+        internal event EventHandler Clearing;
+
+        internal event NotifyCollectionChangedEventHandler ItemsChanged;
 
         public int Count
         {
@@ -35,7 +41,7 @@ namespace Avalonia.Controls
 
         public bool IsReadOnly
         {
-            get { return false; }
+            get { return this.readOnly; }
         }
 
         public bool IsSynchronized
@@ -50,19 +56,28 @@ namespace Avalonia.Controls
 
         public object this[int index]
         {
-            get { return this.items[index]; }
-            set { this.items[index] = value; }
+            get 
+            { 
+                return this.items[index]; 
+            }
+
+            set 
+            {
+                this.ReadOnlyCheck();
+                this.SetItemImpl(index, value);
+            }
         }
 
         public int Add(object value)
         {
-            this.items.Add(value);
-            return this.items.Count - 1;
+            this.ReadOnlyCheck();
+            return this.AddImpl(value);
         }
 
         public void Clear()
         {
-            this.items.Clear();
+            this.ReadOnlyCheck();
+            this.ClearImpl();
         }
 
         public bool Contains(object value)
@@ -77,17 +92,20 @@ namespace Avalonia.Controls
 
         public void Insert(int index, object value)
         {
-            this.items.Insert(index, value);
+            this.ReadOnlyCheck();
+            this.InsertImpl(index, value);
         }
 
         public void Remove(object value)
         {
+            this.ReadOnlyCheck();
             this.items.Remove(value);
         }
 
         public void RemoveAt(int index)
         {
-            this.items.RemoveAt(index);
+            this.ReadOnlyCheck();
+            this.RemoveAtImpl(index);
         }
 
         public void CopyTo(Array array, int index)
@@ -98,6 +116,101 @@ namespace Avalonia.Controls
         bool IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        internal int AddImpl(object value)
+        {
+            this.items.Add(value);
+
+            if (this.ItemsChanged != null)
+            {
+                this.ItemsChanged(
+                    this, 
+                    new NotifyCollectionChangedEventArgs(
+                        NotifyCollectionChangedAction.Add,
+                        value,
+                        this.items.Count - 1));
+            }
+
+            return this.items.Count - 1;
+        }
+
+        internal void ClearImpl()
+        {
+            if (this.Clearing != null)
+            {
+                this.Clearing(this, EventArgs.Empty);
+            }
+
+            this.items.Clear();
+
+            if (this.ItemsChanged != null)
+            {
+                this.ItemsChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
+        }
+
+        internal void InsertImpl(int index, object value)
+        {
+            this.items.Insert(index, value);
+
+            if (this.ItemsChanged != null)
+            {
+                this.ItemsChanged(
+                    this, 
+                    new NotifyCollectionChangedEventArgs(
+                        NotifyCollectionChangedAction.Add,
+                        value,
+                        index));
+            }
+        }
+
+        internal void RemoveAtImpl(int index)
+        {
+            object value = this.items[index];
+
+            this.items.RemoveAt(index);
+
+            if (this.ItemsChanged != null)
+            {
+                this.ItemsChanged(
+                    this, 
+                    new NotifyCollectionChangedEventArgs(
+                        NotifyCollectionChangedAction.Remove,
+                        value,
+                        index));
+            }
+        }
+
+        internal void SetItemImpl(int index, object value)
+        {
+            object old = this.items[index];
+
+            this.items[index] = value;
+
+            if (this.ItemsChanged != null)
+            {
+                this.ItemsChanged(
+                    this, 
+                    new NotifyCollectionChangedEventArgs(
+                        NotifyCollectionChangedAction.Replace,
+                        value,
+                        old,
+                        index));
+            }
+        }
+
+        internal void SetIsReadOnly(bool readOnly)
+        {
+            this.readOnly = readOnly;
+        }
+
+        private void ReadOnlyCheck()
+        {
+            if (this.IsReadOnly)
+            {
+                throw new InvalidOperationException("The collection is readonly.");
+            }
         }
     }
 }

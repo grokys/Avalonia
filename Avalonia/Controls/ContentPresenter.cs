@@ -62,14 +62,8 @@ namespace Avalonia.Controls
 
         public override bool ApplyTemplate()
         {
-            if (this.IsInitialized)
+            if (this.IsInitialized && this.visualChild == null)
             {
-                if (this.visualChild != null)
-                {
-                    this.RemoveVisualChild(this.visualChild);
-                    this.visualChild = null;
-                }
-
                 Visual visual = this.Content as Visual;
 
                 if (visual == null && this.Content != null)
@@ -166,6 +160,8 @@ namespace Avalonia.Controls
             if (oldValue != null)
             {
                 this.RemoveLogicalChild(oldValue);
+                this.RemoveVisualChild(this.visualChild);
+                this.visualChild = null;
             }
 
             if (newValue != null)

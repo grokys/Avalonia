@@ -8,6 +8,7 @@ namespace Avalonia.Controls
 {
     using System;
     using System.Collections;
+    using System.ComponentModel;
     using System.Windows.Markup;
     using Avalonia.Media;
 
@@ -23,8 +24,12 @@ namespace Avalonia.Controls
                     new SolidColorBrush(Colors.White),
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
-        private bool isItemsPanel;
-
+        public static readonly DependencyProperty IsItemsHostProperty =
+            DependencyProperty.Register(
+                "IsItemsHost",
+                typeof(bool),
+                typeof(Panel));
+        
         public Panel()
         {
             this.InternalChildren = new UIElementCollection(this, this);
@@ -32,9 +37,16 @@ namespace Avalonia.Controls
 
         public UIElementCollection Children
         { 
-            get { return this.isItemsPanel ? null : this.InternalChildren; }
+            get { return this.IsItemsHost ? null : this.InternalChildren; }
         }
 
+        [Bindable(false)]
+        public bool IsItemsHost 
+        {
+            get { return (bool)this.GetValue(IsItemsHostProperty); }
+            set { this.SetValue(IsItemsHostProperty, value); }
+        }
+        
         protected internal override IEnumerator LogicalChildren
         {
             get { return this.InternalChildren.GetEnumerator(); }
@@ -48,12 +60,7 @@ namespace Avalonia.Controls
 
         protected internal override int VisualChildrenCount
         {
-            get { return this.Children.Count; }
-        }
-
-        internal void MakeItemsPanel()
-        {
-            this.isItemsPanel = true;
+            get { return this.InternalChildren.Count; }
         }
 
         protected internal override Visual GetVisualChild(int index)

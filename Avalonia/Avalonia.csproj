@@ -44,16 +44,25 @@
   <ItemGroup>
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="Controls\GenerationState.cs" />
     <Compile Include="Controls\ItemCollection.cs" />
+    <Compile Include="Controls\ItemContainerGenerator.cs" />
     <Compile Include="Controls\ItemsControl.cs" />
     <Compile Include="Controls\ItemsPanelTemplate.cs" />
     <Compile Include="Controls\ItemsPresenter.cs" />
+    <Compile Include="Controls\Primitives\GeneratorDirection.cs" />
+    <Compile Include="Controls\Primitives\GeneratorPosition.cs" />
+    <Compile Include="Controls\Primitives\IItemContainerGenerator.cs" />
+    <Compile Include="Controls\Primitives\IRecyclingItemContainerGenerator.cs" />
+    <Compile Include="Controls\Primitives\ItemsChangedEventArgs.cs" />
+    <Compile Include="Controls\RangeCollection.cs" />
     <Compile Include="Controls\StackPanel.cs" />
     <Compile Include="Controls\Panel.cs" />
     <Compile Include="Controls\Primitives\TextBoxBase.cs" />
     <Compile Include="Controls\TextBox.cs" />
     <Compile Include="Controls\TextBoxView.cs" />
     <Compile Include="Controls\UIElementCollection.cs" />
+    <Compile Include="Controls\VirtualizingPanel.cs" />
     <Compile Include="DataTemplateKey.cs" />
     <Compile Include="Data\CollectionView.cs" />
     <Compile Include="Data\ICollectionView.cs" />
@@ -190,6 +199,10 @@
     <Compile Include="TriggerCollection.cs" />
     <Compile Include="UIElement.cs" />
     <Compile Include="UIPropertyMetadata.cs" />
+    <Compile Include="Utils\DoubleKeyedDictionary.cs" />
+    <Compile Include="Utils\IListenCollectionChanged.cs" />
+    <Compile Include="Utils\IWeakListener.cs" />
+    <Compile Include="Utils\WeakCollectionChangedListener.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Media\VisualTreeHelper.cs" />
     <Compile Include="Window.cs" />

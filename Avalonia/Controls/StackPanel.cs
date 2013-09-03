@@ -64,7 +64,7 @@ namespace Avalonia.Controls
             }
 
             // Measure our children to get our extents
-            foreach (UIElement child in this.Children)
+            foreach (UIElement child in this.InternalChildren)
             {
                 child.Measure(childAvailable);
                 Size size = child.DesiredSize;
@@ -98,7 +98,7 @@ namespace Avalonia.Controls
             }
 
             // Arrange our children
-            foreach (UIElement child in this.Children)
+            foreach (UIElement child in this.InternalChildren)
             {
                 Size size = child.DesiredSize;
 

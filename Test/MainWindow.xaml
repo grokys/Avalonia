@@ -16,15 +16,11 @@
         <TextBox Name="textBox" Text="TextBox"></TextBox>
         <Button>Button</Button>
         <Border Name="border"/>
-        <ContentControl Content="{Binding}"/>
 
         <Border BorderBrush="Gray" BorderThickness="1" Margin="2">
             <StackPanel Orientation="Horizontal" Margin="8">
-                <ItemsControl Margin="4" Padding="4" BorderBrush="Blue" BorderThickness="1">
-                    <local:ViewModel Name="Item" Description="1"/>
-                    <local:ViewModel Name="Item" Description="2"/>
-                    <local:ViewModel Name="Item" Description="3"/>
-                </ItemsControl>
+                <ItemsControl Name="itemsControl" ItemsSource="{Binding}"
+                              Margin="4" Padding="4" BorderBrush="Blue" BorderThickness="1"/>
                 <StackPanel>
                     <Button Name="add" Margin="4">Add</Button>
                     <Button Name="remove" Margin="4">Remove</Button>

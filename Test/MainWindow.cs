@@ -34,8 +34,8 @@ namespace Test
             InitializeComponent();
 
             this.DataContext = items;
-            //this.add.Click += add_Click;
-            //this.remove.Click += remove_Click;
+            this.add.Click += add_Click;
+            this.remove.Click += remove_Click;
         }
 
         private void InitializeComponent()

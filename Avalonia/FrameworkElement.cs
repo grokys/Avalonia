@@ -468,20 +468,20 @@ namespace Avalonia
             switch (this.HorizontalAlignment)
             {
                 case HorizontalAlignment.Center:
-                    origin = new Point((finalRect.Right - size.Width) / 2, origin.Y);
+                    origin.X += (finalRect.Width - size.Width) / 2;
                     break;
                 case HorizontalAlignment.Right:
-                    origin = new Point(finalRect.Right - size.Width, origin.Y);
+                    origin.X += finalRect.Width - size.Width;
                     break;
             }
 
             switch (this.VerticalAlignment)
             {
                 case VerticalAlignment.Center:
-                    origin = new Point(origin.X, (finalRect.Bottom - size.Height) / 2);
+                    origin.Y += (finalRect.Height - size.Height) / 2;
                     break;
                 case VerticalAlignment.Bottom:
-                    origin = new Point(origin.X, finalRect.Bottom - size.Height);
+                    origin.Y += finalRect.Height - size.Height;
                     break;
             }
 

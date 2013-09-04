@@ -41,7 +41,7 @@ namespace Avalonia.Direct2D1
 
             // Ensure that the delegate doesn't get garbage collected by storing it as a field.
             this.wndProcDelegate = new UnmanagedMethods.WndProc(this.WndProc);
-
+            
             this.Initialize(parameters);
         }
 

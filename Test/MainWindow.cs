@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 
 namespace Test
@@ -36,6 +38,14 @@ namespace Test
             this.DataContext = items;
             this.add.Click += add_Click;
             this.remove.Click += remove_Click;
+
+            BitmapDecoder d = BitmapDecoder.Create(
+                new Uri(Path.Combine(Directory.GetCurrentDirectory(), "github_icon.png")),
+                BitmapCreateOptions.None,
+                BitmapCacheOption.None);
+            
+            int width = d.Frames[0].PixelWidth;
+            int height = d.Frames[0].PixelHeight;
         }
 
         private void InitializeComponent()

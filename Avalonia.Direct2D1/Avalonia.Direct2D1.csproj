@@ -65,6 +65,9 @@
     <Compile Include="Interop\UnmanagedMethods.cs" />
     <Compile Include="Media\Direct2D1DrawingContext.cs" />
     <Compile Include="Media\Direct2D1FormattedText.cs" />
+    <Compile Include="Media\Imaging\WicBitmapSource.cs" />
+    <Compile Include="Media\Imaging\WicBitmapDecoder.cs" />
+    <Compile Include="Media\Imaging\WicBitmapFrame.cs" />
     <Compile Include="Media\MediaExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowMessageDispatcher.cs" />

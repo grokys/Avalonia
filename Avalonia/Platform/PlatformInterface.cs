@@ -11,6 +11,7 @@ namespace Avalonia.Platform
     using System.Reflection;
     using Avalonia.Input;
     using Avalonia.Media;
+    using Avalonia.Media.Imaging;
 
     /// <summary>
     /// Provides platform-specific implementations.
@@ -99,6 +100,25 @@ namespace Avalonia.Platform
             string textToFormat, 
             Typeface typeface,
             double fontSize);
+
+        /// <summary>
+        /// Creates a new platform-specific bitmap decoder for the specified container format.
+        /// </summary>
+        /// <param name="format">The bitmap container format.</param>
+        /// <returns>An <see cref="IPlatformBitmapDecoder"/>.</returns>
+        public abstract IPlatformBitmapDecoder CreateBitmapDecoder(BitmapContainerFormat format);
+
+        /// <summary>
+        /// Creates a new platform-specific bitmap decoder to decode a stream.
+        /// </summary>
+        /// <param name="format">The stream containing the bitmap.</param>
+        /// <param name="createOptions">The create options.</param>
+        /// <param name="cacheOption">The cache option.</param>
+        /// <returns>An <see cref="IPlatformBitmapDecoder"/>.</returns>
+        public abstract IPlatformBitmapDecoder CreateBitmapDecoder(
+            Stream stream,
+            BitmapCreateOptions createOptions, 
+            BitmapCacheOption cacheOption);
 
         /// <summary>
         /// Starts a new timer.

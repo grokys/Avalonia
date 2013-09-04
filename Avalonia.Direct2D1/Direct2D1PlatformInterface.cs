@@ -8,16 +8,21 @@ namespace Avalonia.Direct2D1
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using Avalonia.Direct2D1.Input;
     using Avalonia.Direct2D1.Interop;
     using Avalonia.Direct2D1.Media;
+    using Avalonia.Direct2D1.Media.Imaging;
     using Avalonia.Input;
     using Avalonia.Media;
+    using Avalonia.Media.Imaging;
     using Avalonia.Platform;
 
     public class Direct2D1PlatformInterface : PlatformInterface
     {
         private Dictionary<IntPtr, Action> timerCallbacks = new Dictionary<IntPtr, Action>();
+
+        private SharpDX.WIC.ImagingFactory wicFactory = new SharpDX.WIC.ImagingFactory();
 
         public Direct2D1PlatformInterface()
         {
@@ -67,6 +72,19 @@ namespace Avalonia.Direct2D1
             double fontSize)
         {
             return new Direct2D1FormattedText(text, typeface, fontSize);
+        }
+
+        public override IPlatformBitmapDecoder CreateBitmapDecoder(BitmapContainerFormat format)
+        {
+            return new WicBitmapDecoder(this.wicFactory, format);
+        }
+
+        public override IPlatformBitmapDecoder CreateBitmapDecoder(
+            Stream stream,
+            BitmapCreateOptions createOptions, 
+            BitmapCacheOption cacheOption)
+        {
+            return new WicBitmapDecoder(this.wicFactory, stream);
         }
 
         public override object StartTimer(TimeSpan interval, Action callback)

@@ -56,11 +56,11 @@ namespace Avalonia.Controls
         {
             get
             {
-                for (int i = 0, cuml_count = 0; i < this.rangeCount && index >= 0; i++)
+                for (int i = 0, cumlCount = 0; i < this.rangeCount && index >= 0; i++)
                 {
-                    if (index < (cuml_count += this.ranges[i].Count))
+                    if (index < (cumlCount += this.ranges[i].Count))
                     {
-                        return this.ranges[i].End - (cuml_count - index) + 1;
+                        return this.ranges[i].End - (cumlCount - index) + 1;
                     }
                 }
 
@@ -204,15 +204,15 @@ namespace Avalonia.Controls
 
         private void EnsureCapacity(int growBy)
         {
-            int new_capacity = this.ranges.Length == 0 ? 1 : this.ranges.Length;
-            int min_capacity = this.ranges.Length == 0 ? MinCapacity : this.ranges.Length + growBy;
+            int newCapacity = this.ranges.Length == 0 ? 1 : this.ranges.Length;
+            int minCapacity = this.ranges.Length == 0 ? MinCapacity : this.ranges.Length + growBy;
 
-            while (new_capacity < min_capacity)
+            while (newCapacity < minCapacity)
             {
-                new_capacity <<= 1;
+                newCapacity <<= 1;
             }
 
-            Array.Resize(ref this.ranges, new_capacity);
+            Array.Resize(ref this.ranges, newCapacity);
         }
 
         private void Insert(int position, Range range)
@@ -234,34 +234,35 @@ namespace Avalonia.Controls
 
         private bool RemoveIndexFromRange(int index)
         {
-            int range_index = this.FindRangeIndexForValue(index);
-            if (range_index < 0)
+            int rangeIndex = this.FindRangeIndexForValue(index);
+            
+            if (rangeIndex < 0)
             {
                 return false;
             }
 
-            Range range = this.ranges[range_index];
+            Range range = this.ranges[rangeIndex];
             if (range.Start == index && range.End == index)
             {
-                this.RemoveAt(range_index);
+                this.RemoveAt(rangeIndex);
             }
             else
             {
                 if (range.Start == index)
                 {
-                    this.ranges[range_index].Start++;
+                    this.ranges[rangeIndex].Start++;
                 }
                 else
                 {
                     if (range.End == index)
                     {
-                        this.ranges[range_index].End--;
+                        this.ranges[rangeIndex].End--;
                     }
                     else
                     {
-                        Range split_range = new Range(index + 1, range.End);
-                        this.ranges[range_index].End = index - 1;
-                        this.Insert(range_index + 1, split_range);
+                        Range splitRange = new Range(index + 1, range.End);
+                        this.ranges[rangeIndex].End = index - 1;
+                        this.Insert(rangeIndex + 1, splitRange);
                     }
                 }
             }
@@ -273,16 +274,16 @@ namespace Avalonia.Controls
         private void InsertRange(Range range)
         {
             int position = this.FindInsertionPosition(range);
-            bool merged_left = this.MergeLeft(range, position);
-            bool merged_right = this.MergeRight(range, position);
+            bool mergedLeft = this.MergeLeft(range, position);
+            bool mergedRight = this.MergeRight(range, position);
 
-            if (!merged_left && !merged_right)
+            if (!mergedLeft && !mergedRight)
             {
                 this.Insert(position, range);
             }
             else
             {
-                if (merged_left && merged_right)
+                if (mergedLeft && mergedRight)
                 {
                     this.ranges[position - 1].End = this.ranges[position].End;
                     this.RemoveAt(position);

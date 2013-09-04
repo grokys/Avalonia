@@ -74,22 +74,6 @@ namespace Avalonia
             get { return this.value; }
         }
 
-        public override bool Equals(object oCompare)
-        {
-            if (oCompare == null)
-                return false;
-
-            if (!(oCompare is GridLength))
-                return false;
-
-            return this == (GridLength)oCompare;
-        }
-
-        public bool Equals(GridLength gridLength)
-        {
-            return this == gridLength;
-        }
-
         public static bool operator ==(GridLength a, GridLength b)
         {
             return (a.IsAuto && b.IsAuto) || (a.value == b.value && a.type == b.type);
@@ -100,20 +84,40 @@ namespace Avalonia
             return !(gl1 == gl2);
         }
 
+        public override bool Equals(object o)
+        {
+            if (o == null)
+            {
+                return false;
+            }
+
+            if (!(o is GridLength))
+            {
+                return false;
+            }
+
+            return this == (GridLength)o;
+        }
+
+        public bool Equals(GridLength gridLength)
+        {
+            return this == gridLength;
+        }
+
         public override int GetHashCode()
         {
-            return value.GetHashCode() ^ type.GetHashCode();
+            return this.value.GetHashCode() ^ this.type.GetHashCode();
         }
 
         public override string ToString()
         {
-            if (IsAuto)
+            if (this.IsAuto)
             {
                 return "Auto";
             }
 
-            string s = value.ToString();
-            return IsStar ? s + "*" : s;
+            string s = this.value.ToString();
+            return this.IsStar ? s + "*" : s;
         }
     }
 }

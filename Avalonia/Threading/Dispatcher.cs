@@ -504,8 +504,8 @@ namespace Avalonia.Threading
                 {
                     for (int i = TopPriority; i > 0 && this.queueBits != 0; i--)
                     {
-                        int current_bit = this.queueBits & (1 << i);
-                        if (current_bit != 0)
+                        int currentBit = this.queueBits & (1 << i);
+                        if (currentBit != 0)
                         {
                             PokableQueue q = this.priorityQueues[i];
 
@@ -549,7 +549,7 @@ namespace Avalonia.Threading
                                     }
                                 }
 
-                                if (current_bit < (this.queueBits & ~current_bit))
+                                if (currentBit < (this.queueBits & ~currentBit))
                                 {
                                     break;
                                 }
@@ -647,9 +647,9 @@ namespace Avalonia.Threading
             private void Grow()
             {
                 int newc = this.array.Length * 2;
-                object[] new_contents = new object[newc];
-                this.array.CopyTo(new_contents, 0);
-                this.array = new_contents;
+                object[] newContents = new object[newc];
+                this.array.CopyTo(newContents, 0);
+                this.array = newContents;
                 this.head = 0;
                 this.tail = this.head + this.size;
             }

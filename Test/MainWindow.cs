@@ -23,6 +23,7 @@ namespace Test
             new ViewModel { Name = "Item", Description = "3" },
         };
 
+        private TextBox textBox;
         private ItemsControl itemsControl;
         private Button add;
         private Button remove;
@@ -33,13 +34,14 @@ namespace Test
             InitializeComponent();
 
             this.DataContext = items;
-            this.add.Click += add_Click;
-            this.remove.Click += remove_Click;
+            //this.add.Click += add_Click;
+            //this.remove.Click += remove_Click;
         }
 
         private void InitializeComponent()
         {
             Application.LoadComponent(this, new Uri("MainWindow.xaml", UriKind.Relative));
+            this.textBox = (TextBox)this.FindName("textBox");
             this.itemsControl = (ItemsControl)this.FindName("itemsControl");
             this.add = (Button)this.FindName("add");
             this.remove = (Button)this.FindName("remove");
@@ -49,7 +51,7 @@ namespace Test
         {
             this.items.Add(new ViewModel 
             { 
-                Name = "Added", 
+                Name = textBox.Text, 
                 Description = index++.ToString(),
             });
         }

@@ -12,21 +12,41 @@
         </DataTemplate>
     </Window.Resources>
 
-    <StackPanel Name="stackPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBox Name="textBox" Text="TextBox"></TextBox>
-        <Button>Button</Button>
-        <Border Name="border"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <Border Grid.Column="0" Grid.Row="0" Background="Red"/>
+        <Border Grid.Column="1" Grid.Row="0" Background="Green"/>
+        <Border Grid.Column="2" Grid.Row="0" Background="Blue"/>
+        <Border Grid.Column="3" Grid.Row="0" Background="Yellow"/>
 
-        <Border BorderBrush="Gray" BorderThickness="1" Margin="2">
-            <StackPanel Orientation="Horizontal" Margin="8">
-                <ItemsControl Name="itemsControl" ItemsSource="{Binding}"
+        <StackPanel Grid.Column="2" Grid.Row="1"  Name="stackPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBox Name="textBox" Text="Item to add"></TextBox>
+
+            <Border BorderBrush="Gray" BorderThickness="1" Margin="2">
+                <StackPanel Orientation="Horizontal" Margin="8">
+                    <ItemsControl Name="itemsControl" ItemsSource="{Binding}"
                               Margin="4" Padding="4" BorderBrush="Blue" BorderThickness="1"/>
-                <StackPanel>
-                    <Button Name="add" Margin="4">Add</Button>
-                    <Button Name="remove" Margin="4">Remove</Button>
+                    <StackPanel>
+                        <Button Name="add" Margin="4">Add</Button>
+                        <Button Name="remove" Margin="4">Remove</Button>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </Border>
-    </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Background="Brown"/>
+        <Border Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" Background="Purple"/>
+    </Grid>
 </Window>        
 

@@ -59,7 +59,11 @@ namespace Avalonia.Media.Imaging
         {
             Stream stream;
 
-            if (bitmapUri.IsFile)
+            if (!bitmapUri.IsAbsoluteUri)
+            {
+                stream = Application.GetResourceStream(bitmapUri).Stream;
+            }
+            else if (bitmapUri.IsFile)
             {
                 stream = new FileStream(
                     Uri.UnescapeDataString(bitmapUri.AbsolutePath), 
@@ -68,7 +72,7 @@ namespace Avalonia.Media.Imaging
             }
             else
             {
-                throw new NotSupportedException("Currently only loading bitmaps from filesystem supported.");
+                throw new NotSupportedException("URI not yet supported.");
             }
 
             using (stream)

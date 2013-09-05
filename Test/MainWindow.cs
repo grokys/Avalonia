@@ -40,7 +40,7 @@ namespace Test
             this.remove.Click += remove_Click;
 
             BitmapDecoder d = BitmapDecoder.Create(
-                new Uri(Path.Combine(Directory.GetCurrentDirectory(), "github_icon.png")),
+                new Uri("/github_icon.png", UriKind.Relative),
                 BitmapCreateOptions.None,
                 BitmapCacheOption.None);
             
@@ -50,7 +50,7 @@ namespace Test
 
         private void InitializeComponent()
         {
-            Application.LoadComponent(this, new Uri("MainWindow.xaml", UriKind.Relative));
+            Application.LoadComponent(this, new Uri("/Test;component/MainWindow.xaml", UriKind.Relative));
             this.textBox = (TextBox)this.FindName("textBox");
             this.itemsControl = (ItemsControl)this.FindName("itemsControl");
             this.add = (Button)this.FindName("add");

@@ -54,16 +54,6 @@ namespace Avalonia.Media
         }
 
         [AvaloniaSpecific]
-        public static void Load(string url, object component)
-        {
-            // Yep, we're only handling files for the moment.
-            using (FileStream stream = new FileStream(url, FileMode.Open))
-            {
-                Load(stream, component);
-            }
-        }
-
-        [AvaloniaSpecific]
         public static void Load(Stream stream, object component)
         {
             DependencyObject dependencyObject = component as DependencyObject;

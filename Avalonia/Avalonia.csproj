@@ -88,6 +88,7 @@
     <Compile Include="Platform\IPlatformBitmapFrame.cs" />
     <Compile Include="Platform\IPlatformBitmapDecoder.cs" />
     <Compile Include="Platform\IPlatformBitmapSource.cs" />
+    <Compile Include="Resources\StreamResourceInfo.cs" />
     <Compile Include="TemplateKey.cs" />
     <Compile Include="DataTemplate.cs" />
     <Compile Include="Document\TextElement.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Utils\DoubleKeyedDictionary.cs" />
     <Compile Include="Utils\IListenCollectionChanged.cs" />
     <Compile Include="Utils\IWeakListener.cs" />
+    <Compile Include="Utils\PackUri.cs" />
     <Compile Include="Utils\WeakCollectionChangedListener.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Media\VisualTreeHelper.cs" />
@@ -231,11 +233,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Themes\Generic.xaml">
+    <Resource Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,6 +11,7 @@ Implemented to some extent so far:
 - TextBlock
 - Button
 - TextBox
+- Image
 - StackPanel
 - Grid
 - ItemsControl

@@ -11,10 +11,15 @@ namespace Avalonia.Direct2D1.Media.Imaging
 
     public class WicBitmapSource : IPlatformBitmapSource
     {
+        private ImagingFactory factory;
+        
         private BitmapSource wicImpl;
+        
+        private SharpDX.Direct2D1.Bitmap direct2D;
 
-        public WicBitmapSource(BitmapSource wicImpl)
+        public WicBitmapSource(ImagingFactory factory, BitmapSource wicImpl)
         {
+            this.factory = factory;
             this.wicImpl = wicImpl;
         }
 
@@ -48,6 +53,18 @@ namespace Avalonia.Direct2D1.Media.Imaging
                 this.wicImpl.GetResolution(out dpiX, out dpiY);
                 return (this.wicImpl.Size.Height / dpiY) * 96.0;
             }
+        }
+
+        public SharpDX.Direct2D1.Bitmap GetDirect2DBitmap(SharpDX.Direct2D1.RenderTarget renderTarget)
+        {
+            if (this.direct2D == null)
+            {
+                FormatConverter converter = new FormatConverter(factory);
+                converter.Initialize(this.wicImpl, PixelFormat.Format32bppPBGRA);
+                this.direct2D = SharpDX.Direct2D1.Bitmap.FromWicBitmap(renderTarget, converter);
+            }
+
+            return this.direct2D;
         }
     }
 }

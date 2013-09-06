@@ -1,14 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -----------------------------------------------------------------------
+// <copyright file="PackUri.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Avalonia.Utils
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public class PackUri
     {
-        Uri uri;
+        private Uri uri;
 
         public PackUri(Uri uri)
         {
@@ -24,7 +30,7 @@ namespace Avalonia.Utils
         {
             get
             {
-                string s = uri.OriginalString;
+                string s = this.uri.OriginalString;
                 int component = s.IndexOf(";component");
 
                 if (component == -1)
@@ -46,7 +52,7 @@ namespace Avalonia.Utils
         {
             get
             {
-                string s = uri.OriginalString;
+                string s = this.uri.OriginalString;
                 int component = s.IndexOf(";component");
 
                 if (component == -1)
@@ -74,7 +80,7 @@ namespace Avalonia.Utils
             }
             else
             {
-                throw new InvalidOperationException("Path is not rooted.");
+                return path;
             }
         }
     }

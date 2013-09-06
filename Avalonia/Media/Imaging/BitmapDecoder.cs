@@ -75,22 +75,19 @@ namespace Avalonia.Media.Imaging
                 throw new NotSupportedException("URI not yet supported.");
             }
 
-            using (stream)
-            {
-                IPlatformBitmapDecoder platformImpl = PlatformInterface.Instance.CreateBitmapDecoder(
-                    stream,
-                    createOptions,
-                    cacheOption);
+            IPlatformBitmapDecoder platformImpl = PlatformInterface.Instance.CreateBitmapDecoder(
+                stream,
+                createOptions,
+                cacheOption);
 
-                switch (platformImpl.ContainerFormat)
-                {
-                    case BitmapContainerFormat.Jpeg:
-                        return new JpegBitmapDecoder(platformImpl);
-                    case BitmapContainerFormat.Png:
-                        return new PngBitmapDecoder(platformImpl);
-                    default:
-                        throw new NotSupportedException();
-                }
+            switch (platformImpl.ContainerFormat)
+            {
+                case BitmapContainerFormat.Jpeg:
+                    return new JpegBitmapDecoder(platformImpl);
+                case BitmapContainerFormat.Png:
+                    return new PngBitmapDecoder(platformImpl);
+                default:
+                    throw new NotSupportedException();
             }
         }
     }

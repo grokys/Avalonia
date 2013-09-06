@@ -6,8 +6,11 @@
 
 namespace Avalonia.Direct2D1.Media
 {
+    using System;
     using System.Collections.Generic;
+    using Avalonia.Direct2D1.Media.Imaging;
     using Avalonia.Media;
+    using Avalonia.Media.Imaging;
     using SharpDX;
     using SharpDX.Direct2D1;
     using Brush = Avalonia.Media.Brush;
@@ -28,6 +31,20 @@ namespace Avalonia.Direct2D1.Media
         public override void Dispose()
         {
             this.target.EndDraw();
+        }
+
+        public override void DrawImage(ImageSource imageSource, Rect rectangle)
+        {
+            BitmapSource bitmapSource = imageSource as BitmapSource;
+
+            if (bitmapSource == null)
+            {
+                throw new NotSupportedException("Cannot draw ImageSource that is not a BitmapSource.");
+            }
+
+            WicBitmapSource wic = (WicBitmapSource)bitmapSource.PlatformImpl;
+            Bitmap bitmap = wic.GetDirect2DBitmap(this.target);
+            this.target.DrawBitmap(bitmap, rectangle.ToSharpDX(), 1, BitmapInterpolationMode.Linear);
         }
 
         public override void DrawLine(Pen pen, Point point0, Point point1)

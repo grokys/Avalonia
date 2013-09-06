@@ -11,31 +11,36 @@ namespace Avalonia.Media.Imaging
 
     public abstract class BitmapSource : ImageSource
     {
-        private IPlatformBitmapSource impl;
-
         internal BitmapSource(IPlatformBitmapSource platformImpl)
         {
-            this.impl = platformImpl;
+            this.PlatformImpl = platformImpl;
         }
 
         public virtual int PixelWidth
         {
-            get { return this.impl.PixelWidth; }
+            get { return this.PlatformImpl.PixelWidth; }
         }
 
         public virtual int PixelHeight
         {
-            get { return this.impl.PixelHeight; }
+            get { return this.PlatformImpl.PixelHeight; }
+        }
+
+        [AvaloniaSpecific]
+        public IPlatformBitmapSource PlatformImpl
+        {
+            get;
+            private set;
         }
 
         public override double Width
         {
-            get { return this.impl.Width; }
+            get { return this.PlatformImpl.Width; }
         }
 
         public override double Height
         {
-            get { return this.impl.Height; }
+            get { return this.PlatformImpl.Height; }
         }
     }
 }

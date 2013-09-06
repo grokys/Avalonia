@@ -13,8 +13,8 @@ namespace Avalonia.Direct2D1.Media.Imaging
     {
         private BitmapFrameDecode wicImpl;
 
-        public WicBitmapFrame(BitmapFrameDecode wicImpl)
-            : base(wicImpl)
+        public WicBitmapFrame(ImagingFactory factory, BitmapFrameDecode wicImpl)
+            : base(factory, wicImpl)
         {
             this.wicImpl = wicImpl;
         }

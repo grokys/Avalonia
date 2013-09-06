@@ -25,15 +25,19 @@ namespace Avalonia.Direct2D1.Media.Imaging
             ContainerFormatGuids.Wmp,
         };
 
+        private ImagingFactory factory;
+
         private BitmapDecoder wicImpl;
 
         public WicBitmapDecoder(ImagingFactory factory, BitmapContainerFormat format)
         {
-            this.wicImpl = new BitmapDecoder(factory, FormatGuids[(int)format]);            
+            this.factory = factory;
+            this.wicImpl = new BitmapDecoder(factory, FormatGuids[(int)format]);
         }
 
         public WicBitmapDecoder(ImagingFactory factory, Stream stream)
         {
+            this.factory = factory;
             this.wicImpl = new BitmapDecoder(factory, stream, DecodeOptions.CacheOnDemand);
         }
 
@@ -55,7 +59,7 @@ namespace Avalonia.Direct2D1.Media.Imaging
 
                 for (int i = 0; i < count; ++i)
                 {
-                    yield return new WicBitmapFrame(this.wicImpl.GetFrame(i));
+                    yield return new WicBitmapFrame(this.factory, this.wicImpl.GetFrame(i));
                 }
             }
         }

@@ -11,6 +11,7 @@ namespace Avalonia.Direct2D1.Media
     using Brush2D = SharpDX.Direct2D1.Brush;
     using Color4 = SharpDX.Color4;
     using DrawingPointF = SharpDX.DrawingPointF;
+    using RectangleF = SharpDX.RectangleF;
     using Matrix3x2 = SharpDX.Matrix3x2;
     using RenderTarget2D = SharpDX.Direct2D1.RenderTarget;
     using SolidColorBrush2D = SharpDX.Direct2D1.SolidColorBrush;
@@ -29,6 +30,15 @@ namespace Avalonia.Direct2D1.Media
         public static DrawingPointF ToSharpDX(this Point point)
         {
             return new DrawingPointF((float)point.X, (float)point.Y);
+        }
+
+        public static RectangleF ToSharpDX(this Rect rect)
+        {
+            return new RectangleF(
+                (float)rect.Left,
+                (float)rect.Top,
+                (float)rect.Right,
+                (float)rect.Bottom);
         }
 
         public static Matrix3x2 ToSharpDX(this Matrix matrix)

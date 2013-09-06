@@ -6,8 +6,10 @@
 
 namespace Avalonia.Media
 {
+    using System.ComponentModel;
     using Avalonia.Animation;
 
+    [TypeConverter(typeof(ImageSourceConverter))]
     public abstract class ImageSource : Animatable
     {
         public abstract double Width { get; }

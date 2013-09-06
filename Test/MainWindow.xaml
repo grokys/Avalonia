@@ -25,7 +25,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         
-        <Border Grid.Column="0" Grid.Row="0" Background="Red"/>
+        <Border Grid.Column="0" Grid.Row="0" Background="Red">
+            <Image Source="github_icon.png"/>
+        </Border>
         <Border Grid.Column="1" Grid.Row="0" Background="Green"/>
         <Border Grid.Column="2" Grid.Row="0" Background="Blue"/>
         <Border Grid.Column="3" Grid.Row="0" Background="Yellow"/>

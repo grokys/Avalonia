@@ -47,6 +47,7 @@
     <Compile Include="AvaloniaCollection.cs" />
     <Compile Include="Controls\ColumnDefinition.cs" />
     <Compile Include="Controls\ColumnDefinitionCollection.cs" />
+    <Compile Include="Controls\Image.cs" />
     <Compile Include="Controls\RowDefinitionCollection.cs" />
     <Compile Include="Controls\RowDefinition.cs" />
     <Compile Include="Controls\DefinitionBase.cs" />
@@ -79,11 +80,13 @@
     <Compile Include="GridLength.cs" />
     <Compile Include="GridLengthConverter.cs" />
     <Compile Include="Media\ImageSource.cs" />
+    <Compile Include="Media\ImageSourceConverter.cs" />
     <Compile Include="Media\Imaging\BitmapDecoder.cs" />
     <Compile Include="Media\Imaging\BitmapFrame.cs" />
     <Compile Include="Media\Imaging\BitmapSource.cs" />
     <Compile Include="Media\Imaging\PngBitmapDecoder.cs" />
     <Compile Include="Media\Imaging\JpegBitmapDecoder.cs" />
+    <Compile Include="Media\Stretch.cs" />
     <Compile Include="Platform\BitmapContainerFormat.cs" />
     <Compile Include="Platform\IPlatformBitmapFrame.cs" />
     <Compile Include="Platform\IPlatformBitmapDecoder.cs" />

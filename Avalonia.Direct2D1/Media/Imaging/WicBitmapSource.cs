@@ -59,7 +59,7 @@ namespace Avalonia.Direct2D1.Media.Imaging
         {
             if (this.direct2D == null)
             {
-                FormatConverter converter = new FormatConverter(factory);
+                FormatConverter converter = new FormatConverter(this.factory);
                 converter.Initialize(this.wicImpl, PixelFormat.Format32bppPBGRA);
                 this.direct2D = SharpDX.Direct2D1.Bitmap.FromWicBitmap(renderTarget, converter);
             }

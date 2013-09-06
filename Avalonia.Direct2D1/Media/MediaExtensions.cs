@@ -11,8 +11,8 @@ namespace Avalonia.Direct2D1.Media
     using Brush2D = SharpDX.Direct2D1.Brush;
     using Color4 = SharpDX.Color4;
     using DrawingPointF = SharpDX.DrawingPointF;
-    using RectangleF = SharpDX.RectangleF;
     using Matrix3x2 = SharpDX.Matrix3x2;
+    using RectangleF = SharpDX.RectangleF;
     using RenderTarget2D = SharpDX.Direct2D1.RenderTarget;
     using SolidColorBrush2D = SharpDX.Direct2D1.SolidColorBrush;
 

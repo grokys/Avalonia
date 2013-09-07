@@ -463,7 +463,11 @@ namespace Avalonia
                 size = new Size(size.Width, Math.Min(size.Height, this.DesiredSize.Height));
             }
 
-            size = this.ArrangeOverride(size);
+            Size taken = this.ArrangeOverride(size);
+
+            size = new Size(
+                Math.Min(taken.Width, size.Width),
+                Math.Min(taken.Height, size.Height));
 
             switch (this.HorizontalAlignment)
             {

@@ -18,6 +18,9 @@ namespace Avalonia.Media
 
         public abstract void DrawImage(ImageSource imageSource, Rect rectangle);
 
+        [AvaloniaSpecific]
+        public abstract void DrawImage(ImageSource imageSource, double opacity, Rect sourceRectangle, Rect destinationRectangle);
+
         public abstract void DrawLine(Pen pen, Point point0, Point point1);
 
         public abstract void DrawRectangle(Brush brush, Pen pen, Rect rectangle);

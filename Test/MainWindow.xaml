@@ -26,10 +26,14 @@
         </Grid.RowDefinitions>
         
         <Border Grid.Column="0" Grid.Row="0" Background="Red">
-            <Image Source="github_icon.png"/>
+            <Image Source="github_icon.png" Stretch="Fill"/>
         </Border>
-        <Border Grid.Column="1" Grid.Row="0" Background="Green"/>
-        <Border Grid.Column="2" Grid.Row="0" Background="Blue"/>
+        <Border Grid.Column="1" Grid.Row="0" Background="Green">
+            <Image Source="abc_horiz.png" Stretch="Uniform"/>
+        </Border>
+        <Border Grid.Column="2" Grid.Row="0" Background="Blue">
+            <Image Source="abc_vert.png" Stretch="Uniform"/>
+        </Border>
         <Border Grid.Column="3" Grid.Row="0" Background="Yellow"/>
 
         <StackPanel Grid.Column="2" Grid.Row="1" Name="stackPanel" 

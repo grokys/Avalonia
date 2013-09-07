@@ -47,6 +47,26 @@ namespace Avalonia.Direct2D1.Media
             this.target.DrawBitmap(bitmap, rectangle.ToSharpDX(), 1, BitmapInterpolationMode.Linear);
         }
 
+        public override void DrawImage(ImageSource imageSource, double opacity, Rect sourceRectangle, Rect destinationRectangle)
+        {
+            BitmapSource bitmapSource = imageSource as BitmapSource;
+
+            if (bitmapSource == null)
+            {
+                throw new NotSupportedException("Cannot draw ImageSource that is not a BitmapSource.");
+            }
+
+            WicBitmapSource wic = (WicBitmapSource)bitmapSource.PlatformImpl;
+            Bitmap bitmap = wic.GetDirect2DBitmap(this.target);
+
+            this.target.DrawBitmap(
+                bitmap, 
+                destinationRectangle.ToSharpDX(), 
+                (float)opacity, 
+                BitmapInterpolationMode.Linear, 
+                sourceRectangle.ToSharpDX());
+        }
+
         public override void DrawLine(Pen pen, Point point0, Point point1)
         {
             this.target.DrawLine(

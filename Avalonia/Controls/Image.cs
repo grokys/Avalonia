@@ -9,6 +9,7 @@ namespace Avalonia.Controls
     using System;
     using System.Windows.Markup;
     using Avalonia.Media;
+    using Avalonia.Media.Imaging;
 
     public enum StretchDirection
     {
@@ -78,10 +79,118 @@ namespace Avalonia.Controls
 
         protected internal override void OnRender(DrawingContext drawingContext)
         {
-            if (this.Source != null)
+            BitmapSource source = this.Source as BitmapSource;
+
+            if (source != null)
             {
-                drawingContext.DrawImage(this.Source, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
+                Rect sourceRect = new Rect(0, 0, source.PixelWidth, source.PixelHeight);
+                Rect destRect = new Rect(this.RenderSize);
+
+                switch (this.Stretch)
+                {
+                    case Stretch.None:
+                        sourceRect = new Rect(
+                            0,
+                            0,
+                            Math.Min(this.ActualWidth, source.PixelWidth),
+                            Math.Min(this.ActualHeight, source.PixelHeight));
+                        break;
+
+                    case Stretch.Uniform:
+                    {
+                        double scale = Math.Min(
+                            this.DesiredSize.Width / source.PixelWidth, 
+                            this.DesiredSize.Height / source.PixelHeight);
+                        double scaledWidth = (double)source.PixelWidth * scale;
+                        double scaledHeight = (double)source.PixelHeight * scale;
+                        destRect = new Rect(
+                            (this.ActualWidth - scaledWidth) / 2,
+                            (this.ActualHeight - scaledHeight) / 2,
+                            scaledWidth,
+                            scaledHeight);
+                        break;
+                    }
+                }
+
+                drawingContext.DrawImage(source, 1, sourceRect, destRect);
             }
+        }
+
+        protected override Size MeasureOverride(Size constraint)
+        {
+            Size desired = constraint;
+            Rect shapeBounds = new Rect();
+            BitmapSource source = this.Source as BitmapSource;
+            double sx = 0.0;
+            double sy = 0.0;
+
+            if (source != null)
+            {
+                shapeBounds = new Rect(0, 0, source.PixelWidth, source.PixelHeight);
+            }
+
+            if (double.IsInfinity(desired.Width))
+            {
+                desired.Width = shapeBounds.Width;
+            }
+
+            if (double.IsInfinity(desired.Height))
+            {
+                desired.Height = shapeBounds.Height;
+            }
+
+            if (shapeBounds.Width > 0)
+            {
+                sx = desired.Width / shapeBounds.Width;
+            }
+
+            if (shapeBounds.Height > 0)
+            {
+                sy = desired.Height / shapeBounds.Height;
+            }
+
+            if (double.IsInfinity(constraint.Width))
+            {
+                sx = sy;
+            }
+
+            if (double.IsInfinity(constraint.Height))
+            {
+                sy = sx;
+            }
+
+            switch (this.Stretch)
+            {
+                case Stretch.Uniform:
+                    sx = sy = Math.Min(sx, sy);
+                    break;
+                case Stretch.UniformToFill:
+                    sx = sy = Math.Max(sx, sy);
+                    break;
+                case Stretch.Fill:
+                    if (double.IsInfinity(constraint.Width))
+                    {
+                        sx = sy;
+                    }
+
+                    if (double.IsInfinity(constraint.Height))
+                    {
+                        sy = sx;
+                    }
+
+                    break;
+                case Stretch.None:
+                    sx = sy = 1;
+                    break;
+            }
+
+            desired = new Size(shapeBounds.Width * sx, shapeBounds.Height * sy);
+            return desired;
+        }
+
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            return finalSize;
         }
     }
 }

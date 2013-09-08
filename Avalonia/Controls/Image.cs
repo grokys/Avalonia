@@ -101,13 +101,26 @@ namespace Avalonia.Controls
                         double scale = Math.Min(
                             this.DesiredSize.Width / source.PixelWidth, 
                             this.DesiredSize.Height / source.PixelHeight);
-                        double scaledWidth = (double)source.PixelWidth * scale;
-                        double scaledHeight = (double)source.PixelHeight * scale;
+                        double scaledWidth = source.PixelWidth * scale;
+                        double scaledHeight = source.PixelHeight * scale;
                         destRect = new Rect(
                             (this.ActualWidth - scaledWidth) / 2,
                             (this.ActualHeight - scaledHeight) / 2,
                             scaledWidth,
                             scaledHeight);
+                        break;
+                    }
+
+                    case Stretch.UniformToFill:
+                    {
+                        double scale = Math.Max(
+                            this.DesiredSize.Width / source.PixelWidth,
+                            this.DesiredSize.Height / source.PixelHeight);
+                        sourceRect = new Rect(
+                            0,
+                            0,
+                            this.ActualWidth / scale,
+                            this.ActualHeight / scale);
                         break;
                     }
                 }

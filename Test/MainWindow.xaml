@@ -52,8 +52,12 @@
             </Border>
         </StackPanel>
 
-        <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Background="Brown"/>
-        <Border Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" Background="Purple"/>
+        <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Background="Brown">
+            <Image Source="abc_horiz.png" Stretch="UniformToFill"/>
+        </Border>
+        <Border Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" Background="Purple">
+            <Image Source="abc_vert.png" Stretch="UniformToFill"/>
+        </Border>
     </Grid>
 </Window>        
 

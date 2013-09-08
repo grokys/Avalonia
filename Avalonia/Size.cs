@@ -121,8 +121,8 @@ namespace Avalonia
         public static Size operator -(Size size, Thickness thickness)
         {
             return new Size(
-                size.width - thickness.Left - thickness.Right,
-                size.height - thickness.Top - thickness.Bottom);
+                Math.Max(size.width - thickness.Left - thickness.Right, 0),
+                Math.Max(size.height - thickness.Top - thickness.Bottom, 0));
         }
 
         public static explicit operator Point(Size size)

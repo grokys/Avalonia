@@ -54,31 +54,31 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\WpfTests\Controls\ContentControl_MeasureArrangeTests.cs">
+    <Compile Include="..\Wpf.UnitTests\Controls\ContentControl_MeasureArrangeTests.cs">
       <Link>Controls\ContentControl_MeasureArrangeTests.cs</Link>
     </Compile>
-    <Compile Include="..\WpfTests\DependencyObjectTests_Inheritance.cs">
+    <Compile Include="..\Wpf.UnitTests\DependencyObjectTests_Inheritance.cs">
       <Link>DependencyObjectTests_Inheritance.cs</Link>
     </Compile>
-    <Compile Include="..\WpfTests\DependencyPropertyTests_AddOwner.cs">
+    <Compile Include="..\Wpf.UnitTests\DependencyPropertyTests_AddOwner.cs">
       <Link>DependencyPropertyTests_AddOwner.cs</Link>
     </Compile>
-    <Compile Include="..\WpfTests\DependencyPropertyTests_GetMetadata.cs">
+    <Compile Include="..\Wpf.UnitTests\DependencyPropertyTests_GetMetadata.cs">
       <Link>DependencyPropertyTests_GetMetadata.cs</Link>
     </Compile>
-    <Compile Include="..\WpfTests\DependencyPropertyTests_IsValidType.cs">
+    <Compile Include="..\Wpf.UnitTests\DependencyPropertyTests_IsValidType.cs">
       <Link>DependencyPropertyTests_IsValidType.cs</Link>
     </Compile>
-    <Compile Include="..\WpfTests\DependencyPropertyTests_Register.cs">
+    <Compile Include="..\Wpf.UnitTests\DependencyPropertyTests_Register.cs">
       <Link>DependencyPropertyTests_Register.cs</Link>
     </Compile>
-    <Compile Include="..\WpfTests\DependencyPropertyTests_RegisterAttached.cs">
+    <Compile Include="..\Wpf.UnitTests\DependencyPropertyTests_RegisterAttached.cs">
       <Link>DependencyPropertyTests_RegisterAttached.cs</Link>
     </Compile>
-    <Compile Include="..\WpfTests\FrameworkElement_MeasureArrangeTests.cs">
+    <Compile Include="..\Wpf.UnitTests\FrameworkElement_MeasureArrangeTests.cs">
       <Link>FrameworkElement_MeasureArrangeTests.cs</Link>
     </Compile>
-    <Compile Include="..\WpfTests\UIElement_MeasureArrangeTests.cs">
+    <Compile Include="..\Wpf.UnitTests\UIElement_MeasureArrangeTests.cs">
       <Link>UIElement_MeasureArrangeTests.cs</Link>
     </Compile>
     <Compile Include="Data\BindingExpressionTests.cs" />

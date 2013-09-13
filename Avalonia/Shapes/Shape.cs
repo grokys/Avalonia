@@ -75,5 +75,16 @@ namespace Avalonia.Shapes
             get { return (double)this.GetValue(StrokeThicknessProperty); }
             set { this.SetValue(StrokeThicknessProperty, value); }
         }
+
+        protected internal override void OnRender(DrawingContext drawingContext)
+        {
+            Pen pen = (this.Stroke != null) ? new Pen(this.Stroke, this.StrokeThickness) : null;
+            drawingContext.DrawGeometry(this.Fill, pen, this.RenderedGeometry);
+        }
+
+        protected override Size MeasureOverride(Size constraint)
+        {
+            return this.RenderedGeometry.Bounds.Size;
+        }
     }
 }

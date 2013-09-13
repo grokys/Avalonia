@@ -25,15 +25,9 @@ namespace Avalonia.Shapes
             set { this.SetValue(DataProperty, value); }
         }
 
-        protected internal override void OnRender(DrawingContext drawingContext)
+        public override Geometry RenderedGeometry
         {
-            Pen pen = (this.Stroke != null) ? new Pen(this.Stroke, this.StrokeThickness) : null;
-            drawingContext.DrawGeometry(this.Fill, pen, this.Data);
-        }
-
-        protected override Size MeasureOverride(Size constraint)
-        {
-            return this.Data.Bounds.Size;
+            get { return this.Data; }
         }
     }
 }

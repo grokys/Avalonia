@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20827.3
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia", "Avalonia\Avalonia.csproj", "{46EA210F-DFF1-4AC0-B7BF-6362141DC61A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{6D06D294-5AA4-42CE-8391-939E417AA33C}"
@@ -9,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Direct2D1", "Avalo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.UnitTests", "Avalonia.UnitTests\Avalonia.UnitTests.csproj", "{F492E4E9-1BC3-4A5F-867D-ABD26A0757FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTests", "WpfTests\WpfTests.csproj", "{24314F2B-3FC8-472E-9BCB-D19CE2C561AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.UnitTests", "Wpf.UnitTests\Wpf.UnitTests.csproj", "{24314F2B-3FC8-472E-9BCB-D19CE2C561AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

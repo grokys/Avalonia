@@ -13,6 +13,8 @@ namespace Avalonia.Direct2D1.Media
     {
         private GeometrySink sink;
 
+        private FigureEnd figureEnd;
+
         public Direct2D1StreamGeometryContext(GeometrySink geometrySink)
         {
             this.sink = geometrySink;
@@ -20,11 +22,15 @@ namespace Avalonia.Direct2D1.Media
 
         public override void Dispose()
         {
+            this.sink.EndFigure(this.figureEnd);
+            this.sink.Close();
             this.sink.Dispose();
         }
 
         public override void BeginFigure(Point startPoint, bool isFilled, bool isClosed)
         {
+            this.figureEnd = isClosed ? FigureEnd.Closed : FigureEnd.Open;
+
             this.sink.BeginFigure(
                 startPoint.ToSharpDX(),
                 isFilled ? FigureBegin.Filled : FigureBegin.Hollow);

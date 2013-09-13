@@ -36,6 +36,8 @@
         </Border>
         <Border Grid.Column="3" Grid.Row="0" Background="Yellow"/>
 
+        <Path Grid.Row="1" Stroke="Red" Fill="Yellow" Data="M 50,5 L5,90 20,90 60,20 80,90 95,90 70,5 Z" />
+
         <StackPanel Grid.Column="2" Grid.Row="1" Name="stackPanel" 
                     HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBox Name="textBox" Text="Item to add"></TextBox>

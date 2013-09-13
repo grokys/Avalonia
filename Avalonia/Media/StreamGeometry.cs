@@ -11,16 +11,20 @@ namespace Avalonia.Media
 
     public sealed class StreamGeometry : Geometry
     {
-        private IPlatformStreamGeometry impl;
-
         public StreamGeometry()
         {
-            this.impl = PlatformInterface.Instance.CreateStreamGeometry();
+            this.PlatformImpl = PlatformInterface.Instance.CreateStreamGeometry();
+        }
+
+        public IPlatformStreamGeometry PlatformImpl
+        {
+            get;
+            private set;
         }
 
         public StreamGeometryContext Open()
         {
-            return this.impl.Open();
+            return this.PlatformImpl.Open();
         }
     }
 }

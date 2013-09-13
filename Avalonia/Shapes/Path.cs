@@ -19,6 +19,15 @@ namespace Avalonia.Shapes
                     null,
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
-        public Geometry Data { get; set; }
+        public Geometry Data
+        {
+            get { return (Geometry)this.GetValue(DataProperty); }
+            set { this.SetValue(DataProperty, value); }
+        }
+
+        protected internal override void OnRender(DrawingContext drawingContext)
+        {
+            drawingContext.DrawGeometry(this.Fill, new Pen(this.Stroke, this.StrokeThickness), this.Data);
+        }
     }
 }

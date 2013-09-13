@@ -16,6 +16,8 @@ namespace Avalonia.Media
     {
         public abstract void Dispose();
 
+        public abstract void DrawGeometry(Brush brush, Pen pen, Geometry geometry);
+
         public abstract void DrawImage(ImageSource imageSource, Rect rectangle);
 
         [AvaloniaSpecific]

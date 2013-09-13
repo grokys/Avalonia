@@ -202,9 +202,10 @@ namespace Avalonia.Direct2D1
         private void CreateRenderTarget()
         {
             Size clientSize = this.ClientSize;
+            SharpDX.Direct2D1.Factory d2dFactory = ((Direct2D1PlatformInterface)PlatformInterface.Instance).Direct2DFactory;
 
             this.renderTarget = new WindowRenderTarget(
-                new SharpDX.Direct2D1.Factory(),
+                d2dFactory,
                 new RenderTargetProperties
                 {
                     PixelFormat = new PixelFormat(Format.Unknown, AlphaMode.Premultiplied)                    

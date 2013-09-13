@@ -11,14 +11,17 @@ namespace Avalonia.Direct2D1.Media
     using Avalonia.Direct2D1.Media.Imaging;
     using Avalonia.Media;
     using Avalonia.Media.Imaging;
+    using Avalonia.Platform;
     using SharpDX;
     using SharpDX.Direct2D1;
     using Brush = Avalonia.Media.Brush;
+    using Geometry = Avalonia.Media.Geometry;
     using SolidColorBrush = Avalonia.Media.SolidColorBrush;
 
-    internal class Direct2D1DrawingContext : DrawingContext
+    public class Direct2D1DrawingContext : DrawingContext
     {
         private RenderTarget target;
+
         private Stack<Matrix3x2> transforms;
 
         public Direct2D1DrawingContext(RenderTarget target)
@@ -31,6 +34,26 @@ namespace Avalonia.Direct2D1.Media
         public override void Dispose()
         {
             this.target.EndDraw();
+        }
+
+        public override void DrawGeometry(Brush brush, Pen pen, Geometry geometry)
+        {
+            StreamGeometry streamGeometry = (StreamGeometry)geometry;
+            Direct2D1StreamGeometry platformGeometry = (Direct2D1StreamGeometry)streamGeometry.PlatformImpl;
+            PathGeometry d2dGeometry = platformGeometry.Direct2DGeometry;
+
+            if (brush != null)
+            {
+                this.target.FillGeometry(d2dGeometry, brush.ToSharpDX(this.target));
+            }
+
+            if (pen != null)
+            {
+                this.target.DrawGeometry(
+                    d2dGeometry,
+                    pen.Brush.ToSharpDX(this.target),
+                    (float)pen.Thickness);
+            }
         }
 
         public override void DrawImage(ImageSource imageSource, Rect rectangle)
@@ -60,10 +83,10 @@ namespace Avalonia.Direct2D1.Media
             Bitmap bitmap = wic.GetDirect2DBitmap(this.target);
 
             this.target.DrawBitmap(
-                bitmap, 
-                destinationRectangle.ToSharpDX(), 
-                (float)opacity, 
-                BitmapInterpolationMode.Linear, 
+                bitmap,
+                destinationRectangle.ToSharpDX(),
+                (float)opacity,
+                BitmapInterpolationMode.Linear,
                 sourceRectangle.ToSharpDX());
         }
 
@@ -144,7 +167,7 @@ namespace Avalonia.Direct2D1.Media
 
         public override void Pop()
         {
-            Matrix3x2 top = this.transforms.Pop();           
+            Matrix3x2 top = this.transforms.Pop();
             this.target.Transform = this.target.Transform * Invert(top);
         }
 

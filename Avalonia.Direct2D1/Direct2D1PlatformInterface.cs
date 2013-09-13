@@ -24,13 +24,12 @@ namespace Avalonia.Direct2D1
     {
         private Dictionary<IntPtr, Action> timerCallbacks = new Dictionary<IntPtr, Action>();
 
-        private Factory direct2DFactory = new Factory();
-
         private ImagingFactory wicFactory = new ImagingFactory();
 
         public Direct2D1PlatformInterface()
         {
             this.Dispatcher = new WindowMessageDispatcher();
+            this.Direct2DFactory = new Factory();
             this.DirectWriteFactory = new SharpDX.DirectWrite.Factory();
         }
 
@@ -41,6 +40,12 @@ namespace Avalonia.Direct2D1
                 uint t = UnmanagedMethods.GetCaretBlinkTime();
                 return new TimeSpan(0, 0, 0, 0, (int)t);
             }
+        }
+
+        public Factory Direct2DFactory
+        {
+            get;
+            private set;
         }
 
         public SharpDX.DirectWrite.Factory DirectWriteFactory
@@ -93,7 +98,7 @@ namespace Avalonia.Direct2D1
 
         public override IPlatformStreamGeometry CreateStreamGeometry()
         {
-            return new Direct2D1StreamGeometry(new PathGeometry(this.direct2DFactory));
+            return new Direct2D1StreamGeometry(new PathGeometry(this.Direct2DFactory));
         }
 
         public override object StartTimer(TimeSpan interval, Action callback)

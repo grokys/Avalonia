@@ -12,16 +12,20 @@ namespace Avalonia.Direct2D1.Media
 
     public class Direct2D1StreamGeometry : IPlatformStreamGeometry
     {
-        private PathGeometry impl;
-
         public Direct2D1StreamGeometry(PathGeometry impl)
         {
-            this.impl = impl;
+            this.Direct2DGeometry = impl;
+        }
+
+        public PathGeometry Direct2DGeometry
+        {
+            get;
+            private set;
         }
 
         public StreamGeometryContext Open()
         {
-            return new Direct2D1StreamGeometryContext(this.impl.Open());
+            return new Direct2D1StreamGeometryContext(this.Direct2DGeometry.Open());
         }
     }
 }

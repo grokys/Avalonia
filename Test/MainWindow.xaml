@@ -37,7 +37,7 @@
         </Border>
         <Border Grid.Column="3" Grid.Row="0" Background="Yellow"/>
 
-        <!--<Path Grid.Row="1" Stroke="Red" Fill="Yellow" Data="M 50,5 L5,90 20,90 60,20 80,90 95,90 70,5 Z" />-->
+        <Path Grid.Row="1" Stroke="Red" Fill="Yellow" Data="M 50,5 L5,90 20,90 60,20 80,90 95,90 70,5 Z" />
         
         <CheckBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">Checkbox</CheckBox>
 

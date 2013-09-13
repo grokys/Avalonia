@@ -16,6 +16,11 @@ namespace Avalonia.Media
             this.PlatformImpl = PlatformInterface.Instance.CreateStreamGeometry();
         }
 
+        public override Rect Bounds
+        {
+            get { return this.PlatformImpl.Bounds; }
+        }
+
         public IPlatformStreamGeometry PlatformImpl
         {
             get;

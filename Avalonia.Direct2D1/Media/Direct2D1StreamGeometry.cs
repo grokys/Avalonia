@@ -17,6 +17,11 @@ namespace Avalonia.Direct2D1.Media
             this.Direct2DGeometry = impl;
         }
 
+        public Rect Bounds
+        {
+            get { return this.Direct2DGeometry.GetBounds().ToAvalonia(); }
+        }
+
         public PathGeometry Direct2DGeometry
         {
             get;

@@ -35,6 +35,12 @@ namespace Avalonia.Controls
             this.InternalChildren = new UIElementCollection(this, this);
         }
 
+        public Brush Background
+        {
+            get { return (Brush)this.GetValue(BackgroundProperty); }
+            set { this.SetValue(BackgroundProperty, value); }
+        }
+
         public UIElementCollection Children
         { 
             get { return this.IsItemsHost ? null : this.InternalChildren; }

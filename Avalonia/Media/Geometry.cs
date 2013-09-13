@@ -12,5 +12,9 @@ namespace Avalonia.Media
     [TypeConverter(typeof(GeometryConverter))]
     public abstract class Geometry : Animatable
     {
+        public virtual Rect Bounds 
+        {
+            get { return new Rect(); }
+        }
     }
 }

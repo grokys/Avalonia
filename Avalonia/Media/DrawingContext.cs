@@ -31,6 +31,8 @@ namespace Avalonia.Media
 
         public abstract void DrawText(FormattedText formattedText, Point origin);
 
+        public abstract void PushOpacity(double opacity);
+
         public abstract void PushTransform(Transform transform);
 
         public abstract void Pop();

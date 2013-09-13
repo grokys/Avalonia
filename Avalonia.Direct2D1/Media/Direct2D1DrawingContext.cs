@@ -22,13 +22,13 @@ namespace Avalonia.Direct2D1.Media
     {
         private RenderTarget target;
 
-        private Stack<Matrix3x2> transforms;
+        private Stack<object> stack;
 
         public Direct2D1DrawingContext(RenderTarget target)
         {
             this.target = target;
             this.target.BeginDraw();
-            this.transforms = new Stack<Matrix3x2>();
+            this.stack = new Stack<object>();
         }
 
         public override void Dispose()
@@ -158,17 +158,36 @@ namespace Avalonia.Direct2D1.Media
                 DrawTextOptions.None);
         }
 
+        public override void PushOpacity(double opacity)
+        {
+            Layer layer = new Layer(this.target);
+            LayerParameters p = new LayerParameters();
+            p.Opacity = (float)opacity;
+            this.target.PushLayer(ref p, layer);
+            this.stack.Push(layer);
+        }
+
         public override void PushTransform(Transform transform)
         {
             Matrix3x2 m = transform.Value.ToSharpDX();
             this.target.Transform = this.target.Transform * m;
-            this.transforms.Push(m);
+            this.stack.Push(m);
         }
 
         public override void Pop()
         {
-            Matrix3x2 top = this.transforms.Pop();
-            this.target.Transform = this.target.Transform * Invert(top);
+            object top = this.stack.Pop();
+            Matrix3x2? transform = top as Matrix3x2?;
+            Layer layer = top as Layer;
+
+            if (transform != null)
+            {
+                this.target.Transform = this.target.Transform * Invert(transform.Value);
+            }
+            else if (layer != null)
+            {
+                this.target.PopLayer();
+            }
         }
 
         // This should be added to SharpDX.

@@ -11,10 +11,13 @@ Implemented to some extent so far:
 - TextBlock
 - Button
 - TextBox
+- CheckBox
 - Image
 - StackPanel
 - Grid
 - ItemsControl
+- Path
+- StreamGeometry
 - Xaml loading
 - Control templates
 - Data templates

@@ -45,9 +45,11 @@
     <Compile Include="Animation\Animatable.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="AvaloniaCollection.cs" />
+    <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\ColumnDefinition.cs" />
     <Compile Include="Controls\ColumnDefinitionCollection.cs" />
     <Compile Include="Controls\Image.cs" />
+    <Compile Include="Controls\Primitives\ToggleButton.cs" />
     <Compile Include="Controls\RowDefinitionCollection.cs" />
     <Compile Include="Controls\RowDefinition.cs" />
     <Compile Include="Controls\DefinitionBase.cs" />

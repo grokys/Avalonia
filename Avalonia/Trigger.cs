@@ -70,10 +70,30 @@ namespace Avalonia
             observable.AttachPropertyChangedHandler(this.Property.Name, this.ValueChanged);
         }
 
+        private static object ConvertToType(object value, Type type)
+        {
+            // Convert.ChangeType doesn't handle nullables. 
+            Type u = Nullable.GetUnderlyingType(type);
+
+            if (u != null)
+            {
+                if (value == null)
+                {
+                    return Activator.CreateInstance(type);
+                }
+
+                return Convert.ChangeType(value, u);
+            }
+            else
+            {
+                return Convert.ChangeType(value, type);
+            }
+        }
+
         private bool CheckCondition(DependencyObject source)
         {
             object value = source.GetValue(this.Property);
-            return value != null && value.Equals(Convert.ChangeType(this.Value, this.Property.PropertyType));
+            return value != null && value.Equals(ConvertToType(this.Value, this.Property.PropertyType));
         }
 
         private void ValueChanged(object sender, DependencyPropertyChangedEventArgs e)

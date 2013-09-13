@@ -38,6 +38,13 @@ namespace Avalonia
                 typeof(bool),
                 typeof(UIElement));
 
+        public static readonly DependencyProperty OpacityProperty =
+            DependencyProperty.Register(
+                "Opacity",
+                typeof(double),
+                typeof(UIElement),
+                new PropertyMetadata(1.0));
+
         public static readonly DependencyProperty SnapsToDevicePixelsProperty =
             DependencyProperty.Register(
                 "SnapsToDevicePixels",
@@ -163,6 +170,12 @@ namespace Avalonia
         {
             get { return (bool)this.GetValue(IsMouseCapturedProperty); }
             private set { this.SetValue(IsMouseCapturedProperty, value); }
+        }
+
+        public double Opacity 
+        {
+            get { return (double)this.GetValue(OpacityProperty); }
+            set { this.SetValue(OpacityProperty, value); }
         }
 
         // TODO: Actually implement this.

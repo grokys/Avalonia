@@ -18,6 +18,11 @@ namespace Avalonia.Direct2D1.Media
 
     public static class MediaExtensions
     {
+        public static Rect ToAvalonia(this RectangleF rect)
+        {
+            return new Rect(rect.Left, rect.Top, rect.Width, rect.Height);
+        }
+
         public static Color4 ToSharpDX(this Color color)
         {
             return new Color4(

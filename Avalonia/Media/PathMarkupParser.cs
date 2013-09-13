@@ -15,6 +15,8 @@ namespace Avalonia.Media
     {
         private static readonly Dictionary<char, Command> Commands = new Dictionary<char, Command>
         {
+            { 'F', Command.FillRule },
+            { 'f', Command.FillRule },
             { 'M', Command.Move },
             { 'm', Command.MoveRelative },
             { 'L', Command.Line },
@@ -163,22 +165,30 @@ namespace Avalonia.Media
         {
             // TODO: Handle Infinity, NaN and scientific notation.
             StringBuilder b = new StringBuilder();
+            bool readSign = false;
             bool readPoint = false;
-            bool start = true;
+            bool readExponent = false;
             int i;
             
             while ((i = reader.Peek()) != -1)
             {
-                char c = (char)i;
+                char c = char.ToUpperInvariant((char)i);
 
-                if ((start && (c == '+' || c == '-')) ||
+                if (((c == '+' || c == '-') && !readSign) ||
                     (c == '.' && !readPoint) ||
+                    (c == 'E' && !readExponent) ||
                     char.IsDigit(c))
                 {
                     b.Append(c);
                     reader.Read();
+                    readSign = c == '+' || c == '-';
                     readPoint = c == '.';
-                    start = false;
+
+                    if (c == 'E')
+                    {
+                        readSign = false;
+                        readExponent = c == 'E';
+                    }
                 }
                 else
                 {

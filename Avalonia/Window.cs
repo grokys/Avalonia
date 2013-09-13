@@ -100,13 +100,20 @@ namespace Avalonia
         {
             Visual visual = o as Visual;
             UIElement uiElement = o as UIElement;
-            bool performPop = false;
+            int popCount = 0;
 
             if (uiElement != null)
             {
                 TranslateTransform translate = new TranslateTransform(uiElement.VisualOffset);
                 drawingContext.PushTransform(translate);
-                performPop = true;
+                ++popCount;
+
+                if (uiElement.Opacity != 1)
+                {
+                    drawingContext.PushOpacity(uiElement.Opacity);
+                    ++popCount;
+                }
+
                 uiElement.OnRender(drawingContext);
             }
 
@@ -118,7 +125,7 @@ namespace Avalonia
                 }
             }
 
-            if (performPop)
+            for (int i = 0; i < popCount; ++i)
             {
                 drawingContext.Pop();
             }

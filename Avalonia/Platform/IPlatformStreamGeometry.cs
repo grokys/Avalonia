@@ -11,6 +11,8 @@ namespace Avalonia.Platform
     [AvaloniaSpecific]
     public interface IPlatformStreamGeometry
     {
+        Rect Bounds { get; }
+
         StreamGeometryContext Open();
     }
 }

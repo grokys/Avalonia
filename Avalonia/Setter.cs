@@ -109,6 +109,11 @@ namespace Avalonia
         {
             object oldValue = DependencyProperty.UnsetValue;
 
+            if (this.TargetName != null)
+            {
+                frameworkElement = (FrameworkElement)frameworkElement.FindName(this.TargetName);
+            }
+
             if (!frameworkElement.IsUnset(this.Property))
             {
                 oldValue = frameworkElement.GetValue(this.Property);
@@ -121,6 +126,11 @@ namespace Avalonia
 
         internal override void Detach(FrameworkElement frameworkElement)
         {
+            if (this.TargetName != null)
+            {
+                frameworkElement = (FrameworkElement)frameworkElement.FindName(this.TargetName);
+            }
+
             frameworkElement.SetValue(this.Property, this.oldValues[frameworkElement]);
             this.oldValues.Remove(frameworkElement);
         }

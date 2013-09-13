@@ -36,8 +36,8 @@ namespace Test
             InitializeComponent();
 
             this.DataContext = items;
-            this.add.Click += add_Click;
-            this.remove.Click += remove_Click;
+            //this.add.Click += add_Click;
+            //this.remove.Click += remove_Click;
 
             BitmapDecoder d = BitmapDecoder.Create(
                 new Uri("/github_icon.png", UriKind.Relative),
@@ -46,6 +46,13 @@ namespace Test
             
             int width = d.Frames[0].PixelWidth;
             int height = d.Frames[0].PixelHeight;
+        }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            Grid templateRoot = (Grid)this.FindName("templateRoot");
+            Border checkBoxBorder = (Border)this.FindName("checkBoxBorder");
+            Grid markGrid = (Grid)this.FindName("markGrid");
         }
 
         private void InitializeComponent()

@@ -54,35 +54,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\Avalonia.UnitTests\Controls\ContentControl_MeasureArrangeTests.cs">
-      <Link>Controls\ContentControl_MeasureArrangeTests.cs</Link>
-    </Compile>
-    <Compile Include="..\Avalonia.UnitTests\DependencyObjectTests_Inheritance.cs">
-      <Link>DependencyObjectTests_Inheritance.cs</Link>
-    </Compile>
-    <Compile Include="..\Avalonia.UnitTests\DependencyPropertyTests_AddOwner.cs">
-      <Link>DependencyPropertyTests_AddOwner.cs</Link>
-    </Compile>
-    <Compile Include="..\Avalonia.UnitTests\DependencyPropertyTests_GetMetadata.cs">
-      <Link>DependencyPropertyTests_GetMetadata.cs</Link>
-    </Compile>
-    <Compile Include="..\Avalonia.UnitTests\DependencyPropertyTests_IsValidType.cs">
-      <Link>DependencyPropertyTests_IsValidType.cs</Link>
-    </Compile>
-    <Compile Include="..\Avalonia.UnitTests\DependencyPropertyTests_Register.cs">
-      <Link>DependencyPropertyTests_Register.cs</Link>
-    </Compile>
-    <Compile Include="..\Avalonia.UnitTests\DependencyPropertyTests_RegisterAttached.cs">
-      <Link>DependencyPropertyTests_RegisterAttached.cs</Link>
-    </Compile>
-    <Compile Include="..\Avalonia.UnitTests\FrameworkElement_MeasureArrangeTests.cs">
-      <Link>FrameworkElement_MeasureArrangeTests.cs</Link>
-    </Compile>
-    <Compile Include="..\Avalonia.UnitTests\UIElement_MeasureArrangeTests.cs">
-      <Link>UIElement_MeasureArrangeTests.cs</Link>
-    </Compile>
+    <Compile Include="Controls\ContentControl_MeasureArrangeTests.cs" />
+    <Compile Include="DependencyObjectTests_Inheritance.cs" />
+    <Compile Include="DependencyPropertyTests_AddOwner.cs" />
+    <Compile Include="DependencyPropertyTests_GetMetadata.cs" />
+    <Compile Include="DependencyPropertyTests_IsValidType.cs" />
+    <Compile Include="DependencyPropertyTests_Register.cs" />
+    <Compile Include="DependencyPropertyTests_RegisterAttached.cs" />
+    <Compile Include="FrameworkElement_MeasureArrangeTests.cs" />
     <Compile Include="Input\WpfInputManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIElement_MeasureArrangeTests.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

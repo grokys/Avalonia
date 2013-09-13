@@ -54,19 +54,37 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Controls\ContentControl_MeasureArrangeTests.cs" />
-    <Compile Include="DependencyPropertyTests_GetMetadata.cs" />
-    <Compile Include="DependencyObjectTests_Inheritance.cs" />
-    <Compile Include="DependencyPropertyTests_IsValidType.cs" />
-    <Compile Include="DependencyPropertyTests_AddOwner.cs" />
-    <Compile Include="DependencyPropertyTests_RegisterAttached.cs" />
+    <Compile Include="..\WpfTests\Controls\ContentControl_MeasureArrangeTests.cs">
+      <Link>Controls\ContentControl_MeasureArrangeTests.cs</Link>
+    </Compile>
+    <Compile Include="..\WpfTests\DependencyObjectTests_Inheritance.cs">
+      <Link>DependencyObjectTests_Inheritance.cs</Link>
+    </Compile>
+    <Compile Include="..\WpfTests\DependencyPropertyTests_AddOwner.cs">
+      <Link>DependencyPropertyTests_AddOwner.cs</Link>
+    </Compile>
+    <Compile Include="..\WpfTests\DependencyPropertyTests_GetMetadata.cs">
+      <Link>DependencyPropertyTests_GetMetadata.cs</Link>
+    </Compile>
+    <Compile Include="..\WpfTests\DependencyPropertyTests_IsValidType.cs">
+      <Link>DependencyPropertyTests_IsValidType.cs</Link>
+    </Compile>
+    <Compile Include="..\WpfTests\DependencyPropertyTests_Register.cs">
+      <Link>DependencyPropertyTests_Register.cs</Link>
+    </Compile>
+    <Compile Include="..\WpfTests\DependencyPropertyTests_RegisterAttached.cs">
+      <Link>DependencyPropertyTests_RegisterAttached.cs</Link>
+    </Compile>
+    <Compile Include="..\WpfTests\FrameworkElement_MeasureArrangeTests.cs">
+      <Link>FrameworkElement_MeasureArrangeTests.cs</Link>
+    </Compile>
+    <Compile Include="..\WpfTests\UIElement_MeasureArrangeTests.cs">
+      <Link>UIElement_MeasureArrangeTests.cs</Link>
+    </Compile>
     <Compile Include="Data\BindingExpressionTests.cs" />
     <Compile Include="Data\PropertyPathParserTests.cs" />
-    <Compile Include="DependencyPropertyTests_Register.cs" />
-    <Compile Include="FrameworkElement_MeasureArrangeTests.cs" />
     <Compile Include="Media\PathMarkupParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIElement_MeasureArrangeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

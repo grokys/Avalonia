@@ -121,6 +121,14 @@ namespace Avalonia.Platform
             BitmapCacheOption cacheOption);
 
         /// <summary>
+        /// Creates a new platform-specific stream geometry;
+        /// </summary>
+        /// <returns>
+        /// An <see cref="IPlatformStreamGeometry"/>.
+        /// </returns>
+        public abstract IPlatformStreamGeometry CreateStreamGeometry();
+
+        /// <summary>
         /// Starts a new timer.
         /// </summary>
         /// <param name="interval">The timer interval.</param>

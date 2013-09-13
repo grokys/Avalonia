@@ -17,12 +17,16 @@ namespace Avalonia.Direct2D1
     using Avalonia.Media;
     using Avalonia.Media.Imaging;
     using Avalonia.Platform;
+    using SharpDX.Direct2D1;
+    using SharpDX.WIC;
 
     public class Direct2D1PlatformInterface : PlatformInterface
     {
         private Dictionary<IntPtr, Action> timerCallbacks = new Dictionary<IntPtr, Action>();
 
-        private SharpDX.WIC.ImagingFactory wicFactory = new SharpDX.WIC.ImagingFactory();
+        private Factory direct2DFactory = new Factory();
+
+        private ImagingFactory wicFactory = new ImagingFactory();
 
         public Direct2D1PlatformInterface()
         {
@@ -85,6 +89,11 @@ namespace Avalonia.Direct2D1
             BitmapCacheOption cacheOption)
         {
             return new WicBitmapDecoder(this.wicFactory, stream);
+        }
+
+        public override IPlatformStreamGeometry CreateStreamGeometry()
+        {
+            return new Direct2D1StreamGeometry(new PathGeometry(this.direct2DFactory));
         }
 
         public override object StartTimer(TimeSpan interval, Action callback)

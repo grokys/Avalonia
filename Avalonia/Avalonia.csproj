@@ -79,6 +79,11 @@
     <Compile Include="FrameworkElementFactory.cs" />
     <Compile Include="GridLength.cs" />
     <Compile Include="GridLengthConverter.cs" />
+    <Compile Include="Media\GeometryConverter.cs" />
+    <Compile Include="Media\PathMarkupParser.cs" />
+    <Compile Include="Media\StreamGeometryContext.cs" />
+    <Compile Include="Media\StreamGeometry.cs" />
+    <Compile Include="Media\Geometry.cs" />
     <Compile Include="Media\ImageSource.cs" />
     <Compile Include="Media\ImageSourceConverter.cs" />
     <Compile Include="Media\Imaging\BitmapDecoder.cs" />
@@ -91,7 +96,10 @@
     <Compile Include="Platform\IPlatformBitmapFrame.cs" />
     <Compile Include="Platform\IPlatformBitmapDecoder.cs" />
     <Compile Include="Platform\IPlatformBitmapSource.cs" />
+    <Compile Include="Platform\IPlatformStreamGeometry.cs" />
     <Compile Include="Resources\StreamResourceInfo.cs" />
+    <Compile Include="Shapes\Path.cs" />
+    <Compile Include="Shapes\Shape.cs" />
     <Compile Include="TemplateKey.cs" />
     <Compile Include="DataTemplate.cs" />
     <Compile Include="Document\TextElement.cs" />

@@ -401,18 +401,20 @@ namespace Avalonia.Controls
         {
             int colCount = this.ColumnDefinitions.Count;
             int rowCount = this.RowDefinitions.Count;
+            int colMatrixDim = this.colMatrix.GetUpperBound(0) + 1;
+            int rowMatrixDim = this.rowMatrix.GetUpperBound(0) + 1;
 
             this.RestoreMeasureResults();
 
             Size totalConsumed = new Size(0, 0);
 
-            for (int c = 0; c < this.colMatrix.GetUpperBound(0) + 1; c++) 
+            for (int c = 0; c < colMatrixDim; c++) 
             {
                 this.colMatrix[c, c].OfferedSize = this.colMatrix[c, c].DesiredSize;
                 totalConsumed.Width += this.colMatrix[c, c].OfferedSize;
             }
 
-            for (int r = 0; r < this.rowMatrix.GetUpperBound(0) + 1; r++) 
+            for (int r = 0; r < rowMatrixDim; r++) 
             {
                 this.rowMatrix[r, r].OfferedSize = this.rowMatrix[r, r].DesiredSize;
                 totalConsumed.Height += this.rowMatrix[r, r].OfferedSize;
@@ -440,10 +442,10 @@ namespace Avalonia.Controls
 
             foreach (UIElement child in VisualTreeHelper.GetChildren(this))
             {
-                int col = Math.Min(GetColumn(child), this.colMatrix.GetUpperBound(0));
-                int row = Math.Min(GetRow(child), this.rowMatrix.GetUpperBound(0));
-                int colspan = Math.Min(GetColumnSpan(child), this.colMatrix.GetUpperBound(0));
-                int rowspan = Math.Min(GetRowSpan(child), this.rowMatrix.GetUpperBound(0));
+                int col = Math.Min(GetColumn(child), colMatrixDim - 1);
+                int row = Math.Min(GetRow(child), rowMatrixDim - 1);
+                int colspan = Math.Min(GetColumnSpan(child), colMatrixDim - col);
+                int rowspan = Math.Min(GetRowSpan(child), rowMatrixDim - row);
 
                 Rect childFinal = new Rect(0, 0, 0, 0);
 

@@ -36,8 +36,8 @@ namespace Test
             InitializeComponent();
 
             this.DataContext = items;
-            //this.add.Click += add_Click;
-            //this.remove.Click += remove_Click;
+            this.add.Click += add_Click;
+            this.remove.Click += remove_Click;
 
             BitmapDecoder d = BitmapDecoder.Create(
                 new Uri("/github_icon.png", UriKind.Relative),

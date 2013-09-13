@@ -29,7 +29,7 @@ namespace Avalonia.Controls.Primitives
         protected override void OnClick()
         {
             bool? isChecked = this.IsChecked;
-            this.IsChecked = (isChecked.HasValue) ? !isChecked : false;
+            this.IsChecked = isChecked.HasValue ? !isChecked : false;
             base.OnClick();
         }
     }

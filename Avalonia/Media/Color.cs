@@ -44,12 +44,6 @@ namespace Avalonia.Media
             };
         }
 
-        public override string ToString()
-        {
-            uint rgb = ((uint)this.A << 24) | ((uint)this.R << 16) | ((uint)this.G << 8) | (uint)this.B;
-            return string.Format("#{0:x8}", rgb);
-        }
-
         [AvaloniaSpecific]
         public static Color FromUInt32(uint value)
         {
@@ -60,6 +54,12 @@ namespace Avalonia.Media
                 G = (byte)((value >> 8) & 0xff),
                 B = (byte)(value & 0xff),
             };
+        }
+
+        public override string ToString()
+        {
+            uint rgb = ((uint)this.A << 24) | ((uint)this.R << 16) | ((uint)this.G << 8) | (uint)this.B;
+            return string.Format("#{0:x8}", rgb);
         }
 
         [AvaloniaSpecific]

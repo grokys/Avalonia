@@ -28,6 +28,12 @@ namespace Avalonia.Direct2D1.Media
             private set;
         }
 
+        public Rect GetRenderBounds(Pen pen, double tolerance, ToleranceType type)
+        {
+            float strokeWidth = (pen != null) ? (float)pen.Thickness : 0f;
+            return this.Direct2DGeometry.GetWidenedBounds(strokeWidth, (float)tolerance).ToAvalonia();
+        }
+
         public StreamGeometryContext Open()
         {
             return new Direct2D1StreamGeometryContext(this.Direct2DGeometry.Open());

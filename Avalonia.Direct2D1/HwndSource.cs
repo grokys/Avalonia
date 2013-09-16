@@ -139,7 +139,9 @@ namespace Avalonia.Direct2D1
         [AvaloniaSpecific]
         public override DrawingContext CreateDrawingContext()
         {
-            return new Direct2D1DrawingContext(this.renderTarget);
+            return new Direct2D1DrawingContext(
+                Direct2D1PlatformInterface.Instance.Direct2DFactory,
+                this.renderTarget);
         }
 
         public void Dispose()
@@ -203,7 +205,7 @@ namespace Avalonia.Direct2D1
         private void CreateRenderTarget()
         {
             Size clientSize = this.ClientSize;
-            SharpDX.Direct2D1.Factory d2dFactory = ((Direct2D1PlatformInterface)PlatformInterface.Instance).Direct2DFactory;
+            SharpDX.Direct2D1.Factory d2dFactory = Direct2D1PlatformInterface.Instance.Direct2DFactory;
             
             this.renderTarget = new WindowRenderTarget(
                 d2dFactory,

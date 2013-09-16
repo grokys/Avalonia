@@ -11,7 +11,25 @@
         }
 
         [TestMethod]
+        public void Triangle_Fill()
+        {
+            this.RunTest();
+        }
+
+        [TestMethod]
         public void Triangle_Offset_Top()
+        {
+            this.RunTest();
+        }
+
+        [TestMethod]
+        public void Triangle_Uniform()
+        {
+            this.RunTest();
+        }
+
+        [TestMethod]
+        public void Triangle_UniformToFill()
         {
             this.RunTest();
         }

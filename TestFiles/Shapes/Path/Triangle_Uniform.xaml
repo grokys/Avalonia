@@ -1,0 +1,7 @@
+<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="250" Height="200">
+    <Border BorderBrush="Red" BorderThickness="1">
+        <Path Fill="Yellow" Stretch="Uniform" Data="M25,25 l-25,50 50,0"/>
+    </Border>
+</UserControl>

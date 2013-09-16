@@ -18,6 +18,9 @@ namespace Avalonia.Media
 
         public abstract void DrawGeometry(Brush brush, Pen pen, Geometry geometry);
 
+        [AvaloniaSpecific]
+        public abstract void DrawGeometry(Brush brush, Pen pen, Geometry geometry, Matrix transform);
+
         public abstract void DrawImage(ImageSource imageSource, Rect rectangle);
 
         [AvaloniaSpecific]

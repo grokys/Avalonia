@@ -6,6 +6,7 @@
 
 namespace Avalonia.Shapes
 {
+    using System;
     using System.ComponentModel;
     using Avalonia.Media;
 
@@ -79,12 +80,106 @@ namespace Avalonia.Shapes
         protected internal override void OnRender(DrawingContext drawingContext)
         {
             Pen pen = (this.Stroke != null) ? new Pen(this.Stroke, this.StrokeThickness) : null;
-            drawingContext.DrawGeometry(this.Fill, pen, this.RenderedGeometry);
+            Rect shapeBounds = this.RenderedGeometry.GetRenderBounds(pen);
+            Matrix matrix = Matrix.Identity;
+
+            if (this.Stretch != Stretch.None)
+            {
+                double scaleX = this.ActualWidth / shapeBounds.Width;
+                double scaleY = this.ActualHeight / shapeBounds.Height;
+
+                switch (this.Stretch)
+                {
+                    case Stretch.Uniform:
+                        scaleX = scaleY = Math.Min(scaleX, scaleY);
+                        break;
+
+                    case Stretch.UniformToFill:
+                        // Hmm, in WPF appears to be the same as Uniform. This can't be right...
+                        scaleX = scaleY = Math.Min(scaleX, scaleY);
+                        break;
+                }
+
+                matrix.Translate(-shapeBounds.X, -shapeBounds.Y);
+                matrix.Scale(scaleX, scaleY);
+                matrix.Translate(
+                    (this.ActualWidth - (shapeBounds.Width * scaleX)) / 2,
+                    (this.ActualHeight - (shapeBounds.Height * scaleY)) / 2);
+            }
+
+            drawingContext.DrawGeometry(this.Fill, pen, this.RenderedGeometry, matrix);
         }
 
         protected override Size MeasureOverride(Size constraint)
         {
-            return this.RenderedGeometry.Bounds.Size;
+            Pen pen = (this.Stroke != null) ? new Pen(this.Stroke, this.StrokeThickness) : null;
+            Rect shapeBounds = this.RenderedGeometry.GetRenderBounds(pen);
+            Size desired = constraint;
+            double sx = 0.0;
+            double sy = 0.0;
+
+            if (this.Stretch == Stretch.None)
+            {
+                return new Size(
+                    shapeBounds.X + shapeBounds.Width,
+                    shapeBounds.Y + shapeBounds.Height);
+            }
+
+            if (double.IsInfinity(constraint.Width))
+            {
+                desired.Width = shapeBounds.Width;
+            }
+
+            if (double.IsInfinity(constraint.Height))
+            {
+                desired.Height = shapeBounds.Height;
+            }
+
+            if (shapeBounds.Width > 0)
+            {
+                sx = desired.Width / shapeBounds.Width;
+            }
+
+            if (shapeBounds.Height > 0)
+            {
+                sy = desired.Height / shapeBounds.Height;
+            }
+
+            if (double.IsInfinity(constraint.Width))
+            {
+                sx = sy;
+            }
+
+            if (double.IsInfinity(constraint.Height))
+            {
+                sy = sx;
+            }
+
+            switch (this.Stretch)
+            {
+                case Stretch.Uniform:
+                    sx = sy = Math.Min(sx, sy);
+                    break;
+                case Stretch.UniformToFill:
+                    sx = sy = Math.Max(sx, sy);
+                    break;
+                case Stretch.Fill:
+                    if (double.IsInfinity(constraint.Width))
+                    {
+                        sx = 1.0;
+                    }
+
+                    if (double.IsInfinity(constraint.Height))
+                    {
+                        sy = 1.0;
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+
+            return new Size(shapeBounds.Width * sx, shapeBounds.Height * sy);
         }
     }
 }

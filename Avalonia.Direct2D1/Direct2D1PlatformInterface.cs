@@ -33,6 +33,11 @@ namespace Avalonia.Direct2D1
             this.DirectWriteFactory = new SharpDX.DirectWrite.Factory();
         }
 
+        public static new Direct2D1PlatformInterface Instance
+        {
+            get { return (Direct2D1PlatformInterface)PlatformInterface.Instance; }
+        }
+
         public override TimeSpan CaretBlinkTime
         {
             get 
@@ -103,7 +108,7 @@ namespace Avalonia.Direct2D1
             Avalonia.Media.PixelFormat pixelFormat)
         {
             SharpDX.WIC.Bitmap bitmap = new SharpDX.WIC.Bitmap(
-                wicFactory,
+                this.wicFactory,
                 pixelWidth,
                 pixelHeight,
                 pixelFormat.ToSharpDX(),

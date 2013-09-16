@@ -82,6 +82,7 @@
     <Compile Include="FrameworkElementFactory.cs" />
     <Compile Include="GridLength.cs" />
     <Compile Include="GridLengthConverter.cs" />
+    <Compile Include="Media\MatrixTransform.cs" />
     <Compile Include="Media\GeometryConverter.cs" />
     <Compile Include="Media\Imaging\BitmapEncoder.cs" />
     <Compile Include="Media\Imaging\PngBitmapEncoder.cs" />

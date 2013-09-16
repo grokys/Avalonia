@@ -13,6 +13,8 @@ namespace Avalonia.Platform
     {
         Rect Bounds { get; }
 
+        Rect GetRenderBounds(Pen pen, double tolerance, ToleranceType type);
+
         StreamGeometryContext Open();
     }
 }

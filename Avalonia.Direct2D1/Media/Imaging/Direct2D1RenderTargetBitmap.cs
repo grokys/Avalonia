@@ -16,6 +16,8 @@ namespace Avalonia.Direct2D1.Media.Imaging
 
     public class Direct2D1RenderTargetBitmap : WicBitmapSource, IPlatformRenderTargetBitmap
     {
+        private Factory d2dFactory;
+
         private WicRenderTarget target;
 
         public Direct2D1RenderTargetBitmap(
@@ -27,6 +29,7 @@ namespace Avalonia.Direct2D1.Media.Imaging
             double dpiX;
             double dpiY;
 
+            this.d2dFactory = d2dFactory;
             bitmap.GetResolution(out dpiX, out dpiY);
 
             this.target = new WicRenderTarget(
@@ -41,7 +44,7 @@ namespace Avalonia.Direct2D1.Media.Imaging
 
         public DrawingContext CreateDrawingContext()
         {
-            return new Direct2D1DrawingContext(this.target);
+            return new Direct2D1DrawingContext(this.d2dFactory, this.target);
         }
     }
 }

@@ -6,6 +6,7 @@
 
 namespace Avalonia.Shapes
 {
+    using System;
     using Avalonia.Media;
 
     public sealed class Path : Shape
@@ -28,12 +29,6 @@ namespace Avalonia.Shapes
         public override Geometry RenderedGeometry
         {
             get { return this.Data; }
-        }
-
-        protected override Size MeasureOverride(Size constraint)
-        {
-            Rect bounds = this.RenderedGeometry.Bounds;
-            return new Size(bounds.Left + bounds.Width, bounds.Top + bounds.Height);
         }
     }
 }

@@ -27,6 +27,11 @@ namespace Avalonia.Media
             private set;
         }
 
+        public override Rect GetRenderBounds(Pen pen, double tolerance, ToleranceType type)
+        {
+            return this.PlatformImpl.GetRenderBounds(pen, tolerance, type);
+        }
+
         public StreamGeometryContext Open()
         {
             return this.PlatformImpl.Open();

@@ -20,12 +20,15 @@ namespace Avalonia.Direct2D1.Media
 
     public class Direct2D1DrawingContext : DrawingContext
     {
+        private Factory factory;
+
         private RenderTarget target;
 
         private Stack<object> stack;
 
-        public Direct2D1DrawingContext(RenderTarget target)
+        public Direct2D1DrawingContext(Factory factory, RenderTarget target)
         {
+            this.factory = factory;
             this.target = target;
             this.target.BeginDraw();
             this.stack = new Stack<object>();
@@ -53,6 +56,31 @@ namespace Avalonia.Direct2D1.Media
                     d2dGeometry,
                     pen.Brush.ToSharpDX(this.target),
                     (float)pen.Thickness);
+            }
+        }
+
+        public override void DrawGeometry(Brush brush, Pen pen, Geometry geometry, Avalonia.Media.Matrix transform)
+        {
+            StreamGeometry streamGeometry = (StreamGeometry)geometry;
+            Direct2D1StreamGeometry platformGeometry = (Direct2D1StreamGeometry)streamGeometry.PlatformImpl;
+
+            using (TransformedGeometry d2dGeometry = new TransformedGeometry(
+                this.factory,
+                platformGeometry.Direct2DGeometry,
+                transform.ToSharpDX()))
+            {
+                if (brush != null)
+                {
+                    this.target.FillGeometry(d2dGeometry, brush.ToSharpDX(this.target));
+                }
+
+                if (pen != null)
+                {
+                    this.target.DrawGeometry(
+                        d2dGeometry,
+                        pen.Brush.ToSharpDX(this.target),
+                        (float)pen.Thickness);
+                }
             }
         }
 

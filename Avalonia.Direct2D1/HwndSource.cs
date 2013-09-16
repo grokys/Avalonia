@@ -40,9 +40,6 @@ namespace Avalonia.Direct2D1
                 WindowStyle = (int)UnmanagedMethods.WindowStyles.WS_OVERLAPPEDWINDOW
             };
 
-            // Ensure that the delegate doesn't get garbage collected by storing it as a field.
-            this.wndProcDelegate = new UnmanagedMethods.WndProc(this.WndProc);
-            
             this.Initialize(parameters);
         }
 
@@ -121,7 +118,7 @@ namespace Avalonia.Direct2D1
                     (int)value.Y,
                     (int)value.Width,
                     (int)value.Height,
-                    UnmanagedMethods.SetWindowPosFlags.SWP_RESIZE);
+                    0);
             }
         }
 
@@ -154,6 +151,18 @@ namespace Avalonia.Direct2D1
             }
         }
 
+        public override Point PointToScreen(Point p)
+        {
+            UnmanagedMethods.POINT result = new UnmanagedMethods.POINT
+            {
+                X = (int)p.X,
+                Y = (int)p.Y,
+            };
+
+            UnmanagedMethods.ClientToScreen(this.Handle, ref result);
+            return new Point(result.X, result.Y);
+        }
+
         [AvaloniaSpecific]
         public override void Show()
         {
@@ -163,7 +172,10 @@ namespace Avalonia.Direct2D1
 
         private void Initialize(HwndSourceParameters parameters)
         {
-            this.className = "Avalonia.HwndSource|" + Guid.NewGuid().ToString();
+            // Ensure that the delegate doesn't get garbage collected by storing it as a field.
+            this.wndProcDelegate = new UnmanagedMethods.WndProc(this.WndProc);
+
+            this.className = Guid.NewGuid().ToString();
 
             UnmanagedMethods.WNDCLASSEX wndClassEx = new UnmanagedMethods.WNDCLASSEX
             {
@@ -172,6 +184,7 @@ namespace Avalonia.Direct2D1
                 lpfnWndProc = this.wndProcDelegate,
                 hInstance = Marshal.GetHINSTANCE(this.GetType().Module),
                 hCursor = UnmanagedMethods.LoadCursor(IntPtr.Zero, (int)UnmanagedMethods.Cursor.IDC_ARROW),
+                hbrBackground = (IntPtr)5,
                 lpszClassName = this.className,
             };
 

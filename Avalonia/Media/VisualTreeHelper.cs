@@ -43,7 +43,7 @@ namespace Avalonia.Media
         }
 
         [AvaloniaSpecific]
-        public static T GetAncestor<T>(UIElement target) where T : DependencyObject
+        public static T GetAncestor<T>(DependencyObject target) where T : DependencyObject
         {
             DependencyObject o = GetParent(target);
 
@@ -94,6 +94,25 @@ namespace Avalonia.Media
         public static Transform GetTransform(Visual reference)
         {
             return GetVisual(reference).VisualTransform;
+        }
+
+        internal static ITopLevelWindow GetTopLevelWindow(DependencyObject target)
+        {
+            DependencyObject o = VisualTreeHelper.GetParent(target);
+
+            while (o != null)
+            {
+                if (o is ITopLevelWindow)
+                {
+                    return (ITopLevelWindow)o;
+                }
+                else
+                {
+                    o = VisualTreeHelper.GetParent(o);
+                }
+            }
+
+            return null;
         }
 
         private static Visual GetVisual(DependencyObject reference)

@@ -142,6 +142,14 @@ namespace Avalonia.Platform
         public abstract PlatformPresentationSource CreatePresentationSource();
 
         /// <summary>
+        /// Creates a new platform-specific <see cref="PresentationSource"/> for a popup.
+        /// </summary>
+        /// <returns>
+        /// The newly created presentation source.
+        /// </returns>
+        public abstract PlatformPresentationSource CreatePopupPresentationSource();
+
+        /// <summary>
         /// Creates a new platform-specific stream geometry;
         /// </summary>
         /// <returns>

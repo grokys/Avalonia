@@ -49,6 +49,28 @@ namespace Avalonia.Media
         }
 
         /// <summary>
+        /// Converts a point in this Visual to screen coordinates.
+        /// </summary>
+        /// <param name="point">The client coordinate.</param>
+        /// <returns>The screen coordinate.</returns>
+        public Point PointToScreen(Point point)
+        {
+            foreach (Visual v in VisualTreeHelper.GetAncestors(this))
+            {
+                point += v.VisualOffset;
+
+                ITopLevelWindow window = v as ITopLevelWindow;
+
+                if (window != null)
+                {
+                    point += (Vector)window.PresentationSource.PointToScreen(new Point(0, 0));
+                }
+            }
+
+            return point;
+        }
+
+        /// <summary>
         /// When overridden in a derived class, returns the bounds of the control for use in hit testing.
         /// </summary>
         /// <returns>The hit test bounds.</returns>

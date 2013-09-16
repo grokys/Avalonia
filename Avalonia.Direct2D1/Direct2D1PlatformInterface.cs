@@ -126,6 +126,29 @@ namespace Avalonia.Direct2D1
             return new HwndSource();
         }
 
+        public override PlatformPresentationSource CreatePopupPresentationSource()
+        {
+            UnmanagedMethods.WindowStyles style =
+                UnmanagedMethods.WindowStyles.WS_POPUP;
+
+            UnmanagedMethods.WindowStyles extendedStyle =
+                UnmanagedMethods.WindowStyles.WS_EX_TOPMOST |
+                UnmanagedMethods.WindowStyles.WS_EX_TOOLWINDOW |
+                UnmanagedMethods.WindowStyles.WS_EX_NOACTIVATE;
+
+            HwndSourceParameters parameters = new HwndSourceParameters
+            {
+                WindowStyle = unchecked((int)style),
+                ExtendedWindowStyle = unchecked((int)extendedStyle),
+                PositionX = 500,
+                PositionY = 500,
+                Width = 200,
+                Height = 200,
+            };
+
+            return new HwndSource(parameters);
+        }
+
         public override IPlatformStreamGeometry CreateStreamGeometry()
         {
             return new Direct2D1StreamGeometry(new PathGeometry(this.Direct2DFactory));

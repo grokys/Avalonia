@@ -25,6 +25,8 @@ namespace Avalonia.Platform
 
         public abstract DrawingContext CreateDrawingContext();
 
+        public abstract Point PointToScreen(Point p);
+
         public abstract void Show();
 
         protected void OnClosed()

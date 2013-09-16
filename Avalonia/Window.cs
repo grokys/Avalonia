@@ -15,7 +15,7 @@ namespace Avalonia
     using Avalonia.Media;
     using Avalonia.Platform;
 
-    public class Window : ContentControl
+    public class Window : ContentControl, ITopLevelWindow
     {
         private bool isShown;
 
@@ -31,7 +31,7 @@ namespace Avalonia
             this.PresentationSource = PlatformInterface.Instance.CreatePresentationSource();
             this.PresentationSource.RootVisual = this;
             this.PresentationSource.Closed += (s, e) => this.OnClosed(EventArgs.Empty);
-            this.PresentationSource.Resized += (s, e) => this.DoMeasureArrange();
+            this.PresentationSource.Resized += (s, e) => ((ITopLevelWindow)this).DoLayoutPass();
 
             this.Background = new SolidColorBrush(Colors.White);
             this.Width = this.PresentationSource.BoundingRect.Width;
@@ -40,7 +40,17 @@ namespace Avalonia
 
         public event EventHandler Closed;
 
-        internal PlatformPresentationSource PresentationSource
+        public double Left
+        {
+            get { return this.PresentationSource.BoundingRect.Left; }
+        }
+
+        public double Top
+        {
+            get { return this.PresentationSource.BoundingRect.Top; }
+        }
+
+        public PlatformPresentationSource PresentationSource
         {
             get;
             private set;
@@ -50,17 +60,22 @@ namespace Avalonia
         {
             this.PresentationSource.Show();
             this.isShown = true;
-            this.DoMeasureArrange();
+            ((ITopLevelWindow)this).DoLayoutPass();
         }
 
-        public void DoMeasureArrange()
+        void ITopLevelWindow.DoLayoutPass()
         {
             if (this.isShown)
             {
                 Size clientSize = this.PresentationSource.ClientSize;
                 this.Measure(clientSize);
                 this.Arrange(new Rect(clientSize));
-                this.DoRender();
+
+                using (DrawingContext drawingContext = this.PresentationSource.CreateDrawingContext())
+                {
+                    Renderer renderer = new Renderer();
+                    renderer.Render(drawingContext, this);
+                }
             }
         }
 
@@ -86,15 +101,6 @@ namespace Avalonia
             Rect rect = window.PresentationSource.BoundingRect;
             rect.Height = (double)e.NewValue;
             window.PresentationSource.BoundingRect = rect;
-        }
-
-        private void DoRender()
-        {
-            using (DrawingContext drawingContext = this.PresentationSource.CreateDrawingContext())
-            {
-                Renderer renderer = new Renderer();
-                renderer.Render(drawingContext, this);
-            }
         }
     }
 }

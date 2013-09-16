@@ -44,6 +44,7 @@ using System.Windows.Markup;
 
 [assembly: XmlnsDefinition("https://github.com/grokys/Avalonia", "Avalonia")]
 [assembly: XmlnsDefinition("https://github.com/grokys/Avalonia", "Avalonia.Controls")]
+[assembly: XmlnsDefinition("https://github.com/grokys/Avalonia", "Avalonia.Controls.Primitives")]
 [assembly: XmlnsDefinition("https://github.com/grokys/Avalonia", "Avalonia.Data")]
 [assembly: XmlnsDefinition("https://github.com/grokys/Avalonia", "Avalonia.Shapes")]
 

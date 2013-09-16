@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Xaml;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
@@ -26,9 +27,7 @@ namespace Test
         };
 
         private TextBox textBox;
-        private ItemsControl itemsControl;
-        private Button add;
-        private Button remove;
+        private Popup popup;
         int index = 1;
 
         public MainWindow()
@@ -36,8 +35,6 @@ namespace Test
             InitializeComponent();
 
             this.DataContext = items;
-            this.add.Click += add_Click;
-            this.remove.Click += remove_Click;
 
             BitmapDecoder d = BitmapDecoder.Create(
                 new Uri("/github_icon.png", UriKind.Relative),
@@ -59,9 +56,7 @@ namespace Test
         {
             Application.LoadComponent(this, new Uri("/Test;component/MainWindow.xaml", UriKind.Relative));
             this.textBox = (TextBox)this.FindName("textBox");
-            this.itemsControl = (ItemsControl)this.FindName("itemsControl");
-            this.add = (Button)this.FindName("add");
-            this.remove = (Button)this.FindName("remove");
+            this.popup = (Popup)this.FindName("popup");
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
@@ -76,6 +71,11 @@ namespace Test
         private void remove_Click(object sender, RoutedEventArgs e)
         {
             this.items.RemoveAt(0);
+        }
+
+        private void showPopupButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.popup.IsOpen = !this.popup.IsOpen;
         }
     }
 

@@ -50,12 +50,22 @@
                     <ItemsControl Name="itemsControl" ItemsSource="{Binding}"
                                 Margin="4" Padding="4" BorderBrush="Blue" BorderThickness="1"/>
                     <StackPanel>
-                        <Button Name="add" Margin="4">Add</Button>
-                        <Button Name="remove" Margin="4">Remove</Button>
+                        <Button Name="add" Margin="4" Click="add_Click">Add</Button>
+                        <Button Name="remove" Margin="4" Click="remove_Click">Remove</Button>
                     </StackPanel>
                 </StackPanel>
             </Border>
         </StackPanel>
+
+        <Button Name="showPopupButton" Grid.Column="3" Grid.Row="1" Click="showPopupButton_Click"
+                VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel>
+                <TextBlock>Show Popup</TextBlock>
+                <Popup Name="popup">
+                    <TextBlock Background="Red">Hello World</TextBlock>
+                </Popup>
+            </StackPanel>
+        </Button>
 
         <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Background="Brown">
             <Image Source="abc_horiz.png" Stretch="UniformToFill"/>

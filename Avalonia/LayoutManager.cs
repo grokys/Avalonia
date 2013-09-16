@@ -14,7 +14,7 @@ namespace Avalonia
     internal class LayoutManager : DispatcherObject
     {
         private List<UIElement> entries = new List<UIElement>();
-        private bool layoutPassQueued = false;
+        private bool layoutPassQueued;
 
         static LayoutManager()
         {
@@ -53,11 +53,11 @@ namespace Avalonia
 
         private void DoLayout()
         {
-            List<Window> windows = new List<Window>();
+            List<ITopLevelWindow> windows = new List<ITopLevelWindow>();
 
             foreach (UIElement entry in this.entries)
             {
-                Window window = VisualTreeHelper.GetAncestor<Window>(entry);
+                ITopLevelWindow window = VisualTreeHelper.GetTopLevelWindow(entry);
 
                 if (window != null)
                 {
@@ -65,9 +65,9 @@ namespace Avalonia
                 }
             }
 
-            foreach (Window window in windows)
+            foreach (ITopLevelWindow window in windows)
             {
-                window.DoMeasureArrange();
+                window.DoLayoutPass();
             }
 
             this.entries.Clear();

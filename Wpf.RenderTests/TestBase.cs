@@ -4,6 +4,7 @@
     using System.IO;
     using System.Linq;
     using System.Runtime.CompilerServices;
+    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Forms.Integration;
     using System.Windows.Markup;
@@ -41,37 +42,24 @@
 
         private void RenderToFile(UserControl target, string path)
         {
-            // Yep. The following seems to be what you have to do to render a control to a file
-            // in WPF. Gotta love how easy it makes stuff.
-            int width = (int)target.Width;
-            int height = (int)target.Height;
+            RenderTargetBitmap bitmap = new RenderTargetBitmap(
+                (int)target.Width,
+                (int)target.Height,
+                96,
+                96,
+                PixelFormats.Pbgra32);
 
-            DispatcherFrame frame = new DispatcherFrame();
+            Size size = new Size(target.Width, target.Height);
+            target.Measure(size);
+            target.Arrange(new Rect(size));
+            bitmap.Render(target);
 
-            System.Windows.Forms.UserControl controlContainer = new System.Windows.Forms.UserControl();
-            controlContainer.Width = width;
-            controlContainer.Height = height;
-            controlContainer.Load += delegate(object sender, EventArgs e)
+            using (FileStream fs = new FileStream(path, FileMode.Create))
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke((Action)delegate
-                {
-                    using (FileStream fs = new FileStream(path, FileMode.Create))
-                    {
-                        RenderTargetBitmap bmp = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
-                        bmp.Render(target);
-                        BitmapEncoder encoder = new PngBitmapEncoder();
-                        encoder.Frames.Add(BitmapFrame.Create(bmp));
-                        encoder.Save(fs);
-                        controlContainer.Dispose();
-                        frame.Continue = false;
-                    }
-                }, DispatcherPriority.Background);
-            };
-
-            controlContainer.Controls.Add(new ElementHost() { Child = target, Dock = System.Windows.Forms.DockStyle.Fill });
-            IntPtr handle = controlContainer.Handle;
-
-            Dispatcher.PushFrame(frame);
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bitmap));
+                encoder.Save(fs);
+            }
         }
 
         private void CompareImages(string expectedFile, string actualFile)

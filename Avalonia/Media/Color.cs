@@ -50,7 +50,8 @@ namespace Avalonia.Media
             return string.Format("#{0:x8}", rgb);
         }
 
-        internal static Color FromUInt32(uint value)
+        [AvaloniaSpecific]
+        public static Color FromUInt32(uint value)
         {
             return new Color
             {
@@ -61,7 +62,8 @@ namespace Avalonia.Media
             };
         }
 
-        internal uint ToUint32()
+        [AvaloniaSpecific]
+        public uint ToUint32()
         {
             return ((uint)this.A << 24) | ((uint)this.R << 16) | ((uint)this.G << 8) | (uint)this.B;
         }

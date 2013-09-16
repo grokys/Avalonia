@@ -19,7 +19,7 @@ namespace Avalonia.Controls
             Panel.BackgroundProperty.AddOwner(
                 typeof(Border),
                 new FrameworkPropertyMetadata(
-                    new SolidColorBrush(Colors.White),
+                    null,
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty BorderBrushProperty =

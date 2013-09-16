@@ -62,12 +62,36 @@
         {
             BitmapSource expected = this.LoadImage(expectedFile);
             BitmapSource actual = this.LoadImage(actualFile);
+            int width = actual.PixelWidth;
+            int height = actual.PixelHeight;
+
+            if (expected.PixelWidth != width || expected.PixelHeight != height)
+            {
+                Assert.Fail("Images are different sizes.");
+            }
+
             uint[] expectedData = this.GetPixels(expected);
             uint[] actualData = this.GetPixels(actual);
 
-            if (!expectedData.SequenceEqual(actualData))
+            for (int y = 0; y < height; ++y)
             {
-                Assert.Fail("Images are different.");
+                for (int x = 0; x < width; ++x)
+                {
+                    Color expectedPixel = Color.FromUInt32(expectedData[x + (y * width)]);
+                    Color actualPixel = Color.FromUInt32(actualData[x + (y * width)]);
+                    
+                    // Compare the images using arbitrary limits. Need to work out how to do 
+                    // this properly...
+                    bool fail = Math.Abs(expectedPixel.R - actualPixel.R) > 8 ||
+                                Math.Abs(expectedPixel.G - actualPixel.G) > 8 ||
+                                Math.Abs(expectedPixel.B - actualPixel.B) > 8 ||
+                                Math.Abs(expectedPixel.A - actualPixel.A) > 16;
+
+                    if (fail)
+                    {
+                        Assert.Fail("Images are different at {0},{1}.", x, y);
+                    }
+                }
             }
         }
 

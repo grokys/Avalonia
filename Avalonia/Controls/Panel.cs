@@ -21,7 +21,7 @@ namespace Avalonia.Controls
                 typeof(Brush),
                 typeof(Panel),
                 new FrameworkPropertyMetadata(
-                    new SolidColorBrush(Colors.White),
+                    null,
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty IsItemsHostProperty =

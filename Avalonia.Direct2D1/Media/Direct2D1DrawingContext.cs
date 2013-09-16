@@ -100,6 +100,12 @@ namespace Avalonia.Direct2D1.Media
 
         public override void DrawRectangle(Brush brush, Pen pen, Rect rectangle)
         {
+            // Line the rectangle up to pixel boundaries.
+            rectangle.X += 0.5f;
+            rectangle.Y += 0.5f;
+            rectangle.Width -= 0.5f;
+            rectangle.Height -= 0.5f;
+
             if (brush != null)
             {
                 using (var brush2D = brush.ToSharpDX(this.target))

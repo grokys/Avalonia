@@ -15,6 +15,8 @@ namespace Avalonia.Media
 
         public abstract void BeginFigure(Point startPoint, bool isFilled, bool isClosed);
 
+        public abstract void BezierTo(Point point1, Point point2, Point point3, bool isStroked, bool isSmoothJoin);
+
         public abstract void LineTo(Point point, bool isStroked, bool isSmoothJoin);
     }
 }

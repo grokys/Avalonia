@@ -36,6 +36,16 @@ namespace Avalonia.Direct2D1.Media
                 isFilled ? FigureBegin.Filled : FigureBegin.Hollow);
         }
 
+        public override void BezierTo(Point point1, Point point2, Point point3, bool isStroked, bool isSmoothJoin)
+        {
+            this.sink.AddBezier(new BezierSegment
+            {
+                Point1 = point1.ToSharpDX(),
+                Point2 = point2.ToSharpDX(),
+                Point3 = point3.ToSharpDX(),
+            });
+        }
+
         public override void LineTo(Point point, bool isStroked, bool isSmoothJoin)
         {
             this.sink.AddLine(point.ToSharpDX());

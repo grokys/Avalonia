@@ -33,5 +33,11 @@
         {
             this.RunTest();
         }
+
+        [TestMethod]
+        public void Cubic_Besier_Curve()
+        {
+            this.RunTest();
+        }
     }
 }

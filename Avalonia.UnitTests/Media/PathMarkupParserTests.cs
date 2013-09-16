@@ -95,12 +95,17 @@
 
             public override void BeginFigure(Point startPoint, bool isFilled, bool isClosed)
             {
-                builder.AppendFormat("M{0} ", startPoint, isFilled, isClosed);
+                builder.AppendFormat("M{0} ", startPoint);
+            }
+
+            public override void BezierTo(Point point1, Point point2, Point point3, bool isStroked, bool isSmoothJoin)
+            {
+                builder.AppendFormat("C{0} {1} {2}) ", point1, point2, point3);
             }
 
             public override void LineTo(Point point, bool isStroked, bool isSmoothJoin)
             {
-                builder.AppendFormat("L{0} ", point, isStroked, isSmoothJoin);
+                builder.AppendFormat("L{0} ", point);
             }
         }
     }

@@ -25,6 +25,8 @@ namespace Avalonia.Media
             { 'h', Command.HorizontalLineRelative },
             { 'V', Command.VerticalLine },
             { 'v', Command.VerticalLineRelative },
+            { 'C', Command.CubicBezierCurve },
+            { 'c', Command.CubicBezierCurveRelative },
             { 'Z', Command.Close },
             { 'z', Command.Close },
         };
@@ -51,6 +53,8 @@ namespace Avalonia.Media
             HorizontalLineRelative,
             VerticalLine,
             VerticalLineRelative,
+            CubicBezierCurve,
+            CubicBezierCurveRelative,
             Close,
             Eof,
         }
@@ -108,6 +112,15 @@ namespace Avalonia.Media
                             point.Y += ReadDouble(reader);
                             this.context.LineTo(point, true, false);
                             break;
+
+                        case Command.CubicBezierCurve:
+                        {
+                            Point point1 = ReadPoint(reader);
+                            Point point2 = ReadPoint(reader);
+                            point = ReadPoint(reader);
+                            this.context.BezierTo(point1, point2, point, true, false);
+                            break;
+                        }
 
                         case Command.Close:
                             this.context.LineTo(startPoint, true, false);

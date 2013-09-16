@@ -12,7 +12,7 @@ namespace Avalonia.Utils
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class DoubleKeyedDictionary<K1, K2> : IEnumerable<KeyValuePair<K1, K2>>
+    public class DoubleKeyedDictionary<K1, K2> : IEnumerable<KeyValuePair<K1, K2>>
     {
         private Dictionary<K1, K2> forwards;
         private Dictionary<K2, K1> backwards;

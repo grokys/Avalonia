@@ -35,10 +35,10 @@ namespace Avalonia.Direct2D1.Media.Imaging
             this.wicImpl = new BitmapDecoder(factory, FormatGuids[(int)format]);
         }
 
-        public WicBitmapDecoder(ImagingFactory factory, Stream stream)
+        public WicBitmapDecoder(ImagingFactory factory, Stream stream, DecodeOptions metadataOptions)
         {
             this.factory = factory;
-            this.wicImpl = new BitmapDecoder(factory, stream, DecodeOptions.CacheOnDemand);
+            this.wicImpl = new BitmapDecoder(factory, stream, metadataOptions);
         }
 
         public BitmapContainerFormat ContainerFormat
@@ -51,15 +51,15 @@ namespace Avalonia.Direct2D1.Media.Imaging
             }
         }
 
-        public IEnumerable<IPlatformBitmapFrame> Frames
+        public IEnumerable<IPlatformBitmapSource> Frames
         {
-            get 
+            get
             {
                 int count = this.wicImpl.FrameCount;
 
                 for (int i = 0; i < count; ++i)
                 {
-                    yield return new WicBitmapFrame(this.factory, this.wicImpl.GetFrame(i));
+                    yield return new WicBitmapSource(this.factory, this.wicImpl.GetFrame(i));
                 }
             }
         }

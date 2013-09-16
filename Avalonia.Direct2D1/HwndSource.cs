@@ -18,6 +18,7 @@ namespace Avalonia.Direct2D1
     using Avalonia.Platform;
     using SharpDX.Direct2D1;
     using SharpDX.DXGI;
+    using PixelFormat = SharpDX.Direct2D1.PixelFormat;
 
     public class HwndSource : PlatformPresentationSource, IDisposable
     {
@@ -203,7 +204,7 @@ namespace Avalonia.Direct2D1
         {
             Size clientSize = this.ClientSize;
             SharpDX.Direct2D1.Factory d2dFactory = ((Direct2D1PlatformInterface)PlatformInterface.Instance).Direct2DFactory;
-
+            
             this.renderTarget = new WindowRenderTarget(
                 d2dFactory,
                 new RenderTargetProperties

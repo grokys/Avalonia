@@ -15,7 +15,12 @@ namespace Avalonia.Media.Imaging
         {
             this.PlatformImpl = platformImpl;
         }
-
+        
+        public virtual PixelFormat Format 
+        {
+            get { return this.PlatformImpl.Format; }
+        }
+        
         public virtual int PixelWidth
         {
             get { return this.PlatformImpl.PixelWidth; }
@@ -41,6 +46,11 @@ namespace Avalonia.Media.Imaging
         public override double Height
         {
             get { return this.PlatformImpl.Height; }
+        }
+
+        public virtual void CopyPixels(Array pixels, int stride, int offset)
+        {
+            this.PlatformImpl.CopyPixels(pixels, stride, offset);
         }
     }
 }

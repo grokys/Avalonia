@@ -6,8 +6,13 @@
 
 namespace Avalonia.Platform
 {
+    using System;
+    using Avalonia.Media;
+
     public interface IPlatformBitmapSource
     {
+        PixelFormat Format { get; }
+
         int PixelWidth { get; }
 
         int PixelHeight { get; }
@@ -15,5 +20,7 @@ namespace Avalonia.Platform
         double Width { get; }
 
         double Height { get; }
+
+        void CopyPixels(Array pixels, int stride, int offset);
     }
 }

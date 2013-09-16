@@ -55,7 +55,40 @@ namespace Avalonia.Media.Imaging
             }
         }
 
-        public static BitmapDecoder Create(Uri bitmapUri, BitmapCreateOptions createOptions, BitmapCacheOption cacheOption)
+        public static BitmapDecoder Create(
+            Stream bitmapStream,
+            BitmapCreateOptions createOptions,
+            BitmapCacheOption cacheOption)
+        {
+            IPlatformBitmapDecoder platformImpl = PlatformInterface.Instance.CreateBitmapDecoder(
+                bitmapStream,
+                cacheOption);
+            BitmapDecoder result;
+
+            switch (platformImpl.ContainerFormat)
+            {
+                case BitmapContainerFormat.Jpeg:
+                    result = new JpegBitmapDecoder(platformImpl);
+                    break;
+                case BitmapContainerFormat.Png:
+                    result = new PngBitmapDecoder(platformImpl);
+                    break;
+                default:
+                    throw new NotSupportedException();
+            }
+
+            if (cacheOption == BitmapCacheOption.OnLoad)
+            {
+                ReadOnlyCollection<BitmapFrame> loadFrames = result.Frames;                
+            }
+
+            return result;
+        }
+
+        public static BitmapDecoder Create(
+            Uri bitmapUri, 
+            BitmapCreateOptions createOptions, 
+            BitmapCacheOption cacheOption)
         {
             Stream stream;
 
@@ -75,20 +108,7 @@ namespace Avalonia.Media.Imaging
                 throw new NotSupportedException("URI not yet supported.");
             }
 
-            IPlatformBitmapDecoder platformImpl = PlatformInterface.Instance.CreateBitmapDecoder(
-                stream,
-                createOptions,
-                cacheOption);
-
-            switch (platformImpl.ContainerFormat)
-            {
-                case BitmapContainerFormat.Jpeg:
-                    return new JpegBitmapDecoder(platformImpl);
-                case BitmapContainerFormat.Png:
-                    return new PngBitmapDecoder(platformImpl);
-                default:
-                    throw new NotSupportedException();
-            }
+            return Create(stream, createOptions, cacheOption);
         }
     }
 }

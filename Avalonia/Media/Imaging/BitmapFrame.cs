@@ -6,16 +6,19 @@
 
 namespace Avalonia.Media.Imaging
 {
+    using System;
     using Avalonia.Platform;
 
     public class BitmapFrame : BitmapSource
     {
-        private IPlatformBitmapFrame impl;
-
-        internal BitmapFrame(IPlatformBitmapFrame platformImpl)
+        internal BitmapFrame(IPlatformBitmapSource platformImpl)
             : base(platformImpl)
         {
-            this.impl = platformImpl;
+        }
+
+        public static BitmapFrame Create(BitmapSource source)
+        {
+            return new BitmapFrame(source.PlatformImpl);
         }
     }
 }

@@ -92,42 +92,8 @@ namespace Avalonia
         {
             using (DrawingContext drawingContext = this.PresentationSource.CreateDrawingContext())
             {
-                this.DoRender(drawingContext, this);
-            }
-        }
-
-        private void DoRender(DrawingContext drawingContext, DependencyObject o)
-        {
-            Visual visual = o as Visual;
-            UIElement uiElement = o as UIElement;
-            int popCount = 0;
-
-            if (uiElement != null)
-            {
-                TranslateTransform translate = new TranslateTransform(uiElement.VisualOffset);
-                drawingContext.PushTransform(translate);
-                ++popCount;
-
-                if (uiElement.Opacity != 1)
-                {
-                    drawingContext.PushOpacity(uiElement.Opacity);
-                    ++popCount;
-                }
-
-                uiElement.OnRender(drawingContext);
-            }
-
-            if (visual != null)
-            {
-                for (int i = 0; i < visual.VisualChildrenCount; ++i)
-                {
-                    this.DoRender(drawingContext, visual.GetVisualChild(i));
-                }
-            }
-
-            for (int i = 0; i < popCount; ++i)
-            {
-                drawingContext.Pop();
+                Renderer renderer = new Renderer();
+                renderer.Render(drawingContext, this);
             }
         }
     }

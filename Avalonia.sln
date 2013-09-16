@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.20827.3
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia", "Avalonia\Avalonia.csproj", "{46EA210F-DFF1-4AC0-B7BF-6362141DC61A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{6D06D294-5AA4-42CE-8391-939E417AA33C}"
@@ -14,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.UnitTests", "Wpf.UnitTests\Wpf.UnitTests.csproj", "{24314F2B-3FC8-472E-9BCB-D19CE2C561AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.RenderTests", "Wpf.RenderTests\Wpf.RenderTests.csproj", "{480B002A-0647-4610-BF10-D7D5454D7006}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.RenderTests", "Avalonia.RenderTests\Avalonia.RenderTests.csproj", "{CA28E200-754F-4C25-9508-F3FE72D0D0DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +45,10 @@ Global
 		{480B002A-0647-4610-BF10-D7D5454D7006}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{480B002A-0647-4610-BF10-D7D5454D7006}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{480B002A-0647-4610-BF10-D7D5454D7006}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA28E200-754F-4C25-9508-F3FE72D0D0DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA28E200-754F-4C25-9508-F3FE72D0D0DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA28E200-754F-4C25-9508-F3FE72D0D0DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA28E200-754F-4C25-9508-F3FE72D0D0DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

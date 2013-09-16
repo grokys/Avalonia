@@ -82,26 +82,6 @@ namespace Avalonia.Platform
         }
 
         /// <summary>
-        /// Creates a new platform-specific <see cref="PresentationSource"/>.
-        /// </summary>
-        /// <returns>
-        /// The newly created presentation source.
-        /// </returns>
-        public abstract PlatformPresentationSource CreatePresentationSource();
-
-        /// <summary>
-        /// Create a new platform-specific <see cref="FormattedText"/>.
-        /// </summary>
-        /// <param name="textToFormat">The text.</param>
-        /// <param name="typeface">The typeface.</param>
-        /// <param name="fontSize">The font size.</param>
-        /// <returns>The formatted text object.</returns>
-        public abstract IPlatformFormattedText CreateFormattedText(
-            string textToFormat, 
-            Typeface typeface,
-            double fontSize);
-
-        /// <summary>
         /// Creates a new platform-specific bitmap decoder for the specified container format.
         /// </summary>
         /// <param name="format">The bitmap container format.</param>
@@ -111,14 +91,55 @@ namespace Avalonia.Platform
         /// <summary>
         /// Creates a new platform-specific bitmap decoder to decode a stream.
         /// </summary>
-        /// <param name="format">The stream containing the bitmap.</param>
-        /// <param name="createOptions">The create options.</param>
+        /// <param name="stream">The stream containing the bitmap.</param>
         /// <param name="cacheOption">The cache option.</param>
         /// <returns>An <see cref="IPlatformBitmapDecoder"/>.</returns>
         public abstract IPlatformBitmapDecoder CreateBitmapDecoder(
-            Stream stream,
-            BitmapCreateOptions createOptions, 
+            Stream stream, 
             BitmapCacheOption cacheOption);
+
+        /// <summary>
+        /// Creates a new platform-specific bitmap encoder for the specified container format.
+        /// </summary>
+        /// <param name="format">The bitmap container format.</param>
+        /// <returns>An <see cref="IPlatformBitmapEncoder"/>.</returns>
+        public abstract IPlatformBitmapEncoder CreateBitmapEncoder(BitmapContainerFormat format);
+
+        /// <summary>
+        /// Creates a new platform-specific render target bitmap.
+        /// </summary>
+        /// <param name="pixelWidth">The width in pixels.</param>
+        /// <param name="pixelHeight">The height in pixels.</param>
+        /// <param name="dpiX">The horizontal resolution.</param>
+        /// <param name="dpiY">The vertical resolution.</param>
+        /// <param name="pixelFormat">The pixel format.</param>
+        /// <returns>An <see cref="IPlatformRenderTargetBitmap"/>.</returns>
+        public abstract IPlatformRenderTargetBitmap CreateRenderTargetBitmap(
+            int pixelWidth,
+            int pixelHeight,
+            double dpiX,
+            double dpiY,
+            PixelFormat pixelFormat);
+
+        /// <summary>
+        /// Create a new platform-specific <see cref="FormattedText"/>.
+        /// </summary>
+        /// <param name="textToFormat">The text.</param>
+        /// <param name="typeface">The typeface.</param>
+        /// <param name="fontSize">The font size.</param>
+        /// <returns>The formatted text object.</returns>
+        public abstract IPlatformFormattedText CreateFormattedText(
+            string textToFormat,
+            Typeface typeface,
+            double fontSize);
+
+        /// <summary>
+        /// Creates a new platform-specific <see cref="PresentationSource"/>.
+        /// </summary>
+        /// <returns>
+        /// The newly created presentation source.
+        /// </returns>
+        public abstract PlatformPresentationSource CreatePresentationSource();
 
         /// <summary>
         /// Creates a new platform-specific stream geometry;

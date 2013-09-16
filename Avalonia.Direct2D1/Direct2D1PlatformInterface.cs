@@ -70,30 +70,54 @@ namespace Avalonia.Direct2D1
             get { return Win32MouseDevice.Instance; }
         }
 
-        public override PlatformPresentationSource CreatePresentationSource()
-        {
-            return new HwndSource();
-        }
-
-        public override IPlatformFormattedText CreateFormattedText(
-            string text, 
-            Typeface typeface, 
-            double fontSize)
-        {
-            return new Direct2D1FormattedText(text, typeface, fontSize);
-        }
-
         public override IPlatformBitmapDecoder CreateBitmapDecoder(BitmapContainerFormat format)
         {
             return new WicBitmapDecoder(this.wicFactory, format);
         }
 
-        public override IPlatformBitmapDecoder CreateBitmapDecoder(
-            Stream stream,
-            BitmapCreateOptions createOptions, 
-            BitmapCacheOption cacheOption)
+        public override IPlatformBitmapDecoder CreateBitmapDecoder(Stream stream, BitmapCacheOption cacheOption)
         {
-            return new WicBitmapDecoder(this.wicFactory, stream);
+            DecodeOptions o = (cacheOption == BitmapCacheOption.OnLoad) ? 
+                DecodeOptions.CacheOnLoad : DecodeOptions.CacheOnDemand;
+            return new WicBitmapDecoder(this.wicFactory, stream, o);
+        }
+
+        public override IPlatformBitmapEncoder CreateBitmapEncoder(BitmapContainerFormat format)
+        {
+            return new WicBitmapEncoder(this.wicFactory, format);
+        }
+
+        public override IPlatformFormattedText CreateFormattedText(
+            string text,
+            Typeface typeface,
+            double fontSize)
+        {
+            return new Direct2D1FormattedText(text, typeface, fontSize);
+        }
+
+        public override IPlatformRenderTargetBitmap CreateRenderTargetBitmap(
+            int pixelWidth, 
+            int pixelHeight, 
+            double dpiX, 
+            double dpiY, 
+            Avalonia.Media.PixelFormat pixelFormat)
+        {
+            SharpDX.WIC.Bitmap bitmap = new SharpDX.WIC.Bitmap(
+                wicFactory,
+                pixelWidth,
+                pixelHeight,
+                pixelFormat.ToSharpDX(),
+                BitmapCreateCacheOption.CacheOnLoad);
+
+            return new Direct2D1RenderTargetBitmap(
+                this.Direct2DFactory,
+                this.wicFactory,
+                bitmap);
+        }
+
+        public override PlatformPresentationSource CreatePresentationSource()
+        {
+            return new HwndSource();
         }
 
         public override IPlatformStreamGeometry CreateStreamGeometry()

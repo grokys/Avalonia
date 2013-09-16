@@ -24,3 +24,4 @@ Implemented to some extent so far:
 - Styles/Setters
 - Routed events
 - Triggers
+- RenderTargetBitmap

@@ -16,6 +16,6 @@ namespace Avalonia.Platform
     {
         BitmapContainerFormat ContainerFormat { get; }
 
-        IEnumerable<IPlatformBitmapFrame> Frames { get; }
+        IEnumerable<IPlatformBitmapSource> Frames { get; }
     }
 }

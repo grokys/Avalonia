@@ -83,7 +83,12 @@
     <Compile Include="GridLength.cs" />
     <Compile Include="GridLengthConverter.cs" />
     <Compile Include="Media\GeometryConverter.cs" />
+    <Compile Include="Media\Imaging\BitmapEncoder.cs" />
+    <Compile Include="Media\Imaging\PngBitmapEncoder.cs" />
+    <Compile Include="Media\Imaging\RenderTargetBitmap.cs" />
     <Compile Include="Media\PathMarkupParser.cs" />
+    <Compile Include="Media\PixelFormat.cs" />
+    <Compile Include="Media\PixelFormats.cs" />
     <Compile Include="Media\StreamGeometryContext.cs" />
     <Compile Include="Media\StreamGeometry.cs" />
     <Compile Include="Media\Geometry.cs" />
@@ -96,10 +101,12 @@
     <Compile Include="Media\Imaging\JpegBitmapDecoder.cs" />
     <Compile Include="Media\Stretch.cs" />
     <Compile Include="Platform\BitmapContainerFormat.cs" />
-    <Compile Include="Platform\IPlatformBitmapFrame.cs" />
+    <Compile Include="Platform\IPlatformBitmapEncoder.cs" />
     <Compile Include="Platform\IPlatformBitmapDecoder.cs" />
     <Compile Include="Platform\IPlatformBitmapSource.cs" />
+    <Compile Include="Platform\IPlatformRenderTargetBitmap.cs" />
     <Compile Include="Platform\IPlatformStreamGeometry.cs" />
+    <Compile Include="Renderer.cs" />
     <Compile Include="Resources\StreamResourceInfo.cs" />
     <Compile Include="Shapes\Path.cs" />
     <Compile Include="Shapes\Shape.cs" />

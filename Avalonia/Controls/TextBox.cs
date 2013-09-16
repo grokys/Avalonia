@@ -49,7 +49,7 @@ namespace Avalonia.Controls
                 if (this.caretIndex != value)
                 {
                     this.caretIndex = value;
-                    this.textBoxView.InvalidateVisual();
+                    this.textBoxView.CaretMoved();
                 }
             }
         }

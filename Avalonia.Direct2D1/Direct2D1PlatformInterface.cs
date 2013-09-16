@@ -22,7 +22,8 @@ namespace Avalonia.Direct2D1
 
     public class Direct2D1PlatformInterface : PlatformInterface
     {
-        private Dictionary<IntPtr, Action> timerCallbacks = new Dictionary<IntPtr, Action>();
+        private Dictionary<IntPtr, UnmanagedMethods.TimerProc> timerCallbacks = 
+            new Dictionary<IntPtr, UnmanagedMethods.TimerProc>();
 
         private ImagingFactory wicFactory = new ImagingFactory();
 
@@ -132,11 +133,17 @@ namespace Avalonia.Direct2D1
 
         public override object StartTimer(TimeSpan interval, Action callback)
         {
+            UnmanagedMethods.TimerProc timerDelegate = (UnmanagedMethods.TimerProc)
+                ((hWnd, uMsg, nIDEvent, dwTime) => callback());
+
             IntPtr handle = UnmanagedMethods.SetTimer(
                 IntPtr.Zero, 
                 IntPtr.Zero, 
                 (uint)interval.TotalMilliseconds, 
-                (hWnd, uMsg, nIDEvent, dwTime) => callback());
+                timerDelegate);
+
+            this.timerCallbacks.Add(handle, timerDelegate);
+
             return handle;
         }
 
@@ -144,11 +151,6 @@ namespace Avalonia.Direct2D1
         {
             this.timerCallbacks.Remove((IntPtr)handle);
             UnmanagedMethods.KillTimer(IntPtr.Zero, (IntPtr)handle);
-        }
-
-        internal void TriggerTimer(IntPtr handle)
-        {
-            this.timerCallbacks[handle]();
         }
     }
 }

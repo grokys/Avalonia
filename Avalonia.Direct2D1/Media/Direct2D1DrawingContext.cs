@@ -128,20 +128,28 @@ namespace Avalonia.Direct2D1.Media
 
         public override void DrawRectangle(Brush brush, Pen pen, Rect rectangle)
         {
+            Rect brushRect = rectangle;
+            Rect penRect = rectangle;
+
+            if (pen != null)
+            {
+                double penOffset = -(pen.Thickness / 2);
+                brushRect.Inflate(-pen.Thickness, -pen.Thickness);
+                penRect.Inflate(penOffset, penOffset);
+            }
+
             if (brush != null)
             {
                 using (var brush2D = brush.ToSharpDX(this.target))
                 {
                     this.target.FillRectangle(
-                        rectangle.ToSharpDX(),
+                        brushRect.ToSharpDX(),
                         brush2D);
                 }
             }
 
             if (pen != null)
             {
-                Rect penRect = Rect.Inflate(rectangle, -0.5, -0.5);
-
                 using (var brush2D = pen.Brush.ToSharpDX(this.target))
                 {
                     this.target.DrawRectangle(

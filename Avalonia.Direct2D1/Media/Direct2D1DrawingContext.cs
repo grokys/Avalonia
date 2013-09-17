@@ -128,28 +128,24 @@ namespace Avalonia.Direct2D1.Media
 
         public override void DrawRectangle(Brush brush, Pen pen, Rect rectangle)
         {
-            // Line the rectangle up to pixel boundaries.
-            rectangle.X += 0.5f;
-            rectangle.Y += 0.5f;
-            rectangle.Width -= 0.5f;
-            rectangle.Height -= 0.5f;
-
             if (brush != null)
             {
                 using (var brush2D = brush.ToSharpDX(this.target))
                 {
                     this.target.FillRectangle(
-                        this.CreateRectangleF(rectangle),
+                        rectangle.ToSharpDX(),
                         brush2D);
                 }
             }
 
             if (pen != null)
             {
+                Rect penRect = Rect.Inflate(rectangle, -0.5, -0.5);
+
                 using (var brush2D = pen.Brush.ToSharpDX(this.target))
                 {
                     this.target.DrawRectangle(
-                        this.CreateRectangleF(rectangle),
+                        penRect.ToSharpDX(),
                         brush2D,
                         (float)pen.Thickness);
                 }
@@ -160,7 +156,7 @@ namespace Avalonia.Direct2D1.Media
         {
             RoundedRectangle roundedRect = new RoundedRectangle
             {
-                Rect = this.CreateRectangleF(rectangle),
+                Rect = rectangle.ToSharpDX(),
                 RadiusX = (float)radiusX,
                 RadiusY = (float)radiusY,
             };
@@ -247,15 +243,6 @@ namespace Avalonia.Direct2D1.Media
                 value.M11 * invdet,
                 ((value.M21 * offsetY) - (offsetX * value.M22)) * invdet,
                 ((offsetX * value.M12) - (value.M11 * offsetY)) * invdet);
-        }
-
-        private RectangleF CreateRectangleF(Rect rect)
-        {
-            return new RectangleF(
-                (float)rect.Left,
-                (float)rect.Top,
-                (float)rect.Width,
-                (float)rect.Height);
         }
     }
 }

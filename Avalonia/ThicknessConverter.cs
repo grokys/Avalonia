@@ -31,7 +31,7 @@ namespace Avalonia
             }
             else
             {
-                if (components.Length == 4)
+                if (components.Length == 2)
                 {
                     return new Thickness(
                         double.Parse(components[0]),

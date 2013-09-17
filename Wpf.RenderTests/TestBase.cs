@@ -11,6 +11,7 @@
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using System.Windows.Threading;
+    using ImageMagick;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     public class TestBase
@@ -26,7 +27,7 @@
         public void RunTest([CallerMemberName] string name = "")
         {
             string xamlFile = Path.Combine(testDirectory, name + ".xaml");
-            string expectedFile = Path.Combine(testDirectory, name + ".png");
+            string expectedFile = Path.Combine(testDirectory, name + ".expected.png");
             string outFile = Path.Combine(testDirectory, name + ".wpf.out.png");
 
             File.Delete(outFile);
@@ -64,7 +65,11 @@
 
         private void CompareImages(string expectedFile, string actualFile)
         {
-            Assert.Inconclusive("TODO: Work out how to compare images.");
+            MagickImage expected = new MagickImage(expectedFile);
+            MagickImage actual = new MagickImage(actualFile);
+            MagickErrorInfo error = expected.Compare(actual);
+
+            Assert.IsNull(error);
         }
     }
 }

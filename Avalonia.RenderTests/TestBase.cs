@@ -7,6 +7,7 @@
     using Avalonia.Controls;
     using Avalonia.Media;
     using Avalonia.Media.Imaging;
+    using ImageMagick;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     public class TestBase
@@ -22,7 +23,7 @@
         public void RunTest([CallerMemberName] string name = "")
         {
             string xamlFile = Path.Combine(testDirectory, name + ".xaml");
-            string expectedFile = Path.Combine(testDirectory, name + ".png");
+            string expectedFile = Path.Combine(testDirectory, name + ".expected.png");
             string outFile = Path.Combine(testDirectory, name + ".avalonia.out.png");
 
             File.Delete(outFile);
@@ -60,7 +61,14 @@
 
         private void CompareImages(string expectedFile, string actualFile)
         {
-            Assert.Inconclusive("TODO: Work out how to compare images.");
+            MagickImage expected = new MagickImage(expectedFile);
+            MagickImage actual = new MagickImage(actualFile);
+            MagickErrorInfo error = expected.Compare(actual);
+
+            if (error != null && error.NormalizedMaximumError > 0.15)
+            {
+                Assert.Fail("NormalizedMaximumError = " + error.NormalizedMaximumError);
+            }
         }
     }
 }

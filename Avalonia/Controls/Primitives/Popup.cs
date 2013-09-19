@@ -29,7 +29,7 @@ namespace Avalonia.Controls.Primitives
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     IsOpenChanged));
 
-        PopupRoot popupRoot;
+        private PopupRoot popupRoot;
 
         public UIElement Child
         {

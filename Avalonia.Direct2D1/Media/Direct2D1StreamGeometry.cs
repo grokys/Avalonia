@@ -28,6 +28,11 @@ namespace Avalonia.Direct2D1.Media
             private set;
         }
 
+        public void Dispose()
+        {
+            this.Direct2DGeometry.Dispose();
+        }
+
         public Rect GetRenderBounds(Pen pen, double tolerance, ToleranceType type)
         {
             float strokeWidth = (pen != null) ? (float)pen.Thickness : 0f;

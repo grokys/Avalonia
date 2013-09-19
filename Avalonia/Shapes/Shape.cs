@@ -56,7 +56,7 @@ namespace Avalonia.Shapes
 
         public virtual Geometry RenderedGeometry 
         {
-            get { return null; }
+            get { return this.DefiningGeometry; }
         }
 
         public Stretch Stretch
@@ -75,6 +75,11 @@ namespace Avalonia.Shapes
         {
             get { return (double)this.GetValue(StrokeThicknessProperty); }
             set { this.SetValue(StrokeThicknessProperty, value); }
+        }
+
+        protected abstract Geometry DefiningGeometry 
+        { 
+            get; 
         }
 
         protected internal override void OnRender(DrawingContext drawingContext)

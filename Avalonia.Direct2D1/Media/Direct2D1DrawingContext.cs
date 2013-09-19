@@ -61,8 +61,7 @@ namespace Avalonia.Direct2D1.Media
 
         public override void DrawGeometry(Brush brush, Pen pen, Geometry geometry, Avalonia.Media.Matrix transform)
         {
-            StreamGeometry streamGeometry = (StreamGeometry)geometry;
-            Direct2D1StreamGeometry platformGeometry = (Direct2D1StreamGeometry)streamGeometry.PlatformImpl;
+            Direct2D1StreamGeometry platformGeometry = (Direct2D1StreamGeometry)geometry.PlatformImpl;
 
             using (TransformedGeometry d2dGeometry = new TransformedGeometry(
                 this.factory,

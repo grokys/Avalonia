@@ -85,6 +85,7 @@
     <Compile Include="GridLength.cs" />
     <Compile Include="GridLengthConverter.cs" />
     <Compile Include="ITopLevelWindow.cs" />
+    <Compile Include="Media\RectangleGeometry.cs" />
     <Compile Include="Media\MatrixTransform.cs" />
     <Compile Include="Media\GeometryConverter.cs" />
     <Compile Include="Media\Imaging\BitmapEncoder.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Renderer.cs" />
     <Compile Include="Resources\StreamResourceInfo.cs" />
     <Compile Include="Shapes\Path.cs" />
+    <Compile Include="Shapes\Rectangle.cs" />
     <Compile Include="Shapes\Shape.cs" />
     <Compile Include="TemplateKey.cs" />
     <Compile Include="DataTemplate.cs" />

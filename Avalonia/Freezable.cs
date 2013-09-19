@@ -107,11 +107,6 @@ namespace Avalonia
             throw new NotImplementedException();
         }
 
-        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         protected void ReadPreamble()
         {
             throw new NotImplementedException();

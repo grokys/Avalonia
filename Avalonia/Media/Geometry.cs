@@ -8,13 +8,13 @@ namespace Avalonia.Media
 {
     using System.ComponentModel;
     using Avalonia.Animation;
+    using Avalonia.Platform;
 
     public enum ToleranceType
     {
         Absolute,
         Relative,
     }
-
 
     [TypeConverter(typeof(GeometryConverter))]
     public abstract class Geometry : Animatable
@@ -29,6 +29,12 @@ namespace Avalonia.Media
             get { return new Rect(); }
         }
 
+        public IPlatformStreamGeometry PlatformImpl
+        {
+            get;
+            protected set;
+        }
+
         public Rect GetRenderBounds(Pen pen)
         {
             return this.GetRenderBounds(pen, StandardFlatteningTolerance, ToleranceType.Absolute);
@@ -36,7 +42,7 @@ namespace Avalonia.Media
 
         public virtual Rect GetRenderBounds(Pen pen, double tolerance, ToleranceType type)
         {
-            return new Rect();
+            return this.PlatformImpl.GetRenderBounds(pen, tolerance, type);
         }
     }
 }

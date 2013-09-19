@@ -21,12 +21,6 @@ namespace Avalonia.Media
             get { return this.PlatformImpl.Bounds; }
         }
 
-        public IPlatformStreamGeometry PlatformImpl
-        {
-            get;
-            private set;
-        }
-
         public override Rect GetRenderBounds(Pen pen, double tolerance, ToleranceType type)
         {
             return this.PlatformImpl.GetRenderBounds(pen, tolerance, type);

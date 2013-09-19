@@ -6,10 +6,11 @@
 
 namespace Avalonia.Platform
 {
+    using System;
     using Avalonia.Media;
 
     [AvaloniaSpecific]
-    public interface IPlatformStreamGeometry
+    public interface IPlatformStreamGeometry : IDisposable
     {
         Rect Bounds { get; }
 

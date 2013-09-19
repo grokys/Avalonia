@@ -4,9 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Avalonia.Platform;
 namespace Avalonia
 {
+    using Avalonia.Platform;
+
     internal interface ITopLevelWindow
     {
         PlatformPresentationSource PresentationSource { get; }

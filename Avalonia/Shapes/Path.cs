@@ -26,7 +26,7 @@ namespace Avalonia.Shapes
             set { this.SetValue(DataProperty, value); }
         }
 
-        public override Geometry RenderedGeometry
+        protected override Geometry DefiningGeometry
         {
             get { return this.Data; }
         }

@@ -26,7 +26,7 @@
             userControl.Width = 200;
             userControl.Height = 200;
 
-            TestControl testControl = new TestControl();
+            DrawRectangleControl testControl = new DrawRectangleControl();
             testControl.Brush = new SolidColorBrush(Colors.Red);
             userControl.Content = testControl;
 
@@ -41,7 +41,7 @@
             userControl.Width = 200;
             userControl.Height = 200;
 
-            TestControl testControl = new TestControl();
+            DrawRectangleControl testControl = new DrawRectangleControl();
             testControl.Pen = new Pen(new SolidColorBrush(Colors.Red), 1);
             userControl.Content = testControl;
 
@@ -56,7 +56,7 @@
             userControl.Width = 200;
             userControl.Height = 200;
 
-            TestControl testControl = new TestControl();
+            DrawRectangleControl testControl = new DrawRectangleControl();
             testControl.Pen = new Pen(new SolidColorBrush(Colors.Red), 2);
             userControl.Content = testControl;
 
@@ -71,7 +71,7 @@
             userControl.Width = 200;
             userControl.Height = 200;
 
-            TestControl testControl = new TestControl();
+            DrawRectangleControl testControl = new DrawRectangleControl();
             testControl.Brush = new SolidColorBrush(Colors.Red);
             testControl.Pen = new Pen(new SolidColorBrush(Colors.Transparent), 3);
             userControl.Content = testControl;
@@ -87,7 +87,7 @@
             userControl.Width = 200;
             userControl.Height = 200;
 
-            TestControl testControl = new TestControl();
+            DrawRectangleControl testControl = new DrawRectangleControl();
             testControl.Brush = new SolidColorBrush(Colors.Red);
             testControl.Pen = new Pen(new SolidColorBrush(Colors.Yellow), 5);
             userControl.Content = testControl;
@@ -96,7 +96,23 @@
             this.CompareImages();
         }
 
-        private class TestControl : FrameworkElement
+        [TestMethod]
+        public void DrawGeometry_Rectangle_Fill()
+        {
+            UserControl userControl = new UserControl();
+            userControl.Width = 200;
+            userControl.Height = 200;
+
+            DrawGeometryControl testControl = new DrawGeometryControl();
+            testControl.Geometry = new RectangleGeometry(new Rect(8, 10, 180, 175.5));
+            testControl.Pen = new Pen(new SolidColorBrush(Colors.Red), 1);
+            userControl.Content = testControl;
+
+            this.RenderToFile(userControl);
+            this.CompareImages();
+        }
+
+        private class DrawRectangleControl : FrameworkElement
         {
             public Brush Brush { get; set; }
 
@@ -108,6 +124,20 @@
                     this.Brush,
                     this.Pen,
                     new Rect(10, 10, 180, 180.5));
+            }
+        }
+
+        private class DrawGeometryControl : FrameworkElement
+        {
+            public Geometry Geometry { get; set; }
+
+            public Brush Brush { get; set; }
+
+            public Pen Pen { get; set; }
+
+            protected override void OnRender(DrawingContext drawingContext)
+            {
+                drawingContext.DrawGeometry(this.Brush, this.Pen, this.Geometry);
             }
         }
     }

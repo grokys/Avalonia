@@ -41,8 +41,7 @@ namespace Avalonia.Direct2D1.Media
 
         public override void DrawGeometry(Brush brush, Pen pen, Geometry geometry)
         {
-            StreamGeometry streamGeometry = (StreamGeometry)geometry;
-            Direct2D1StreamGeometry platformGeometry = (Direct2D1StreamGeometry)streamGeometry.PlatformImpl;
+            Direct2D1StreamGeometry platformGeometry = (Direct2D1StreamGeometry)geometry.PlatformImpl;
             PathGeometry d2dGeometry = platformGeometry.Direct2DGeometry;
 
             if (brush != null)

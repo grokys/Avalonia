@@ -67,9 +67,16 @@
             MagickImage actual = new MagickImage(actualPath);
             MagickErrorInfo error = expected.Compare(actual);
 
-            if (error != null && error.NormalizedMaximumError > 0.15)
+            if (error != null)
             {
-                Assert.Fail("NormalizedMaximumError = " + error.NormalizedMaximumError);
+                if (error.NormalizedMaximumError > 0.15)
+                {
+                    Assert.Fail("NormalizedMaximumError = " + error.NormalizedMaximumError);
+                }
+                else
+                {
+                    Assert.Inconclusive("Close but no cigar.");
+                }
             }
         }
     }

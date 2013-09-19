@@ -90,12 +90,17 @@ namespace Avalonia.Controls
 
         protected internal override void OnRender(DrawingContext drawingContext)
         {
-            Rect rect = new Rect(new Size(this.ActualWidth, this.ActualHeight));
+            Rect brushRect = new Rect(new Size(this.ActualWidth, this.ActualHeight));
+            Rect penRect = brushRect;
             Pen pen = null;
 
             if (this.BorderBrush != null && !this.BorderThickness.IsEmpty)
             {
                 pen = new Pen(this.BorderBrush, this.BorderThickness.Left);
+
+                double penOffset = -(pen.Thickness / 2);
+                brushRect.Inflate(-pen.Thickness, -pen.Thickness);
+                penRect.Inflate(penOffset, penOffset);
             }
 
             if (this.CornerRadius.TopLeft > 0 || this.CornerRadius.BottomLeft > 0)
@@ -103,16 +108,21 @@ namespace Avalonia.Controls
                 drawingContext.DrawRoundedRectangle(
                     this.Background,
                     pen,
-                    rect,
+                    brushRect,
                     this.CornerRadius.TopLeft,
                     this.CornerRadius.BottomLeft);
             }
             else
             {
-                drawingContext.DrawRectangle(
-                    this.Background,
-                    pen,
-                    rect);
+                if (this.Background != null)
+                {
+                    drawingContext.DrawRectangle(this.Background, null, brushRect);
+                }
+
+                if (pen != null)
+                {
+                    drawingContext.DrawRectangle(null, pen, penRect);
+                }
             }
         }
 

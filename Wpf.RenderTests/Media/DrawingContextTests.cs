@@ -112,6 +112,24 @@
             this.CompareImages();
         }
 
+        [TestMethod]
+        public void DrawGeometry_Cubic_Besier_Curve()
+        {
+            UserControl userControl = new UserControl();
+            userControl.Width = 320;
+            userControl.Height = 180;
+
+            DrawGeometryControl testControl = new DrawGeometryControl();
+            GeometryConverter converter = new GeometryConverter();
+            testControl.Geometry = (Geometry)converter.ConvertFrom("M 10,100 C 10,300 300,-200 300,100");
+            testControl.Brush = new SolidColorBrush(Colors.Gray);
+            testControl.Pen = new Pen(new SolidColorBrush(Colors.Black), 1);
+            userControl.Content = testControl;
+
+            this.RenderToFile(userControl);
+            this.CompareImages();
+        }
+
         private class DrawRectangleControl : FrameworkElement
         {
             public Brush Brush { get; set; }

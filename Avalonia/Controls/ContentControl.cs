@@ -82,5 +82,22 @@ namespace Avalonia.Controls
 
             return base.ArrangeOverride(finalSize);
         }
+
+        //private static void ContentChanged(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    ContentControl control = (ContentControl)sender;
+
+        //    if (e.OldValue != null)
+        //    {
+        //        control.RemoveLogicalChild(e.OldValue);
+        //        control.RemoveLogicalChild(e.OldValue);
+        //    }
+
+        //    if (e.NewValue != null)
+        //    {
+        //        control.AddLogicalChild(e.OldValue);
+        //        control.AddLogicalChild(e.OldValue);
+        //    }
+        //}
     }
 }

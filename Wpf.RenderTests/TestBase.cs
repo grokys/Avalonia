@@ -24,25 +24,23 @@
             this.testDirectory = Path.Combine(testFiles, testDirectory);
         }
 
-        public void RunTest([CallerMemberName] string name = "")
+        public void RunTest([CallerMemberName] string testName = "")
         {
-            string xamlFile = Path.Combine(testDirectory, name + ".xaml");
-            string expectedFile = Path.Combine(testDirectory, name + ".expected.png");
-            string outFile = Path.Combine(testDirectory, name + ".wpf.out.png");
-
-            File.Delete(outFile);
+            string xamlFile = Path.Combine(testDirectory, testName + ".xaml");
 
             using (FileStream s = new FileStream(xamlFile, FileMode.Open, FileAccess.Read))
             {
                 UserControl target = (UserControl)XamlReader.Load(s);
-                this.RenderToFile(target, outFile);
+                this.RenderToFile(target, testName);
             }
 
-            this.CompareImages(expectedFile, outFile);
+            this.CompareImages(testName);
         }
 
-        private void RenderToFile(UserControl target, string path)
+        public void RenderToFile(UserControl target, [CallerMemberName] string testName = "")
         {
+            string path = Path.Combine(testDirectory, testName + ".wpf.out.png");
+
             RenderTargetBitmap bitmap = new RenderTargetBitmap(
                 (int)target.Width,
                 (int)target.Height,
@@ -55,6 +53,8 @@
             target.Arrange(new Rect(size));
             bitmap.Render(target);
 
+            File.Delete(path);
+
             using (FileStream fs = new FileStream(path, FileMode.Create))
             {
                 PngBitmapEncoder encoder = new PngBitmapEncoder();
@@ -63,10 +63,12 @@
             }
         }
 
-        private void CompareImages(string expectedFile, string actualFile)
+        public void CompareImages([CallerMemberName] string testName = "")
         {
-            MagickImage expected = new MagickImage(expectedFile);
-            MagickImage actual = new MagickImage(actualFile);
+            string expectedPath = Path.Combine(testDirectory, testName + ".expected.png");
+            string actualPath = Path.Combine(testDirectory, testName + ".wpf.out.png");
+            MagickImage expected = new MagickImage(expectedPath);
+            MagickImage actual = new MagickImage(actualPath);
             MagickErrorInfo error = expected.Compare(actual);
 
             Assert.IsNull(error);

@@ -28,6 +28,13 @@ namespace Avalonia.Media.Imaging
         public void Render(Visual visual)
         {
             IPlatformRenderTargetBitmap impl = (IPlatformRenderTargetBitmap)this.PlatformImpl;
+            FrameworkElement fe = visual as FrameworkElement;
+
+            if (fe != null && !fe.IsInitialized)
+            {
+                fe.IsInitialized = true;
+                fe.ApplyTemplate();
+            }
 
             using (DrawingContext context = impl.CreateDrawingContext())
             {

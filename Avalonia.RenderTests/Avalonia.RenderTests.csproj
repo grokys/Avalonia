@@ -59,6 +59,9 @@
     <Compile Include="..\Wpf.RenderTests\Controls\BorderTests.cs">
       <Link>Controls\BorderTests.cs</Link>
     </Compile>
+    <Compile Include="..\Wpf.RenderTests\Media\DrawingContextTests.cs">
+      <Link>Media\DrawingContextTests.cs</Link>
+    </Compile>
     <Compile Include="..\Wpf.RenderTests\Shapes\PathTests.cs">
       <Link>Shapes\PathTests.cs</Link>
     </Compile>

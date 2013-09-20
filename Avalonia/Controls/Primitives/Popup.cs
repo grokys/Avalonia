@@ -7,6 +7,7 @@
 namespace Avalonia.Controls.Primitives
 {
     using System.Windows.Markup;
+    using Avalonia.Input;
     using Avalonia.Media;
     using Avalonia.Platform;
 
@@ -29,6 +30,12 @@ namespace Avalonia.Controls.Primitives
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     IsOpenChanged));
 
+        public static readonly DependencyProperty StaysOpenProperty =
+            DependencyProperty.Register(
+                "StaysOpen",
+                typeof(bool),
+                typeof(Popup));
+
         private PopupRoot popupRoot;
 
         public UIElement Child
@@ -41,6 +48,19 @@ namespace Avalonia.Controls.Primitives
         {
             get { return (bool)this.GetValue(IsOpenProperty); }
             set { this.SetValue(IsOpenProperty, value); }
+        }
+
+        public bool StaysOpen
+        {
+            get { return (bool)this.GetValue(StaysOpenProperty); }
+            set { this.SetValue(StaysOpenProperty, value); }
+        }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            // TODO: This should be listening to the Mouse.MouseDown event for all mouse clicks.
+            // TODO: Should not close popup when click is on popup.
+            this.IsOpen = false;
         }
 
         private static void IsOpenChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -57,10 +77,20 @@ namespace Avalonia.Controls.Primitives
                 {
                     popup.popupRoot.Show();
                 }
+
+                if (!popup.StaysOpen)
+                {
+                    popup.CaptureMouse();
+                }
             }
             else if (popup.popupRoot != null)
             {
                 popup.popupRoot.Hide();
+
+                if (popup.IsMouseCaptured)
+                {
+                    popup.ReleaseMouseCapture();
+                }
             }
         }
 

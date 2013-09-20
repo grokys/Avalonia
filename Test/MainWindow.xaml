@@ -55,13 +55,13 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
-        </StackPanel>
+        </StackPanel> 
 
         <Button Name="showPopupButton" Grid.Column="3" Grid.Row="1" Click="showPopupButton_Click"
                 VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel>
                 <TextBlock>Show Popup</TextBlock>
-                <Popup Name="popup">
+                <Popup Name="popup" StaysOpen="False">
                     <TextBlock Background="Red">Hello World</TextBlock>
                 </Popup>
             </StackPanel>

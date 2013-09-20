@@ -11,7 +11,7 @@ namespace Avalonia.Platform
     using Avalonia.Media;
 
     [AvaloniaSpecific]
-    public abstract class PlatformPresentationSource : PresentationSource
+    public abstract class PlatformPresentationSource : PresentationSource, IDisposable
     {
         public event EventHandler Closed;
 
@@ -25,9 +25,13 @@ namespace Avalonia.Platform
 
         public abstract DrawingContext CreateDrawingContext();
 
+        public abstract void Dispose();
+
         public abstract Point PointToScreen(Point p);
 
         public abstract void Show();
+
+        public abstract void Hide();
 
         protected void OnClosed()
         {

@@ -47,9 +47,20 @@ namespace Avalonia.Controls.Primitives
         {
             Popup popup = (Popup)sender;
 
-            if (popup.IsOpen && popup.popupRoot == null && popup.Child != null)
+            if (popup.IsOpen)
             {
-                popup.popupRoot = new PopupRoot(popup.GetLocation(), popup.Child);
+                if (popup.popupRoot == null)
+                {
+                    popup.popupRoot = new PopupRoot(popup.GetLocation(), popup.Child);
+                }
+                else
+                {
+                    popup.popupRoot.Show();
+                }
+            }
+            else if (popup.popupRoot != null)
+            {
+                popup.popupRoot.Hide();
             }
         }
 

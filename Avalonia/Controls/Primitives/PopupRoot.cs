@@ -6,6 +6,7 @@
 
 namespace Avalonia.Controls.Primitives
 {
+    using System;
     using System.Windows.Markup;
     using Avalonia.Media;
     using Avalonia.Platform;
@@ -32,6 +33,17 @@ namespace Avalonia.Controls.Primitives
         {
             get;
             private set;
+        }
+        
+        public void Show()
+        {
+            this.PresentationSource.Show();
+            this.InvalidateMeasure();
+        }
+
+        public void Hide()
+        {
+            this.PresentationSource.Hide();
         }
 
         public void DoLayoutPass()

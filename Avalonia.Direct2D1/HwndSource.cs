@@ -20,7 +20,7 @@ namespace Avalonia.Direct2D1
     using SharpDX.DXGI;
     using PixelFormat = SharpDX.Direct2D1.PixelFormat;
 
-    public class HwndSource : PlatformPresentationSource, IDisposable
+    public class HwndSource : PlatformPresentationSource
     {
         private UnmanagedMethods.WndProc wndProcDelegate;
 
@@ -46,6 +46,11 @@ namespace Avalonia.Direct2D1
         public HwndSource(HwndSourceParameters parameters)
         {
             this.Initialize(parameters);
+        }
+
+        ~HwndSource()
+        {
+            this.Dispose();
         }
 
         [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Using Win32 naming for consistency.")]
@@ -141,7 +146,7 @@ namespace Avalonia.Direct2D1
                 this.renderTarget);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             if (this.Handle != IntPtr.Zero)
             {
@@ -149,6 +154,8 @@ namespace Avalonia.Direct2D1
                 UnmanagedMethods.UnregisterClass(this.className, IntPtr.Zero);
                 this.Handle = IntPtr.Zero;
             }
+
+            GC.SuppressFinalize(this);
         }
 
         public override Point PointToScreen(Point p)
@@ -168,6 +175,13 @@ namespace Avalonia.Direct2D1
         {
             this.CreateRenderTarget();
             UnmanagedMethods.ShowWindow(this.Handle, 4);
+        }
+
+        [AvaloniaSpecific]
+        public override void Hide()
+        {
+            this.CreateRenderTarget();
+            UnmanagedMethods.ShowWindow(this.Handle, 0);
         }
 
         private void Initialize(HwndSourceParameters parameters)

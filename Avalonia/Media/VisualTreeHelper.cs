@@ -98,7 +98,7 @@ namespace Avalonia.Media
 
         internal static ITopLevelWindow GetTopLevelWindow(DependencyObject target)
         {
-            DependencyObject o = VisualTreeHelper.GetParent(target);
+            DependencyObject o = target;
 
             while (o != null)
             {

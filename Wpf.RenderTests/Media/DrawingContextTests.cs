@@ -10,6 +10,7 @@
 #endif
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Globalization;
 
     [TestClass]
     public class DrawingContextTests : TestBase
@@ -130,6 +131,48 @@
             this.CompareImages();
         }
 
+        [TestMethod]
+        public void DrawText_16em()
+        {
+            UserControl userControl = new UserControl();
+            userControl.Width = 200;
+            userControl.Height = 200;
+
+            DrawTextControl testControl = new DrawTextControl();
+            testControl.Text = new FormattedText(
+                "Hello World",
+                CultureInfo.InvariantCulture,
+                FlowDirection.LeftToRight,
+                new Typeface("Ariel"),
+                16,
+                new SolidColorBrush(Colors.Black));
+            userControl.Content = testControl;
+
+            this.RenderToFile(userControl);
+            this.CompareImages();
+        }
+
+        [TestMethod]
+        public void DrawText_40em()
+        {
+            UserControl userControl = new UserControl();
+            userControl.Width = 200;
+            userControl.Height = 200;
+
+            DrawTextControl testControl = new DrawTextControl();
+            testControl.Text = new FormattedText(
+                "Hello World",
+                CultureInfo.InvariantCulture,
+                FlowDirection.LeftToRight,
+                new Typeface("Ariel"),
+                40,
+                new SolidColorBrush(Colors.Black));
+            userControl.Content = testControl;
+
+            this.RenderToFile(userControl);
+            this.CompareImages();
+        }
+
         private class DrawRectangleControl : FrameworkElement
         {
             public Brush Brush { get; set; }
@@ -156,6 +199,18 @@
             protected override void OnRender(DrawingContext drawingContext)
             {
                 drawingContext.DrawGeometry(this.Brush, this.Pen, this.Geometry);
+            }
+        }
+
+        private class DrawTextControl : FrameworkElement
+        {
+            public FormattedText Text { get; set; }
+
+            public Point Position { get; set; }
+
+            protected override void OnRender(DrawingContext drawingContext)
+            {
+                drawingContext.DrawText(this.Text, this.Position);
             }
         }
     }

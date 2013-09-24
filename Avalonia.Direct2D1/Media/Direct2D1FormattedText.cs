@@ -7,8 +7,8 @@
 namespace Avalonia.Direct2D1.Media
 {
     using Avalonia.Media;
-using Avalonia.Platform;
-using SharpDX.DirectWrite;
+    using Avalonia.Platform;
+    using SharpDX.DirectWrite;
 
     public class Direct2D1FormattedText : IPlatformFormattedText
     {

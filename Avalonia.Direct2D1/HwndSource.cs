@@ -48,11 +48,6 @@ namespace Avalonia.Direct2D1
             this.Initialize(parameters);
         }
 
-        ~HwndSource()
-        {
-            this.Dispose();
-        }
-
         [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Using Win32 naming for consistency.")]
         public HwndSource(int classStyle, int style, int exStyle, int x, int y, string name, IntPtr parent)
             : this(new HwndSourceParameters
@@ -100,6 +95,11 @@ namespace Avalonia.Direct2D1
                 ParentWindow = parent,
             })
         {
+        }
+
+        ~HwndSource()
+        {
+            this.Dispose();
         }
 
         public override Visual RootVisual { get; set; }

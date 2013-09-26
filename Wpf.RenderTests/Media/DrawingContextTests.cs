@@ -132,42 +132,37 @@
         }
 
         [TestMethod]
-        public void DrawText_16em()
+        public void DrawText_Various_Sizes()
         {
             UserControl userControl = new UserControl();
             userControl.Width = 200;
             userControl.Height = 200;
 
-            DrawTextControl testControl = new DrawTextControl();
-            testControl.Text = new FormattedText(
-                "Hello World",
-                CultureInfo.InvariantCulture,
-                FlowDirection.LeftToRight,
-                new Typeface("Ariel"),
-                16,
-                new SolidColorBrush(Colors.Black));
-            userControl.Content = testControl;
+            Grid container = new Grid();
+            userControl.Content = container;
 
-            this.RenderToFile(userControl);
-            this.CompareImages();
-        }
+            Point p = new Point();
+            double size = 6;
+            
+            while (p.Y < userControl.Height)
+            {
+                FormattedText text = new FormattedText(
+                    "Hello World",
+                    CultureInfo.InvariantCulture,
+                    FlowDirection.LeftToRight,
+                    new Typeface("Ariel"),
+                    size,
+                    new SolidColorBrush(Colors.Black));
 
-        [TestMethod]
-        public void DrawText_40em()
-        {
-            UserControl userControl = new UserControl();
-            userControl.Width = 200;
-            userControl.Height = 200;
+                DrawTextControl testControl = new DrawTextControl();
+                testControl.Text = text;
+                testControl.Position = p;
 
-            DrawTextControl testControl = new DrawTextControl();
-            testControl.Text = new FormattedText(
-                "Hello World",
-                CultureInfo.InvariantCulture,
-                FlowDirection.LeftToRight,
-                new Typeface("Ariel"),
-                40,
-                new SolidColorBrush(Colors.Black));
-            userControl.Content = testControl;
+                p.Y += text.Height;
+                size += size / 2;
+
+                container.Children.Add(testControl);
+            }
 
             this.RenderToFile(userControl);
             this.CompareImages();

@@ -26,7 +26,7 @@ namespace Avalonia.Data
         internal bool cached;
         object cachedValue;
 
-        UnmanagedPropertyChangeHandler updateDataSourceCallback;
+        DependencyPropertyChangedEventHandler updateDataSourceCallback;
 
         internal Binding Binding
         {
@@ -116,8 +116,8 @@ namespace Avalonia.Data
             while (fe != null && source == null)
             {
                 source = fe.FindName(Binding.ElementName);
-                if (source == null && fe.TemplateOwner != null)
-                    fe = (UIElement)fe.TemplateOwner;
+                if (source == null && fe.TemplatedParent != null)
+                    fe = (FrameworkElement)fe.TemplatedParent;
                 else
                     fe = null;
             }
@@ -170,7 +170,7 @@ namespace Avalonia.Data
                 {
                     if (fe != null && Binding.RelativeSource != null && Binding.RelativeSource.Mode == RelativeSourceMode.TemplatedParent)
                     {
-                        PropertyPathWalker.Update(fe.TemplateOwner);
+                        PropertyPathWalker.Update(fe.TemplatedParent);
                     }
                     else
                     {

@@ -13,6 +13,8 @@ namespace Avalonia.Media
     /// </summary>
     public class Visual : DependencyObject
     {
+        internal event EventHandler VisualParentChanged;
+
         /// <summary>
         /// Gets the number of child controls in the visual tree.
         /// </summary>
@@ -112,6 +114,10 @@ namespace Avalonia.Media
         /// <param name="oldParent">The old visual parent.</param>
         protected internal virtual void OnVisualParentChanged(DependencyObject oldParent)
         {
+            if (this.VisualParentChanged != null)
+            {
+                this.VisualParentChanged(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>

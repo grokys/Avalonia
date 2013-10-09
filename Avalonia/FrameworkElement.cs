@@ -144,6 +144,13 @@ namespace Avalonia
                     double.NaN,
                     FrameworkPropertyMetadataOptions.AffectsMeasure));
 
+        public static readonly RoutedEvent LoadedEvent =
+            EventManager.RegisterRoutedEvent(
+                "Loaded",
+                RoutingStrategy.Direct,
+                typeof(RoutedEventHandler),
+                typeof(FrameworkElement));
+
         internal static readonly DependencyProperty TemplatedParentProperty =
             DependencyProperty.Register(
                 "TemplatedParent",
@@ -153,12 +160,20 @@ namespace Avalonia
 
         private bool isInitialized;
 
+        private bool isLoaded;
+
         public FrameworkElement()
         {
             this.Resources = new ResourceDictionary();
         }
 
         public event EventHandler Initialized;
+
+        public event RoutedEventHandler Loaded
+        {
+            add { this.AddHandler(LoadedEvent, value); }
+            remove { this.RemoveHandler(LoadedEvent, value); }
+        }
 
         public double ActualWidth
         {
@@ -202,6 +217,26 @@ namespace Avalonia
                 if (this.isInitialized)
                 {
                     this.OnInitialized(EventArgs.Empty);
+                }
+            }
+        }
+
+        public bool IsLoaded
+        {
+            get
+            {
+                return this.isLoaded;
+            }
+
+            internal set
+            {
+                this.isLoaded = value;
+                
+                if (this.isLoaded)
+                {
+                    RoutedEventArgs e = new RoutedEventArgs(LoadedEvent);
+                    e.OriginalSource = this;
+                    this.RaiseEvent(e);
                 }
             }
         }

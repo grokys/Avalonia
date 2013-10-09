@@ -75,6 +75,7 @@
     <Compile Include="Controls\TextBoxView.cs" />
     <Compile Include="Controls\UIElementCollection.cs" />
     <Compile Include="Controls\UserControl.cs" />
+    <Compile Include="Controls\ValidationError.cs" />
     <Compile Include="Controls\VirtualizingPanel.cs" />
     <Compile Include="ContentElement.cs" />
     <Compile Include="DataTemplateKey.cs" />

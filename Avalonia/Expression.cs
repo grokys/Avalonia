@@ -6,13 +6,34 @@
 
 namespace Avalonia
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    public class Expression
+    public abstract class Expression
     {
+        internal bool Attached
+        {
+            get;
+            private set;
+        }
+
+        internal bool Updating
+        {
+            get;
+            set;
+        }
+
+        internal Expression()
+        {
+        }
+
+        internal abstract object GetValue(DependencyProperty dp);
+
+        internal virtual void OnAttached(DependencyObject element)
+        {
+            Attached = true;
+        }
+
+        internal virtual void OnDetached(DependencyObject element)
+        {
+            Attached = false;
+        }
     }
 }

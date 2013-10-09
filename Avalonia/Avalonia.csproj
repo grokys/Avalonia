@@ -80,6 +80,7 @@
     <Compile Include="DataTemplateKey.cs" />
     <Compile Include="Data\CollectionView.cs" />
     <Compile Include="Data\ICollectionView.cs" />
+    <Compile Include="Data\IValueConverter.cs" />
     <Compile Include="FrameworkContentElement.cs" />
     <Compile Include="FrameworkElementFactory.cs" />
     <Compile Include="GridLength.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Platform\IPlatformBitmapSource.cs" />
     <Compile Include="Platform\IPlatformRenderTargetBitmap.cs" />
     <Compile Include="Platform\IPlatformStreamGeometry.cs" />
+    <Compile Include="PropertyPathConverter.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="Resources\StreamResourceInfo.cs" />
     <Compile Include="Shapes\Path.cs" />

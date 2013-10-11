@@ -314,5 +314,11 @@ namespace Avalonia
         {
             return this.Name.GetHashCode() ^ this.PropertyType.GetHashCode() ^ this.OwnerType.GetHashCode();
         }
+
+        internal object GetDefaultValue(DependencyObject target)
+        {
+            PropertyMetadata metadata = this.GetMetadata(target);
+            return metadata.DefaultValue;
+        }
     }
 }

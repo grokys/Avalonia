@@ -189,10 +189,9 @@ namespace Avalonia
         [AvaloniaSpecific]
         public BindingExpression SetBinding(DependencyProperty dp, Binding binding)
         {
-            PropertyPathParser pathParser = new PropertyPathParser();
             BindingExpression expression = new BindingExpression(binding, this, dp);
             object oldValue = this.GetValue(dp);
-            object newValue = expression.GetValue();
+            object newValue = expression.GetValue(dp);
 
             this.propertyBindings.Add(dp, expression);
             this.SetValueInternal(dp, oldValue, newValue);

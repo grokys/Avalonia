@@ -245,7 +245,10 @@ namespace Avalonia.Data
                         }
                     }
                 };
-                Target.AddPropertyChangedHandler(Property, updateDataSourceCallback);
+
+                ((IObservableDependencyObject)this.Target).AttachPropertyChangedHandler(
+                    this.Property.Name, 
+                    updateDataSourceCallback);
             }
         }
 
@@ -582,9 +585,8 @@ namespace Avalonia.Data
 
         void MaybeEmitError(object message, Exception exception)
         {
-            // If we've databound to a DependencyObject we need to emit
-            // the error on the Mentor, if it has one.
-            var fe = Target as FrameworkElement ?? Target.Mentor;
+            var fe = Target as FrameworkElement;
+
             if (fe == null)
             {
                 return;
@@ -602,28 +604,28 @@ namespace Avalonia.Data
                 CurrentError = null;
 
             // We had an error and now we have a new error
-            if (oldError != null && CurrentError != null)
-            {
-                Validation.AddError(fe, CurrentError);
-                Validation.RemoveError(fe, oldError);
-                if (Binding.NotifyOnValidationError)
-                {
-                    fe.RaiseBindingValidationError(new ValidationErrorEventArgs(ValidationErrorEventAction.Removed, oldError));
-                    fe.RaiseBindingValidationError(new ValidationErrorEventArgs(ValidationErrorEventAction.Added, CurrentError));
-                }
-            }
-            else if (oldError != null)
-            {
-                Validation.RemoveError(fe, oldError);
-                if (Binding.NotifyOnValidationError)
-                    fe.RaiseBindingValidationError(new ValidationErrorEventArgs(ValidationErrorEventAction.Removed, oldError));
-            }
-            else if (CurrentError != null)
-            {
-                Validation.AddError(fe, CurrentError);
-                if (Binding.NotifyOnValidationError)
-                    fe.RaiseBindingValidationError(new ValidationErrorEventArgs(ValidationErrorEventAction.Added, CurrentError));
-            }
+            ////if (oldError != null && CurrentError != null)
+            ////{
+            ////    Validation.AddError(fe, CurrentError);
+            ////    Validation.RemoveError(fe, oldError);
+            ////    if (Binding.NotifyOnValidationError)
+            ////    {
+            ////        fe.RaiseBindingValidationError(new ValidationErrorEventArgs(ValidationErrorEventAction.Removed, oldError));
+            ////        fe.RaiseBindingValidationError(new ValidationErrorEventArgs(ValidationErrorEventAction.Added, CurrentError));
+            ////    }
+            ////}
+            ////else if (oldError != null)
+            ////{
+            ////    Validation.RemoveError(fe, oldError);
+            ////    if (Binding.NotifyOnValidationError)
+            ////        fe.RaiseBindingValidationError(new ValidationErrorEventArgs(ValidationErrorEventAction.Removed, oldError));
+            ////}
+            ////else if (CurrentError != null)
+            ////{
+            ////    Validation.AddError(fe, CurrentError);
+            ////    if (Binding.NotifyOnValidationError)
+            ////        fe.RaiseBindingValidationError(new ValidationErrorEventArgs(ValidationErrorEventAction.Added, CurrentError));
+            ////}
         }
 
         internal void TryUpdateSourceObject(object value)

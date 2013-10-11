@@ -10,7 +10,7 @@ namespace Avalonia.Data
 {
     class StandardPropertyPathNode : PropertyPathNode, IListenPropertyChanged
     {
-        WeakPropertyChangedListener Listener
+        new WeakPropertyChangedListener Listener
         {
             get;
             set;

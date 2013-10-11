@@ -14,119 +14,123 @@ namespace Avalonia.Data
     using System.Text;
     using System.Threading.Tasks;
 
-    /// <summary>
-    /// Parses a property path into a set of <see cref="PropertyPathToken"/>s.
-    /// </summary>
-    internal class PropertyPathParser : IPropertyPathParser
+    internal class PropertyPathParser
     {
-        /// <summary>
-        /// Parses the property path.
-        /// </summary>
-        /// <param name="source">The source object at which the property path starts.</param>
-        /// <param name="path">The property path.</param>
-        /// <returns>
-        /// A chain of <see cref="PropertyPathToken"/>s describing the objects referred to in the
-        /// property path.
-        /// </returns>
-        public IEnumerable<PropertyPathToken> Parse(object source, string path)
+        string Path
         {
-            Validate(source, path);
+            get;
+            set;
+        }
 
-            StringReader reader = new StringReader(path);
-            string token = string.Empty;
-            int read;
-            char c;
+        public PropertyPathParser(string path)
+        {
+            Path = path;
+        }
 
-            if (!string.IsNullOrWhiteSpace(path))
+        public PropertyNodeType Step(out string typeName, out string propertyName, out string index)
+        {
+            var type = PropertyNodeType.None;
+            if (Path.Length == 0)
             {
-                do
+                typeName = null;
+                propertyName = null;
+                index = null;
+                return type;
+            }
+
+            int end;
+            if (Path.StartsWith("("))
+            {
+                type = PropertyNodeType.AttachedProperty;
+                end = Path.IndexOf(")");
+                if (end == -1)
+                    throw new ArgumentException("Invalid property path. Attached property is missing the closing bracket");
+
+                int splitIndex;
+                int tick_open = Path.IndexOf('\'');
+                int tick_close = 0;
+
+                int type_open;
+                int type_close;
+                int prop_open;
+                int prop_close;
+
+                type_open = Path.IndexOf('\'');
+                if (type_open > 0)
                 {
-                    read = reader.Read();
-                    c = (char)read;
 
-                    if (read == -1 || c == '.')
-                    {
-                        object next;
-                        bool found = GetPropertyValue(source, token, out next);
+                    // move past the ' char
+                    ++type_open;
 
-                        yield return new PropertyPathToken
-                        {
-                            Type = found ? PropertyPathTokenType.Valid : PropertyPathTokenType.Broken,
-                            Object = source,
-                            PropertyName = token,
-                        };
+                    type_close = Path.IndexOf('\'', type_open + 1);
+                    if (type_close < 0)
+                        throw new Exception(String.Format("Invalid property path, Unclosed type name '{0}'.", Path));
 
-                        if (!found)
-                        {
-                            yield break;
-                        }
+                    prop_open = Path.IndexOf('.', type_close);
+                    if (prop_open < 0)
+                        throw new Exception(String.Format("Invalid properth path, No property indexer found '{0}'.", Path));
 
-                        source = next;
-                        token = string.Empty;
-                    }
+                    // move past the . char
+                    ++prop_open;
+                }
+                else
+                {
+                    type_open = 1;
+
+                    type_close = Path.IndexOf('.', type_open);
+                    if (type_close < 0)
+                        throw new Exception(String.Format("Invalid property path, No property indexer found on '{0}'.", Path));
+
+                    prop_open = type_close + 1;
+                }
+
+                prop_close = end;
+
+                typeName = Path.Substring(type_open, type_close - type_open);
+                propertyName = Path.Substring(prop_open, prop_close - prop_open);
+
+                index = null;
+                if (Path.Length > (end + 1) && Path[end + 1] == '.')
+                    end++;
+                Path = Path.Substring(end + 1);
+            }
+            else if (Path.StartsWith("["))
+            {
+                type = PropertyNodeType.Indexed;
+                end = Path.IndexOf("]");
+
+                typeName = null;
+                propertyName = null;
+                index = Path.Substring(1, end - 1);
+                Path = Path.Substring(end + 1);
+                // You can do stuff like: [someIndex].SomeProp
+                // as well as: [SomeIndex]SomeProp
+                if (Path.StartsWith("."))
+                    Path = Path.Substring(1);
+            }
+            else
+            {
+                type = PropertyNodeType.Property;
+                end = Path.IndexOfAny(new char[] { '.', '[' });
+                if (end == -1)
+                {
+                    propertyName = Path;
+                    Path = "";
+                }
+                else
+                {
+                    propertyName = Path.Substring(0, end);
+                    if (Path[end] == '.')
+                        Path = Path.Substring(end + 1);
                     else
-                    {
-                        token += c;
-                    }
+                        Path = Path.Substring(end);
                 }
-                while (read != -1);
+
+                typeName = null;
+                index = null;
             }
 
-            yield return new PropertyPathToken
-            {
-                Type = PropertyPathTokenType.FinalValue,
-                Object = source,
-            };
-        }
-
-        private static bool GetPropertyValue(object source, string name, out object value)
-        {
-            if (source != null)
-            {
-                PropertyInfo p = source.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
-
-                if (p != null)
-                {
-                    value = p.GetValue(source);
-                    return true;
-                }
-            }
-
-            value = null;
-            return false;
-        }
-
-        /// <summary>
-        /// Validates the arguments to <see cref="Parse."/>
-        /// </summary>
-        /// <param name="source">The source object at which the property path starts.</param>
-        /// <param name="path">The property path.</param>
-        private static void Validate(object source, string path)
-        {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
-            else if (path == null)
-            {
-                throw new ArgumentNullException("path");
-            }
-            else if (path.Contains('['))
-            {
-                throw new NotSupportedException("Property path indexers not yet supported.");
-            }
-            else if (path.Contains('('))
-            {
-                throw new NotSupportedException("Partially qualified property paths not yet supported.");
-            }
-            else if (path.Contains('/'))
-            {
-                throw new NotSupportedException("Source traversal in property paths not yet supported.");
-            }
-            else if (path.Contains('\\') || path.Contains('^'))
-            {
-                throw new NotSupportedException("Escape characters in property paths not yet supported.");
-            }
+            return type;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Avalonia.Controls
             this.caretTimer.Start();
         }
 
-        public void LostFocus()
+        public void HandleLostFocus()
         {
             this.caretTimer.Stop();
             this.InvalidateVisual();

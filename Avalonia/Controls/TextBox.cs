@@ -79,7 +79,7 @@ namespace Avalonia.Controls
 
         protected override void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs e)
         {
-            this.textBoxView.LostFocus();
+            this.textBoxView.HandleLostFocus();
             base.OnLostKeyboardFocus(e);
         }
 

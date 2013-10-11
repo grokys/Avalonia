@@ -51,6 +51,13 @@ namespace Avalonia
                 typeof(bool),
                 typeof(UIElement));
 
+        public static readonly RoutedEvent LostFocusEvent =
+            EventManager.RegisterRoutedEvent(
+                "LostFocus",
+                RoutingStrategy.Direct,
+                typeof(RoutedEventHandler),
+                typeof(UIElement));
+
         public static readonly RoutedEvent GotKeyboardFocusEvent =
             Keyboard.GotKeyboardFocusEvent.AddOwner(typeof(UIElement));
 
@@ -101,6 +108,12 @@ namespace Avalonia
         {
             add { this.AddHandler(KeyDownEvent, value); }
             remove { this.RemoveHandler(KeyDownEvent, value); }
+        }
+
+        public event RoutedEventHandler LostFocus
+        {
+            add { this.AddHandler(LostFocusEvent, value); }
+            remove { this.RemoveHandler(LostFocusEvent, value); }
         }
 
         public event MouseEventHandler MouseEnter

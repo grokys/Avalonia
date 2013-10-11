@@ -1,0 +1,15 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="IListenEventRaised.cs" company="Steven Kirk">
+// Copyright 2013 MIT Licence. See licence.md for more information.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Avalonia.Utils
+{
+    using System;
+
+    internal interface IListenEventRaised
+    {
+        void OnEventRaised(object o, EventArgs e);
+    }
+}

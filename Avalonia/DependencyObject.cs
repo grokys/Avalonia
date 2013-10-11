@@ -190,7 +190,7 @@ namespace Avalonia
         public BindingExpression SetBinding(DependencyProperty dp, Binding binding)
         {
             PropertyPathParser pathParser = new PropertyPathParser();
-            BindingExpression expression = new BindingExpression(pathParser, this, dp, binding);
+            BindingExpression expression = new BindingExpression(binding, this, dp);
             object oldValue = this.GetValue(dp);
             object newValue = expression.GetValue();
 
@@ -247,10 +247,9 @@ namespace Avalonia
             }
         }
 
-        internal static DependencyProperty GetPropertyFromName(Type type, string name)
+        internal static bool TryGetPropertyFromName(Type type, string name, out DependencyProperty result)
         {
             Dictionary<string, DependencyProperty> list;
-            DependencyProperty result;
             Type t = type;
 
             while (t != null)
@@ -259,17 +258,30 @@ namespace Avalonia
                 {
                     if (list.TryGetValue(name, out result))
                     {
-                        return result;
+                        return true;
                     }
                 }
 
                 t = t.BaseType;
             }
 
-            throw new KeyNotFoundException(string.Format(
-                "Dependency property '{0}' could not be found on type '{1}'.",
-                name,
-                type.FullName));
+            result = null;
+            return false;
+        }
+
+        internal static DependencyProperty GetPropertyFromName(Type type, string name)
+        {
+            DependencyProperty result;
+
+            if (!TryGetPropertyFromName(type, name, out result))
+            {
+                throw new KeyNotFoundException(string.Format(
+                    "Dependency property '{0}' could not be found on type '{1}'.",
+                    name,
+                    type.FullName));
+            }
+
+            return result;
         }
 
         internal static void Register(Type t, DependencyProperty dp)

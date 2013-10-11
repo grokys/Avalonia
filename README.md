@@ -25,3 +25,5 @@ Implemented to some extent so far:
 - Routed events
 - Triggers
 - RenderTargetBitmap
+
+Follow development on Twitter: https://twitter.com/grokys

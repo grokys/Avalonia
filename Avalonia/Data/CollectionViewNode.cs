@@ -22,7 +22,7 @@ namespace Avalonia.Data
             set;
         }
 
-        PropertyChangedEventHandler ViewChangedHandler
+        DependencyPropertyChangedEventHandler ViewChangedHandler
         {
             get;
             set;
@@ -45,7 +45,9 @@ namespace Avalonia.Data
             view = oldSource as ICollectionView;
             if (source != null)
             {
-                source.RemovePropertyChangedHandler(CollectionViewSource.ViewProperty, ViewChangedHandler);
+                ((IObservableDependencyObject)source).RemovePropertyChangedHandler(
+                    CollectionViewSource.ViewProperty.Name, 
+                    ViewChangedHandler);
                 DisconnectViewHandlers(source.View);
             }
             else if (view != null)
@@ -57,7 +59,9 @@ namespace Avalonia.Data
             view = newSource as ICollectionView;
             if (source != null)
             {
-                source.AddPropertyChangedHandler(CollectionViewSource.ViewProperty, ViewChangedHandler);
+                ((IObservableDependencyObject)source).AttachPropertyChangedHandler(
+                    CollectionViewSource.ViewProperty.Name, 
+                    ViewChangedHandler);
                 ConnectViewHandlers(source.View);
             }
             else if (view != null)

@@ -81,8 +81,6 @@
     <Compile Include="..\Wpf.UnitTests\UIElement_MeasureArrangeTests.cs">
       <Link>UIElement_MeasureArrangeTests.cs</Link>
     </Compile>
-    <Compile Include="Data\BindingExpressionTests.cs" />
-    <Compile Include="Data\PropertyPathParserTests.cs" />
     <Compile Include="Media\PathMarkupParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -100,6 +98,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="Shapes\" />
   </ItemGroup>
   <Choose>

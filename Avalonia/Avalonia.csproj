@@ -73,6 +73,7 @@
     <Compile Include="Controls\Primitives\TextBoxBase.cs" />
     <Compile Include="Controls\TextBox.cs" />
     <Compile Include="Controls\TextBoxView.cs" />
+    <Compile Include="Controls\TypeConverters.cs" />
     <Compile Include="Controls\UIElementCollection.cs" />
     <Compile Include="Controls\UserControl.cs" />
     <Compile Include="Controls\ValidationError.cs" />
@@ -82,13 +83,19 @@
     <Compile Include="Data\CollectionView.cs" />
     <Compile Include="Data\CollectionViewGroup.cs" />
     <Compile Include="Data\CollectionViewNode.cs" />
+    <Compile Include="Data\CollectionViewSource.cs" />
     <Compile Include="Data\CurrentChangingEventArgs.cs" />
+    <Compile Include="Data\Deferrer.cs" />
     <Compile Include="Data\EditableCollectionView.cs" />
     <Compile Include="Data\EnumerableCollectionView.cs" />
+    <Compile Include="Data\FilterEventArgs.cs" />
     <Compile Include="Data\GroupDescription.cs" />
+    <Compile Include="Data\GroupEnumerator.cs" />
     <Compile Include="Data\ICollectionView.cs" />
+    <Compile Include="Data\ICollectionViewFactory.cs" />
     <Compile Include="Data\IDeferRefresh.cs" />
     <Compile Include="Data\IEditableCollectionView.cs" />
+    <Compile Include="Data\IndexedPropertyPathNode.cs" />
     <Compile Include="Data\INPCProperty.cs" />
     <Compile Include="Data\IPropertyPathNode.cs" />
     <Compile Include="Data\IValueConverter.cs" />
@@ -125,6 +132,8 @@
     <Compile Include="Media\Imaging\PngBitmapDecoder.cs" />
     <Compile Include="Media\Imaging\JpegBitmapDecoder.cs" />
     <Compile Include="Media\Stretch.cs" />
+    <Compile Include="MoonlightTypeConverter.cs" />
+    <Compile Include="NullableBoolConverter.cs" />
     <Compile Include="Platform\BitmapContainerFormat.cs" />
     <Compile Include="Platform\IPlatformBitmapEncoder.cs" />
     <Compile Include="Platform\IPlatformBitmapDecoder.cs" />
@@ -271,6 +280,7 @@
     <Compile Include="UIElement.cs" />
     <Compile Include="UIPropertyMetadata.cs" />
     <Compile Include="Utils\DoubleKeyedDictionary.cs" />
+    <Compile Include="Utils\Helper.cs" />
     <Compile Include="Utils\IListenCollectionChanged.cs" />
     <Compile Include="Utils\IListenEventRaised.cs" />
     <Compile Include="Utils\IListenINPC.cs" />
@@ -279,6 +289,8 @@
     <Compile Include="Utils\ObservableList.cs" />
     <Compile Include="Utils\PackUri.cs" />
     <Compile Include="Utils\WeakCollectionChangedListener.cs" />
+    <Compile Include="Utils\WeakCurrentChangedListener.cs" />
+    <Compile Include="Utils\WeakEventListener.cs" />
     <Compile Include="Utils\WeakINPCListener.cs" />
     <Compile Include="Utils\WeakPropertyChangedListener.cs" />
     <Compile Include="Vector.cs" />

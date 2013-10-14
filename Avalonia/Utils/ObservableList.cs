@@ -64,6 +64,11 @@ namespace Avalonia.Utils
             }
         }
 
+        public int BinarySearch(T item, IComparer<T> comparer)
+        {
+            return List.BinarySearch(item, comparer);
+        }
+
         public int BinarySearch(int index, int count, T item, IComparer<T> comparer)
         {
             return List.BinarySearch(index, count, item, comparer);

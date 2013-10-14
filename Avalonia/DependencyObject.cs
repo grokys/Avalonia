@@ -158,7 +158,7 @@ namespace Avalonia
             if (this.propertyBindings.TryGetValue(dp, out binding))
             {
                 object oldValue = this.GetValue(dp);
-                object newValue = binding.GetValue();
+                object newValue = binding.GetValue(dp);
                 this.SetValueInternal(dp, oldValue, newValue);
             }
         }

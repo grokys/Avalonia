@@ -16,6 +16,7 @@ namespace Avalonia.Data
     using System.Text;
     using System.Threading.Tasks;
     using Avalonia.Controls;
+    using Avalonia.Utils;
 
     public abstract class BindingExpressionBase : Expression
     {
@@ -224,7 +225,8 @@ namespace Avalonia.Data
                 ((TextBox)Target).LostFocus += TextBoxLostFocus;
 
             var targetFE = element as FrameworkElement;
-            if (Binding.Mode == BindingMode.TwoWay && Property is CustomDependencyProperty)
+
+            if (Binding.Mode == BindingMode.TwoWay)
             {
                 updateDataSourceCallback = delegate
                 {
@@ -674,10 +676,10 @@ namespace Avalonia.Data
             {
                 // If the user calls BindingExpresion.UpdateSource (), we must update regardless of focus state.
                 // Otherwise we only update if the textbox is unfocused.
-                if (!force && TwoWayTextBoxText && System.Windows.Input.FocusManager.GetFocusedElement() == Target)
-                {
-                    return;
-                }
+                ////if (!force && TwoWayTextBoxText && System.Windows.Input.FocusManager.GetFocusedElement() == Target)
+                ////{
+                ////    return;
+                ////}
 
                 if (PropertyPathWalker.IsPathBroken)
                 {

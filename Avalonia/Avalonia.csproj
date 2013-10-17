@@ -79,7 +79,10 @@
     <Compile Include="ContentElement.cs" />
     <Compile Include="DataTemplateKey.cs" />
     <Compile Include="Data\CollectionView.cs" />
+    <Compile Include="Data\CollectionViewSource.cs" />
+    <Compile Include="Data\EnumerableCollectionView.cs" />
     <Compile Include="Data\ICollectionView.cs" />
+    <Compile Include="Data\ListCollectionView.cs" />
     <Compile Include="FrameworkContentElement.cs" />
     <Compile Include="FrameworkElementFactory.cs" />
     <Compile Include="GridLength.cs" />

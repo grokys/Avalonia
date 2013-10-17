@@ -9,6 +9,7 @@ namespace Avalonia.Controls
     using System;
     using System.Collections.Specialized;
 
+    // TODO: Should be derived from CollectionView
     public sealed class ItemCollection : AvaloniaCollection<object>
     {
         public ItemCollection()

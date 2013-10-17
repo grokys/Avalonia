@@ -18,7 +18,7 @@ namespace Avalonia.Controls
     using Avalonia.Utils;
 
     [ContentProperty("Items")]
-    public class ItemsControl : Control, IListenCollectionChanged
+    public class ItemsControl : Control
     {
         public static readonly DependencyProperty DisplayMemberPathProperty =
             DependencyProperty.Register(
@@ -66,28 +66,15 @@ namespace Avalonia.Controls
             this.ItemContainerGenerator = new ItemContainerGenerator(this);
             this.ItemContainerGenerator.ItemsChanged += this.OnItemContainerGeneratorChanged;
 
-            // Ensure that the collection is created so it can be databound to without
-            // having to touch the CLR wrapper property first.
-            GC.KeepAlive(this.Items);
+            ItemCollection items = new ItemCollection();
+            ((INotifyCollectionChanged)items).CollectionChanged += (s, e) => this.OnItemsChanged(e);
+            this.itemsIsDataBound = false;
+            this.SetValue(ItemsProperty, items);
         }
 
         public ItemCollection Items
         {
-            get
-            {
-                ItemCollection items = (ItemCollection)this.GetValue(ItemsProperty);
-
-                if (items == null)
-                {
-                    items = new ItemCollection();
-                    this.itemsIsDataBound = false;
-                    items.ItemsChanged += this.InvokeItemsChanged;
-                    items.Clearing += this.OnItemsClearing;
-                    this.SetValue(ItemsProperty, items);
-                }
-
-                return items;
-            }
+            get { return (ItemCollection)this.GetValue(ItemsProperty); }
         }
 
         public string DisplayMemberPath
@@ -135,12 +122,6 @@ namespace Avalonia.Controls
         internal Panel Panel
         {
             get { return this.itemsPresenter == null ? null : this.itemsPresenter.Child; }
-        }
-
-        private IWeakListener CollectionListener
-        {
-            get;
-            set;
         }
 
         private DataTemplate DisplayMemberTemplate
@@ -213,44 +194,6 @@ namespace Avalonia.Controls
             }
         }
 
-        void IListenCollectionChanged.CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    for (int i = 0; i < e.NewItems.Count; i++)
-                    {
-                        this.Items.InsertInternal(e.NewStartingIndex + i, e.NewItems[i]);
-                    }
-
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    for (int i = 0; i < e.OldItems.Count; i++)
-                    {
-                        this.Items.RemoveAtInternal(e.OldStartingIndex);
-                    }
-                    
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    for (int i = 0; i < e.NewItems.Count; i++)
-                    {
-                        this.Items.SetItemInternal(e.NewStartingIndex + i, e.NewItems[i]);
-                    }
-
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    this.Items.ClearInternal();
-                    foreach (var v in this.ItemsSource)
-                    {
-                        this.Items.AddInternal(v);
-                    }
-
-                    break;
-            }
-
-            this.OnItemsChanged(e);
-        }
-
         internal void ClearContainerForItem(DependencyObject element, object item)
         {
             this.ClearContainerForItemOverride(element, item);
@@ -268,29 +211,10 @@ namespace Avalonia.Controls
 
         internal virtual void OnItemsSourceChanged(IEnumerable oldSource, IEnumerable newSource)
         {
-            if (this.CollectionListener != null)
-            {
-                this.CollectionListener.Detach();
-                this.CollectionListener = null;
-            }
-
             if (newSource != null)
             {
-                if (newSource is INotifyCollectionChanged)
-                {
-                    this.CollectionListener = new WeakCollectionChangedListener(
-                        (INotifyCollectionChanged)newSource,
-                        this);
-                }
-
-                this.Items.SetIsReadOnly(true);
                 this.itemsIsDataBound = true;
-                this.Items.ClearInternal();
-
-                foreach (object v in newSource)
-                {
-                    this.Items.AddInternal(v);
-                }
+                this.Items.SetSource(newSource);
 
                 // Setting itemsIsDataBound to true prevents normal notifications from propagating, so do it manually here
                 this.OnItemsChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
@@ -298,14 +222,8 @@ namespace Avalonia.Controls
             else
             {
                 this.itemsIsDataBound = false;
-                this.Items.SetIsReadOnly(false);
-                this.Items.ClearInternal();
+                this.Items.SetSource(null);
             }
-
-            // Yes this is stupid and shouldn't be here, but DRT 348 sets an empty collection as the ItemsSource
-            // and expects the LayoutUpdated event to be raised. This is the only way that makes sense for this
-            // to happen. It's all very strange.
-            this.InvalidateMeasure();
         }
 
         internal virtual void OnItemTemplateChanged(DataTemplate oldValue, DataTemplate newValue)
@@ -315,7 +233,7 @@ namespace Avalonia.Controls
             for (int i = 0; i < count; i++)
             {
                 this.UpdateContentTemplateOnContainer(
-                    this.ItemContainerGenerator.ContainerFromIndex(i), 
+                    this.ItemContainerGenerator.ContainerFromIndex(i),
                     this.Items[i]);
             }
         }
@@ -419,11 +337,6 @@ namespace Avalonia.Controls
             {
                 this.UpdateContentTemplateOnContainer(ItemContainerGenerator.ContainerFromIndex(i), this.Items[i]);
             }
-        }
-
-        private void OnItemsClearing(object o, EventArgs e)
-        {
-            this.SetLogicalParent(null, this.Items);
         }
 
         private void OnItemContainerGeneratorChanged(object sender, ItemsChangedEventArgs e)

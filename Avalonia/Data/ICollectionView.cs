@@ -11,5 +11,6 @@ namespace Avalonia.Data
 
     public interface ICollectionView : IEnumerable, INotifyCollectionChanged
     {
+        IEnumerable SourceCollection { get; }
     }
 }

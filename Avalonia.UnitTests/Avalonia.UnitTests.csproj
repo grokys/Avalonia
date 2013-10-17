@@ -60,6 +60,9 @@
     <Compile Include="..\Wpf.UnitTests\Controls\ContentControl_MeasureArrangeTests.cs">
       <Link>Controls\ContentControl_MeasureArrangeTests.cs</Link>
     </Compile>
+    <Compile Include="..\Wpf.UnitTests\Controls\ItemsControlTests.cs">
+      <Link>Controls\ItemsControlTests.cs</Link>
+    </Compile>
     <Compile Include="..\Wpf.UnitTests\Data\CollectionViewSourceTests.cs">
       <Link>Data\CollectionViewSourceTests.cs</Link>
     </Compile>

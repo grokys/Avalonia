@@ -10,7 +10,7 @@ namespace Avalonia.Data
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
 
-    public class CollectionViewSource
+    public class CollectionViewSource : DependencyObject
     {
         private static ConditionalWeakTable<object, ICollectionView> defaultViews =
             new ConditionalWeakTable<object, ICollectionView>();

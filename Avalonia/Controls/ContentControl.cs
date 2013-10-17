@@ -20,7 +20,8 @@ namespace Avalonia.Controls
                 typeof(ContentControl),
                 new FrameworkPropertyMetadata(
                     null,
-                    FrameworkPropertyMetadataOptions.AffectsMeasure));
+                    FrameworkPropertyMetadataOptions.AffectsMeasure,
+                    ContentPropertyChanged));
 
         public static readonly DependencyProperty ContentTemplateProperty =
             DependencyProperty.Register(
@@ -81,6 +82,11 @@ namespace Avalonia.Controls
             }
 
             return base.ArrangeOverride(finalSize);
+        }
+
+        private static void ContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((ContentControl)d).IsInitialized = true;
         }
     }
 }

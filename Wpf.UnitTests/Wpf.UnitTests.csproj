@@ -54,6 +54,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Controls\ContentControlTests.cs" />
     <Compile Include="Controls\ContentControl_MeasureArrangeTests.cs" />
     <Compile Include="DependencyObjectTests_Inheritance.cs" />
     <Compile Include="DependencyPropertyTests_AddOwner.cs" />

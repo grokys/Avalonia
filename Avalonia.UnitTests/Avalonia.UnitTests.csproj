@@ -54,6 +54,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="..\Wpf.UnitTests\Controls\ContentControlTests.cs">
+      <Link>Controls\ContentControlTests.cs</Link>
+    </Compile>
     <Compile Include="..\Wpf.UnitTests\Controls\ContentControl_MeasureArrangeTests.cs">
       <Link>Controls\ContentControl_MeasureArrangeTests.cs</Link>
     </Compile>

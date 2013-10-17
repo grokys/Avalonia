@@ -17,9 +17,9 @@ namespace Avalonia.Data
 
         public static ICollectionView GetDefaultView(object source)
         {
-            ICollectionView result;
+            ICollectionView result = null;
 
-            if (!defaultViews.TryGetValue(source, out result))
+            if (source != null && !defaultViews.TryGetValue(source, out result))
             {
                 IList list = source as IList;
                 IEnumerable enumerable = source as IEnumerable;

@@ -16,7 +16,9 @@ namespace Avalonia.Data
 
     public class CollectionView : DispatcherObject, ICollectionView, INotifyPropertyChanged
     {
-        private List<object> items;
+        private object currentItem;
+
+        private int currentPosition;
 
         private NotifyCollectionChangedEventHandler collectionChanged;
 
@@ -24,7 +26,19 @@ namespace Avalonia.Data
 
         public CollectionView(IEnumerable collection)
         {
-            this.SetSource(collection);
+            if (collection == null)
+            {
+                throw new ArgumentNullException("collection");
+            }
+
+            this.SourceCollection = collection;
+
+            if (collection != null)
+            {
+                this.currentItem = collection.Cast<object>().FirstOrDefault();
+            }
+
+            this.currentPosition = (this.currentItem != null) ? 0 : -1;
         }
 
         event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
@@ -39,9 +53,40 @@ namespace Avalonia.Data
             remove { this.propertyChanged -= value; }
         }
 
+        public virtual bool CanFilter 
+        {
+            get { return true; }
+        }
+
+        public virtual bool CanGroup
+        {
+            get { return false; }
+        }
+
+        public virtual bool CanSort
+        {
+            get { return false; }
+        }
+
         public virtual int Count 
         {
-            get { return this.items.Count; }
+            get { return this.SourceCollection.Cast<object>().Count(); }
+        }
+
+        public virtual object CurrentItem
+        {
+            get { return this.currentItem; }
+        }
+
+        public virtual int CurrentPosition
+        {
+            get { return this.currentPosition; }
+        }
+
+        public virtual Predicate<Object> Filter 
+        { 
+            get; 
+            set; 
         }
 
         public virtual IEnumerable SourceCollection
@@ -50,20 +95,44 @@ namespace Avalonia.Data
             private set;
         }
 
-        internal List<object> Items
-        {
-            get { return this.items; }
-        }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.SourceCollection.GetEnumerator();
+            if (this.Filter == null)
+            {
+                return this.SourceCollection.GetEnumerator();
+            }
+            else
+            {
+                return this.SourceCollection
+                    .Cast<object>()
+                    .Where(x => this.Filter(x))
+                    .GetEnumerator();
+            }
         }
 
-        internal void SetSource(IEnumerable source)
+        public virtual bool MoveCurrentToNext()
         {
-            this.items = new List<object>(source.Cast<object>());
-            this.SourceCollection = source;
+            IEnumerator e = this.SourceCollection.GetEnumerator();
+            int next = this.currentPosition + 1;
+
+            for (int i = -1; i < next; ++i)
+            {
+                if (!e.MoveNext())
+                {
+                    if (i > -1)
+                    {
+                        // Ummm? According to unit tests, this is what WPF does.
+                        this.currentPosition = next;
+                    }
+
+                    this.currentItem = null;
+                    return false;
+                }
+            }
+
+            this.currentItem = e.Current;
+            this.currentPosition = next;
+            return true;
         }
     }
 }

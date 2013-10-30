@@ -40,8 +40,8 @@ namespace Avalonia.Controls
         public Object this[int index] 
         {
             get 
-            { 
-                return this.Items[index]; 
+            {
+                throw new NotImplementedException();
             }
 
             set
@@ -62,12 +62,12 @@ namespace Avalonia.Controls
             if (source != null)
             {
                 this.internalList = null;
-                base.SetSource(source);
+                //base.SetSource(source);
             }
             else if (this.internalList == null)
             {
                 this.internalList = new ObservableCollection<object>();
-                base.SetSource(this.internalList);
+                //base.SetSource(this.internalList);
             }
         }
 

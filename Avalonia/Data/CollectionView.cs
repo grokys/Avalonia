@@ -32,13 +32,15 @@ namespace Avalonia.Data
             }
 
             this.SourceCollection = collection;
-
-            if (collection != null)
-            {
-                this.currentItem = collection.Cast<object>().FirstOrDefault();
-            }
-
+            this.currentItem = collection.Cast<object>().FirstOrDefault();
             this.currentPosition = (this.currentItem != null) ? 0 : -1;
+
+            INotifyCollectionChanged incc = collection as INotifyCollectionChanged;
+
+            if (incc != null)
+            {
+                incc.CollectionChanged += OnCollectionChanged;
+            }
         }
 
         event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
@@ -165,6 +167,24 @@ namespace Avalonia.Data
             this.currentItem = e.Current;
             this.currentPosition = next;
             return true;
+        }
+
+        protected void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            this.ProcessCollectionChanged(args);
+            this.OnCollectionChanged(args);
+        }
+
+        protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
+        {
+            if (this.collectionChanged != null)
+            {
+                this.collectionChanged(this, args);
+            }
+        }
+
+        protected virtual void ProcessCollectionChanged(NotifyCollectionChangedEventArgs args)
+        {
         }
     }
 }

@@ -12,6 +12,7 @@
     using System.Collections.ObjectModel;
     using System.Collections.Generic;
     using System;
+    using System.Collections.Specialized;
 
     [TestClass]
     public class CollectionViewTests
@@ -301,6 +302,69 @@
             Assert.IsFalse(target.MoveCurrentToNext());
             Assert.AreEqual(null, target.CurrentItem);
             Assert.AreEqual(2, target.CurrentPosition);
+        }
+
+        [TestMethod]
+        public void CollectionChanged_Is_Raised_If_Source_Implements_INotifyCollectionChanged()
+        {
+            ObservableCollection<int> source = new ObservableCollection<int>();
+            CollectionView target = new CollectionView(source);
+            object sender = null;
+
+            ((INotifyCollectionChanged)target).CollectionChanged += (s, e) => sender = s;
+            source.Add(1);
+
+            Assert.AreSame(sender, target);
+        }
+
+        [TestMethod]
+        public void Calling_OnCollectionChanged_Doesnt_Call_ProcessCollectionChanged()
+        {
+            List<int> source = new List<int> { 1, 2 };
+            TestCollectionView target = new TestCollectionView(source);
+
+            target.CallOnCollectionChanged(
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+
+            Assert.IsFalse(target.ProcessCollectionChangedCalled);
+        }
+
+        [TestMethod]
+        public void Calling_OnCollectionChanged_Event_Handler_Calls_ProcessCollectionChanged()
+        {
+            List<int> source = new List<int> { 1, 2 };
+            TestCollectionView target = new TestCollectionView(source);
+
+            target.CallOnCollectionChanged(
+                source, 
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+
+            Assert.IsTrue(target.ProcessCollectionChangedCalled);
+        }
+
+        private class TestCollectionView : CollectionView
+        {
+            public TestCollectionView(IEnumerable collection)
+                : base(collection)
+            {
+            }
+
+            public bool ProcessCollectionChangedCalled { get; set; }
+
+            public void CallOnCollectionChanged(NotifyCollectionChangedEventArgs args)
+            {
+                this.OnCollectionChanged(args);
+            }
+
+            public void CallOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+            {
+                this.OnCollectionChanged(sender, args);
+            }
+
+            protected override void ProcessCollectionChanged(NotifyCollectionChangedEventArgs args)
+            {
+                this.ProcessCollectionChangedCalled = true;
+            }
         }
     }
 }

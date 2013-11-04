@@ -110,6 +110,38 @@ namespace Avalonia.Data
             }
         }
 
+        public virtual bool MoveCurrentToFirst()
+        {
+            if (this.SourceCollection.Cast<object>().Any())
+            {
+                this.currentPosition = 0;
+                this.currentItem = this.SourceCollection.Cast<object>().First();
+                return true;
+            }
+            else
+            {
+                this.currentPosition = -1;
+                this.currentItem = null;
+                return false;
+            }
+        }
+
+        public virtual bool MoveCurrentToLast()
+        {
+            if (this.SourceCollection.Cast<object>().Any())
+            {
+                this.currentPosition = this.SourceCollection.Cast<object>().Count() - 1;
+                this.currentItem = this.SourceCollection.Cast<object>().Last();
+                return true;
+            }
+            else
+            {
+                this.currentPosition = -1;
+                this.currentItem = null;
+                return false;
+            }
+        }
+
         public virtual bool MoveCurrentToNext()
         {
             IEnumerator e = this.SourceCollection.GetEnumerator();

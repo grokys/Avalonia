@@ -9,8 +9,10 @@ namespace Avalonia.Data
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.ComponentModel;
+    using System.Globalization;
     using System.Linq;
     using Avalonia.Threading;
 
@@ -32,9 +34,18 @@ namespace Avalonia.Data
             }
 
             this.SourceCollection = collection;
-            this.currentItem = collection.Cast<object>().FirstOrDefault();
-            this.currentPosition = (this.currentItem != null) ? 0 : -1;
 
+            if (collection.Cast<object>().Any())
+            {
+                this.currentItem = collection.Cast<object>().First();
+                this.currentPosition = 0;
+            }
+            else
+            {
+                this.currentPosition = -1;
+                this.IsCurrentAfterLast = this.IsCurrentBeforeFirst = true;
+            }
+            
             INotifyCollectionChanged incc = collection as INotifyCollectionChanged;
 
             if (incc != null)
@@ -70,9 +81,26 @@ namespace Avalonia.Data
             get { return false; }
         }
 
+        public virtual IComparer Comparer 
+        {
+            get { return null; }
+        }
+
         public virtual int Count 
         {
-            get { return this.SourceCollection.Cast<object>().Count(); }
+            get 
+            {
+                ICollection collection = this.SourceCollection as ICollection;
+                return (collection != null) ? 
+                    collection.Count :
+                    this.SourceCollection.Cast<object>().Count(); 
+            }
+        }
+
+        public virtual CultureInfo Culture 
+        { 
+            get; 
+            set; 
         }
 
         public virtual object CurrentItem
@@ -89,6 +117,28 @@ namespace Avalonia.Data
         { 
             get; 
             set; 
+        }
+
+        public virtual ObservableCollection<GroupDescription> GroupDescriptions 
+        {
+            get { return null; }
+        }
+
+        public virtual ReadOnlyObservableCollection<Object> Groups 
+        {
+            get { return null; }
+        }
+
+        public virtual bool IsCurrentAfterLast
+        {
+            get;
+            private set;
+        }
+
+        public virtual bool IsCurrentBeforeFirst
+        {
+            get;
+            private set;
         }
 
         public virtual IEnumerable SourceCollection
@@ -114,59 +164,62 @@ namespace Avalonia.Data
 
         public virtual bool MoveCurrentToFirst()
         {
-            if (this.SourceCollection.Cast<object>().Any())
-            {
-                this.currentPosition = 0;
-                this.currentItem = this.SourceCollection.Cast<object>().First();
-                return true;
-            }
-            else
-            {
-                this.currentPosition = -1;
-                this.currentItem = null;
-                return false;
-            }
+            return this.MoveCurrentToPosition(0);
         }
 
         public virtual bool MoveCurrentToLast()
         {
-            if (this.SourceCollection.Cast<object>().Any())
-            {
-                this.currentPosition = this.SourceCollection.Cast<object>().Count() - 1;
-                this.currentItem = this.SourceCollection.Cast<object>().Last();
-                return true;
-            }
-            else
-            {
-                this.currentPosition = -1;
-                this.currentItem = null;
-                return false;
-            }
+            return this.MoveCurrentToPosition(this.Count - 1);
         }
 
         public virtual bool MoveCurrentToNext()
         {
-            IEnumerator e = this.SourceCollection.GetEnumerator();
-            int next = this.currentPosition + 1;
+            return this.MoveCurrentToPosition(this.currentPosition + 1);
+        }
 
-            for (int i = -1; i < next; ++i)
+        public virtual bool MoveCurrentToPosition(int position)
+        {
+            int count = this.Count;
+
+            if (position < -1 || position > count)
             {
-                if (!e.MoveNext())
-                {
-                    if (i > -1)
-                    {
-                        // Ummm? According to unit tests, this is what WPF does.
-                        this.currentPosition = next;
-                    }
-
-                    this.currentItem = null;
-                    return false;
-                }
+                throw new ArgumentOutOfRangeException();
             }
+            else if (position == -1 || (position == 0 && count == 0))
+            {
+                this.IsCurrentBeforeFirst = true;
+                this.IsCurrentAfterLast = false;
+                this.currentPosition = -1;
+                this.currentItem = null;
+                return false;
+            }
+            else if (position == count)
+            {
+                this.IsCurrentBeforeFirst = false;
+                this.IsCurrentAfterLast = true;
+                this.currentPosition = position;
+                this.currentItem = null;
+                return false;
+            }
+            else
+            {
+                this.IsCurrentBeforeFirst = this.IsCurrentAfterLast = false;
+                this.currentPosition = position;
+                this.currentItem = this.SourceCollection.Cast<object>().ElementAt(position);
+                return true;
+            }
+        }
 
-            this.currentItem = e.Current;
-            this.currentPosition = next;
-            return true;
+        public virtual bool MoveCurrentToPrevious()
+        {
+            if (this.currentPosition > -1)
+            {
+                return this.MoveCurrentToPosition(this.currentPosition - 1);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         protected void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)

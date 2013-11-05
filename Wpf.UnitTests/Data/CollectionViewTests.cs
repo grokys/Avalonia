@@ -70,6 +70,42 @@
         }
 
         [TestMethod]
+        public void Comparer_Is_Initially_Null()
+        {
+            int[] source = new[] { 1, 1, 2, 3, 5, 8 };
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsNull(target.Comparer);
+        }
+
+        [TestMethod]
+        public void Culture_Is_Initially_Null()
+        {
+            int[] source = new[] { 1, 1, 2, 3, 5, 8 };
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsNull(target.Culture);
+        }
+
+        [TestMethod]
+        public void GroupDescriptions_Returns_Null()
+        {
+            int[] source = new[] { 1, 1, 2, 3, 5, 8 };
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsNull(target.GroupDescriptions);
+        }
+
+        [TestMethod]
+        public void Groups_Returns_Null()
+        {
+            int[] source = new[] { 1, 1, 2, 3, 5, 8 };
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsNull(target.Groups);
+        }
+
+        [TestMethod]
         public void Added_Item_Appears_Even_With_Basic_List()
         {
             List<int> source = new List<int> { 1, 1, 2, 3, 5, 8 };
@@ -302,6 +338,159 @@
             Assert.IsFalse(target.MoveCurrentToNext());
             Assert.AreEqual(null, target.CurrentItem);
             Assert.AreEqual(2, target.CurrentPosition);
+        }
+
+        [TestMethod]
+        public void MoveCurrentToPosition_Returns_False_For_Empty_Collection()
+        {
+            List<int> source = new List<int>();
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsFalse(target.MoveCurrentToPosition(0));
+            Assert.IsNull(target.CurrentItem);
+            Assert.AreEqual(-1, target.CurrentPosition);
+        }
+
+        [TestMethod]
+        public void MoveCurrentToPosition_Returns_True_When_Item_Available()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsTrue(target.MoveCurrentToPosition(1));
+            Assert.AreEqual(2, target.CurrentItem);
+            Assert.AreEqual(1, target.CurrentPosition);
+        }
+
+        [TestMethod]
+        public void MoveCurrentToPosition_Returns_False_For_Minus_1_Index()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsFalse(target.MoveCurrentToPosition(-1));
+            Assert.IsNull(target.CurrentItem);
+            Assert.AreEqual(-1, target.CurrentPosition);
+            Assert.IsTrue(target.IsCurrentBeforeFirst);
+            Assert.IsFalse(target.IsCurrentAfterLast);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void MoveCurrentToPosition_Throws_Exception_For_Minus_2_Index()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            CollectionView target = new CollectionView(source);
+
+            target.MoveCurrentToPosition(-2);
+        }
+
+        [TestMethod]
+        public void MoveCurrentToPosition_Returns_False_For_After_End_Index()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsFalse(target.MoveCurrentToPosition(3));
+            Assert.IsNull(target.CurrentItem);
+            Assert.AreEqual(3, target.CurrentPosition);
+            Assert.IsFalse(target.IsCurrentBeforeFirst);
+            Assert.IsTrue(target.IsCurrentAfterLast);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void MoveCurrentToPosition_Throws_Exception_For_Past_End_Index()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            CollectionView target = new CollectionView(source);
+
+            target.MoveCurrentToPosition(4);
+        }
+
+        [TestMethod]
+        public void MoveCurrentToPrevious_Can_Be_Called_Before_First()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsFalse(target.MoveCurrentToPrevious());
+            Assert.AreEqual(-1, target.CurrentPosition);
+            Assert.IsFalse(target.MoveCurrentToPrevious());
+            Assert.AreEqual(-1, target.CurrentPosition);
+        }
+
+        [TestMethod]
+        public void IsCurrentAfterLast_Returns_True_For_Empty_Collection()
+        {
+            List<int> source = new List<int>();
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsTrue(target.IsCurrentAfterLast);
+        }
+
+        [TestMethod]
+        public void IsCurrentAfterLast_Returns_False_When_Before_Last()
+        {
+            List<int> source = new List<int> { 1, 2 };
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsFalse(target.IsCurrentAfterLast);
+        }
+
+        [TestMethod]
+        public void IsCurrentAfterLast_Returns_True_When_After_Last()
+        {
+            List<int> source = new List<int> { 1, 2 };
+            CollectionView target = new CollectionView(source);
+
+            target.MoveCurrentToLast();
+            target.MoveCurrentToNext();
+
+            Assert.IsTrue(target.IsCurrentAfterLast);
+            Assert.AreEqual(2, target.CurrentPosition);
+        }
+
+        [TestMethod]
+        public void IsCurrentBeforeFirst_Returns_True_For_Empty_Collection()
+        {
+            List<int> source = new List<int>();
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsTrue(target.IsCurrentAfterLast);
+        }
+
+        [TestMethod]
+        public void IsCurrentBeforeFirst_Returns_False_When_After_First()
+        {
+            List<int> source = new List<int> { 1, 2 };
+            CollectionView target = new CollectionView(source);
+
+            Assert.IsFalse(target.IsCurrentBeforeFirst);
+        }
+
+        [TestMethod]
+        public void IsCurrentBeforeFirst_Returns_True_When_Before_First()
+        {
+            List<int> source = new List<int> { 1, 2 };
+            CollectionView target = new CollectionView(source);
+
+            target.MoveCurrentToPrevious();
+
+            Assert.IsTrue(target.IsCurrentBeforeFirst);
+            Assert.AreEqual(-1, target.CurrentPosition);
+        }
+
+        [TestMethod]
+        public void CollectionView_Works_With_Null_Items()
+        {
+            List<object> source = new List<object> { null };
+            CollectionView target = new CollectionView(source);
+
+            Assert.AreEqual(0, target.CurrentPosition);
+            Assert.IsNull(target.CurrentItem);
+            Assert.IsFalse(target.IsCurrentAfterLast);
+            Assert.IsFalse(target.IsCurrentBeforeFirst);
         }
 
         [TestMethod]

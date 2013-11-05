@@ -81,6 +81,7 @@
     <Compile Include="Data\CollectionView.cs" />
     <Compile Include="Data\CollectionViewSource.cs" />
     <Compile Include="Data\EnumerableCollectionView.cs" />
+    <Compile Include="Data\GroupDescription.cs" />
     <Compile Include="Data\ICollectionView.cs" />
     <Compile Include="Data\ListCollectionView.cs" />
     <Compile Include="FrameworkContentElement.cs" />

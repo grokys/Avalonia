@@ -54,6 +54,10 @@ namespace Avalonia.Data
             }
         }
 
+        public virtual event EventHandler CurrentChanged;
+
+        public virtual event CurrentChangingEventHandler CurrentChanging;
+
         event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
         {
             add { this.collectionChanged += value; }
@@ -185,27 +189,41 @@ namespace Avalonia.Data
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else if (position == -1 || (position == 0 && count == 0))
+
+            if (this.OKToChangeCurrent())
             {
-                this.IsCurrentBeforeFirst = true;
-                this.IsCurrentAfterLast = false;
-                this.currentPosition = -1;
-                this.currentItem = null;
-                return false;
-            }
-            else if (position == count)
-            {
-                this.IsCurrentBeforeFirst = false;
-                this.IsCurrentAfterLast = true;
-                this.currentPosition = position;
-                this.currentItem = null;
-                return false;
+                bool result;
+
+                if (position == -1 || (position == 0 && count == 0))
+                {
+                    this.IsCurrentBeforeFirst = true;
+                    this.IsCurrentAfterLast = false;
+                    this.currentPosition = -1;
+                    this.currentItem = null;
+                    result = false;
+                }
+                else if (position == count)
+                {
+                    this.IsCurrentBeforeFirst = false;
+                    this.IsCurrentAfterLast = true;
+                    this.currentPosition = position;
+                    this.currentItem = null;
+                    result = false;
+                }
+                else
+                {
+                    this.IsCurrentBeforeFirst = this.IsCurrentAfterLast = false;
+                    this.currentPosition = position;
+                    this.currentItem = this.SourceCollection.Cast<object>().ElementAt(position);
+                    result = true;
+                }
+
+                this.OnCurrentChanged();
+
+                return result;
             }
             else
             {
-                this.IsCurrentBeforeFirst = this.IsCurrentAfterLast = false;
-                this.currentPosition = position;
-                this.currentItem = this.SourceCollection.Cast<object>().ElementAt(position);
                 return true;
             }
         }
@@ -222,6 +240,13 @@ namespace Avalonia.Data
             }
         }
 
+        protected bool OKToChangeCurrent()
+        {
+            CurrentChangingEventArgs e = new CurrentChangingEventArgs();
+            this.OnCurrentChanging(e);
+            return !e.Cancel;
+        }
+
         protected void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
             this.ProcessCollectionChanged(args);
@@ -233,6 +258,28 @@ namespace Avalonia.Data
             if (this.collectionChanged != null)
             {
                 this.collectionChanged(this, args);
+            }
+        }
+
+        protected virtual void OnCurrentChanged()
+        {
+            if (this.CurrentChanged != null)
+            {
+                this.CurrentChanged(this, EventArgs.Empty);
+            }
+        }
+
+        protected void OnCurrentChanging()
+        {
+            this.currentPosition = -1;
+            this.OnCurrentChanging(new CurrentChangingEventArgs(false));
+        }
+
+        protected virtual void OnCurrentChanging(CurrentChangingEventArgs args)
+        {
+            if (this.CurrentChanging != null)
+            {
+                this.CurrentChanging(this, args);
             }
         }
 

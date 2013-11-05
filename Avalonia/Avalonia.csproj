@@ -80,6 +80,7 @@
     <Compile Include="DataTemplateKey.cs" />
     <Compile Include="Data\CollectionView.cs" />
     <Compile Include="Data\CollectionViewSource.cs" />
+    <Compile Include="Data\CurrentChangingEventArgs.cs" />
     <Compile Include="Data\EnumerableCollectionView.cs" />
     <Compile Include="Data\GroupDescription.cs" />
     <Compile Include="Data\ICollectionView.cs" />

@@ -386,6 +386,33 @@
         }
 
         [TestMethod]
+        public void MoveCurrentToPosition_Can_Be_Cancelled()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            CollectionView target = new CollectionView(source);
+
+            target.CurrentChanging += (s, e) => e.Cancel = true;
+
+            Assert.IsTrue(target.MoveCurrentToPosition(1));
+            Assert.AreEqual(1, target.CurrentItem);
+            Assert.AreEqual(0, target.CurrentPosition);
+        }
+
+        [TestMethod]
+        public void MoveCurrentToPosition_Minus_1_Can_Be_Cancelled()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            CollectionView target = new CollectionView(source);
+
+            target.CurrentChanging += (s, e) => e.Cancel = true;
+
+            Assert.IsTrue(target.MoveCurrentToPosition(-1));
+            Assert.AreEqual(1, target.CurrentItem);
+            Assert.AreEqual(0, target.CurrentPosition);
+            Assert.IsFalse(target.IsCurrentBeforeFirst);
+        }
+
+        [TestMethod]
         public void MoveCurrentToPosition_Returns_False_For_After_End_Index()
         {
             List<int> source = new List<int> { 1, 2, 3 };
@@ -507,6 +534,46 @@
         }
 
         [TestMethod]
+        public void CurrentChanged_Should_Be_Raised()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            CollectionView target = new CollectionView(source);
+            bool eventRaised = false;
+
+            target.CurrentChanged += (s, e) => eventRaised = true;
+            target.MoveCurrentToNext();
+
+            Assert.IsTrue(eventRaised);
+        }
+
+        [TestMethod]
+        public void CurrentChanged_Should_Not_Be_Raised_If_Cancelled()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            CollectionView target = new CollectionView(source);
+            bool eventRaised = false;
+
+            target.CurrentChanging += (s, e) => e.Cancel = true;
+            target.CurrentChanged += (s, e) => eventRaised = true;
+            target.MoveCurrentToNext();
+
+            Assert.IsFalse(eventRaised);
+        }
+
+        [TestMethod]
+        public void CurrentChanged_Should_Be_Raised_Even_If_Position_Doesnt_Change()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            CollectionView target = new CollectionView(source);
+            bool eventRaised = false;
+
+            target.CurrentChanged += (s, e) => eventRaised = true;
+            target.MoveCurrentToPosition(0);
+
+            Assert.IsTrue(eventRaised);
+        }
+
+        [TestMethod]
         public void Calling_OnCollectionChanged_Doesnt_Call_ProcessCollectionChanged()
         {
             List<int> source = new List<int> { 1, 2 };
@@ -531,6 +598,24 @@
             Assert.IsTrue(target.ProcessCollectionChangedCalled);
         }
 
+        [TestMethod]
+        public void Calling_OnCurrentChanging_Sets_CurrentPosition_To_Minus_1()
+        {
+            List<int> source = new List<int> { 1, 2, 3 };
+            TestCollectionView target = new TestCollectionView(source);
+            bool eventRaised = false;
+
+            target.CurrentChanging += (s, e) =>
+            {
+                Assert.AreEqual(-1, target.CurrentPosition);
+                eventRaised = true;
+            };
+            
+            target.CallOnCurrentChanging();
+
+            Assert.IsTrue(eventRaised);
+        }
+
         private class TestCollectionView : CollectionView
         {
             public TestCollectionView(IEnumerable collection)
@@ -548,6 +633,11 @@
             public void CallOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
             {
                 this.OnCollectionChanged(sender, args);
+            }
+
+            public void CallOnCurrentChanging()
+            {
+                this.OnCurrentChanging();
             }
 
             protected override void ProcessCollectionChanged(NotifyCollectionChangedEventArgs args)

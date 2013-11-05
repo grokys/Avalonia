@@ -21,7 +21,7 @@ namespace Avalonia.Controls
         internal ItemCollection()
             : base(new ObservableCollection<object>())
         {
-            this.internalList = (ObservableCollection<object>)this.SourceCollection;
+            this.internalList = (ObservableCollection<object>)base.SourceCollection;
         }
 
         internal ItemCollection(IEnumerable source)
@@ -62,12 +62,12 @@ namespace Avalonia.Controls
             if (source != null)
             {
                 this.internalList = null;
-                //base.SetSource(source);
+                base.SetSource(source);
             }
             else if (this.internalList == null)
             {
                 this.internalList = new ObservableCollection<object>();
-                //base.SetSource(this.internalList);
+                base.SetSource(this.internalList);
             }
         }
 

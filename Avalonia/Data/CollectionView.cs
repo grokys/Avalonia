@@ -18,6 +18,8 @@ namespace Avalonia.Data
 
     public class CollectionView : DispatcherObject, ICollectionView, INotifyPropertyChanged
     {
+        private IEnumerable sourceCollection;
+
         private object currentItem;
 
         private int currentPosition;
@@ -33,7 +35,7 @@ namespace Avalonia.Data
                 throw new ArgumentNullException("collection");
             }
 
-            this.SourceCollection = collection;
+            this.sourceCollection = collection;
 
             if (collection.Cast<object>().Any())
             {
@@ -94,10 +96,10 @@ namespace Avalonia.Data
         {
             get 
             {
-                ICollection collection = this.SourceCollection as ICollection;
+                ICollection collection = this.sourceCollection as ICollection;
                 return (collection != null) ? 
                     collection.Count :
-                    this.SourceCollection.Cast<object>().Count(); 
+                    this.sourceCollection.Cast<object>().Count(); 
             }
         }
 
@@ -147,19 +149,18 @@ namespace Avalonia.Data
 
         public virtual IEnumerable SourceCollection
         {
-            get;
-            private set;
+            get { return this.sourceCollection; }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             if (this.Filter == null)
             {
-                return this.SourceCollection.GetEnumerator();
+                return this.sourceCollection.GetEnumerator();
             }
             else
             {
-                return this.SourceCollection
+                return this.sourceCollection
                     .Cast<object>()
                     .Where(x => this.Filter(x))
                     .GetEnumerator();
@@ -214,7 +215,7 @@ namespace Avalonia.Data
                 {
                     this.IsCurrentBeforeFirst = this.IsCurrentAfterLast = false;
                     this.currentPosition = position;
-                    this.currentItem = this.SourceCollection.Cast<object>().ElementAt(position);
+                    this.currentItem = this.sourceCollection.Cast<object>().ElementAt(position);
                     result = true;
                 }
 
@@ -238,6 +239,11 @@ namespace Avalonia.Data
             {
                 return false;
             }
+        }
+
+        internal void SetSource(IEnumerable collection)
+        {
+            this.sourceCollection = collection;
         }
 
         protected bool OKToChangeCurrent()

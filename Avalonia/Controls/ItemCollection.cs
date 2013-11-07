@@ -39,15 +39,8 @@ namespace Avalonia.Controls
 
         public Object this[int index] 
         {
-            get 
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return ((IList)base.SourceCollection)[index]; }
+            set { ((IList)base.SourceCollection)[index] = value; }
         }
 
         public int Add(object newItem)

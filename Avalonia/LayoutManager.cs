@@ -59,7 +59,7 @@ namespace Avalonia
             {
                 ITopLevelWindow window = VisualTreeHelper.GetTopLevelWindow(entry);
 
-                if (window != null)
+                if (window != null && !windows.Contains(window))
                 {
                     windows.Add(window);
                 }

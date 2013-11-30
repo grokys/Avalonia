@@ -8,6 +8,8 @@
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
+    using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
 
     [TestClass]
     public class ItemsControlTests
@@ -76,6 +78,20 @@
             target.ItemsSource = null;
 
             Assert.AreSame(target.Items, target.Items.SourceCollection);
+        }
+
+        [TestMethod]
+        public void Items_Propogates_CollectionChanged_Events()
+        {
+            ItemsControl target = new ItemsControl();
+            ObservableCollection<int> collection = new ObservableCollection<int>();
+            object sender = null;
+
+            target.ItemsSource = collection;
+            ((INotifyCollectionChanged)target.Items).CollectionChanged += (s, e) => sender = s;
+            collection.Add(1);
+
+            Assert.AreSame(target.Items, sender);
         }
     }
 }

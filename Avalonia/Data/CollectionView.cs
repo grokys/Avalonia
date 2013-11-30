@@ -243,7 +243,20 @@ namespace Avalonia.Data
 
         internal void SetSource(IEnumerable collection)
         {
+            INotifyCollectionChanged incc = this.sourceCollection as INotifyCollectionChanged;
+
+            if (incc != null)
+            {
+                incc.CollectionChanged -= OnCollectionChanged;
+            }
+
             this.sourceCollection = collection;
+            incc = this.sourceCollection as INotifyCollectionChanged;
+
+            if (incc != null)
+            {
+                incc.CollectionChanged += OnCollectionChanged;
+            }
         }
 
         protected bool OKToChangeCurrent()

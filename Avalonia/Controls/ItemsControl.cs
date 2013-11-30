@@ -67,7 +67,7 @@ namespace Avalonia.Controls
             this.ItemContainerGenerator.ItemsChanged += this.OnItemContainerGeneratorChanged;
 
             ItemCollection items = new ItemCollection();
-            ((INotifyCollectionChanged)items).CollectionChanged += (s, e) => this.OnItemsChanged(e);
+            ((INotifyCollectionChanged)items).CollectionChanged += this.InvokeItemsChanged;
             this.itemsIsDataBound = false;
             this.SetValue(ItemsProperty, items);
         }

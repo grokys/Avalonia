@@ -16,6 +16,7 @@ namespace Avalonia.Direct2D1.Media
     using SharpDX.Direct2D1;
     using Brush = Avalonia.Media.Brush;
     using Geometry = Avalonia.Media.Geometry;
+    using Point = Avalonia.Point;
     using SolidColorBrush = Avalonia.Media.SolidColorBrush;
 
     public class Direct2D1DrawingContext : DrawingContext

@@ -12,11 +12,11 @@ namespace Avalonia.Direct2D1.Media
     using Avalonia.Utils;
     using Brush2D = SharpDX.Direct2D1.Brush;
     using Color4 = SharpDX.Color4;
-    using DrawingPointF = SharpDX.DrawingPointF;
     using Matrix3x2 = SharpDX.Matrix3x2;
     using RectangleF = SharpDX.RectangleF;
     using RenderTarget2D = SharpDX.Direct2D1.RenderTarget;
     using SolidColorBrush2D = SharpDX.Direct2D1.SolidColorBrush;
+    using Vector2 = SharpDX.Vector2;
     using WicPixelFormat = SharpDX.WIC.PixelFormat;
 
     public static class MediaExtensions
@@ -60,9 +60,9 @@ namespace Avalonia.Direct2D1.Media
                 (float)(color.A / 255.0));
         }
 
-        public static DrawingPointF ToSharpDX(this Point point)
+        public static Vector2 ToSharpDX(this Point point)
         {
-            return new DrawingPointF((float)point.X, (float)point.Y);
+            return new Vector2((float)point.X, (float)point.Y);
         }
 
         public static PixelFormat ToAvalonia(this Guid pixelFormat)

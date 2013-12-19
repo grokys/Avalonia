@@ -243,7 +243,7 @@ namespace Avalonia.Direct2D1
                 new HwndRenderTargetProperties
                 {
                     Hwnd = this.Handle,
-                    PixelSize = new SharpDX.DrawingSize((int)clientSize.Width, (int)clientSize.Height),
+                    PixelSize = new SharpDX.Size2((int)clientSize.Width, (int)clientSize.Height),
                 });
         }
 
@@ -291,7 +291,7 @@ namespace Avalonia.Direct2D1
                 case UnmanagedMethods.WindowsMessage.WM_SIZE:
                     if (this.renderTarget != null)
                     {
-                        this.renderTarget.Resize(new SharpDX.DrawingSize((int)lParam & 0xffff, (int)lParam >> 16));
+                        this.renderTarget.Resize(new SharpDX.Size2((int)lParam & 0xffff, (int)lParam >> 16));
                     }
 
                     this.OnResized();

@@ -412,6 +412,13 @@ namespace Avalonia
 
         private void SetValueInternal(DependencyProperty dp, object oldValue, object newValue)
         {
+            PropertyMetadata metadata = dp.GetMetadata(this);
+            
+            if (metadata.CoerceValueCallback != null)
+            {
+                newValue = metadata.CoerceValueCallback(this, newValue);
+            }
+
             if (newValue != DependencyProperty.UnsetValue && dp.IsValidValue(newValue))
             {
                 this.properties[dp] = newValue;

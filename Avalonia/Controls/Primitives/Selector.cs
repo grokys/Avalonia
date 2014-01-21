@@ -31,7 +31,7 @@ namespace Avalonia.Controls.Primitives
                 "SelectedIndex",
                 typeof(int),
                 typeof(Selector),
-                new PropertyMetadata(-1));
+                new PropertyMetadata(-1, SelectedIndexChanged, CoerceSelectedIndex));
 
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register(
@@ -113,6 +113,45 @@ namespace Avalonia.Controls.Primitives
         protected virtual void OnSelectionChanged(SelectionChangedEventArgs e)
         {
             this.RaiseEvent(e);
+        }
+
+        private static object CoerceSelectedIndex(DependencyObject d, object baseValue)
+        {
+            Selector s = (Selector)d;
+            int value = (int)baseValue;
+            return value < s.Items.Count ? value : s.SelectedIndex;
+        }
+
+        private static void SelectedIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((Selector)d).OnSelectedIndexChanged((int)e.OldValue);
+        }
+
+        private object GetSelectedValue(object o)
+        {
+            string selectedValuePath = this.SelectedValuePath;
+
+            if (string.IsNullOrWhiteSpace(selectedValuePath))
+            {
+                return o;
+            }
+            else
+            {
+                return o.GetType().GetProperty(selectedValuePath).GetValue(o);
+            }
+        }
+
+        private void OnSelectedIndexChanged(int oldValue)
+        {
+            int selectedIndex = this.SelectedIndex;
+
+            if (selectedIndex < -1)
+            {
+                throw new ArgumentException("SelectedIndex is out of range.");
+            }
+
+            this.SelectedItem = this.Items[selectedIndex];
+            this.SelectedValue = this.GetSelectedValue(this.SelectedItem);
         }
     }
 }

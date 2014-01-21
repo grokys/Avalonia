@@ -1,14 +1,15 @@
 ﻿// -----------------------------------------------------------------------
 // <copyright file="Selector.cs" company="Steven Kirk">
-// Copyright 2014 MIT Licence. See licence.md for more information.
+// Copyright 2013 MIT Licence. See licence.md for more information.
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Specialized;
-using System.ComponentModel;
 namespace Avalonia.Controls.Primitives
 {
+    using System;
+    using System.Collections.Specialized;
+    using System.ComponentModel;
+
     [DefaultEvent("SelectionChanged")]
     [DefaultProperty("SelectedIndex")]
     public abstract class Selector : ItemsControl
@@ -56,7 +57,6 @@ namespace Avalonia.Controls.Primitives
                 RoutingStrategy.Bubble,
                 typeof(SelectionChangedEventHandler),
                 typeof(Selector));
-
 
         public static readonly RoutedEvent UnselectedEvent;
 

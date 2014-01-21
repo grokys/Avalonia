@@ -37,7 +37,7 @@ namespace Avalonia.Controls
             }
         }
 
-        public Object this[int index] 
+        public object this[int index] 
         {
             get { return ((IList)base.SourceCollection)[index]; }
             set { ((IList)base.SourceCollection)[index] = value; }

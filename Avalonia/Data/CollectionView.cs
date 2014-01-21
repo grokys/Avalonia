@@ -52,7 +52,7 @@ namespace Avalonia.Data
 
             if (incc != null)
             {
-                incc.CollectionChanged += OnCollectionChanged;
+                incc.CollectionChanged += this.OnCollectionChanged;
             }
         }
 
@@ -119,7 +119,7 @@ namespace Avalonia.Data
             get { return this.currentPosition; }
         }
 
-        public virtual Predicate<Object> Filter 
+        public virtual Predicate<object> Filter 
         { 
             get; 
             set; 
@@ -130,7 +130,7 @@ namespace Avalonia.Data
             get { return null; }
         }
 
-        public virtual ReadOnlyObservableCollection<Object> Groups 
+        public virtual ReadOnlyObservableCollection<object> Groups 
         {
             get { return null; }
         }
@@ -247,7 +247,7 @@ namespace Avalonia.Data
 
             if (incc != null)
             {
-                incc.CollectionChanged -= OnCollectionChanged;
+                incc.CollectionChanged -= this.OnCollectionChanged;
             }
 
             this.sourceCollection = collection;
@@ -255,7 +255,7 @@ namespace Avalonia.Data
 
             if (incc != null)
             {
-                incc.CollectionChanged += OnCollectionChanged;
+                incc.CollectionChanged += this.OnCollectionChanged;
             }
         }
 

@@ -167,6 +167,29 @@ namespace Avalonia.Data
             }
         }
 
+        public virtual bool Contains(object item)
+        {
+            return this.sourceCollection.Cast<object>().Contains(item);
+        }
+
+        public virtual int IndexOf(object item)
+        {
+            IComparer comparer = this.Comparer;
+            int i = 0;
+
+            foreach (object o in this.sourceCollection)
+            {
+                if ((comparer != null && comparer.Compare(item, o) == 0) || o == item)
+                {
+                    return i;
+                }
+
+                ++i;
+            }
+
+            return -1;
+        }
+
         public virtual bool MoveCurrentToFirst()
         {
             return this.MoveCurrentToPosition(0);

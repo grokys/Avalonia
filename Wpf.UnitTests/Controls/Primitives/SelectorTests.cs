@@ -126,6 +126,48 @@ using System;
             target.SelectedIndex = -2;
         }
 
+        [TestMethod]
+        public void Setting_SelectedItem_Should_Set_SelectedIndex()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedItem = target.TestItems[1];
+
+            Assert.AreEqual(1, target.SelectedIndex);
+        }
+
+        [TestMethod]
+        public void Setting_SelectedItem_Should_Set_SelectedValue()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedItem = target.TestItems[1];
+
+            Assert.AreEqual(target.TestItems[1], target.SelectedValue);
+        }
+
+        [TestMethod]
+        public void Setting_SelectedItem_With_SelectedValuePath_Should_Set_SelectedValue()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedValuePath = "Caption";
+            target.SelectedItem = target.TestItems[1];
+
+            Assert.AreEqual("Bar", target.SelectedValue);
+        }
+
+        [TestMethod]
+        public void Setting_SelectedItem_To_Invalid_Value_Should_Leave_SelectedIndex_Unchanged()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedIndex = 1;
+            target.SelectedItem = "Invalid";
+
+            Assert.AreEqual(1, target.SelectedIndex);
+        }
+
         private class TestSelector : Selector
         {
             public TestSelector()

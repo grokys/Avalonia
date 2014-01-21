@@ -9,6 +9,7 @@ namespace Avalonia.Controls.Primitives
     using System;
     using System.Collections.Specialized;
     using System.ComponentModel;
+    using System.Linq;
     using System.Reflection;
 
     [DefaultEvent("SelectionChanged")]
@@ -38,7 +39,8 @@ namespace Avalonia.Controls.Primitives
             DependencyProperty.Register(
                 "SelectedItem",
                 typeof(object),
-                typeof(Selector));
+                typeof(Selector),
+                new PropertyMetadata(null, SelectedItemChanged, CoerceSelectedItem));
 
         public static readonly DependencyProperty SelectedValueProperty =
             DependencyProperty.Register(
@@ -123,9 +125,21 @@ namespace Avalonia.Controls.Primitives
             return value < s.Items.Count ? value : s.SelectedIndex;
         }
 
+        private static object CoerceSelectedItem(DependencyObject d, object baseValue)
+        {
+            Selector s = (Selector)d;
+            return (baseValue == null || s.Items.Contains(baseValue)) ? 
+                baseValue : s.SelectedItem;
+        }
+
         private static void SelectedIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((Selector)d).OnSelectedIndexChanged((int)e.OldValue);
+            ((Selector)d).OnSelectedIndexChanged();
+        }
+
+        private static void SelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((Selector)d).OnSelectedItemChanged();
         }
 
         private object GetSelectedValue(object o)
@@ -143,7 +157,7 @@ namespace Avalonia.Controls.Primitives
             }
         }
 
-        private void OnSelectedIndexChanged(int oldValue)
+        private void OnSelectedIndexChanged()
         {
             int selectedIndex = this.SelectedIndex;
 
@@ -154,12 +168,29 @@ namespace Avalonia.Controls.Primitives
 
             if (selectedIndex == -1)
             {
-                this.SelectedItem = this.SelectedValue = null;
+                this.ClearValue(SelectedItemProperty);
+                this.ClearValue(SelectedValueProperty);
             }
             else
             {
                 this.SelectedItem = this.Items[selectedIndex];
                 this.SelectedValue = this.GetSelectedValue(this.SelectedItem);
+            }
+        }
+
+        private void OnSelectedItemChanged()
+        {
+            object selectedItem = this.SelectedItem;
+
+            if (selectedItem == null)
+            {
+                this.ClearValue(SelectedIndexProperty);
+                this.ClearValue(SelectedValueProperty);
+            }
+            else
+            {
+                this.SelectedIndex = this.Items.IndexOf(selectedItem);
+                this.SelectedValue = this.GetSelectedValue(selectedItem);
             }
         }
     }

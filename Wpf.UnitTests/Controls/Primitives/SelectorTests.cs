@@ -8,6 +8,7 @@
 #endif
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
     [TestClass]
 #if TEST_WPF    
@@ -69,6 +70,49 @@
             target.SelectedIndex = 1;
 
             Assert.AreEqual("Bar", target.SelectedValue);
+        }
+
+        [TestMethod]
+        public void Setting_SelectedIndex_To_Minus_1_Should_Clear_SelectedItem()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedIndex = 1;
+            target.SelectedIndex = -1;
+
+            Assert.IsNull(target.SelectedItem);
+        }
+
+        [TestMethod]
+        public void Setting_SelectedIndex_To_Minus_1_Should_Clear_SelectedValue()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedIndex = 1;
+            target.SelectedIndex = -1;
+
+            Assert.IsNull(target.SelectedValue);
+        }
+
+        [TestMethod]
+        public void Setting_SelectedIndex_Out_Of_Range_Should_Leave_SelectedIndex_Unchanged()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedIndex = 1;
+            target.SelectedIndex = 4;
+
+            Assert.AreEqual(1, target.SelectedIndex);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Setting_SelectedIndex_To_Invalid_Negative_Value_Should_Throw_Exception()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedIndex = 1;
+            target.SelectedIndex = -2;
         }
 
         private class TestSelector : Selector

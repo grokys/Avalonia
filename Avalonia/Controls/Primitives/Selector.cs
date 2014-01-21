@@ -9,6 +9,7 @@ namespace Avalonia.Controls.Primitives
     using System;
     using System.Collections.Specialized;
     using System.ComponentModel;
+    using System.Reflection;
 
     [DefaultEvent("SelectionChanged")]
     [DefaultProperty("SelectedIndex")]
@@ -137,7 +138,8 @@ namespace Avalonia.Controls.Primitives
             }
             else
             {
-                return o.GetType().GetProperty(selectedValuePath).GetValue(o);
+                PropertyInfo p = o.GetType().GetProperty(selectedValuePath);
+                return (p != null) ? p.GetValue(o) : null;
             }
         }
 
@@ -150,8 +152,15 @@ namespace Avalonia.Controls.Primitives
                 throw new ArgumentException("SelectedIndex is out of range.");
             }
 
-            this.SelectedItem = this.Items[selectedIndex];
-            this.SelectedValue = this.GetSelectedValue(this.SelectedItem);
+            if (selectedIndex == -1)
+            {
+                this.SelectedItem = this.SelectedValue = null;
+            }
+            else
+            {
+                this.SelectedItem = this.Items[selectedIndex];
+                this.SelectedValue = this.GetSelectedValue(this.SelectedItem);
+            }
         }
     }
 }

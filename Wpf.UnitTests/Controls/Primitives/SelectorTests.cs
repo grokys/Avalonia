@@ -73,6 +73,17 @@ using System;
         }
 
         [TestMethod]
+        public void Setting_SelectedIndex_With_Invalid_SelectedValuePath_Should_()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedValuePath = "Invalid";
+            target.SelectedIndex = 1;
+
+            Assert.IsNull(target.SelectedValue);
+        }
+
+        [TestMethod]
         public void Setting_SelectedIndex_To_Minus_1_Should_Clear_SelectedItem()
         {
             TestSelector target = new TestSelector();

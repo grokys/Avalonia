@@ -68,6 +68,8 @@
     <Compile Include="Controls\Primitives\IRecyclingItemContainerGenerator.cs" />
     <Compile Include="Controls\Primitives\ItemsChangedEventArgs.cs" />
     <Compile Include="Controls\RangeCollection.cs" />
+    <Compile Include="Controls\Primitives\Selector.cs" />
+    <Compile Include="Controls\SelectionChangedEventArgs.cs" />
     <Compile Include="Controls\StackPanel.cs" />
     <Compile Include="Controls\Panel.cs" />
     <Compile Include="Controls\Primitives\TextBoxBase.cs" />

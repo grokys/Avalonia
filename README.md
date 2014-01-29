@@ -16,6 +16,7 @@ Implemented to some extent so far:
 - StackPanel
 - Grid
 - ItemsControl
+- Selector
 - Path
 - StreamGeometry
 - Xaml loading

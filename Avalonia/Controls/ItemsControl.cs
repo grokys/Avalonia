@@ -77,7 +77,7 @@ namespace Avalonia.Controls
             get { return (ItemCollection)this.GetValue(ItemsProperty); }
         }
 
-        public string DisplayMemberPath
+        public string SelectedValuePath
         {
             get { return (string)this.GetValue(DisplayMemberPathProperty); }
             set { this.SetValue(DisplayMemberPathProperty, value); }
@@ -128,12 +128,12 @@ namespace Avalonia.Controls
         {
             get
             {
-                if (!string.IsNullOrWhiteSpace(this.DisplayMemberPath) && this.displayMemberTemplate == null)
+                if (!string.IsNullOrWhiteSpace(this.SelectedValuePath) && this.displayMemberTemplate == null)
                 {
                     MemoryStream s = new MemoryStream(Encoding.UTF8.GetBytes(@"
 <DataTemplate xmlns=""https://github.com/grokys/Avalonia""
               xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"">
-    <TextBlock Text=""{Binding " + this.DisplayMemberPath + @"}"" />
+    <TextBlock Text=""{Binding " + this.SelectedValuePath + @"}"" />
 </DataTemplate>"));
                     this.displayMemberTemplate = (DataTemplate)XamlReader.Load(s);
                 }
@@ -275,7 +275,7 @@ namespace Avalonia.Controls
 
         protected virtual void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
-            if (this.DisplayMemberPath != null && this.ItemTemplate != null)
+            if (this.SelectedValuePath != null && this.ItemTemplate != null)
             {
                 throw new InvalidOperationException("Cannot set 'DisplayMemberPath' and 'ItemTemplate' simultaneously.");
             }

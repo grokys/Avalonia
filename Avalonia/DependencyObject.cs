@@ -112,7 +112,7 @@ namespace Avalonia
                 throw new InvalidOperationException("Cannot manipulate property values on a sealed DependencyObject");
             }
 
-            this.properties[dp] = null;
+            this.properties.Remove(dp);
         }
 
         public void ClearValue(DependencyPropertyKey key)

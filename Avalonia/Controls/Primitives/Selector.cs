@@ -46,7 +46,8 @@ namespace Avalonia.Controls.Primitives
             DependencyProperty.Register(
                 "SelectedValue",
                 typeof(object),
-                typeof(Selector));
+                typeof(Selector),
+                new PropertyMetadata(null, SelectedValueChanged, CoerceSelectedValue));
 
         public static readonly DependencyProperty SelectedValuePathProperty =
             DependencyProperty.Register(
@@ -62,6 +63,8 @@ namespace Avalonia.Controls.Primitives
                 typeof(Selector));
 
         public static readonly RoutedEvent UnselectedEvent;
+
+        private bool selectionChanging;
 
         protected Selector()
         {
@@ -132,6 +135,12 @@ namespace Avalonia.Controls.Primitives
                 baseValue : s.SelectedItem;
         }
 
+        private static object CoerceSelectedValue(DependencyObject d, object baseValue)
+        {
+            Selector s = (Selector)d;
+            return (s.FindItemForValue(baseValue).Item1 != -1) ? baseValue : DependencyProperty.UnsetValue;
+        }
+
         private static void SelectedIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((Selector)d).OnSelectedIndexChanged();
@@ -140,6 +149,44 @@ namespace Avalonia.Controls.Primitives
         private static void SelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((Selector)d).OnSelectedItemChanged();
+        }
+
+        private static void SelectedValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((Selector)d).OnSelectedValueChanged();
+        }
+
+        private Tuple<int, object> FindItemForValue(object value)
+        {
+            string selectedValuePath = this.SelectedValuePath;
+
+            if (value != null)
+            {
+                if (string.IsNullOrWhiteSpace(selectedValuePath))
+                {
+                    int index = this.Items.IndexOf(value);
+                    object item = (index != -1) ? this.Items[index] : null;
+                    return Tuple.Create(index, item);
+                }
+                else
+                {
+                    int index = 0;
+
+                    foreach (object o in this.Items)
+                    {
+                        object itemValue = this.GetSelectedValue(o);
+
+                        if (object.Equals(value, itemValue))
+                        {
+                            return Tuple.Create(index, itemValue);
+                        }
+
+                        ++index;
+                    }
+                }
+            }
+
+            return new Tuple<int, object>(-1, null);
         }
 
         private object GetSelectedValue(object o)
@@ -173,8 +220,9 @@ namespace Avalonia.Controls.Primitives
             }
             else
             {
-                this.SelectedItem = this.Items[selectedIndex];
-                this.SelectedValue = this.GetSelectedValue(this.SelectedItem);
+                object item = this.Items[selectedIndex];
+                this.SelectedItem = item;
+                this.SelectedValue = this.GetSelectedValue(item);
             }
         }
 
@@ -191,6 +239,23 @@ namespace Avalonia.Controls.Primitives
             {
                 this.SelectedIndex = this.Items.IndexOf(selectedItem);
                 this.SelectedValue = this.GetSelectedValue(selectedItem);
+            }
+        }
+
+        private void OnSelectedValueChanged()
+        {
+            object selectedValue = this.SelectedValue;
+            Tuple<int, object> found = this.FindItemForValue(selectedValue);
+
+            if (selectedValue == null || found.Item1 == -1)
+            {
+                this.ClearValue(SelectedIndexProperty);
+                this.ClearValue(SelectedItemProperty);
+            }
+            else
+            {
+                this.SelectedIndex = found.Item1;
+                this.SelectedValue = found.Item2;
             }
         }
     }

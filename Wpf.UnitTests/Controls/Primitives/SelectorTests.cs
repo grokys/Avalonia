@@ -168,6 +168,62 @@ using System;
             Assert.AreEqual(1, target.SelectedIndex);
         }
 
+        [TestMethod]
+        public void Setting_SelectedValue_Should_Set_SelectedIndex()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedValue = target.TestItems[1];
+
+            Assert.AreEqual(1, target.SelectedIndex);
+        }
+
+        [TestMethod]
+        public void Setting_SelectedValue_Should_Set_SelectedItem()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedValue = target.TestItems[1];
+
+            Assert.AreEqual(target.TestItems[1], target.SelectedItem);
+        }
+
+        [TestMethod]
+        public void Setting_SelectedValue_With_SelectedValuePath_Should_Set_SelectedIndex()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedValuePath = "Caption";
+            target.SelectedValue = "Bar";
+
+            Assert.AreEqual(1, target.SelectedIndex);
+        }
+
+        [TestMethod]
+        public void Setting_SelectedValue_With_SelectedValuePath_Should_Set_SelectedItem()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedValuePath = "Caption";
+            target.SelectedValue = "Bar";
+
+            Assert.AreEqual(target.TestItems[1], target.SelectedItem);
+        }
+
+        [TestMethod]
+        public void Setting_SelectedValue_To_Invalid_Value_Should_Clear_Selection()
+        {
+            TestSelector target = new TestSelector();
+
+            target.SelectedIndex = 1;
+            target.SelectedValuePath = "Caption";
+            target.SelectedValue = "Invalid";
+
+            Assert.AreEqual(-1, target.SelectedIndex);
+            Assert.IsNull(target.SelectedItem);
+            Assert.IsNull(target.SelectedValue);
+        }
+
         private class TestSelector : Selector
         {
             public TestSelector()

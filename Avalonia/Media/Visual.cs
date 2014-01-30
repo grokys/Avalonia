@@ -101,8 +101,8 @@ namespace Avalonia.Media
             }
 
             DependencyObject oldParent = child.VisualParent;
-            child.DependencyParent = this;
             child.VisualParent = this;
+            child.DependencyParent = this;
             child.OnVisualParentChanged(oldParent);
         }
 

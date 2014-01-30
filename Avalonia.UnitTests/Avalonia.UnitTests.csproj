@@ -63,6 +63,9 @@
     <Compile Include="..\Wpf.UnitTests\Controls\ItemsControlTests.cs">
       <Link>Controls\ItemsControlTests.cs</Link>
     </Compile>
+    <Compile Include="..\Wpf.UnitTests\Controls\ListBoxTests.cs">
+      <Link>Controls\ListBoxTests.cs</Link>
+    </Compile>
     <Compile Include="..\Wpf.UnitTests\Controls\Primitives\SelectorTests.cs">
       <Link>Controls\Primitives\SelectorTests.cs</Link>
     </Compile>

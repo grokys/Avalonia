@@ -49,6 +49,8 @@
     <Compile Include="Controls\ColumnDefinition.cs" />
     <Compile Include="Controls\ColumnDefinitionCollection.cs" />
     <Compile Include="Controls\Image.cs" />
+    <Compile Include="Controls\ListBoxItem.cs" />
+    <Compile Include="Controls\ListBox.cs" />
     <Compile Include="Controls\Primitives\PopupRoot.cs" />
     <Compile Include="Controls\Primitives\Popup.cs" />
     <Compile Include="Controls\Primitives\ToggleButton.cs" />

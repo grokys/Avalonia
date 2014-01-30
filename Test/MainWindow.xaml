@@ -47,8 +47,11 @@
 
             <Border BorderBrush="Gray" BorderThickness="1" Margin="2">
                 <StackPanel Orientation="Horizontal" Margin="8">
-                    <ItemsControl Name="itemsControl" ItemsSource="{Binding}"
-                                Margin="4" Padding="4" BorderBrush="Blue" BorderThickness="1"/>
+                    <ListBox ItemsSource="{Binding}"
+                             Margin="4" 
+                             Padding="4" 
+                             BorderBrush="Blue" 
+                             BorderThickness="1"/>
                     <StackPanel>
                         <Button Name="add" Margin="4" Click="add_Click">Add</Button>
                         <Button Name="remove" Margin="4" Click="remove_Click">Remove</Button>

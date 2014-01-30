@@ -65,6 +65,8 @@ namespace Avalonia.Controls
             if (this.IsInitialized && this.visualChild == null)
             {
                 Visual visual = this.Content as Visual;
+                
+                System.Console.WriteLine("ApplyTemplate: " + this.GetHashCode());
 
                 if (visual == null && this.Content != null)
                 {
